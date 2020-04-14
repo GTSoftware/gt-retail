@@ -33,3 +33,4 @@ out/
 /webapp/node_modules/
 /webapp/build/
 /src/main/generated/ar/com/gtsoftware/
+/gradle/wrapper/
