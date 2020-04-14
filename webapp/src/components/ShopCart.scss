@@ -1,0 +1,25 @@
+.shop-cart {
+  &--cart-total {
+    font-size: 2rem;
+    font-weight: bold;
+    display: block;
+  }
+
+  &--footer-actions-button {
+    width: 50%;
+  }
+
+  &--add-product-button {
+    width: 40% !important;
+  }
+
+  &--search-product-button {
+    width: 25% !important;
+  }
+
+  &--not-enough-quantity {
+    color: red !important;
+    background-color: transparent !important;
+    font-weight: bold;
+  }
+}

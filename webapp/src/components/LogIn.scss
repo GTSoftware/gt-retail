@@ -1,0 +1,23 @@
+.login-logo {
+  &--container {
+    text-align: center;
+  }
+
+  &--img {
+    height: 5em;
+  }
+}
+
+.login-input {
+  &--label {
+    left: 10px !important;
+  }
+
+  &--field {
+    margin-top: 10px;
+  }
+}
+
+.login-button {
+  margin-top: 20px;
+}
