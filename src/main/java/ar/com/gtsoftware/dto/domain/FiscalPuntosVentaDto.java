@@ -18,9 +18,6 @@ package ar.com.gtsoftware.dto.domain;
 
 import ar.com.gtsoftware.enums.TiposPuntosVenta;
 import lombok.*;
-import org.apache.commons.lang3.StringUtils;
-
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Representa a los puntos de venta fiscales asignados a cada sucursal

@@ -20,15 +20,12 @@ package ar.com.gtsoftware.rules;
 
 import ar.com.gtsoftware.dto.domain.SucursalesDto;
 import lombok.*;
-import org.apache.commons.collections4.CollectionUtils;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)

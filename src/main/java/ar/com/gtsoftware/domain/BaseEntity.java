@@ -16,7 +16,6 @@
 package ar.com.gtsoftware.domain;
 
 /**
- *
  * @author Rodrigo Tato <rotatomel@gmail.com>
  */
 public abstract class BaseEntity extends GTEntity<Long> {

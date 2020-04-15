@@ -54,5 +54,4 @@ public class CajasTransferenciasDto {
     private Integer version;
 
 
-
 }

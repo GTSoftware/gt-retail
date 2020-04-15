@@ -18,10 +18,8 @@
 package ar.com.gtsoftware.search.reportes;
 
 import lombok.*;
-import org.apache.commons.lang3.time.DateUtils;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -30,7 +28,7 @@ import java.util.Date;
 @Builder
 public class ReporteVentasSearchFilter extends AbstractReportSearchFilter {
 
-    private Date fechaDesde, fechaHasta;
+    private LocalDate fechaDesde, fechaHasta;
     private Long idSucursal;
 
     @Override
@@ -44,8 +42,8 @@ public class ReporteVentasSearchFilter extends AbstractReportSearchFilter {
     }
 
     public void setDefaultDatesValues() {
-        Date today = new Date();
-        fechaDesde = DateUtils.truncate(today, Calendar.MONTH);
-        fechaHasta = DateUtils.addMonths(DateUtils.truncate(today, Calendar.MONTH), 1);
+        LocalDate today = LocalDate.now();
+        fechaDesde = today.withDayOfMonth(1);
+        fechaHasta = today.withDayOfMonth(today.lengthOfMonth());
     }
 }

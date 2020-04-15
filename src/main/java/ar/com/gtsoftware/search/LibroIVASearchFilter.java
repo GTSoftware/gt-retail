@@ -19,13 +19,6 @@ import lombok.*;
 
 import java.util.Date;
 
-/**
- * Clase que sirve para encapsular los distintos criterios de búsqueda para generar los Libros de IVA
- *
- * @author Rodrigo Tato <rotatomel@gmail.com>
- * @version 1.0.0
- * @since 1.0.0
- */
 @Getter
 @Setter
 @NoArgsConstructor

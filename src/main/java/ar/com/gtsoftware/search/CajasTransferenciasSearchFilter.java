@@ -45,7 +45,7 @@ public class CajasTransferenciasSearchFilter extends AbstractSearchFilter {
                 || idCajaOrigen != null
                 || idCajaDestino != null
                 || idFormaPago != null
-                || idCaja !=null;
+                || idCaja != null;
     }
 
     public boolean hasFechasFilter() {

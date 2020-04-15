@@ -17,18 +17,18 @@
 
 package ar.com.gtsoftware.service.impl;
 
-import ar.com.gtsoftware.dto.domain.NegocioCondicionesOperacionesDto;
 import ar.com.gtsoftware.dao.NegocioCondicionesOperacionesFacade;
-import ar.com.gtsoftware.mappers.NegocioCondicionesOperacionesMapper;
 import ar.com.gtsoftware.domain.NegocioCondicionesOperaciones;
+import ar.com.gtsoftware.dto.domain.NegocioCondicionesOperacionesDto;
+import ar.com.gtsoftware.mappers.NegocioCondicionesOperacionesMapper;
 import ar.com.gtsoftware.search.AbstractSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;
 import ar.com.gtsoftware.service.NegocioCondicionesOperacionesService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 
-@Component
+@Service
 @RequiredArgsConstructor
 public class NegocioCondicionesOperacionesServiceImpl
         extends BaseEntityService<NegocioCondicionesOperacionesDto, AbstractSearchFilter, NegocioCondicionesOperaciones>

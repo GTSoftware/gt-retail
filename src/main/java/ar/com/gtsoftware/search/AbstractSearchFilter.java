@@ -27,8 +27,8 @@ import java.util.List;
  * Clase abstracta que representa una agrupación de criterios de filtrado
  *
  * @author Rodrigo Tato <rotatomel@gmail.com>
- * @since 1.0.0
  * @version 1.0.0
+ * @since 1.0.0
  */
 public abstract class AbstractSearchFilter implements Serializable {
 

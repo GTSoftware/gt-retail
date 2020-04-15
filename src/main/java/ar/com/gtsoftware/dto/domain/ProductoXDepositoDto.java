@@ -50,5 +50,4 @@ public class ProductoXDepositoDto {
     private Integer version;
 
 
-
 }

@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Component
 public class JwtUnAuthorizedResponseAuthenticationEntryPoint implements AuthenticationEntryPoint, Serializable {
 
-  private static final long serialVersionUID = -8970718410437077606L;
+    private static final long serialVersionUID = -8970718410437077606L;
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, org.springframework.security.core.AuthenticationException authException) throws IOException, ServletException {

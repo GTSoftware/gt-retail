@@ -22,7 +22,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
 /**
- *
  * @author rodrigo
  */
 @Entity

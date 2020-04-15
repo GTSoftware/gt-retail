@@ -25,9 +25,9 @@ import ar.com.gtsoftware.search.SucursalesSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;
 import ar.com.gtsoftware.service.SucursalesService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 @RequiredArgsConstructor
 public class SucursalesServiceImpl
         extends BaseEntityService<SucursalesDto, SucursalesSearchFilter, Sucursales>

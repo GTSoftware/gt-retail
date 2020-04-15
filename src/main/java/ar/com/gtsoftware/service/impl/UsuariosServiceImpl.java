@@ -32,28 +32,25 @@ import ar.com.gtsoftware.service.BaseEntityService;
 import ar.com.gtsoftware.service.UsuariosService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+@Service
 @RequiredArgsConstructor
 public class UsuariosServiceImpl extends BaseEntityService<UsuariosDto,
         UsuariosSearchFilter, Usuarios>
         implements UsuariosService {
 
-    @Value("${gtretail.default.user.password:Cambiame}")
-    private String defaultPassword;
-
     private final UsuariosFacade facade;
     private final UsuariosGruposFacade gruposFacade;
-
     private final UsuariosMapper mapper;
-
     private final UsuariosGruposMapper gruposMapper;
+    @Value("${gtretail.default.user.password:Cambiame}")
+    private String defaultPassword;
 
     @Override
     protected UsuariosFacade getFacade() {

@@ -1,6 +1,5 @@
 package ar.com.gtsoftware.api.response;
 
-import ar.com.gtsoftware.api.PromotionCartItem;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

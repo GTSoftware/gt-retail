@@ -16,11 +16,8 @@
 package ar.com.gtsoftware.dao;
 
 import ar.com.gtsoftware.domain.Usuarios;
-import ar.com.gtsoftware.domain.Usuarios;
 import ar.com.gtsoftware.domain.Usuarios_;
 import ar.com.gtsoftware.search.UsuariosSearchFilter;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -29,7 +26,6 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 /**
- *
  * @author Rodrigo M. Tato Rothamel <rotatomel@gmail.com>
  */
 @Repository
@@ -37,14 +33,14 @@ public class UsuariosFacade extends AbstractFacade<Usuarios, UsuariosSearchFilte
 
     private final EntityManager em;
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
-
     public UsuariosFacade(EntityManager em) {
         super(Usuarios.class);
         this.em = em;
+    }
+
+    @Override
+    protected EntityManager getEntityManager() {
+        return em;
     }
 
     @Override

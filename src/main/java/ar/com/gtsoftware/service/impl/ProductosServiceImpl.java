@@ -17,27 +17,27 @@
 
 package ar.com.gtsoftware.service.impl;
 
-import ar.com.gtsoftware.dto.domain.ProductosDto;
 import ar.com.gtsoftware.dao.ProductoXDepositoFacade;
 import ar.com.gtsoftware.dao.ProductosFacade;
 import ar.com.gtsoftware.dao.ProductosPreciosFacade;
-import ar.com.gtsoftware.mappers.ProductosMapper;
 import ar.com.gtsoftware.domain.Productos;
 import ar.com.gtsoftware.domain.ProductosPrecios;
+import ar.com.gtsoftware.dto.domain.ProductosDto;
+import ar.com.gtsoftware.mappers.ProductosMapper;
 import ar.com.gtsoftware.search.ProductoXDepositoSearchFilter;
 import ar.com.gtsoftware.search.ProductosPreciosSearchFilter;
 import ar.com.gtsoftware.search.ProductosSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;
 import ar.com.gtsoftware.service.ProductosService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 
-@Component
+@Service
 @RequiredArgsConstructor
 public class ProductosServiceImpl
         extends BaseEntityService<ProductosDto, ProductosSearchFilter, Productos>

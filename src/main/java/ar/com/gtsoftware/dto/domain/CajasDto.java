@@ -43,7 +43,6 @@ public class CajasDto {
     private Integer version;
 
 
-
     @Override
     public String toString() {
         return "[" + id + "] - "

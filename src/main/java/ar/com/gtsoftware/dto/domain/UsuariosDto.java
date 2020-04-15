@@ -56,5 +56,4 @@ public class UsuariosDto {
     private SucursalesDto idSucursal;
 
 
-
 }

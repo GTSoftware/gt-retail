@@ -303,10 +303,7 @@ public class RegistroIVADTO implements Serializable {
             return false;
         }
         final RegistroIVADTO other = (RegistroIVADTO) obj;
-        if (!Objects.equals(this.idFactura, other.idFactura)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.idFactura, other.idFactura);
     }
 
     @Override

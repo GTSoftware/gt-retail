@@ -28,12 +28,12 @@ import ar.com.gtsoftware.search.PersonasCuentaCorrienteSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;
 import ar.com.gtsoftware.service.PersonasCuentaCorrienteService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
-@Component
+@Service
 @RequiredArgsConstructor
 public class PersonasCuentaCorrienteServiceImpl
         extends BaseEntityService<PersonasCuentaCorrienteDto, PersonasCuentaCorrienteSearchFilter, PersonasCuentaCorriente>

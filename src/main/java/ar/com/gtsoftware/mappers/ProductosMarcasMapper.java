@@ -17,8 +17,8 @@
 
 package ar.com.gtsoftware.mappers;
 
-import ar.com.gtsoftware.dto.domain.ProductosMarcasDto;
 import ar.com.gtsoftware.domain.ProductosMarcas;
+import ar.com.gtsoftware.dto.domain.ProductosMarcasDto;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

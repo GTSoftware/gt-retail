@@ -20,6 +20,7 @@ import ar.com.gtsoftware.search.AbstractSearchFilter;
 import ar.com.gtsoftware.search.SortField;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+
 import javax.persistence.EntityGraph;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;

@@ -23,7 +23,6 @@ import ar.com.gtsoftware.domain.*;
 import ar.com.gtsoftware.dto.RegistroVentaDto;
 import ar.com.gtsoftware.dto.domain.ComprobantesDto;
 import ar.com.gtsoftware.enums.NegocioTiposComprobanteEnum;
-import ar.com.gtsoftware.enums.Parametros;
 import ar.com.gtsoftware.mappers.ComprobantesMapper;
 import ar.com.gtsoftware.mappers.helper.CycleAvoidingMappingContext;
 import ar.com.gtsoftware.search.DepositosSearchFilter;
@@ -32,7 +31,7 @@ import ar.com.gtsoftware.service.PersonasCuentaCorrienteService;
 import ar.com.gtsoftware.service.VentasService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
@@ -42,7 +41,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-@Component
+@Service
 @RequiredArgsConstructor
 public class VentasServiceImpl implements VentasService {
 

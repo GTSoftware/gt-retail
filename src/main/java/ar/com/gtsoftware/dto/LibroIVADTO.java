@@ -27,8 +27,8 @@ import java.util.Objects;
  * Clase que almacena la información necesaria para un libro de IVA Ventas
  *
  * @author Rodrigo Tato <rotatomel@gmail.com>
- * @since 1.0.0
  * @version 1.0.0
+ * @since 1.0.0
  */
 @Getter
 @Setter
@@ -38,11 +38,9 @@ import java.util.Objects;
 public class LibroIVADTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    private final Date fechaGeneracion = new Date();
     private Date fechaDesde;
     private Date fechaHasta;
-    private final Date fechaGeneracion = new Date();
-
     private List<RegistroIVADTO> facturasList;
     private BigDecimal importeTotal;
     private BigDecimal importeTotalIVA;
@@ -202,10 +200,7 @@ public class LibroIVADTO implements Serializable {
             return false;
         }
         final LibroIVADTO other = (LibroIVADTO) obj;
-        if (!Objects.equals(this.fechaGeneracion, other.fechaGeneracion)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.fechaGeneracion, other.fechaGeneracion);
     }
 
 }

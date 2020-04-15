@@ -66,5 +66,4 @@ public class CuponesDto {
     private BigDecimal coeficiente;
 
 
-
 }

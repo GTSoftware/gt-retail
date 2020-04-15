@@ -25,10 +25,10 @@ import ar.com.gtsoftware.search.OfertasSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;
 import ar.com.gtsoftware.service.OfertasService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 
-@Component
+@Service
 @RequiredArgsConstructor
 public class OfertasServiceImpl
         extends BaseEntityService<OfertaDto, OfertasSearchFilter, Ofertas>

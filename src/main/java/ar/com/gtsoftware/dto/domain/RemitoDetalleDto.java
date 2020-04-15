@@ -48,6 +48,4 @@ public class RemitoDetalleDto {
     private transient BigDecimal stockDeposito;
 
 
-
-
 }

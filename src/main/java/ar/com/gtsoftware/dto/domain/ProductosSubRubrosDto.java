@@ -43,5 +43,4 @@ public class ProductosSubRubrosDto {
     private Integer version;
 
 
-
 }

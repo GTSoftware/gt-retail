@@ -31,7 +31,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public class ShopCartControllerImpl implements ShopCartController {
+class ShopCartControllerImpl implements ShopCartController {
 
     private static final BigDecimal CIEN = new BigDecimal(100);
     private static final Long DEFAULT_TIPO_COMPROBANTE_ID = 1L;

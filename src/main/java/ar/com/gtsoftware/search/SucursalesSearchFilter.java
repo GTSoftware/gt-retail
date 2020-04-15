@@ -15,13 +15,10 @@
  */
 package ar.com.gtsoftware.search;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 
-/**
- * @author Rodrigo M. Tato Rothamel mailto:rotatomel@gmail.com
- */
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -29,7 +26,6 @@ import org.apache.commons.lang3.StringUtils;
 @Builder
 public class SucursalesSearchFilter extends AbstractSearchFilter {
 
-    private static final long serialVersionUID = 1L;
 
     private Boolean activa;
     private String nombre;
@@ -39,6 +35,5 @@ public class SucursalesSearchFilter extends AbstractSearchFilter {
         return activa != null
                 || StringUtils.isNotEmpty(nombre);
     }
-
 
 }

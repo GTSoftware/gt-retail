@@ -40,7 +40,7 @@ public class PersonasTelefonosDto {
     private String numero;
     @Size(max = 100)
     private String referencia;
-//    @NotNull
+    //    @NotNull
 //    private PersonasDto idPersona;
     private Integer version;
 }

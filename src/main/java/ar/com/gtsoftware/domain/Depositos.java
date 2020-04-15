@@ -22,7 +22,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author rodrigo
@@ -59,7 +58,7 @@ public class Depositos extends BaseEntity {
     @NotNull
     @Column(name = "activo")
     private boolean activo;
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDepositoMovimiento")
+    //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDepositoMovimiento")
 //    private List<StockMovimientos> stockMovimientosList;
     @JoinColumn(name = "id_provincia", referencedColumnName = "id_provincia", columnDefinition = "int4")
     @ManyToOne(optional = false)

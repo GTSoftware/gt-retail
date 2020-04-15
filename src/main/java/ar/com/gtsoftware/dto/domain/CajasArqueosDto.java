@@ -52,5 +52,4 @@ public class CajasArqueosDto {
     private Integer version;
 
 
-
 }

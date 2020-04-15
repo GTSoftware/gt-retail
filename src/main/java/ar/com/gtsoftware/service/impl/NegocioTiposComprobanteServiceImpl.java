@@ -25,10 +25,10 @@ import ar.com.gtsoftware.search.NegocioTiposComprobanteSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;
 import ar.com.gtsoftware.service.NegocioTiposComprobanteService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 
-@Component
+@Service
 @RequiredArgsConstructor
 public class NegocioTiposComprobanteServiceImpl
         extends BaseEntityService<NegocioTiposComprobanteDto, NegocioTiposComprobanteSearchFilter, NegocioTiposComprobante>

@@ -42,5 +42,4 @@ public class UsuariosGruposDto {
     private Integer version;
 
 
-
 }

@@ -27,8 +27,8 @@ import java.util.Objects;
 /**
  * Superclase para todas las entidades del sistema
  *
- * @author Rodrigo M. Tato Rothamel mailto:rotatomel@gmail.com
  * @param <T> la clase de la clave primaria
+ * @author Rodrigo M. Tato Rothamel mailto:rotatomel@gmail.com
  */
 @MappedSuperclass
 @Getter

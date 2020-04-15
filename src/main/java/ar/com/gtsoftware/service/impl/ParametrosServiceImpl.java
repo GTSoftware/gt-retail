@@ -24,12 +24,12 @@ import ar.com.gtsoftware.mappers.ParametrosMapper;
 import ar.com.gtsoftware.mappers.helper.CycleAvoidingMappingContext;
 import ar.com.gtsoftware.service.ParametrosService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-@Component
+@Service
 @RequiredArgsConstructor
 public class ParametrosServiceImpl implements ParametrosService {
 

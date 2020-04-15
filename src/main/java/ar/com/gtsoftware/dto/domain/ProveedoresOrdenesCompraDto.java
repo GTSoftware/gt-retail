@@ -64,7 +64,6 @@ public class ProveedoresOrdenesCompraDto {
     private Integer version;
 
 
-
     public void addPurchaseItem(ProveedoresOrdenesCompraLineasDto item) {
         if (proveedoresOrdenesCompraLineasList == null) {
             proveedoresOrdenesCompraLineasList = new ArrayList<>();

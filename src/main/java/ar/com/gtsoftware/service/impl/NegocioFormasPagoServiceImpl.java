@@ -25,10 +25,10 @@ import ar.com.gtsoftware.search.FormasPagoSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;
 import ar.com.gtsoftware.service.NegocioFormasPagoService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 
-@Component
+@Service
 @RequiredArgsConstructor
 public class NegocioFormasPagoServiceImpl extends BaseEntityService<NegocioFormasPagoDto,
         FormasPagoSearchFilter, NegocioFormasPago>

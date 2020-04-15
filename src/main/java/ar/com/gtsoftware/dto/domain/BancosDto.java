@@ -41,5 +41,4 @@ public class BancosDto {
     private PersonasDto idPersona;
 
 
-
 }

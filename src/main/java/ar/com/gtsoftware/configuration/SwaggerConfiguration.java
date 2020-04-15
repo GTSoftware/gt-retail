@@ -38,7 +38,7 @@ public class SwaggerConfiguration {
 
     private static ApiInfo getApiInfo() {
         return new ApiInfoBuilder().description("GTRetail REST API documentation")
-                .license("Apache License, Version 2.0")
+                .license("GNU GENERAL PUBLIC LICENSE Version 3")
                 .contact(new Contact("Rodrigo Tato",
                         "gtsoftware.com.ar",
                         "rotatomel@gmail.com"))

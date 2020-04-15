@@ -25,10 +25,10 @@ import ar.com.gtsoftware.search.PersonasSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;
 import ar.com.gtsoftware.service.PersonasService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 
-@Component
+@Service
 @RequiredArgsConstructor
 public class PersonasServiceImpl
         extends BaseEntityService<PersonasDto, PersonasSearchFilter, Personas>

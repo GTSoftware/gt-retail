@@ -36,7 +36,7 @@ public class GeneradorCodigoBarraFE {
                 .append(AMD.format(registro.getFechaVencimientoCae()));
         int digito = calcularDigitoVerificador(result.toString());
 
-        result.append(String.valueOf(digito));
+        result.append(digito);
         return result.toString();
     }
 

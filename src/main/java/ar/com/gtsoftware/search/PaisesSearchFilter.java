@@ -18,7 +18,6 @@ package ar.com.gtsoftware.search;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- *
  * @author Rodrigo Tato <rotatomel@gmail.com>
  */
 public class PaisesSearchFilter extends AbstractSearchFilter {
@@ -30,11 +29,6 @@ public class PaisesSearchFilter extends AbstractSearchFilter {
     private Integer idPais;
     private String nombrePais;
 
-    @Override
-    public boolean hasFilter() {
-        return (idPais != null) || (StringUtils.isNotEmpty(nombrePais));
-    }
-
     public PaisesSearchFilter() {
     }
 
@@ -44,6 +38,11 @@ public class PaisesSearchFilter extends AbstractSearchFilter {
 
     public PaisesSearchFilter(String nombrePais) {
         this.nombrePais = nombrePais;
+    }
+
+    @Override
+    public boolean hasFilter() {
+        return (idPais != null) || (StringUtils.isNotEmpty(nombrePais));
     }
 
     public Integer getIdPais() {

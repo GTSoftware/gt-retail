@@ -38,5 +38,4 @@ public class ProductosListasPreciosDto {
     private Integer version;
 
 
-
 }

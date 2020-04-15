@@ -43,5 +43,4 @@ public class LegalTiposDocumentoDto {
     private LegalTiposPersoneriaDto idTipoPersoneria;
 
 
-
 }

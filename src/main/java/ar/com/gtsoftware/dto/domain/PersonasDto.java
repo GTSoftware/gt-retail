@@ -35,12 +35,9 @@ import java.util.List;
 public class PersonasDto {
 
     private static final long serialVersionUID = 1L;
-
+    private static final String BUSINESS_STRING = "[%d] %s - %s: %s";
     @EqualsAndHashCode.Include
     private Long id;
-
-    private static final String BUSINESS_STRING = "[%d] %s - %s: %s";
-
     @Pattern(regexp = "^$|^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\."
             + "[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@"
             + "(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",

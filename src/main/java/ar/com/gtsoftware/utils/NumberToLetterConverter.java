@@ -26,15 +26,15 @@ import org.apache.commons.lang3.StringUtils;
 public abstract class NumberToLetterConverter {
 
     private static final String[] UNIDADES = {"", "UN ", "DOS ", "TRES ",
-        "CUATRO ", "CINCO ", "SEIS ", "SIETE ", "OCHO ", "NUEVE ", "DIEZ ",
-        "ONCE ", "DOCE ", "TRECE ", "CATORCE ", "QUINCE ", "DIECISEIS",
-        "DIECISIETE", "DIECIOCHO", "DIECINUEVE", "VEINTE"};
+            "CUATRO ", "CINCO ", "SEIS ", "SIETE ", "OCHO ", "NUEVE ", "DIEZ ",
+            "ONCE ", "DOCE ", "TRECE ", "CATORCE ", "QUINCE ", "DIECISEIS",
+            "DIECISIETE", "DIECIOCHO", "DIECINUEVE", "VEINTE"};
     private static final String[] DECENAS = {"VEINTI", "TREINTA ", "CUARENTA ",
-        "CINCUENTA ", "SESENTA ", "SETENTA ", "OCHENTA ", "NOVENTA ",
-        "CIEN "};
+            "CINCUENTA ", "SESENTA ", "SETENTA ", "OCHENTA ", "NOVENTA ",
+            "CIEN "};
     private static final String[] CENTENAS = {"CIENTO ", "DOSCIENTOS ",
-        "TRESCIENTOS ", "CUATROCIENTOS ", "QUINIENTOS ", "SEISCIENTOS ",
-        "SETECIENTOS ", "OCHOCIENTOS ", "NOVECIENTOS "};
+            "TRESCIENTOS ", "CUATROCIENTOS ", "QUINIENTOS ", "SEISCIENTOS ",
+            "SETECIENTOS ", "OCHOCIENTOS ", "NOVECIENTOS "};
 
     private static final String MILLONES = "MILLONES ";
     private static final String UN_MILLON = "UN MILLON ";
@@ -73,7 +73,7 @@ public abstract class NumberToLetterConverter {
                     "El número es mayor que 9.999.999, no es posible convertirlo");
         }
 
-        String splitNumber[] = String.valueOf(doubleNumber).replace('.', '#').split("#");
+        String[] splitNumber = String.valueOf(doubleNumber).replace('.', '#').split("#");
 
         // Descompone el trio de millones - ¡SGT!
         int millon = Integer.parseInt(String.valueOf(getDigitAt(splitNumber[0],
@@ -194,7 +194,7 @@ public abstract class NumberToLetterConverter {
      * <p>
      * Creation date 3/05/2006 - 05:26:03 PM
      *
-     * @param origin Cadena en la cual se busca el digito
+     * @param origin   Cadena en la cual se busca el digito
      * @param position Posicion de derecha a izquierda a retornar
      * @return Digito ubicado en la posicion indicada
      * @since 1.0

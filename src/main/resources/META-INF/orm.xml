@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<entity-mappings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
+                 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm http://xmlns.jcp.org/xml/ns/persistence/orm_2_2.xsd"
+                 version="2.2">
+
+    <named-native-query name="ReporteVentasQueryCount">
+        <query>
+            SELECT COUNT(1)
+                FROM productos p
+                JOIN productos_tipos_unidades u ON p.id_tipo_unidad_venta = u.id_tipo_unidad
+            WHERE EXISTS (
+                SELECT 1
+                    FROM comprobantes comp
+                    JOIN comprobantes_lineas cl ON comp.id_comprobante = cl.id_comprobante
+                WHERE comp.anulada = false
+                    AND comp.fecha_comprobante between :fechaDesde and :fechaHasta
+                    AND cl.id_producto = p.id_producto
+                    AND (COALESCE(null, :idSucursal) IS NULL OR comp.id_sucursal = CAST(:idSucursal AS INTEGER))
+                )
+        </query>
+    </named-native-query>
+
+    <named-native-query name="ReporteVentasQuery" result-set-mapping="ReporteVentasMapping">
+        <query>
+            SELECT
+                p.id_producto,
+                p.codigo_propio,
+                p.codigo_fabricante,
+                p.descripcion,
+                u.nombre_unidad,
+                p.stock_minimo,
+                (SELECT SUM(pxd.stock) FROM productos_x_depositos pxd WHERE pxd.id_producto = p.id_producto) AS stock_actual,
+                (SELECT SUM(cl.cantidad * ntc.signo)
+                    FROM comprobantes comp
+                    JOIN comprobantes_lineas cl ON comp.id_comprobante = cl.id_comprobante
+                    JOIN negocio_tipos_comprobante ntc ON comp.id_negocio_tipo_comprobante = ntc.id_negocio_tipo_comprobante
+                WHERE comp.anulada = false
+                    AND comp.fecha_comprobante between :fechaDesde and :fechaHasta
+                    AND cl.id_producto = p.id_producto
+                    AND (coalesce(null, :idSucursal) IS NULL OR comp.id_sucursal = CAST(:idSucursal AS INTEGER))) AS cantidad_vendida,
+                (SELECT SUM(cl.costo_neto_unitario * cl.cantidad * ntc.signo)
+                    FROM comprobantes comp
+                    JOIN comprobantes_lineas cl ON comp.id_comprobante = cl.id_comprobante
+                    JOIN negocio_tipos_comprobante ntc ON comp.id_negocio_tipo_comprobante = ntc.id_negocio_tipo_comprobante
+                WHERE comp.anulada = false
+                    AND comp.fecha_comprobante between :fechaDesde and :fechaHasta
+                    AND cl.id_producto = p.id_producto
+                    AND (COALESCE(null, :idSucursal) IS NULL OR comp.id_sucursal = CAST(:idSucursal AS INTEGER))) AS costo_total_ventas,
+                (SELECT SUM(cl.sub_total * ntc.signo)
+                    FROM comprobantes comp
+                    JOIN comprobantes_lineas cl ON comp.id_comprobante = cl.id_comprobante
+                    JOIN negocio_tipos_comprobante ntc ON comp.id_negocio_tipo_comprobante = ntc.id_negocio_tipo_comprobante
+                WHERE comp.anulada = false
+                    AND comp.fecha_comprobante BETWEEN :fechaDesde AND :fechaHasta
+                    AND cl.id_producto = p.id_producto
+                    AND (COALESCE(null, :idSucursal) IS NULL OR comp.id_sucursal = CAST(:idSucursal AS INTEGER))) AS total_precio_venta,
+                (SELECT COUNT(distinct comp.id_comprobante)
+                    FROM comprobantes comp
+                    JOIN comprobantes_lineas cl on comp.id_comprobante = cl.id_comprobante
+                WHERE comp.anulada = false
+                    AND comp.fecha_comprobante between :fechaDesde and :fechaHasta
+                    AND cl.id_producto = p.id_producto
+                    AND (COALESCE(null, :idSucursal) IS NULL OR comp.id_sucursal = CAST(:idSucursal AS INTEGER))) AS cant_comprobantes,
+                (SELECT '[' || prov.id_persona || '] ' || prov.razon_social
+                    FROM personas prov where prov.id_persona =
+                    p.id_proveedor_habitual) AS proveedor
+
+                FROM productos p
+                JOIN productos_tipos_unidades u ON p.id_tipo_unidad_venta = u.id_tipo_unidad
+            WHERE EXISTS(SELECT 1
+                    FROM comprobantes comp
+                    JOIN comprobantes_lineas cl on comp.id_comprobante = cl.id_comprobante
+                WHERE comp.anulada = false
+                    AND comp.fecha_comprobante between :fechaDesde and :fechaHasta
+                    AND cl.id_producto = p.id_producto
+                    AND (coalesce(null, :idSucursal) IS NULL OR comp.id_sucursal = CAST(:idSucursal AS INTEGER)))
+            ORDER BY cant_comprobantes DESC
+        </query>
+    </named-native-query>
+
+    <sql-result-set-mapping name="ReporteVentasMapping">
+
+        <constructor-result target-class="ar.com.gtsoftware.dto.reportes.VentaPorProducto">
+            <column name="id_producto" class="java.lang.Long"/>
+            <column name="codigo_propio" class="java.lang.String"/>
+            <column name="codigo_fabricante" class="java.lang.String"/>
+            <column name="descripcion" class="java.lang.String"/>
+            <column name="nombre_unidad" class="java.lang.String"/>
+            <column name="stock_minimo" class="java.math.BigDecimal"/>
+            <column name="stock_actual" class="java.math.BigDecimal"/>
+            <column name="cantidad_vendida" class="java.math.BigDecimal"/>
+            <column name="costo_total_ventas" class="java.math.BigDecimal"/>
+            <column name="total_precio_venta" class="java.math.BigDecimal"/>
+            <column name="cant_comprobantes" class="java.lang.Integer"/>
+            <column name="proveedor" class="java.lang.String"/>
+        </constructor-result>
+    </sql-result-set-mapping>
+</entity-mappings>

@@ -44,5 +44,4 @@ public class CajasMovimientosDto {
     private Integer version;
 
 
-
 }

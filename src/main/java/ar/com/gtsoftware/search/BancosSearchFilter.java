@@ -18,7 +18,6 @@ package ar.com.gtsoftware.search;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- *
  * @author Rodrigo Tato mailto:rotatomel@gmail.com
  */
 public class BancosSearchFilter extends AbstractSearchFilter {
