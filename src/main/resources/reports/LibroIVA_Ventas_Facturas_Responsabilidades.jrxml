@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="LibroIVA_Ventas_Facturas" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0"
+              rightMargin="0" topMargin="0" bottomMargin="0" uuid="658183c0-1e32-4007-bfe2-14dc13246571">
+    <property name="ireport.zoom" value="1.0"/>
+    <property name="ireport.x" value="0"/>
+    <property name="ireport.y" value="0"/>
+    <queryString>
+        <![CDATA[]]>
+    </queryString>
+    <field name="importeTotal" class="java.math.BigDecimal">
+        <fieldDescription><![CDATA[importeTotal]]></fieldDescription>
+    </field>
+    <field name="ivaTotal" class="java.math.BigDecimal">
+        <fieldDescription><![CDATA[ivaTotal]]></fieldDescription>
+    </field>
+    <field name="netoGravadoTotal" class="java.math.BigDecimal">
+        <fieldDescription><![CDATA[netoGravadoTotal]]></fieldDescription>
+    </field>
+    <field name="noGravadoTotal" class="java.math.BigDecimal">
+        <fieldDescription><![CDATA[noGravadoTotal]]></fieldDescription>
+    </field>
+    <field name="responsabilidadIva" class="ar.com.gtsoftware.model.FiscalResponsabilidadesIva">
+        <fieldDescription><![CDATA[responsabilidadIva]]></fieldDescription>
+    </field>
+    <background>
+        <band splitType="Stretch"/>
+    </background>
+    <columnHeader>
+        <band height="21">
+            <staticText>
+                <reportElement x="0" y="0" width="121" height="20" uuid="78878321-4f06-4e7a-8aac-cc00686b63f3"/>
+                <text><![CDATA[Responsabilidad]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="132" y="1" width="100" height="20" uuid="88555332-3b23-4978-b0af-3bc7a0ef4354"/>
+                <textElement textAlignment="Right"/>
+                <text><![CDATA[Neto Gravado]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="234" y="1" width="100" height="20" uuid="7b1f9916-2ab7-4d23-9d7f-61cf2253b644"/>
+                <textElement textAlignment="Right"/>
+                <text><![CDATA[No Gravado]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="339" y="1" width="100" height="20" uuid="d8ce62ab-ecaa-4ed7-a0a0-6b522226cb8e"/>
+                <textElement textAlignment="Right"/>
+                <text><![CDATA[IVA]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="442" y="1" width="100" height="20" uuid="59e3cc8b-33db-47e1-8dae-3144afce9ba2"/>
+                <textElement textAlignment="Right"/>
+                <text><![CDATA[Total]]></text>
+            </staticText>
+        </band>
+    </columnHeader>
+    <detail>
+        <band height="20" splitType="Stretch">
+            <textField isStretchWithOverflow="true">
+                <reportElement x="0" y="0" width="121" height="20" uuid="cc381baf-afa8-40dc-8453-9f62d509867d"/>
+                <textFieldExpression>
+                    <![CDATA[""+$F{responsabilidadIva}.getNombreResponsabildiad()]]></textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true" pattern="¤ #,##0.00">
+                <reportElement x="132" y="0" width="100" height="20" uuid="4d3e6aaf-667b-44f4-9839-f5c57df680d6"/>
+                <textElement textAlignment="Right"/>
+                <textFieldExpression><![CDATA[$F{netoGravadoTotal}]]></textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true" pattern="¤ #,##0.00">
+                <reportElement x="234" y="0" width="100" height="20" uuid="7163e1cc-4daa-4b8c-808a-43fdc962fe9d"/>
+                <textElement textAlignment="Right"/>
+                <textFieldExpression><![CDATA[$F{noGravadoTotal}]]></textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true" pattern="¤ #,##0.00">
+                <reportElement x="339" y="0" width="100" height="20" uuid="d45e9798-14ff-4f9e-979d-fd944c9a4553"/>
+                <textElement textAlignment="Right"/>
+                <textFieldExpression><![CDATA[$F{ivaTotal}]]></textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true" pattern="¤ #,##0.00">
+                <reportElement x="442" y="0" width="100" height="20" uuid="e6fdac5b-d097-41d6-a1be-67004f514d0b"/>
+                <textElement textAlignment="Right"/>
+                <textFieldExpression><![CDATA[$F{importeTotal}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+</jasperReport>

@@ -45,6 +45,7 @@ public class ComprobantesLineasDto implements Serializable {
     private ProductosDto idProducto;
     private String descripcion;
     private Integer version;
+    private Integer item;
 
     /**
      * Retorna la descripción imprimible o mostrable hasta los 90 caracteres.

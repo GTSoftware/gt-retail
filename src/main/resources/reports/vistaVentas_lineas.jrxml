@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+			  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			  xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+			  name="facturaB_lineas" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0"
+			  topMargin="0" bottomMargin="0" uuid="8ee54347-3d25-4c73-9f92-449488104ca3">
+	<property name="ireport.zoom" value="1.9487171000000019"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="presupuesto.impresion.mostrar_detalle_precios" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="cantidad" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[cantidad]]></fieldDescription>
+	</field>
+	<field name="idProducto" class="ar.com.gtsoftware.dto.domain.ProductosDto">
+		<fieldDescription><![CDATA[idProducto]]></fieldDescription>
+	</field>
+	<field name="precioUnitario" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[precioUnitario]]></fieldDescription>
+	</field>
+	<field name="subTotal" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[subTotal]]></fieldDescription>
+	</field>
+	<field name="descripcion" class="java.lang.String"/>
+	<field name="item" class="java.lang.Integer">
+		<fieldDescription><![CDATA[item]]></fieldDescription>
+	</field>
+	<sortField name="item"/>
+	<variable name="subTotal_1" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{subTotal}]]></variableExpression>
+	</variable>
+	<columnHeader>
+		<band height="21">
+			<rectangle radius="5">
+				<reportElement mode="Transparent" x="1" y="0" width="553" height="20"
+							   uuid="e75f267e-5da2-4678-9e27-a05153ef9c0e"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="0" width="54" height="20" uuid="d357dad4-06db-4837-a679-87cf09a304df"/>
+				<box leftPadding="5">
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Cant.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="54" y="0" width="68" height="20" uuid="026f7664-9ea6-4814-82b5-2674fc4d807f"/>
+				<box leftPadding="5">
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Unidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="122" y="0" width="244" height="20" uuid="22e93171-ef26-49af-a377-b57a8ff5a448"/>
+				<box leftPadding="5">
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Descripción]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="366" y="0" width="49" height="20" uuid="3c4947d0-6acb-4657-be9b-3d3921bf8df2">
+					<printWhenExpression>
+						<![CDATA[$P{presupuesto.impresion.mostrar_detalle_precios}]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[IVA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="415" y="0" width="69" height="20" uuid="3c3c2816-5c6e-410e-8ad8-4db6ee7c539d">
+					<printWhenExpression>
+						<![CDATA[$P{presupuesto.impresion.mostrar_detalle_precios}]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Precio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="485" y="0" width="68" height="20" uuid="c36e2831-9097-46ac-99f3-213b13a9bcba">
+					<printWhenExpression>
+						<![CDATA[$P{presupuesto.impresion.mostrar_detalle_precios}]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Sub-Total]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="49" height="24" uuid="685291bc-c0d0-42ca-acf1-fa4c720826cc"/>
+				<box leftPadding="2"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="122" y="0" width="245" height="24" uuid="28435475-9b51-4ff1-b6f1-957423fb2291"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression>
+					<![CDATA["["+$F{idProducto}.getCodigoPropio()+"] "+$F{descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="54" y="0" width="57" height="24" uuid="9198d21b-a936-4cf8-a475-355332c68bce"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression>
+					<![CDATA[$F{idProducto}.getIdTipoUnidadVenta().getNombreUnidad()]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="416" y="0" width="69" height="24" uuid="e8f13670-d049-4398-943b-644ed58e24a5">
+					<printWhenExpression>
+						<![CDATA[$P{presupuesto.impresion.mostrar_detalle_precios}]]></printWhenExpression>
+				</reportElement>
+				<box rightPadding="2"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{precioUnitario}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="¤ #,##0.00">
+				<reportElement x="485" y="0" width="70" height="24" uuid="662c956e-f7e4-4c4a-b4bb-d316677c2f91">
+					<printWhenExpression>
+						<![CDATA[$P{presupuesto.impresion.mostrar_detalle_precios}]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{subTotal}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="367" y="0" width="49" height="24" uuid="f7d41e1f-9fa7-41bd-9a97-762275e9fac1">
+					<printWhenExpression>
+						<![CDATA[$P{presupuesto.impresion.mostrar_detalle_precios}]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="2"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression>
+					<![CDATA[$F{idProducto}.getIdAlicuotaIva().getValorAlicuota()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="7" y="23" width="549" height="1" uuid="1fca64aa-fb6d-4d56-9add-9b5fd3a3e5a9"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="21">
+			<staticText>
+				<reportElement x="354" y="0" width="77" height="20" uuid="156629ee-5325-4125-a3f7-c07607651199"/>
+				<textElement textAlignment="Right">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Sub-Total:]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="431" y="0" width="125" height="20" uuid="acc6f341-4d5b-4cb0-b8cc-d56b5c8b2d85"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{subTotal_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>

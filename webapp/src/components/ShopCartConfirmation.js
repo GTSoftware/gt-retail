@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Button} from "primereact/button";
 import {InputText} from "primereact/inputtext";
 import {ShopCartStore} from "../stores/ShopCartStore";
+import FileOutputsService from "../service/FileOutputsService";
 
 export class ShopCartConfirmation extends Component {
 
@@ -16,6 +17,7 @@ export class ShopCartConfirmation extends Component {
 
         this.handleStartNewSale = this.handleStartNewSale.bind(this);
         this.renderDeliveryNote = this.renderDeliveryNote.bind(this);
+        this.renderPrintDeliveryNoteButton = this.renderPrintDeliveryNoteButton.bind(this);
     }
 
     render() {
@@ -45,7 +47,16 @@ export class ShopCartConfirmation extends Component {
                                 icon="fa fa-fw fa-plus"
                                 onClick={() => this.handleStartNewSale()}
                         />
+
                     </div>
+                    <Button label="Imprimir Presupuesto"
+                            icon="fa fa-fw fa-print"
+                            className="p-button-secondary"
+                            onClick={() => {
+                                FileOutputsService.getSaleBudget(this.state.saleInformation.saleId);
+                            }}
+                    />
+                    {this.renderPrintDeliveryNoteButton()}
                 </div>
             </div>
         );
@@ -63,6 +74,24 @@ export class ShopCartConfirmation extends Component {
                            value={saleInformation.deliveryNoteId}/>
             </div>
         );
+    }
+
+    renderPrintDeliveryNoteButton() {
+        let button = null;
+
+        if (this.state.saleInformation.deliveryNoteId) {
+            button = (
+                <Button label="Imprimir Remito"
+                        icon="fa fa-fw fa-print"
+                        className="p-button-secondary"
+                        onClick={() => {
+                            FileOutputsService.getDeliveryNote(this.state.saleInformation.deliveryNoteId);
+                        }}
+                />
+            );
+        }
+
+        return button;
     }
 
     handleStartNewSale() {

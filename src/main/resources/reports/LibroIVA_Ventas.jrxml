@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="LibroIVA_Ventas" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20"
+              topMargin="20" bottomMargin="20" uuid="658183c0-1e32-4007-bfe2-14dc13246571">
+    <property name="ireport.zoom" value="1.1"/>
+    <property name="ireport.x" value="0"/>
+    <property name="ireport.y" value="0"/>
+    <queryString>
+        <![CDATA[]]>
+    </queryString>
+    <field name="facturasList" class="java.util.List">
+        <fieldDescription><![CDATA[facturasList]]></fieldDescription>
+    </field>
+    <field name="fechaDesde" class="java.util.Date">
+        <fieldDescription><![CDATA[fechaDesde]]></fieldDescription>
+    </field>
+    <field name="fechaGeneracion" class="java.util.Date">
+        <fieldDescription><![CDATA[fechaGeneracion]]></fieldDescription>
+    </field>
+    <field name="fechaHasta" class="java.util.Date">
+        <fieldDescription><![CDATA[fechaHasta]]></fieldDescription>
+    </field>
+    <field name="importeTotal" class="java.math.BigDecimal">
+        <fieldDescription><![CDATA[importeTotal]]></fieldDescription>
+    </field>
+    <field name="importeTotalIVA" class="java.math.BigDecimal">
+        <fieldDescription><![CDATA[importeTotalIVA]]></fieldDescription>
+    </field>
+    <field name="totalesAlicuota" class="java.util.List">
+        <fieldDescription><![CDATA[totalesAlicuota]]></fieldDescription>
+    </field>
+    <field name="totalesIVAResponsabilidad" class="java.util.List">
+        <fieldDescription><![CDATA[totalesIVAResponsabilidad]]></fieldDescription>
+    </field>
+    <background>
+        <band splitType="Stretch"/>
+    </background>
+    <title>
+        <band height="46" splitType="Stretch">
+            <staticText>
+                <reportElement x="0" y="0" width="555" height="20" uuid="5f434daa-1338-4901-8340-59fbe66c8b7f"/>
+                <textElement textAlignment="Center">
+                    <font size="14" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Libro de IVA Ventas]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="0" y="20" width="100" height="20" uuid="1a3b8f5e-fb41-426e-bbce-3cb6d67122b4"/>
+                <text><![CDATA[Fecha Impresión:]]></text>
+            </staticText>
+            <textField pattern="dd/MM/yyyy hh:mm:ss">
+                <reportElement x="100" y="20" width="155" height="20" uuid="1ff66050-8fd0-4d6d-825a-639f9a3fe5f7"/>
+                <textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="255" y="20" width="47" height="20" uuid="c1c6c012-26f5-4a14-9d4c-4985f4842467"/>
+                <text><![CDATA[Período:]]></text>
+            </staticText>
+            <textField pattern="dd/MM/yyyy">
+                <reportElement x="302" y="20" width="74" height="20" uuid="7d54ddc0-7055-4fc2-8822-664f4a88d652"/>
+                <textFieldExpression><![CDATA[$F{fechaDesde}]]></textFieldExpression>
+            </textField>
+            <textField pattern="dd/MM/yyyy">
+                <reportElement x="413" y="20" width="100" height="20" uuid="03c449e2-a585-48c1-97d8-66107a7fbbed"/>
+                <textFieldExpression><![CDATA[$F{fechaHasta}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="391" y="20" width="11" height="20" uuid="93d616f0-81c3-4020-a13c-01fb18ab1954"/>
+                <textElement textAlignment="Center"/>
+                <text><![CDATA[-]]></text>
+            </staticText>
+        </band>
+    </title>
+    <detail>
+        <band height="51" splitType="Stretch">
+            <subreport>
+                <reportElement x="0" y="0" width="555" height="51" uuid="952aa2bb-a317-46e0-ab93-e856214c72fa"/>
+                <dataSourceExpression>
+                    <![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{facturasList})]]></dataSourceExpression>
+                <subreportExpression><![CDATA["reports/LibroIVA_Ventas_Facturas.jasper"]]></subreportExpression>
+            </subreport>
+        </band>
+    </detail>
+    <pageFooter>
+        <band height="24" splitType="Stretch">
+            <textField>
+                <reportElement x="469" y="0" width="44" height="20" uuid="1195022c-56c9-409b-b070-b8a812f054e8"/>
+                <textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="422" y="0" width="47" height="20" uuid="38688717-2451-4f93-85b5-f597329ed4bd"/>
+                <text><![CDATA[Página:]]></text>
+            </staticText>
+        </band>
+    </pageFooter>
+    <summary>
+        <band height="189" splitType="Stretch">
+            <textField pattern="¤ #,##0.00">
+                <reportElement x="422" y="33" width="100" height="20" uuid="5e9a2538-9b9b-4ceb-b366-3ed30b836b2c"/>
+                <textElement textAlignment="Right"/>
+                <textFieldExpression><![CDATA[$F{importeTotalIVA}]]></textFieldExpression>
+            </textField>
+            <textField pattern="¤ #,##0.00">
+                <reportElement x="422" y="13" width="100" height="20" uuid="8f24311a-5e6d-496f-9b54-6b16180c2410"/>
+                <textElement textAlignment="Right"/>
+                <textFieldExpression><![CDATA[$F{importeTotal}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="328" y="13" width="94" height="20" uuid="a8fe4b56-e869-406e-915e-4024015a8cab"/>
+                <text><![CDATA[Facturación total:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="328" y="33" width="94" height="20" uuid="aec0613a-75e2-4fe0-a382-5179cf9488ed"/>
+                <text><![CDATA[IVA total:]]></text>
+            </staticText>
+            <subreport>
+                <reportElement x="0" y="97" width="555" height="92" uuid="d6f98c66-26e5-4fdf-a25e-8ea95cbec82c"/>
+                <dataSourceExpression>
+                    <![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{totalesIVAResponsabilidad})]]></dataSourceExpression>
+                <subreportExpression>
+                    <![CDATA["LibroIVA_Ventas_Facturas_Responsabilidades.jasper"]]></subreportExpression>
+            </subreport>
+            <subreport>
+                <reportElement x="0" y="13" width="302" height="66" uuid="c85654ee-e92e-4230-ae35-7e986cdca788"/>
+                <dataSourceExpression>
+                    <![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{totalesAlicuota})]]></dataSourceExpression>
+                <subreportExpression><![CDATA["LibroIVA_Ventas_Facturas_Alicuotas.jasper"]]></subreportExpression>
+            </subreport>
+            <line>
+                <reportElement x="0" y="0" width="555" height="1" uuid="344847e9-627b-4c7f-9d0e-a78197b1b435"/>
+                <graphicElement>
+                    <pen lineStyle="Dashed"/>
+                </graphicElement>
+            </line>
+        </band>
+    </summary>
+</jasperReport>

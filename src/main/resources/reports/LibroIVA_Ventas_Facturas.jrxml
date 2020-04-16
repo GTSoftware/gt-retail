@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+			  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			  xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+			  name="LibroIVA_Ventas_Facturas" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0"
+			  rightMargin="0" topMargin="0" bottomMargin="0" uuid="658183c0-1e32-4007-bfe2-14dc13246571">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="documentoCliente" class="java.lang.String">
+		<fieldDescription><![CDATA[documentoCliente]]></fieldDescription>
+	</field>
+	<field name="fechaFactura" class="java.util.Date">
+		<fieldDescription><![CDATA[fechaFactura]]></fieldDescription>
+	</field>
+	<field name="idFactura" class="java.lang.Long">
+		<fieldDescription><![CDATA[idFactura]]></fieldDescription>
+	</field>
+	<field name="netoGravado" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[netoGravado]]></fieldDescription>
+	</field>
+	<field name="noGravado" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[noGravado]]></fieldDescription>
+	</field>
+	<field name="numeroFactura" class="java.lang.String">
+		<fieldDescription><![CDATA[numeroFactura]]></fieldDescription>
+	</field>
+	<field name="razonSocialCliente" class="java.lang.String">
+		<fieldDescription><![CDATA[razonSocialCliente]]></fieldDescription>
+	</field>
+	<field name="totalAlicuota" class="java.util.Map">
+		<fieldDescription><![CDATA[totalAlicuota]]></fieldDescription>
+	</field>
+	<field name="totalFactura" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[totalFactura]]></fieldDescription>
+	</field>
+	<field name="totalIva" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[totalIva]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="21">
+			<staticText>
+				<reportElement x="0" y="0" width="58" height="20" uuid="ac6e48a6-b36f-4af5-b40a-77cc04c7dcb1"/>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="61" y="0" width="90" height="20" uuid="50760bfa-1c33-4422-ad67-974a502688a8"/>
+				<text><![CDATA[Factura]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="153" y="0" width="73" height="20" uuid="5f7918bc-0f67-4375-8a0d-00fa28a2c8e6"/>
+				<text><![CDATA[Documento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="228" y="0" width="100" height="20" uuid="8072dadb-ca54-4d23-8058-6d9021eb6f8b"/>
+				<text><![CDATA[Razon Social]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="333" y="0" width="53" height="20" uuid="1432bc43-d596-4aee-b670-52f933828c51"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Neto Gravado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="391" y="0" width="53" height="20" uuid="1df4a0fb-d431-4491-8d4c-33206096d7db"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[No Grav.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="446" y="0" width="53" height="20" uuid="d9f11d84-19a5-42ff-9dbc-e3bc5deb9b90"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[IVA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="502" y="0" width="53" height="20" uuid="3a089b43-f021-422b-b9c9-eacc2021a38e"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
+				<reportElement x="0" y="0" width="58" height="20" uuid="62457a38-e29b-43a8-86bd-bf2f5cd97392"/>
+				<textFieldExpression><![CDATA[$F{fechaFactura}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="61" y="0" width="90" height="20" uuid="12398b31-f863-4b36-8f75-fc073d3175f5"/>
+				<textFieldExpression><![CDATA[$F{numeroFactura}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="153" y="0" width="73" height="20" uuid="9cb67e42-1973-436b-9d3d-6271f0b4a533"/>
+				<textFieldExpression><![CDATA[$F{documentoCliente}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="228" y="0" width="100" height="20" uuid="fd88e748-1b9b-4faa-a670-512cfff15688"/>
+				<textFieldExpression><![CDATA[$F{razonSocialCliente}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="¤ #,##0.00">
+				<reportElement x="333" y="0" width="53" height="20" uuid="4e14e059-2fc4-4951-9a9e-ba592fd4d41f"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{netoGravado}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="¤ #,##0.00">
+				<reportElement x="391" y="0" width="53" height="20" uuid="53462175-bac0-42a1-a252-6dd5d608c832"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{noGravado}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="¤ #,##0.00">
+				<reportElement x="446" y="0" width="53" height="20" uuid="cdc5e520-174c-486b-a57b-f6b80e1c6301"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{totalIva}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="¤ #,##0.00">
+				<reportElement x="502" y="0" width="53" height="20" uuid="f9238f3c-9331-48ed-83f4-876e4709d3b8"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{totalFactura}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

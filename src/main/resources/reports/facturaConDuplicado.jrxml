@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="report name" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0"
+              topMargin="0" bottomMargin="0" uuid="201dea38-09bb-4acf-8ab0-fcef22ea9ec6">
+    <parameter name="logo" class="java.lang.String" isForPrompting="false"/>
+    <parameter name="empresa.direccion" class="java.lang.String" isForPrompting="false"/>
+    <parameter name="empresa.telefono" class="java.lang.String" isForPrompting="false"/>
+    <parameter name="empresa.email" class="java.lang.String" isForPrompting="false"/>
+    <parameter name="empresa.cuit" class="java.lang.String" isForPrompting="false"/>
+    <parameter name="empresa.razon_social" class="java.lang.String" isForPrompting="false"/>
+    <parameter name="empresa.nombre_fantasia" class="java.lang.String" isForPrompting="false"/>
+    <parameter name="empresa.localidad" class="java.lang.String" isForPrompting="false"/>
+    <parameter name="empresa.provincia" class="java.lang.String" isForPrompting="false"/>
+    <parameter name="empresa.fechainicio" class="java.lang.String" isForPrompting="false"/>
+    <parameter name="codigobarras" class="java.lang.String" isForPrompting="false"/>
+    <parameter name="logoAfip" class="java.lang.String" isForPrompting="false"/>
+    <parameter name="subreport" class="java.lang.String" isForPrompting="false">
+        <defaultValueExpression><![CDATA["reports/vistaVentas_lineas.jasper"]]></defaultValueExpression>
+    </parameter>
+    <parameter name="subDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
+    <parameter name="subDataSource2" class="net.sf.jasperreports.engine.JRDataSource"/>
+    <background>
+        <band splitType="Stretch"/>
+    </background>
+    <detail>
+        <band height="50">
+            <subreport runToBottom="true">
+                <reportElement x="0" y="0" width="595" height="49" uuid="fffa08ff-34c3-4b0f-963a-1bb46e8bbcda"/>
+                <subreportParameter name="subreport">
+                    <subreportParameterExpression><![CDATA[$P{subreport}]]></subreportParameterExpression>
+                </subreportParameter>
+                <subreportParameter name="logoAfip">
+                    <subreportParameterExpression><![CDATA[$P{logoAfip}]]></subreportParameterExpression>
+                </subreportParameter>
+                <subreportParameter name="empresa.localidad">
+                    <subreportParameterExpression><![CDATA[$P{empresa.localidad}]]></subreportParameterExpression>
+                </subreportParameter>
+                <subreportParameter name="empresa.email">
+                    <subreportParameterExpression><![CDATA[$P{empresa.email}]]></subreportParameterExpression>
+                </subreportParameter>
+                <subreportParameter name="empresa.telefono">
+                    <subreportParameterExpression><![CDATA[$P{empresa.telefono}]]></subreportParameterExpression>
+                </subreportParameter>
+                <subreportParameter name="empresa.fechainicio">
+                    <subreportParameterExpression><![CDATA[$P{empresa.fechainicio}]]></subreportParameterExpression>
+                </subreportParameter>
+                <subreportParameter name="empresa.razon_social">
+                    <subreportParameterExpression><![CDATA[$P{empresa.razon_social}]]></subreportParameterExpression>
+                </subreportParameter>
+                <subreportParameter name="empresa.cuit">
+                    <subreportParameterExpression><![CDATA[$P{empresa.cuit}]]></subreportParameterExpression>
+                </subreportParameter>
+                <subreportParameter name="empresa.provincia">
+                    <subreportParameterExpression><![CDATA[$P{empresa.provincia}]]></subreportParameterExpression>
+                </subreportParameter>
+                <subreportParameter name="empresa.direccion">
+                    <subreportParameterExpression><![CDATA[$P{empresa.direccion}]]></subreportParameterExpression>
+                </subreportParameter>
+                <subreportParameter name="codigobarras">
+                    <subreportParameterExpression><![CDATA[$P{codigobarras}]]></subreportParameterExpression>
+                </subreportParameter>
+                <subreportParameter name="logo">
+                    <subreportParameterExpression><![CDATA[$P{logo}]]></subreportParameterExpression>
+                </subreportParameter>
+                <subreportParameter name="copia">
+                    <subreportParameterExpression><![CDATA["ORIGINAL"]]></subreportParameterExpression>
+                </subreportParameter>
+                <subreportParameter name="empresa.nombre_fantasia">
+                    <subreportParameterExpression><![CDATA[$P{empresa.nombre_fantasia}]]></subreportParameterExpression>
+                </subreportParameter>
+                <dataSourceExpression><![CDATA[$P{subDataSource}]]></dataSourceExpression>
+                <subreportExpression><![CDATA["reports/factura.jasper"]]></subreportExpression>
+            </subreport>
+            <break>
+                <reportElement x="0" y="49" width="555" height="1" uuid="9c30e974-d4df-43f0-9f73-0eb75b709bf3"/>
+            </break>
+        </band>
+        <band height="38">
+            <subreport runToBottom="true">
+                <reportElement x="0" y="0" width="595" height="38" uuid="346c9e00-05bf-470b-8f70-10d0c77f6b83"/>
+                <subreportParameter name="subreport">
+                    <subreportParameterExpression><![CDATA[$P{subreport}]]></subreportParameterExpression>
+                </subreportParameter>
+                <subreportParameter name="logoAfip">
+                    <subreportParameterExpression><![CDATA[$P{logoAfip}]]></subreportParameterExpression>
+                </subreportParameter>
+                <subreportParameter name="empresa.localidad">
+                    <subreportParameterExpression><![CDATA[$P{empresa.localidad}]]></subreportParameterExpression>
+                </subreportParameter>
+                <subreportParameter name="empresa.email">
+                    <subreportParameterExpression><![CDATA[$P{empresa.email}]]></subreportParameterExpression>
+                </subreportParameter>
+                <subreportParameter name="empresa.telefono">
+                    <subreportParameterExpression><![CDATA[$P{empresa.telefono}]]></subreportParameterExpression>
+                </subreportParameter>
+                <subreportParameter name="empresa.fechainicio">
+                    <subreportParameterExpression><![CDATA[$P{empresa.fechainicio}]]></subreportParameterExpression>
+                </subreportParameter>
+                <subreportParameter name="empresa.razon_social">
+                    <subreportParameterExpression><![CDATA[$P{empresa.razon_social}]]></subreportParameterExpression>
+                </subreportParameter>
+                <subreportParameter name="empresa.cuit">
+                    <subreportParameterExpression><![CDATA[$P{empresa.cuit}]]></subreportParameterExpression>
+                </subreportParameter>
+                <subreportParameter name="empresa.provincia">
+                    <subreportParameterExpression><![CDATA[$P{empresa.provincia}]]></subreportParameterExpression>
+                </subreportParameter>
+                <subreportParameter name="empresa.direccion">
+                    <subreportParameterExpression><![CDATA[$P{empresa.direccion}]]></subreportParameterExpression>
+                </subreportParameter>
+                <subreportParameter name="codigobarras">
+                    <subreportParameterExpression><![CDATA[$P{codigobarras}]]></subreportParameterExpression>
+                </subreportParameter>
+                <subreportParameter name="logo">
+                    <subreportParameterExpression><![CDATA[$P{logo}]]></subreportParameterExpression>
+                </subreportParameter>
+                <subreportParameter name="copia">
+                    <subreportParameterExpression><![CDATA["DUPLICADO"]]></subreportParameterExpression>
+                </subreportParameter>
+                <subreportParameter name="empresa.nombre_fantasia">
+                    <subreportParameterExpression><![CDATA[$P{empresa.nombre_fantasia}]]></subreportParameterExpression>
+                </subreportParameter>
+                <dataSourceExpression><![CDATA[$P{subDataSource2}]]></dataSourceExpression>
+                <subreportExpression><![CDATA["factura.jasper"]]></subreportExpression>
+            </subreport>
+        </band>
+    </detail>
+</jasperReport>

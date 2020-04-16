@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="report name" pageWidth="175" pageHeight="85" orientation="Landscape" columnWidth="165"
+              leftMargin="5" rightMargin="5" topMargin="11" bottomMargin="8" isIgnorePagination="true"
+              uuid="853fbc68-941f-4e6d-9a55-93417f3bd8ea">
+    <property name="ireport.zoom" value="3.0"/>
+    <property name="ireport.x" value="0"/>
+    <property name="ireport.y" value="0"/>
+    <queryString>
+        <![CDATA[]]>
+    </queryString>
+    <field name="descripcion" class="java.lang.String">
+        <fieldDescription><![CDATA[descripcion]]></fieldDescription>
+    </field>
+    <field name="codigoPropio" class="java.lang.String">
+        <fieldDescription><![CDATA[codigoPropio]]></fieldDescription>
+    </field>
+    <field name="idMarca" class="ar.com.gtsoftware.dto.domain.ProductosMarcasDto">
+        <fieldDescription><![CDATA[idMarca]]></fieldDescription>
+    </field>
+    <field name="idProveedorHabitual" class="ar.com.gtsoftware.dto.domain.PersonasDto"/>
+    <field name="id" class="java.lang.Long"/>
+    <field name="codigoFabricante" class="java.lang.String"/>
+    <background>
+        <band splitType="Stretch"/>
+    </background>
+    <detail>
+        <band height="66">
+            <textField isBlankWhenNull="true">
+                <reportElement x="0" y="55" width="96" height="10" uuid="8d1a077b-1d1d-46ef-bacc-8759b9896380"/>
+                <textElement verticalAlignment="Bottom">
+                    <font fontName="SansSerif" size="8"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{codigoPropio}]]></textFieldExpression>
+            </textField>
+            <componentElement>
+                <reportElement x="96" y="29" width="67" height="36" uuid="ab58423b-f99d-4a86-8e98-4bab9480df05"/>
+                <jr:Code128 xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components"
+                            xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd"
+                            textPosition="bottom">
+                    <jr:codeExpression><![CDATA[$F{id}]]></jr:codeExpression>
+                </jr:Code128>
+            </componentElement>
+            <textField isBlankWhenNull="true">
+                <reportElement x="0" y="29" width="96" height="8" uuid="b494aa55-372a-435e-8a92-c7dc49be7404"/>
+                <textElement>
+                    <font fontName="SansSerif" size="6" isBold="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{idMarca}.getNombreMarca()]]></textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true" isBlankWhenNull="true">
+                <reportElement x="0" y="0" width="163" height="29" uuid="e23651c3-5854-47dd-8638-390ef7971674"/>
+                <textElement textAlignment="Justified" verticalAlignment="Top">
+                    <font fontName="SansSerif" size="7"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="0" y="46" width="55" height="9" uuid="c4acfc3a-ae60-4518-a246-ca15a13872cc"/>
+                <textElement>
+                    <font fontName="SansSerif" size="7"/>
+                </textElement>
+                <text><![CDATA[Id Prov:]]></text>
+            </staticText>
+            <textField isBlankWhenNull="true">
+                <reportElement x="55" y="46" width="41" height="9" uuid="2fd2f705-3490-40ce-a0fd-cc64b9f7f6bb"/>
+                <textElement>
+                    <font fontName="SansSerif" size="7"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{idProveedorHabitual}.getId()]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="0" y="37" width="55" height="9" uuid="301b262c-648b-416d-bf44-ca3e98046a28"/>
+                <textElement>
+                    <font fontName="SansSerif" size="7"/>
+                </textElement>
+                <text><![CDATA[Cod. Fab. :]]></text>
+            </staticText>
+            <textField isBlankWhenNull="true">
+                <reportElement x="55" y="37" width="41" height="9" uuid="22642549-a706-4ff6-9a23-8ccbdfa19463"/>
+                <textElement>
+                    <font fontName="SansSerif" size="7"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{codigoFabricante}]]></textFieldExpression>
+            </textField>
+            <line>
+                <reportElement x="0" y="65" width="165" height="1" uuid="be3c2a7a-64cf-4659-a0de-5eee51e06a82"/>
+                <graphicElement>
+                    <pen lineStyle="Dashed"/>
+                </graphicElement>
+            </line>
+        </band>
+    </detail>
+</jasperReport>

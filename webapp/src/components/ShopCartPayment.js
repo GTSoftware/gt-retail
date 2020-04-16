@@ -322,7 +322,7 @@ export class ShopCartPayment extends Component {
     addPaymentPlanDetail(negocioPlanesPagoDetalles, montoPago) {
 
         if (negocioPlanesPagoDetalles) {
-            negocioPlanesPagoDetalles.map((d) => {
+            negocioPlanesPagoDetalles.forEach((d) => {
                 d.detallePlan = '' + d.cuotas + ' x $' + ((d.coeficienteInteres * montoPago) / d.cuotas).toFixed(2) + ' = $' + (d.coeficienteInteres * montoPago).toFixed(2);
             })
         }
@@ -342,7 +342,7 @@ export class ShopCartPayment extends Component {
         newPayment[propertyName] = value;
 
         if (propertyName === 'paymentPlans') {
-            value.map((plan) => {
+            value.forEach((plan) => {
                 this.addPaymentPlanDetail(plan.negocioPlanesPagoDetalles, newPayment.montoPago);
                 this.sortPaymentPlanDetails(plan.negocioPlanesPagoDetalles);
             });

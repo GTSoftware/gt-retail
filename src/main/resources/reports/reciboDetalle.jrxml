@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="reciboDetalle" pageWidth="555" pageHeight="380" columnWidth="555" leftMargin="0" rightMargin="0"
+              topMargin="0" bottomMargin="0" uuid="0d3f5d5d-e82d-4fe9-af74-98902561a71d">
+    <property name="ireport.zoom" value="1.331000000000001"/>
+    <property name="ireport.x" value="0"/>
+    <property name="ireport.y" value="0"/>
+    <queryString>
+        <![CDATA[]]>
+    </queryString>
+    <field name="id" class="java.lang.Long">
+        <fieldDescription><![CDATA[id]]></fieldDescription>
+    </field>
+    <field name="idFormaPago" class="ar.com.gtsoftware.dto.domain.NegocioFormasPagoDto">
+        <fieldDescription><![CDATA[idFormaPago]]></fieldDescription>
+    </field>
+    <field name="idPagoComprobante" class="ar.com.gtsoftware.dto.domain.ComprobantesPagosDto">
+        <fieldDescription><![CDATA[idPagoComprobante]]></fieldDescription>
+    </field>
+    <field name="idRecibo" class="ar.com.gtsoftware.dto.domain.RecibosDto">
+        <fieldDescription><![CDATA[idRecibo]]></fieldDescription>
+    </field>
+    <field name="idValor" class="ar.com.gtsoftware.dto.domain.ValoresDto">
+        <fieldDescription><![CDATA[idValor]]></fieldDescription>
+    </field>
+    <field name="montoPagado" class="java.math.BigDecimal">
+        <fieldDescription><![CDATA[montoPagado]]></fieldDescription>
+    </field>
+    <field name="montoPagadoConSigno" class="java.math.BigDecimal">
+        <fieldDescription><![CDATA[montoPagadoConSigno]]></fieldDescription>
+    </field>
+    <background>
+        <band splitType="Stretch"/>
+    </background>
+    <columnHeader>
+        <band height="20">
+            <staticText>
+                <reportElement x="0" y="0" width="139" height="20" uuid="9f7959df-57e2-4354-ba3f-9e200c093121"/>
+                <text><![CDATA[Forma de pago]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="441" y="0" width="100" height="20" uuid="8355fd68-c86e-4d5a-ad71-b442f09100f3"/>
+                <textElement textAlignment="Right"/>
+                <text><![CDATA[Monto]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="153" y="0" width="239" height="20" uuid="817c3943-5f38-4c83-a8a9-6495ca7844d4"/>
+                <text><![CDATA[Comprobante]]></text>
+            </staticText>
+        </band>
+    </columnHeader>
+    <detail>
+        <band height="22">
+            <textField>
+                <reportElement x="0" y="0" width="139" height="20" uuid="fc093efe-2410-41a3-829b-3cbb26b83046"/>
+                <textFieldExpression><![CDATA[$F{idFormaPago}.getNombreFormaPago()]]></textFieldExpression>
+            </textField>
+            <textField pattern="¤ #,##0.00">
+                <reportElement x="441" y="0" width="100" height="20" uuid="e08e9214-3c21-4341-b4d9-06fec343c6d7"/>
+                <textElement textAlignment="Right"/>
+                <textFieldExpression><![CDATA[$F{montoPagadoConSigno}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="153" y="0" width="239" height="20" uuid="d9eaae7d-9a4f-4edb-a653-45a724eed560"/>
+                <textFieldExpression>
+                    <![CDATA[$F{idPagoComprobante}.getIdComprobante().toString()]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+</jasperReport>
