@@ -1,8 +1,8 @@
 package ar.com.gtsoftware.auth;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.tomcat.util.codec.binary.Base64;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.nio.charset.StandardCharsets;
@@ -11,7 +11,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class HashPasswordEncoder implements PasswordEncoder {
 
-    private final Logger logger = LoggerFactory.getLogger(HashPasswordEncoder.class);
+    private final Logger logger = LogManager.getLogger(HashPasswordEncoder.class);
 
     @Override
     public String encode(CharSequence rawPassword) {

@@ -5,13 +5,10 @@ import ar.com.gtsoftware.api.UsersController;
 import ar.com.gtsoftware.dto.domain.UsuariosDto;
 import ar.com.gtsoftware.service.UsuariosService;
 import ar.com.gtsoftware.utils.SecurityUtils;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiResponse;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -25,7 +22,6 @@ class UsersControllerImpl implements UsersController {
 
     private final UsuariosService usuariosService;
     private final SecurityUtils securityUtils;
-    private final Logger logger = LoggerFactory.getLogger(UsersController.class);
 
 
     @Override

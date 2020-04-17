@@ -20,6 +20,8 @@ import ar.com.gtsoftware.domain.AFIPAuthServices;
 import ar.com.gtsoftware.domain.FiscalLibroIvaVentas;
 import ar.com.gtsoftware.domain.FiscalLibroIvaVentasLineas;
 import ar.com.gtsoftware.dto.fiscal.CAEResponse;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.xmlbeans.impl.soap.*;
 
 import javax.xml.transform.Source;
@@ -29,8 +31,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 /**
  * Cliente para el servicio de factura electrónica
@@ -39,7 +40,8 @@ import java.util.logging.Logger;
  */
 public class WSFEClient {
 
-    private static final Logger LOG = Logger.getLogger(WSFEClient.class.getName());
+    private static final Logger LOG = LogManager.getLogger(WSFEClient.class);
+
 
     private static final String NAMESPACE = "http://ar.gov.afip.dif.FEV1/";
     private static final String FECompUltimoAutorizado_Action = "http://ar.gov.afip.dif.FEV1/FECompUltimoAutorizado";
@@ -74,7 +76,7 @@ public class WSFEClient {
             throw new RuntimeException(response.getSOAPBody().getTextContent());
 
         } catch (SOAPException | ParseException ex) {
-            LOG.log(Level.SEVERE, null, ex);
+            LOG.error(ex);
             throw new RuntimeException("Error al realizar la solicitud", ex);
         }
 
@@ -171,7 +173,7 @@ public class WSFEClient {
             transformer.transform(sourceContent, result);
 
         } catch (TransformerException | SOAPException ex) {
-            Logger.getLogger(WSFEClient.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.error(ex);
         }
     }
 
@@ -244,7 +246,7 @@ public class WSFEClient {
 
             return Integer.parseInt(utlComp);
         } catch (SOAPException ex) {
-            LOG.log(Level.SEVERE, null, ex);
+            LOG.error(ex);
             throw new RuntimeException("Error al realizar la solicitud", ex);
 
         }

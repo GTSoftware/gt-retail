@@ -17,6 +17,8 @@ package ar.com.gtsoftware.service.afip;
 
 import ar.com.gtsoftware.dto.fiscal.AuthTicket;
 import org.apache.commons.codec.binary.Base64;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.xmlbeans.impl.soap.*;
 import org.bouncycastle.cert.jcajce.JcaCertStore;
 import org.bouncycastle.cms.*;
@@ -47,8 +49,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 /**
  * Clase para obtener acceso al servicio de autorización y autenticación de AFIP
@@ -57,7 +58,8 @@ import java.util.logging.Logger;
  */
 public class WSAAClient {
 
-    private static final Logger LOG = Logger.getLogger(WSAAClient.class.getName());
+    private static final Logger LOG = LogManager.getLogger(WSAAClient.class);
+
 
     // private static final String URL_PROD =
     // "https://wsaa.afip.gov.ar/ws/services/LoginCms";
@@ -84,7 +86,7 @@ public class WSAAClient {
             return ticket;
 
         } catch (SOAPException | XPathExpressionException ex) {
-            LOG.log(Level.SEVERE, null, ex);
+            LOG.error(ex);
             throw new RuntimeException("Error al realizar la autorización", ex);
 
         }
@@ -216,7 +218,7 @@ public class WSAAClient {
 
         } catch (KeyStoreException | IOException | NoSuchAlgorithmException | CertificateException
                 | UnrecoverableKeyException e) {
-            LOG.log(Level.SEVERE, null, e);
+            LOG.error(e);
             throw new RuntimeException("Error durante el tratamiento del certificado", e);
         }
 
@@ -226,7 +228,7 @@ public class WSAAClient {
             //
             loginTicketRequest_xml = create_LoginTicketRequest(signerDN, dstDN, service);
         } catch (DatatypeConfigurationException ex) {
-            LOG.log(Level.SEVERE, null, ex);
+            LOG.error(ex);
             throw new RuntimeException("Error durante el armado del XML", ex);
         }
 
@@ -252,7 +254,7 @@ public class WSAAClient {
             //
             asn1_cms = signed.getEncoded();
         } catch (OperatorCreationException | CertificateEncodingException | CMSException | IOException e) {
-            LOG.log(Level.SEVERE, null, e);
+            LOG.error(e);
             throw new RuntimeException("Error durante el tratamiento del certificado", e);
         }
 

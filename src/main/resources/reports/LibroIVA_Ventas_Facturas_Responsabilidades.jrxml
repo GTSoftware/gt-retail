@@ -22,7 +22,7 @@
     <field name="noGravadoTotal" class="java.math.BigDecimal">
         <fieldDescription><![CDATA[noGravadoTotal]]></fieldDescription>
     </field>
-    <field name="responsabilidadIva" class="ar.com.gtsoftware.model.FiscalResponsabilidadesIva">
+    <field name="responsabilidadIva" class="ar.com.gtsoftware.dto.domain.FiscalResponsabilidadesIvaDto">
         <fieldDescription><![CDATA[responsabilidadIva]]></fieldDescription>
     </field>
     <background>

@@ -14,8 +14,8 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpHeaders;
@@ -41,7 +41,7 @@ public class PrintControllerImpl implements PrintController {
     private final RemitoService remitoService;
     private final HttpServletResponse response;
     private final ResourceLoader resourceLoader;
-    private final Logger logger = LoggerFactory.getLogger(PrintControllerImpl.class);
+    private final Logger logger = LogManager.getLogger(PrintControllerImpl.class);
 
 
     @Override

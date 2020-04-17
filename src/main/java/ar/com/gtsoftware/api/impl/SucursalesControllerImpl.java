@@ -6,9 +6,9 @@ import ar.com.gtsoftware.search.SucursalesSearchFilter;
 import ar.com.gtsoftware.service.SucursalesService;
 import ar.com.gtsoftware.utils.SecurityUtils;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -19,7 +19,6 @@ class SucursalesControllerImpl implements SucursalesController {
 
     private final SucursalesService sucursalesService;
     private final SecurityUtils securityUtils;
-    private final Logger logger = LoggerFactory.getLogger(SucursalesController.class);
 
 
     @Override
