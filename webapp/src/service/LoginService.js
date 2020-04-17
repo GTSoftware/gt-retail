@@ -2,13 +2,14 @@ import axios from 'axios';
 import jwt from 'jwt-decode'
 
 export const USER_TOKEN_STORE = 'userToken';
-export const USER_DETAILS_STORE = 'userDetails';
 
 class LoginService {
 
     constructor() {
         if (!this.axiosInterceptorId && this.isUserLoggedIn()) {
             let userToken = sessionStorage.getItem(USER_TOKEN_STORE);
+
+            this.userDetails = jwt(userToken).userDetails;
 
             this.setUpInterceptors(this.createTokenHeaderValue(userToken));
         }
@@ -21,8 +22,8 @@ class LoginService {
     initUserSession(token) {
         let userDetails = jwt(token).userDetails;
 
+        this.userDetails = userDetails;
         sessionStorage.setItem(USER_TOKEN_STORE, token);
-        sessionStorage.setItem(USER_DETAILS_STORE, JSON.stringify(userDetails));
 
         this.setUpInterceptors(this.createTokenHeaderValue(token));
     }
@@ -54,13 +55,20 @@ class LoginService {
     }
 
     getUserDetails() {
-        return JSON.parse(sessionStorage.getItem(USER_DETAILS_STORE));
+        return this.userDetails;
+    }
+
+    hasUserRole(role) {
+        let userDetails = this.userDetails;
+        let hasRole = userDetails.userRoles.filter((r) => r === role);
+
+        return hasRole.length !== 0;
     }
 
     performLogout() {
         axios.interceptors.request.eject(this.axiosInterceptorId);
         sessionStorage.removeItem(USER_TOKEN_STORE);
-        sessionStorage.removeItem(USER_DETAILS_STORE);
+        delete this.userDetails;
     }
 }
 
