@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {Steps} from "primereact/steps";
-import {ShopCartStore} from "../stores/ShopCartStore";
+import {ShopCartStore} from "../../stores/ShopCartStore";
 import {ShopCartItems} from "./ShopCartItems";
 import {ShopCartCustomer} from "./ShopCartCustomer";
 import {ShopCartPayment} from "./ShopCartPayment";

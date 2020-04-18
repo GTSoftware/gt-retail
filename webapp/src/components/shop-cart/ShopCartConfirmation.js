@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {Button} from "primereact/button";
 import {InputText} from "primereact/inputtext";
-import {ShopCartStore} from "../stores/ShopCartStore";
-import FileOutputsService from "../service/FileOutputsService";
+import {ShopCartStore} from "../../stores/ShopCartStore";
+import FileOutputsService from "../../service/FileOutputsService";
 
 export class ShopCartConfirmation extends Component {
 

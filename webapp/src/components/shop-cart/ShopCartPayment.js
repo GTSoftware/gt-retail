@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {ShopCartStore} from "../stores/ShopCartStore";
+import {ShopCartStore} from "../../stores/ShopCartStore";
 import {Button} from "primereact/button";
-import ShopCartService from "../service/ShopCartService";
+import ShopCartService from "../../service/ShopCartService";
 import {Dropdown} from "primereact/dropdown";
 import {DataTable} from "primereact/datatable";
 import {Column} from "primereact/column";
@@ -10,7 +10,7 @@ import {Panel} from "primereact/panel";
 import {InputTextarea} from "primereact/inputtextarea";
 import {InputText} from "primereact/inputtext";
 import {Growl} from "primereact/growl";
-import {LoadingButton} from "./core/LoadingButton";
+import {LoadingButton} from "../core/LoadingButton";
 import {Dialog} from "primereact/dialog";
 
 
@@ -134,7 +134,7 @@ export class ShopCartPayment extends Component {
                     <div className="p-grid">
                         <div className="p-col-12 p-md-4">
                             <Button label="Agregar pago"
-                                    disabled={this.getRemainingAmount() < 0}
+                                    disabled={this.getRemainingAmount() <= 0}
                                     icon="fa fa-fw fa-plus"
                                     onClick={() => this.setState({
                                         showAddPaymentDialog: true,
@@ -354,7 +354,7 @@ export class ShopCartPayment extends Component {
             newPayment.idPlan = null;
             newPayment.idFormaPago = null;
             newPayment.paymentPlans = null;
-            newPayment.montoPago = parseFloat(value);
+            newPayment.montoPago = value;
         }
 
         this.setState({
@@ -458,7 +458,7 @@ export class ShopCartPayment extends Component {
         const payments = this.state.payments;
 
         if (payments && payments.length > 0) {
-            payments.map((payment) => total = total + payment.montoPago);
+            payments.map((payment) => total = total + parseFloat(payment.montoPago));
         }
 
         return +(total).toFixed(2);
@@ -516,7 +516,7 @@ export class ShopCartPayment extends Component {
         let surchargeItemNumber;
 
         newPayment.itemNumber = itemNumber;
-        newPayment.montoPago = +(newPayment.montoPago.toFixed(2));
+        newPayment.montoPago = parseFloat(newPayment.montoPago).toFixed(2);
         delete newPayment.paymentPlans;
         delete newPayment.paymentMethods;
 

@@ -20,9 +20,8 @@ class LoginService {
     }
 
     initUserSession(token) {
-        let userDetails = jwt(token).userDetails;
+        this.userDetails = jwt(token).userDetails;
 
-        this.userDetails = userDetails;
         sessionStorage.setItem(USER_TOKEN_STORE, token);
 
         this.setUpInterceptors(this.createTokenHeaderValue(token));
@@ -72,4 +71,4 @@ class LoginService {
     }
 }
 
-export default new LoginService()
+export default new LoginService();

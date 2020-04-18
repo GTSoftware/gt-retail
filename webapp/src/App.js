@@ -18,7 +18,7 @@ import './App.scss';
 import {Login} from "./components/Login";
 import LoginService from "./service/LoginService.js";
 import {UsersList} from "./components/UsersList";
-import {ShopCart} from "./components/ShopCart";
+import {ShopCart} from "./components/shop-cart/ShopCart";
 
 const ProtectedRoute = ({component: Component, ...rest}) => (
     <Route {...rest} render={(props) => (

@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import {Button} from "primereact/button";
 import {AutoComplete} from "primereact/autocomplete";
 import {InputText} from "primereact/inputtext";
-import {ShopCartStore} from "../stores/ShopCartStore";
-import ShopCartService from "../service/ShopCartService";
+import {ShopCartStore} from "../../stores/ShopCartStore";
+import ShopCartService from "../../service/ShopCartService";
 import _ from "lodash";
 import {InputTextarea} from "primereact/inputtextarea";
 
