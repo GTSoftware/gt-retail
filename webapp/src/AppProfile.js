@@ -1,8 +1,13 @@
 import React, {Component} from 'react';
 import classNames from 'classnames';
 import LoginService from "./service/LoginService.js";
+import PropTypes from "prop-types";
 
 export class AppProfile extends Component {
+
+    static propTypes = {
+        onLogout: PropTypes.func
+    }
 
     constructor() {
         super();
@@ -23,7 +28,7 @@ export class AppProfile extends Component {
             <div className="layout-profile">
                 <div>
                     {/*<img src="assets/layout/images/profile.png" alt=""/>*/}
-                    <i className="fa fa-user-circle fa-5x" />
+                    <i className="fa fa-user-circle fa-5x"/>
                 </div>
                 <button className="p-link layout-profile-link" onClick={this.onClick}>
                     <span className="username">{LoginService.getUserDetails().completeUserName}</span>
@@ -48,6 +53,9 @@ export class AppProfile extends Component {
 
     handleLogOut() {
         LoginService.performLogout();
-        //window.location.href = 'login';
+
+        if (this.props.onLogout) {
+            this.props.onLogout();
+        }
     }
 }

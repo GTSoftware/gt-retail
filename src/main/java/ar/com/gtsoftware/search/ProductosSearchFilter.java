@@ -20,17 +20,12 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.constraints.Size;
 
-/**
- * @author Rodrigo Tato <rotatomel@gmail.com>
- */
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class ProductosSearchFilter extends AbstractSearchFilter {
-
-    private static final long serialVersionUID = 1L;
 
     private String txt;
     private Long idProducto;
@@ -53,14 +48,6 @@ public class ProductosSearchFilter extends AbstractSearchFilter {
     @Builder.Default
     private boolean buscarEnTodosLados = false;
 
-
-    public ProductosSearchFilter(Boolean activo, Boolean puedeComprarse, Boolean puedeVenderse, Boolean soloConStock) {
-        this.activo = activo;
-        this.puedeComprarse = puedeComprarse;
-        this.puedeVenderse = puedeVenderse;
-        this.conStock = soloConStock;
-    }
-
     @Override
     public boolean hasFilter() {
         return (StringUtils.isNotEmpty(txt)
@@ -78,7 +65,6 @@ public class ProductosSearchFilter extends AbstractSearchFilter {
                 || conStock != null
                 || stockDebajoMinimo != null
                 || StringUtils.isNotEmpty(codigoFabrica);
-
     }
 
 }

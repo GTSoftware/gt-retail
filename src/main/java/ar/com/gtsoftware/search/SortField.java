@@ -15,6 +15,7 @@
  */
 package ar.com.gtsoftware.search;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -24,10 +25,8 @@ import java.io.Serializable;
  */
 public class SortField implements Serializable {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 1L;
+    @NotNull
     private String fieldName;
     private boolean ascending;
 

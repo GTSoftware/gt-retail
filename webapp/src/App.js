@@ -19,6 +19,7 @@ import {Login} from "./components/Login";
 import LoginService from "./service/LoginService.js";
 import {UsersList} from "./components/UsersList";
 import {ShopCart} from "./components/shop-cart/ShopCart";
+import {PageNotFound} from "./components/PageNotFound";
 
 const ProtectedRoute = ({component: Component, ...rest}) => (
     <Route {...rest} render={(props) => (
@@ -33,11 +34,12 @@ class App extends Component {
     constructor() {
         super();
         this.state = {
-            layoutMode: 'static',
+            layoutMode: 'overlay',
             layoutColorMode: 'dark',
             staticMenuInactive: false,
             overlayMenuActive: false,
-            mobileMenuActive: false
+            mobileMenuActive: false,
+            userLoggedIn: false
         };
 
         this.onWrapperClick = this.onWrapperClick.bind(this);
@@ -101,26 +103,11 @@ class App extends Component {
                     window.location = '#/'
                 }
             },
-            {
-                label: 'Usuarios', icon: 'fa fa-fw fa-users', command: () => {
-                    window.location = '#/users'
-                }
-            },
-            {
-                label: 'Fiscal', icon: 'fa fa-fw fa-book',
-                items: [
-                    {
-                        label: 'Static Menu',
-                        icon: 'pi pi-fw pi-bars',
-                        command: () => this.setState({layoutMode: 'static'})
-                    },
-                    {
-                        label: 'Overlay Menu',
-                        icon: 'pi pi-fw pi-bars',
-                        command: () => this.setState({layoutMode: 'overlay'})
-                    }
-                ]
-            },
+            // {
+            //     label: 'Usuarios', icon: 'fa fa-fw fa-users', command: () => {
+            //         window.location = '#/users'
+            //     }
+            // },
             {
                 label: 'Ventas', icon: 'fa fa-fw fa-shopping-cart',
                 items: [
@@ -132,90 +119,7 @@ class App extends Component {
                         }
                     }
                 ]
-            },
-            // {
-            //     label: 'Menu Colors', icon: 'pi pi-fw pi-align-left',
-            //     items: [
-            //         {label: 'Dark', icon: 'pi pi-fw pi-bars', command: () => this.setState({layoutColorMode: 'dark'})},
-            //         {label: 'Light', icon: 'pi pi-fw pi-bars', command: () => this.setState({layoutColorMode: 'light'})}
-            //     ]
-            // },
-            // {
-            //     label: 'Components', icon: 'pi pi-fw pi-globe', badge: '9',
-            //     items: [
-            //         {label: 'Sample Page', icon: 'pi pi-fw pi-th-large', to: '/sample'},
-            //         {label: 'Forms', icon: 'pi pi-fw pi-file', to: '/forms'},
-            //         {label: 'Data', icon: 'pi pi-fw pi-table', to: '/data'},
-            //         {label: 'Panels', icon: 'pi pi-fw pi-list', to: '/panels'},
-            //         {label: 'Overlays', icon: 'pi pi-fw pi-clone', to: '/overlays'},
-            //         {label: 'Menus', icon: 'pi pi-fw pi-plus', to: '/menus'},
-            //         {label: 'Messages', icon: 'pi pi-fw pi-spinner', to: '/messages'},
-            //         {label: 'Charts', icon: 'pi pi-fw pi-chart-bar', to: '/charts'},
-            //         {label: 'Misc', icon: 'pi pi-fw pi-upload', to: '/misc'}
-            //     ]
-            // },
-            // {
-            //     label: 'Template Pages', icon: 'pi pi-fw pi-file',
-            //     items: [
-            //         {label: 'Empty Page', icon: 'pi pi-fw pi-circle-off', to: '/empty'},
-            //         {label: 'Posts', icon: 'pi pi-fw pi-circle-off', to: '/posts'}
-            //     ]
-            // },
-            // {
-            //     label: 'Menu Hierarchy', icon: 'pi pi-fw pi-search',
-            //     items: [
-            //         {
-            //             label: 'Submenu 1', icon: 'pi pi-fw pi-bookmark',
-            //             items: [
-            //                 {
-            //                     label: 'Submenu 1.1', icon: 'pi pi-fw pi-bookmark',
-            //                     items: [
-            //                         {label: 'Submenu 1.1.1', icon: 'pi pi-fw pi-bookmark'},
-            //                         {label: 'Submenu 1.1.2', icon: 'pi pi-fw pi-bookmark'},
-            //                         {label: 'Submenu 1.1.3', icon: 'pi pi-fw pi-bookmark'},
-            //                     ]
-            //                 },
-            //                 {
-            //                     label: 'Submenu 1.2', icon: 'pi pi-fw pi-bookmark',
-            //                     items: [
-            //                         {label: 'Submenu 1.2.1', icon: 'pi pi-fw pi-bookmark'},
-            //                         {label: 'Submenu 1.2.2', icon: 'pi pi-fw pi-bookmark'}
-            //                     ]
-            //                 },
-            //             ]
-            //         },
-            //         {
-            //             label: 'Submenu 2', icon: 'pi pi-fw pi-bookmark',
-            //             items: [
-            //                 {
-            //                     label: 'Submenu 2.1', icon: 'pi pi-fw pi-bookmark',
-            //                     items: [
-            //                         {label: 'Submenu 2.1.1', icon: 'pi pi-fw pi-bookmark'},
-            //                         {label: 'Submenu 2.1.2', icon: 'pi pi-fw pi-bookmark'},
-            //                         {label: 'Submenu 2.1.3', icon: 'pi pi-fw pi-bookmark'},
-            //                     ]
-            //                 },
-            //                 {
-            //                     label: 'Submenu 2.2', icon: 'pi pi-fw pi-bookmark',
-            //                     items: [
-            //                         {label: 'Submenu 2.2.1', icon: 'pi pi-fw pi-bookmark'},
-            //                         {label: 'Submenu 2.2.2', icon: 'pi pi-fw pi-bookmark'}
-            //                     ]
-            //                 }
-            //             ]
-            //         }
-            //     ]
-            // },
-            // {
-            //     label: 'Documentation', icon: 'pi pi-fw pi-question', command: () => {
-            //         window.location = "#/documentation"
-            //     }
-            // },
-            // {
-            //     label: 'View Source', icon: 'pi pi-fw pi-search', command: () => {
-            //         window.location = "https://github.com/primefaces/sigma"
-            //     }
-            // }
+            }
         ];
     }
 
@@ -246,7 +150,7 @@ class App extends Component {
     }
 
     render() {
-        const isUserLoggedIn = LoginService.isUserLoggedIn();
+        const isUserLoggedIn = this.state.userLoggedIn;
         const logo = this.state.layoutColorMode === 'dark' ? 'assets/layout/images/logo-gt.svg' : 'assets/layout/images/logo-gt-dark.svg';
 
         const wrapperClass = classNames('layout-wrapper', {
@@ -271,29 +175,18 @@ class App extends Component {
                     <div className="layout-logo">
                         <img alt="Logo" src={logo} style={{height: "40px"}}/>
                     </div>
-                    <AppProfile/>
+                    <AppProfile onLogout={() => this.setState({userLoggedIn: false})}/>
                     <AppMenu model={this.menu} onMenuItemClick={this.onMenuItemClick}/>
                 </div>}
 
                 <div className="layout-main">
-
                     <Switch>
-                        <Route path="/login" component={Login}/>
+                        <Route path="/login" render={(props) => <Login {...props} onLoginSuccess={() =>
+                            this.setState({userLoggedIn: true})}/>}/>
                         <ProtectedRoute path="/" exact component={Dashboard}/>
                         <ProtectedRoute path="/users" component={UsersList}/>
                         <ProtectedRoute path="/shop-cart" component={ShopCart}/>
-                        {/*<ProtectedRoute path="/forms" component={FormsDemo} />*/}
-                        {/*<ProtectedRoute path="/sample" component={SampleDemo}/>*/}
-                        {/*<ProtectedRoute path="/data" component={DataDemo}/>*/}
-                        {/*<ProtectedRoute path="/panels" component={PanelsDemo}/>*/}
-                        {/*<ProtectedRoute path="/overlays" component={OverlaysDemo}/>*/}
-                        {/*<ProtectedRoute path="/menus" component={MenusDemo}/>*/}
-                        {/*<ProtectedRoute path="/messages" component={MessagesDemo}/>*/}
-                        {/*<ProtectedRoute path="/charts" component={ChartsDemo}/>*/}
-                        {/*<ProtectedRoute path="/misc" component={MiscDemo}/>*/}
-                        {/*<ProtectedRoute path="/empty" component={EmptyPage}/>*/}
-                        {/*<ProtectedRoute path="/posts" component={PostsPage}/>*/}
-                        {/*<ProtectedRoute path="/documentation" component={Documentation}/>*/}
+                        <Route component={PageNotFound}/>
                     </Switch>
                 </div>
 

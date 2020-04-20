@@ -6,8 +6,13 @@ import {Messages} from "primereact/messages";
 import {Redirect} from "react-router-dom";
 import {LoadingButton} from "./core/LoadingButton";
 import './LogIn.scss';
+import PropTypes from 'prop-types';
 
 export class Login extends Component {
+
+    static propTypes = {
+        onLoginSuccess: PropTypes.func
+    }
 
     constructor() {
         super();
@@ -84,29 +89,6 @@ export class Login extends Component {
         this.handleLoginButton();
     }
 
-    //
-    // handleUsernameChange(event) {
-    //     let userCredentials = this.state.userCredentials;
-    //
-    //     userCredentials.username = event.target.value;
-    //     this.setState({
-    //         userCredentials
-    //     });
-    //
-    //     this.handleLoginButton();
-    // }
-    //
-    // handlePasswordChange(event) {
-    //     let userCredentials = this.state.userCredentials;
-    //
-    //     userCredentials.password = event.target.value;
-    //     this.setState({
-    //         userCredentials
-    //     });
-    //
-    //     this.handleLoginButton();
-    // }
-
     handleEnterKeyPress(event) {
         if (event.key === 'Enter' && !this.state.loginDisabled) {
             this.performLogin();
@@ -138,6 +120,9 @@ export class Login extends Component {
 
     handleLoginDone(response) {
         LoginService.initUserSession(response.data.token);
+        if (this.props.onLoginSuccess) {
+            this.props.onLoginSuccess();
+        }
         this.props.history.replace('/');
     }
 

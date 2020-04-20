@@ -75,6 +75,10 @@ public abstract class AbstractSearchFilter implements Serializable {
         return sortFields;
     }
 
+    public void setSortFields(List<SortField> sortFields) {
+        this.sortFields = sortFields;
+    }
+
     /**
      * Agrega un nuevo campo de ordenamiento
      *

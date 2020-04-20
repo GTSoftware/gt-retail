@@ -2,6 +2,7 @@ package ar.com.gtsoftware.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.MediaType;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.ParameterBuilder;
@@ -17,6 +18,7 @@ import java.util.*;
 
 @Configuration
 @EnableSwagger2
+@Profile("!prod")
 public class SwaggerConfiguration {
 
     private static final Set<String> DEFAULT_PRODUCES_AND_CONSUMES

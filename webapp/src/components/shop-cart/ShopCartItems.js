@@ -11,6 +11,7 @@ import {LoadingButton} from "../core/LoadingButton";
 import {ShopCartStore} from "../../stores/ShopCartStore";
 import {Dialog} from "primereact/dialog";
 import LoginService from "../../service/LoginService";
+import {SearchProductsDialog} from "./SearchProductsDialog";
 
 const productColumns = [
     {field: 'codigoPropio', header: 'Código', style: {width: "10%"}},
@@ -38,7 +39,8 @@ export class ShopCartItems extends Component {
             },
             itemNumber: this.getNextItemNumber(),
             loadingAddProduct: false,
-            showEditItemDialog: false
+            showEditItemDialog: false,
+            showSearchProductsDialog: false
         };
 
 
@@ -58,6 +60,8 @@ export class ShopCartItems extends Component {
         this.getNextItemNumber = this.getNextItemNumber.bind(this);
         this.renderAddProductSection = this.renderAddProductSection.bind(this);
         this.renderDialogContent = this.renderDialogContent.bind(this);
+        this.renderSearchProductsDialog = this.renderSearchProductsDialog.bind(this);
+        this.handleSelectedProduct = this.handleSelectedProduct.bind(this);
     }
 
     render() {
@@ -66,6 +70,7 @@ export class ShopCartItems extends Component {
                 <Growl ref={(el) => this.growl = el}/>
                 {this.renderAddProductSection()}
                 {this.renderEditProductDialog()}
+                {this.renderSearchProductsDialog()}
 
                 <DataTable {...this.getItemsTableProps()} >
                     {this.renderColumns()}
@@ -135,7 +140,9 @@ export class ShopCartItems extends Component {
                     <Button type="button"
                             className="shop-cart--search-product-button"
                             icon="fa fa-fw fa-search"
-                            tooltip={'Buscar producto'}/>
+                            tooltip={'Buscar producto'}
+                            onClick={() => this.setState({showSearchProductsDialog: true})}
+                    />
 
                     <Button type="button"
                             className="p-button-secondary"
@@ -165,6 +172,15 @@ export class ShopCartItems extends Component {
                 {this.renderDialogContent()}
             </Dialog>
         );
+    }
+
+    renderSearchProductsDialog() {
+        return (
+            <SearchProductsDialog visible={this.state.showSearchProductsDialog}
+                                  modal={true}
+                                  acceptCallback={this.handleSelectedProduct}
+                                  onHide={() => this.setState({showSearchProductsDialog: false})}/>
+        )
     }
 
     renderDialogContent() {
@@ -273,7 +289,7 @@ export class ShopCartItems extends Component {
                     <Button icon="fa fa-fw fa-exclamation-triangle"
                             className="shop-cart--not-enough-quantity"
                             type="button"
-                            label={rowData.cantidad}
+                            label={rowData.cantidad.toString(10)}
                             iconPos="right"
                             tooltip={`No hay stock suficiente para esta cantidad. Stock: ${rowData.stockActualEnSucursal}`}/>
                 </span>
@@ -375,8 +391,8 @@ export class ShopCartItems extends Component {
         let cantidad;
 
         if (itemToEdit) {
-            cantidad = parseFloat(itemToEdit.cantidad).toFixed(2);
-            itemToEdit.cantidad = cantidad < 0.01 ? 1 : cantidad;
+            cantidad = parseFloat(itemToEdit.cantidad).toFixed(itemToEdit.cantidadEntera ? 0 : 2);
+            itemToEdit.cantidad = cantidad < 0.01 ? 1 : +(cantidad);
 
             this.handleUpdatedItem(itemToEdit);
             this.setState({showEditItemDialog: false})
@@ -391,6 +407,15 @@ export class ShopCartItems extends Component {
                 productCode: ""
             }
         });
+    }
+
+    handleSelectedProduct(searchProduct) {
+        let productToSearch = this.state.productToSearch;
+
+        productToSearch.productId = searchProduct.id;
+
+        this.setState({productToSearch: productToSearch});
+        this.tryAddProduct();
     }
 
     removeItem(rowData) {

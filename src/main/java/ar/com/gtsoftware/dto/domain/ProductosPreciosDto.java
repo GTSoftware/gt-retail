@@ -18,25 +18,20 @@ package ar.com.gtsoftware.dto.domain;
 
 import lombok.*;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-/**
- * @author Rodrigo M. Tato Rothamel <rotatomel@gmail.com>
- */
-@Data
+@Getter
+@Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ProductosPreciosDto implements Serializable {
+public class ProductosPreciosDto {
 
-    private static final long serialVersionUID = 3L;
 
     @EqualsAndHashCode.Include
     private Long id;
-    private ProductosDto idProducto;
 
     private ProductosListasPreciosDto idListaPrecios;
 
@@ -48,6 +43,5 @@ public class ProductosPreciosDto implements Serializable {
 
     private Date fechaModificacion;
     private Integer version;
-
 
 }
