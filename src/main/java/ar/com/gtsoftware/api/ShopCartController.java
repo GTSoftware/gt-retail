@@ -4,7 +4,11 @@ import ar.com.gtsoftware.api.request.AddCartItemRequest;
 import ar.com.gtsoftware.api.request.SaleRequest;
 import ar.com.gtsoftware.api.response.CartItemResponse;
 import ar.com.gtsoftware.api.response.CreatedSaleResponse;
-import ar.com.gtsoftware.dto.domain.*;
+import ar.com.gtsoftware.api.response.Customer;
+import ar.com.gtsoftware.dto.domain.NegocioCondicionesOperacionesDto;
+import ar.com.gtsoftware.dto.domain.NegocioFormasPagoDto;
+import ar.com.gtsoftware.dto.domain.NegocioPlanesPagoDto;
+import ar.com.gtsoftware.dto.domain.NegocioTiposComprobanteDto;
 import io.swagger.annotations.ApiModel;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,10 +24,10 @@ public interface ShopCartController {
     CartItemResponse addProduct(@RequestBody @Valid AddCartItemRequest addCartItemRequest);
 
     @GetMapping(path = "/shop-cart/default-customer")
-    PersonasDto getDefaultCustomer();
+    Customer getDefaultCustomer();
 
     @GetMapping(path = "/shop-cart/customers-search")
-    List<PersonasDto> searchCustomers(@RequestParam String query);
+    List<Customer> searchCustomers(@RequestParam String query);
 
     @GetMapping(path = "/shop-cart/sale-types")
     List<NegocioTiposComprobanteDto> getSaleTypes();

@@ -22,7 +22,6 @@ import ar.com.gtsoftware.domain.Comprobantes;
 import ar.com.gtsoftware.dto.domain.ComprobantesDto;
 import ar.com.gtsoftware.mappers.ComprobantesMapper;
 import ar.com.gtsoftware.mappers.PersonasMapper;
-import ar.com.gtsoftware.mappers.helper.CycleAvoidingMappingContext;
 import ar.com.gtsoftware.search.ComprobantesSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;
 import ar.com.gtsoftware.service.ComprobantesService;
@@ -78,8 +77,7 @@ public class ComprobantesServiceImpl
             throw new ServiceException("Comprobante total o parcialmente cobrado!");
         }
         venta.setAnulada(true);
-        cuentaCorrienteBean.registrarMovimientoCuenta(personasMapper.entityToDto(venta.getIdPersona(),
-                new CycleAvoidingMappingContext()),
+        cuentaCorrienteBean.registrarMovimientoCuenta(venta.getIdPersona(),
                 venta.getTotalConSigno(), String.format("Anulación comprobante Nro: %d", venta.getId()));
         facade.edit(venta);
     }

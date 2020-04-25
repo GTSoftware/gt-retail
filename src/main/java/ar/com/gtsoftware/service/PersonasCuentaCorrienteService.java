@@ -17,8 +17,8 @@
 
 package ar.com.gtsoftware.service;
 
+import ar.com.gtsoftware.domain.Personas;
 import ar.com.gtsoftware.dto.domain.PersonasCuentaCorrienteDto;
-import ar.com.gtsoftware.dto.domain.PersonasDto;
 import ar.com.gtsoftware.search.PersonasCuentaCorrienteSearchFilter;
 
 import javax.validation.constraints.NotNull;
@@ -28,7 +28,7 @@ import java.math.BigDecimal;
 public interface PersonasCuentaCorrienteService
         extends EntityService<PersonasCuentaCorrienteDto, PersonasCuentaCorrienteSearchFilter> {
 
-    void registrarMovimientoCuenta(@NotNull PersonasDto personaDto, @NotNull BigDecimal importe, @NotNull String descripcion);
+    void registrarMovimientoCuenta(@NotNull Personas persona, @NotNull BigDecimal importe, @NotNull String descripcion);
 
     BigDecimal getSaldoPersona(long idPersona);
 }

@@ -22,7 +22,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @author rodrigo
@@ -44,8 +44,7 @@ public class PersonasCuentaCorriente extends BaseEntity {
     @Basic(optional = false)
     @NotNull
     @Column(name = "fecha_movimiento")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaMovimiento;
+    private LocalDateTime fechaMovimiento;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
     @NotNull

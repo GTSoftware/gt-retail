@@ -67,6 +67,7 @@ export class ShopCartPayment extends Component {
         this.getRemainingAmount = this.getRemainingAmount.bind(this);
         this.handleAddNewPayment = this.handleAddNewPayment.bind(this);
         this.addSurchargeItem = this.addSurchargeItem.bind(this);
+        this.handleSavedSale = this.handleSavedSale.bind(this);
     }
 
     componentDidMount() {
@@ -587,13 +588,7 @@ export class ShopCartPayment extends Component {
         this.shopCartStore.setProducts(state.products);
         this.setState({savingSale: true});
 
-        ShopCartService.saveSale(this.shopCartStore.getData())
-            .then(
-                (response) => this.handleSavedSale(response.data)
-            )
-            .catch(
-                error => this.handleSaveSaleError(error)
-            )
+        ShopCartService.saveSale(this.shopCartStore.getData(), this.handleSavedSale, this.handleSaveSaleError);
     }
 
     handleSavedSale(savedSale) {

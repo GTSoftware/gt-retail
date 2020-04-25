@@ -21,7 +21,15 @@ import ar.com.gtsoftware.domain.Personas;
 import ar.com.gtsoftware.dto.domain.PersonasDto;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring", uses = PersonasTelefonosMapper.class)
+@Mapper(componentModel = "spring", uses = {PersonasTelefonosMapper.class,
+        UbicacionPaisesMapper.class,
+        UbicacionLocalidadesMapper.class,
+        UbicacionProvinciasMapper.class,
+        FiscalResponsabilidadesIvaMapper.class,
+        LegalGenerosMapper.class,
+        SucursalesMapper.class,
+        LegalTiposDocumentoMapper.class,
+        LegalTiposPersoneriaMapper.class})
 public interface PersonasMapper
         extends GenericMapper<Personas, PersonasDto> {
 }

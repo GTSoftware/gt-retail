@@ -1,12 +1,10 @@
 package ar.com.gtsoftware.api.request;
 
-import ar.com.gtsoftware.dto.domain.NegocioCondicionesOperacionesDto;
-import ar.com.gtsoftware.dto.domain.NegocioTiposComprobanteDto;
-import ar.com.gtsoftware.dto.domain.PersonasDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
@@ -16,13 +14,15 @@ import java.util.List;
 @Setter
 public class SaleRequest {
     @NotNull
+    @Valid
     private List<SaleItem> products;
     @NotNull
-    private PersonasDto customerInfo;
+    private Long customerId;
     @NotNull
-    private NegocioCondicionesOperacionesDto saleCondition;
+    private Long saleConditionId;
     @NotNull
-    private NegocioTiposComprobanteDto saleType;
+    private Long saleTypeId;
+    @Valid
     private List<SalePayment> payments;
     @Size(max = 1024)
     private String observaciones;

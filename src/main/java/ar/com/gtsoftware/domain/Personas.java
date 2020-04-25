@@ -22,7 +22,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -82,8 +82,8 @@ public class Personas extends BaseEntity {
     @Basic(optional = false)
     @NotNull
     @Column(name = "fecha_alta")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaAlta;
+    //@Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime fechaAlta;
     @Basic(optional = false)
     @NotNull
     @Column(name = "activo")

@@ -44,7 +44,7 @@ public class CobranzaServiceImpl implements CobranzaService {
     private final ComprobantesPagosFacade compPagosFacade;
 
 
-    private final PersonasCuentaCorrienteService cuentaCorrienteBean;
+    private final PersonasCuentaCorrienteService cuentaCorrienteService;
     private final ComprobantesPagosFacade pagosFacade;
     private final UsuariosFacade usuariosFacade;
 
@@ -169,9 +169,7 @@ public class CobranzaServiceImpl implements CobranzaService {
     }
 
     private void generarMovimientoCuenta(BigDecimal monto, Comprobantes comprobante, String descMovimiento) {
-        cuentaCorrienteBean.registrarMovimientoCuenta(
-                personasMapper.entityToDto(comprobante.getIdPersona(),
-                        new CycleAvoidingMappingContext()),
+        cuentaCorrienteService.registrarMovimientoCuenta(comprobante.getIdPersona(),
                 monto.negate(),
                 descMovimiento);
     }

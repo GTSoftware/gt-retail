@@ -21,7 +21,7 @@ import lombok.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -64,7 +64,7 @@ public class PersonasDto {
     @Size(min = 1, max = 13)
     private String documento;
     @NotNull
-    private Date fechaAlta;
+    private LocalDateTime fechaAlta;
 
     private boolean activo;
 

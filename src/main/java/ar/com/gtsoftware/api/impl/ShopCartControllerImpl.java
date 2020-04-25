@@ -9,7 +9,9 @@ import ar.com.gtsoftware.api.request.SalePayment;
 import ar.com.gtsoftware.api.request.SaleRequest;
 import ar.com.gtsoftware.api.response.CartItemResponse;
 import ar.com.gtsoftware.api.response.CreatedSaleResponse;
+import ar.com.gtsoftware.api.response.Customer;
 import ar.com.gtsoftware.api.response.DiscountItem;
+import ar.com.gtsoftware.api.transformer.CustomerTransformer;
 import ar.com.gtsoftware.auth.JwtUserDetails;
 import ar.com.gtsoftware.dto.RegistroVentaDto;
 import ar.com.gtsoftware.dto.domain.*;
@@ -45,6 +47,7 @@ class ShopCartControllerImpl implements ShopCartController {
     private final NegocioPlanesPagoService negocioPlanesPagoService;
     private final VentasService ventasService;
     private final OfertasHelper ofertasHelper;
+    private final CustomerTransformer customerTransformer;
     private final Logger logger = LoggerFactory.getLogger(ShopCartControllerImpl.class);
 
     @Override
@@ -73,13 +76,15 @@ class ShopCartControllerImpl implements ShopCartController {
     }
 
     @Override
-    public PersonasDto getDefaultCustomer() {
+    public Customer getDefaultCustomer() {
         Long idClienteDefecto = parametrosService.getLongParam(Parametros.ID_CLIENTE_DEFECTO);
-        return personasService.find(idClienteDefecto);
+
+        return customerTransformer.transformCustomer(personasService.find(idClienteDefecto));
     }
 
+
     @Override
-    public List<PersonasDto> searchCustomers(String query) {
+    public List<Customer> searchCustomers(String query) {
         PersonasSearchFilter filter = PersonasSearchFilter.builder()
                 .activo(true)
                 .cliente(true)
@@ -87,7 +92,7 @@ class ShopCartControllerImpl implements ShopCartController {
                 .build();
         filter.addSortField("razonSocial", true);
 
-        return personasService.findBySearchFilter(filter, 0, 15);
+        return customerTransformer.transformCustomers(personasService.findBySearchFilter(filter, 0, 15));
     }
 
     @Override
@@ -153,12 +158,12 @@ class ShopCartControllerImpl implements ShopCartController {
         JwtUserDetails userDetails = securityUtils.getUserDetails();
 
         ComprobantesDto comprobante = ComprobantesDto.builder()
-                .idCondicionComprobante(saleRequest.getSaleCondition())
-                .idPersona(saleRequest.getCustomerInfo())
+                .idCondicionComprobante(NegocioCondicionesOperacionesDto.builder().id(saleRequest.getSaleConditionId()).build())
+                .idPersona(PersonasDto.builder().id(saleRequest.getCustomerId()).build())
                 .nroRemito(saleRequest.getRemito())
                 .observaciones(saleRequest.getObservaciones())
                 .remitente(saleRequest.getRemitente())
-                .tipoComprobante(saleRequest.getSaleType())
+                .tipoComprobante(NegocioTiposComprobanteDto.builder().id(saleRequest.getSaleTypeId()).build())
                 .comprobantesLineasList(transformSaleItems(saleRequest.getProducts()))
                 .pagosList(transformPayments(saleRequest.getPayments()))
                 .idSucursal(SucursalesDto.builder().id(userDetails.getSucursalId()).build())
@@ -177,12 +182,13 @@ class ShopCartControllerImpl implements ShopCartController {
         List<ComprobantesPagosDto> pagos = new ArrayList<>(payments.size());
         for (SalePayment payment : payments) {
             ComprobantesPagosDto pago = ComprobantesPagosDto.builder()
-                    .idFormaPago(payment.getIdFormaPago())
-                    .montoPago(payment.getMontoPago())
-                    .idPlan(payment.getIdPlan())
-                    .idDetallePlan(payment.getIdDetallePlan())
+                    .idFormaPago(NegocioFormasPagoDto.builder().id(payment.getPaymentMethodId()).build())
+                    .montoPago(payment.getPaymentAmount())
                     .build();
-
+            if (payment.getPaymentPlanId() != null) {
+                pago.setIdPlan(NegocioPlanesPagoDto.builder().id(payment.getPaymentPlanId()).build());
+                pago.setIdDetallePlan(NegocioPlanesPagoDetalleDto.builder().id(payment.getPaymentPlanDetailId()).build());
+            }
             pagos.add(pago);
         }
 

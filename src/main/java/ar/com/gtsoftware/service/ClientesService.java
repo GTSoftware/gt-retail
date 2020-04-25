@@ -16,7 +16,6 @@
 package ar.com.gtsoftware.service;
 
 import ar.com.gtsoftware.dto.domain.PersonasDto;
-import ar.com.gtsoftware.service.exceptions.ServiceException;
 
 /**
  * @author Rodrigo M. Tato Rothamel <rotatomel@gmail.com>
@@ -24,7 +23,7 @@ import ar.com.gtsoftware.service.exceptions.ServiceException;
 
 public interface ClientesService {
 
-    PersonasDto guardarCliente(PersonasDto cliente) throws ServiceException;
+    PersonasDto guardarCliente(PersonasDto cliente);
 
     PersonasDto find(Long id);
 

@@ -17,13 +17,11 @@ package ar.com.gtsoftware.service.impl;
 
 
 import ar.com.gtsoftware.dao.PersonasCuentaCorrienteFacade;
+import ar.com.gtsoftware.domain.Personas;
 import ar.com.gtsoftware.domain.PersonasCuentaCorriente;
 import ar.com.gtsoftware.dto.domain.PersonasCuentaCorrienteDto;
-import ar.com.gtsoftware.dto.domain.PersonasDto;
 import ar.com.gtsoftware.mappers.GenericMapper;
 import ar.com.gtsoftware.mappers.PersonasCuentaCorrienteMapper;
-import ar.com.gtsoftware.mappers.PersonasMapper;
-import ar.com.gtsoftware.mappers.helper.CycleAvoidingMappingContext;
 import ar.com.gtsoftware.search.PersonasCuentaCorrienteSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;
 import ar.com.gtsoftware.service.PersonasCuentaCorrienteService;
@@ -31,7 +29,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -41,18 +39,15 @@ public class PersonasCuentaCorrienteServiceImpl
 
 
     private final PersonasCuentaCorrienteFacade cuentaCorrienteFacade;
-
     private final PersonasCuentaCorrienteMapper mapper;
 
-    private final PersonasMapper personasMapper;
-
     @Override
-    public void registrarMovimientoCuenta(PersonasDto personaDto, BigDecimal importe, String descripcion) {
+    public void registrarMovimientoCuenta(Personas persona, BigDecimal importe, String descripcion) {
         PersonasCuentaCorriente cc = new PersonasCuentaCorriente();
         cc.setDescripcionMovimiento(descripcion);
-        cc.setFechaMovimiento(new Date());
+        cc.setFechaMovimiento(LocalDateTime.now());
         cc.setImporteMovimiento(importe);
-        cc.setIdPersona(personasMapper.dtoToEntity(personaDto, new CycleAvoidingMappingContext()));
+        cc.setIdPersona(persona);
         //cc.setIdRegistroContable(null);
         cuentaCorrienteFacade.create(cc);
     }

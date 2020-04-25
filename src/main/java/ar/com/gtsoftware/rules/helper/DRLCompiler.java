@@ -7,7 +7,9 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.drools.template.ObjectDataCompiler;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
@@ -78,5 +80,11 @@ class DRLCompiler {
         }
 
         return drl.toString();
+    }
+
+    //TODO this is here until the add/edit offers is done
+    @CacheEvict(allEntries = true, cacheNames = {"drlRules"})
+    @Scheduled(fixedDelay = 30 * 60000)//30 Minutes
+    public void cacheEvict() {
     }
 }

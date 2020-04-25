@@ -16,8 +16,8 @@
 package ar.com.gtsoftware.service.impl;
 
 
-import ar.com.gtsoftware.dao.PersonasFacade;
-import ar.com.gtsoftware.dao.PersonasTelefonosFacade;
+import ar.com.gtsoftware.api.exception.CustomerValidationException;
+import ar.com.gtsoftware.dao.*;
 import ar.com.gtsoftware.domain.Personas;
 import ar.com.gtsoftware.domain.PersonasTelefonos;
 import ar.com.gtsoftware.dto.domain.PersonasDto;
@@ -25,12 +25,12 @@ import ar.com.gtsoftware.mappers.PersonasMapper;
 import ar.com.gtsoftware.mappers.helper.CycleAvoidingMappingContext;
 import ar.com.gtsoftware.search.PersonasSearchFilter;
 import ar.com.gtsoftware.service.ClientesService;
-import ar.com.gtsoftware.service.exceptions.ServiceException;
 import ar.com.gtsoftware.validators.ValidadorCUIT;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -39,49 +39,56 @@ public class ClientesServiceImpl implements ClientesService {
     private final PersonasFacade personasFacade;
     private final PersonasTelefonosFacade telefonosFacade;
     private final PersonasMapper personasMapper;
+    private final LegalGenerosFacade legalGenerosFacade;
+    private final UbicacionLocalidadesFacade localidadesFacade;
+    private final FiscalResponsabilidadesIvaFacade fiscalResponsabilidadesIvaFacade;
+    private final SucursalesFacade sucursalesFacade;
+    private final LegalTiposDocumentoFacade legalTiposDocumentoFacade;
 
     @Override
-    public PersonasDto guardarCliente(PersonasDto clienteDto) throws ServiceException {
+    @Transactional
+    public PersonasDto guardarCliente(PersonasDto clienteDto) {
 
         Personas cliente = personasMapper.dtoToEntity(clienteDto, new CycleAvoidingMappingContext());
 
-        if (cliente != null) {
-            validarCliente(cliente);
-            formatDatosCliente(cliente);
-            if (cliente.isNew()) {
+        completeCustomer(cliente);
+        validarCliente(cliente);
+        formatDatosCliente(cliente);
+        if (cliente.isNew()) {
 
-                cliente.setFechaAlta(new Date());
-                cliente.setActivo(true);
-                cliente.setCliente(true);
-                personasFacade.create(cliente);
+            cliente.setFechaAlta(LocalDateTime.now());
+            cliente.setActivo(true);
+            cliente.setCliente(true);
+            personasFacade.create(cliente);
 
-            } else {
-
-                personasFacade.edit(cliente);
-            }
-            return personasMapper.entityToDto(personasFacade.find(cliente.getId()), new CycleAvoidingMappingContext());
+        } else {
+            personasFacade.edit(cliente);
         }
-        return null;
+        return personasMapper.entityToDto(personasFacade.find(cliente.getId()), new CycleAvoidingMappingContext());
 
+    }
+
+    private void completeCustomer(Personas cliente) {
+        cliente.setIdGenero(legalGenerosFacade.find(cliente.getIdGenero().getId()));
+        cliente.setIdLocalidad(localidadesFacade.find(cliente.getIdLocalidad().getId()));
+        cliente.setIdProvincia(cliente.getIdLocalidad().getIdProvincia());
+        cliente.setIdPais(cliente.getIdLocalidad().getIdProvincia().getIdPais());
+        cliente.setIdResponsabilidadIva(fiscalResponsabilidadesIvaFacade.find(cliente.getIdResponsabilidadIva().getId()));
+        cliente.setIdSucursal(sucursalesFacade.find(cliente.getIdSucursal().getId()));
+        cliente.setIdTipoDocumento(legalTiposDocumentoFacade.find(cliente.getIdTipoDocumento().getId()));
+        cliente.setIdTipoPersoneria(cliente.getIdTipoDocumento().getIdTipoPersoneria());
+        for (PersonasTelefonos tel : cliente.getPersonasTelefonosList()) {
+            tel.setIdPersona(cliente);
+        }
     }
 
     private void formatDatosCliente(Personas cliente) {
         cliente.setRazonSocial(formatRazonSocial(cliente.getRazonSocial(),
-                cliente.getApellidos(), cliente.getNombres(),
+                cliente.getApellidos(),
+                cliente.getNombres(),
                 cliente.getIdTipoPersoneria().getId()));
-
     }
 
-    /**
-     * Retorna la razón social del cliente en forma de Apellidos, Nombres si es persona física, en otro caso lo deja
-     * intacto
-     *
-     * @param razonSocialCliente
-     * @param apellidos
-     * @param nombres
-     * @param tipoPersoneria
-     * @return
-     */
     private String formatRazonSocial(String razonSocialCliente, String apellidos, String nombres, long tipoPersoneria) {
         String razonSocial = razonSocialCliente;
         if (tipoPersoneria == 1) {//Persona física
@@ -90,27 +97,21 @@ public class ClientesServiceImpl implements ClientesService {
         return razonSocial;
     }
 
-    /**
-     * Valida los datos del cliente y verifica que no existan duplicados
-     *
-     * @param cliente
-     * @throws ServiceException
-     */
-    private void validarCliente(Personas cliente) throws ServiceException {
+    private void validarCliente(Personas cliente) {
         try {
             long documento = Long.parseLong(cliente.getDocumento());
             if (documento <= 0) {
-                throw new ServiceException("El documento debe ser un número positivo distinto de 0!");
+                throw new CustomerValidationException("El documento debe ser un número positivo distinto de 0!");
             }
         } catch (NumberFormatException nfe) {
-            throw new ServiceException("El documento debe ser un número!");
+            throw new CustomerValidationException("El documento debe ser un número!");
         }
         //Es responsable inscripto y tiene cargado DNI
         if (cliente.getIdResponsabilidadIva().getId() == 2 && cliente.getIdTipoDocumento().getId() != 2) {
-            throw new ServiceException("Se debe cargar tipo de documento como CUIT para Responsables Inscriptos");
+            throw new CustomerValidationException("Se debe cargar tipo de documento como CUIT para Responsables Inscriptos");
         }
         if (cliente.getIdTipoDocumento().getId() == 2 && !ValidadorCUIT.getValidate(cliente.getDocumento())) {
-            throw new ServiceException("El número de CUIT ingresado no es válido!");
+            throw new CustomerValidationException("El número de CUIT ingresado no es válido!");
         }
         PersonasSearchFilter psf = PersonasSearchFilter.builder()
                 .idTipoDocumento(cliente.getIdTipoDocumento().getId())
@@ -120,10 +121,10 @@ public class ClientesServiceImpl implements ClientesService {
         int result = personasFacade.countBySearchFilter(psf);
         if (cliente.isNew()) {
             if (result > 0) {
-                throw new ServiceException("Ya existe un cliente con ese número de documento!");
+                throw new CustomerValidationException("Ya existe un cliente con ese número de documento!");
             }
         } else if (personasFacade.existePersonaRepetida(cliente)) {
-            throw new ServiceException("Ya existe un cliente con ese número de documento!");
+            throw new CustomerValidationException("Ya existe un cliente con ese número de documento!");
 
         }
 

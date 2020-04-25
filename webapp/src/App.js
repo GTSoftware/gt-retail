@@ -49,6 +49,12 @@ class App extends Component {
         this.createMenu();
     }
 
+    componentDidMount() {
+        if (LoginService.isUserLoggedIn()) {
+            this.setState({userLoggedIn: true});
+        }
+    }
+
     onWrapperClick(event) {
         if (!this.menuClick) {
             this.setState({

@@ -23,8 +23,6 @@ export class ShopCartCustomer extends Component {
         this.handleGoNext = this.handleGoNext.bind(this);
         this.handleGoBack = this.handleGoBack.bind(this);
         this.handleSetCustomer = this.handleSetCustomer.bind(this);
-        this.getFormattedAddress = this.getFormattedAddress.bind(this);
-        this.getFormattedDocument = this.getFormattedDocument.bind(this);
         this.filterCustomers = this.filterCustomers.bind(this);
         this.getFormattedTelefonos = this.getFormattedTelefonos.bind(this);
     }
@@ -32,8 +30,7 @@ export class ShopCartCustomer extends Component {
 
     componentDidMount() {
         if (!this.shopCartStore.getCustomerInfo()) {
-            ShopCartService.getDefaultCustomer()
-                .then(response => this.handleSetCustomer(response.data));
+            ShopCartService.getDefaultCustomer(this.handleSetCustomer);
         }
     }
 
@@ -52,11 +49,10 @@ export class ShopCartCustomer extends Component {
                                           id="razonSocialField" style={{width: "40%"}}
                                           completeMethod={(event) => this.filterCustomers(event.query)}
                                           suggestions={this.state.filteredCustomers}
-                                          field="razonSocial"
+                                          field="businessName"
                                           required={true}
                                           onChange={event => this.handleSetCustomer(event.value)}
                                           value={this.state.customerInfo}
-
 
                             />
                             <Button icon="fa fa-fw fa-plus"
@@ -73,21 +69,21 @@ export class ShopCartCustomer extends Component {
                             <label htmlFor="documento">Documento: </label>
                             <InputText id="documento"
                                        readOnly={true}
-                                       value={this.getFormattedDocument(customerInfo)}/>
+                                       value={_.get(customerInfo, 'identification', '')}/>
 
                         </div>
                         <div className="p-col-12 p-md-4">
                             <label htmlFor="responsabilidadIVA">Categoría IVA: </label>
                             <InputText id="responsabilidadIVA"
                                        readOnly={true}
-                                       value={_.get(customerInfo, 'idResponsabilidadIva.nombreResponsabildiad', '')}/>
+                                       value={_.get(customerInfo, 'responsabilidadIVA', '')}/>
                         </div>
 
                         <div className="p-col p-md-12">
                             <label htmlFor="direccion">Dirección: </label>
                             <InputText id="direccion"
                                        readOnly={true}
-                                       value={this.getFormattedAddress(customerInfo)}/>
+                                       value={_.get(customerInfo, 'address', '')}/>
                         </div>
 
                         <div className="p-col-12 p-md-4">
@@ -113,7 +109,7 @@ export class ShopCartCustomer extends Component {
                                 onClick={this.handleGoBack}/>
                         <Button label="Siguiente"
                                 className="shop-cart--footer-actions-button"
-                                disabled={_.get(this.state, 'customerInfo.id', null) === null}
+                                disabled={_.get(this.state, 'customerInfo.customerId', null) === null}
                                 icon="fa fa-fw fa-arrow-right"
                                 iconPos="right"
                                 onClick={this.handleGoNext}/>
@@ -136,43 +132,21 @@ export class ShopCartCustomer extends Component {
             );
     }
 
-    getFormattedAddress(customerInfo) {
-        const pais = _.get(customerInfo, 'idPais.nombrePais', '');
-        const provincia = _.get(customerInfo, 'idProvincia.nombreProvincia', '');
-        const localidad = _.get(customerInfo, 'idLocalidad.nombreLocalidad', '');
-        const postalCode = _.get(customerInfo, 'idLocalidad.codigoPostal', '');
-        const calle = _.get(customerInfo, 'calle', '');
-        const altura = _.get(customerInfo, 'altura', '');
-        const piso = _.get(customerInfo, 'piso', '');
-        const depto = _.get(customerInfo, 'depto', '');
-
-        return `${calle} ${altura} Piso: ${piso} Depto: ${depto} - (${postalCode}) ${localidad} - ${provincia} - ${pais}`
-    }
-
-    getFormattedDocument(customerInfo) {
-        const tipoDoc = _.get(customerInfo, 'idTipoDocumento.nombreTipoDocumento', '');
-        const documento = _.get(customerInfo, 'documento', '');
-
-        return `${tipoDoc} ${documento}`
-    }
-
     getFormattedTelefonos(customerInfo) {
-        const telefonos = _.get(customerInfo, 'personasTelefonosList');
+        const telefonos = _.get(customerInfo, 'phones');
         let formattedTelefonos = '';
 
         if (telefonos) {
             formattedTelefonos = telefonos.map((telefono) => {
-                return `${telefono.numero} (${telefono.referencia})`
+                return `${telefono.phoneNumber} (${telefono.reference})`
             }).join('\n');
         }
 
         return formattedTelefonos;
-
-
     }
 
     handleGoNext() {
-        if (_.get(this.state.customerInfo, 'id', null) !== null) {
+        if (_.get(this.state.customerInfo, 'customerId', null) !== null) {
             this.shopCartStore.setCustomerInfo(this.state.customerInfo);
             this.props.goNextCallback();
         }

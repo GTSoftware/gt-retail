@@ -1,8 +1,5 @@
 package ar.com.gtsoftware.api.request;
 
-import ar.com.gtsoftware.dto.domain.NegocioFormasPagoDto;
-import ar.com.gtsoftware.dto.domain.NegocioPlanesPagoDetalleDto;
-import ar.com.gtsoftware.dto.domain.NegocioPlanesPagoDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,10 +12,10 @@ import java.math.BigDecimal;
 @Setter
 public class SalePayment {
     @NotNull
-    private NegocioFormasPagoDto idFormaPago;
+    private Long paymentMethodId;
     @NotNull
-    private BigDecimal montoPago;
-    private NegocioPlanesPagoDto idPlan;
-    private NegocioPlanesPagoDetalleDto idDetallePlan;
+    private BigDecimal paymentAmount;
+    private Long paymentPlanId;
+    private Long paymentPlanDetailId;
 
 }

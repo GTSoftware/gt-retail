@@ -21,17 +21,12 @@ import org.apache.commons.collections4.CollectionUtils;
 import java.util.Date;
 import java.util.List;
 
-/**
- * @author Rodrigo Tato <rotatomel@gmail.com>
- */
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class ComprobantesSearchFilter extends AbstractSearchFilter {
-
-    private static final long serialVersionUID = 1L;
 
     private Long idVenta;
     private Date fechaVentaDesde;
