@@ -17,33 +17,33 @@
 
 package ar.com.gtsoftware.service.impl;
 
-import ar.com.gtsoftware.dao.LegalTiposDocumentoFacade;
-import ar.com.gtsoftware.domain.LegalTiposDocumento;
-import ar.com.gtsoftware.dto.domain.LegalTiposDocumentoDto;
-import ar.com.gtsoftware.mappers.LegalTiposDocumentoMapper;
-import ar.com.gtsoftware.search.LegalTiposDocumentoSearchFilter;
+import ar.com.gtsoftware.dao.UbicacionLocalidadesFacade;
+import ar.com.gtsoftware.domain.UbicacionLocalidades;
+import ar.com.gtsoftware.dto.domain.UbicacionLocalidadesDto;
+import ar.com.gtsoftware.mappers.UbicacionLocalidadesMapper;
+import ar.com.gtsoftware.search.LocalidadesSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;
-import ar.com.gtsoftware.service.LegalTiposDocumentoService;
+import ar.com.gtsoftware.service.UbicacionLocalidadesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class LegalTiposDocumentoServiceImpl
-        extends BaseEntityService<LegalTiposDocumentoDto, LegalTiposDocumentoSearchFilter, LegalTiposDocumento>
-        implements LegalTiposDocumentoService {
+public class UbicacionLocalidadesServiceImpl
+        extends BaseEntityService<UbicacionLocalidadesDto, LocalidadesSearchFilter, UbicacionLocalidades>
+        implements UbicacionLocalidadesService {
 
-    private final LegalTiposDocumentoFacade facade;
+    private final UbicacionLocalidadesFacade facade;
 
-    private final LegalTiposDocumentoMapper mapper;
+    private final UbicacionLocalidadesMapper mapper;
 
     @Override
-    protected LegalTiposDocumentoFacade getFacade() {
+    protected UbicacionLocalidadesFacade getFacade() {
         return facade;
     }
 
     @Override
-    protected LegalTiposDocumentoMapper getMapper() {
+    protected UbicacionLocalidadesMapper getMapper() {
         return mapper;
     }
 }

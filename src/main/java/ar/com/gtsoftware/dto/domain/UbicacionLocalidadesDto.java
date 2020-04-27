@@ -21,17 +21,13 @@ import lombok.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-/**
- * @author rodrigo
- */
-@Data
+@Getter
+@Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class UbicacionLocalidadesDto {
-
-    private static final long serialVersionUID = 1L;
 
     @EqualsAndHashCode.Include
     private Long id;
@@ -42,9 +38,8 @@ public class UbicacionLocalidadesDto {
     @NotNull
     @Size(min = 1, max = 20)
     private String codigoPostal;
-    @NotNull
-    private UbicacionProvinciasDto idProvincia;
     private Integer version;
 
+    private String displayName;
 
 }

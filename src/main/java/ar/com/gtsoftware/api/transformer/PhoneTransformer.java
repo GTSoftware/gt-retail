@@ -11,14 +11,16 @@ import java.util.List;
 public class PhoneTransformer {
 
     public List<Phone> transformPhones(List<PersonasTelefonosDto> telefonosList) {
-        List<Phone> phones = new ArrayList<>(telefonosList.size());
-        for (PersonasTelefonosDto tel : telefonosList) {
-            phones.add(Phone.builder()
-                    .phoneNumber(tel.getNumero())
-                    .reference(tel.getReferencia())
-                    .build());
+        List<Phone> phones = null;
+        if (telefonosList != null) {
+            phones = new ArrayList<>(telefonosList.size());
+            for (PersonasTelefonosDto tel : telefonosList) {
+                phones.add(Phone.builder()
+                        .phoneNumber(tel.getNumero())
+                        .reference(tel.getReferencia())
+                        .build());
+            }
         }
-
         return phones;
     }
 }

@@ -1715,6 +1715,16 @@ ajv@^6.1.0, ajv@^6.10.2, ajv@^6.5.5, ajv@^6.9.1:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
+ajv@^6.11.0:
+  version "6.12.2"
+  resolved "https://registry.yarnpkg.com/ajv/-/ajv-6.12.2.tgz#c629c5eced17baf314437918d2da88c99d5958cd"
+  integrity sha512-k+V+hzjm5q/Mr8ef/1Y9goCmlsK4I6Sm74teeyGvFk1XrOsbsKLjEdrvny42CZ+a8sXbk8KWpY/bDwS+FLL2UQ==
+  dependencies:
+    fast-deep-equal "^3.1.1"
+    fast-json-stable-stringify "^2.0.0"
+    json-schema-traverse "^0.4.1"
+    uri-js "^4.2.2"
+
 alphanum-sort@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/alphanum-sort/-/alphanum-sort-1.0.2.tgz#97a1119649b211ad33691d9f9f486a8ec9fbe0a3"
@@ -3587,6 +3597,11 @@ domutils@^1.5.1, domutils@^1.7.0:
   dependencies:
     dom-serializer "0"
     domelementtype "1"
+
+dot-prop-immutable@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/dot-prop-immutable/-/dot-prop-immutable-2.1.0.tgz#aa08d57b7b4c8ba1aac1b8f9b058bb3f37027af6"
+  integrity sha512-8IIkxeXjLkKbhbqwmqCdFzRup1wFwH4tuY7/s5ScVpzYXgjZ+lw5ocvtDG1KR9VG+/AIGgGpWBdzmq+QUFANoA==
 
 dot-prop@^5.2.0:
   version "5.2.0"
@@ -6316,6 +6331,11 @@ lodash.templatesettings@^4.0.0:
   dependencies:
     lodash._reinterpolate "^3.0.0"
 
+lodash.throttle@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
+  integrity sha1-wj6RtxAkKscMN/HhzaknTMOb8vQ=
+
 lodash.unescape@4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/lodash.unescape/-/lodash.unescape-4.0.1.tgz#bf2249886ce514cda112fae9218cdc065211fc9c"
@@ -6447,6 +6467,11 @@ mem@^4.0.0:
     map-age-cleaner "^0.1.1"
     mimic-fn "^2.0.0"
     p-is-promise "^2.0.0"
+
+memoize-one@^5.1.1:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/memoize-one/-/memoize-one-5.1.1.tgz#047b6e3199b508eaec03504de71229b8eb1d75c0"
+  integrity sha512-HKeeBpWvqiVJD57ZUAsJNm71eHTykffzcLZVYWiVfQeI1rJtuEaS7hQiEpWfVVk18donPwJEcFKIkCmPJNOhHA==
 
 memory-fs@^0.4.1, memory-fs@~0.4.1:
   version "0.4.1"
@@ -8166,10 +8191,10 @@ primeicons@1.0.0:
   resolved "https://registry.yarnpkg.com/primeicons/-/primeicons-1.0.0.tgz#90061f168ef6227f21f0a7db8204ffa85cd27aec"
   integrity sha512-p/hzIjUVccW4eJPhuORHI3AUkDpqfvCQVrjxbFEejnTEdWY4C8fomVfjiaA9jCu83fSQnBHuRIGB96iAR8R6uA==
 
-primereact@4.1.2:
-  version "4.1.2"
-  resolved "https://registry.yarnpkg.com/primereact/-/primereact-4.1.2.tgz#db9a78cb4742aee28dfc4c863c7af3ba5c08a565"
-  integrity sha512-NZ9DmsOWzek05RzS54DtsM9b2T65rRyTxNo/EllFyLW3qeKg96Eci5HRlyO1KHu7233IHX6gjJp5JrChS01p8g==
+primereact@4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/primereact/-/primereact-4.2.0.tgz#0fc62ab404e9e90957eadf9b5851c9d290c3e7a5"
+  integrity sha512-/DZyUztlodGeYoLyJBRayhD5ktN1/JahvkaBz/Pwx9KydFIMY+H0FNGPl37SkMxjObsFFIMHh/nwUEYZoLNTLw==
 
 private@^0.1.8:
   version "0.1.8"
@@ -8346,7 +8371,7 @@ quill@1.3.3:
     parchment "1.1.0"
     quill-delta "3.6.2"
 
-raf@^3.4.1:
+raf@^3.4.0, raf@^3.4.1:
   version "3.4.1"
   resolved "https://registry.yarnpkg.com/raf/-/raf-3.4.1.tgz#0742e99a4a6552f445d73e3ee0328af0ff1ede39"
   integrity sha512-Sq4CW4QhwOHE8ucn6J34MqtZCeWFP2aQSmrlroYgqAV1PjStIhJXxYuTgUIfkEk7zTLjmIjLmU5q+fbD1NnOJA==
@@ -8445,6 +8470,20 @@ react-is@^16.12.0, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-i
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
+
+react-jsonschema-form-validation@^0.5.6:
+  version "0.5.6"
+  resolved "https://registry.yarnpkg.com/react-jsonschema-form-validation/-/react-jsonschema-form-validation-0.5.6.tgz#6eeb142280b143e68e3633bd62834428ed53aea3"
+  integrity sha512-s2i/a35V2q+vgGK8dcmTuKsdDFhVFgxsAo+zke9Au5wzI3VvKXkocdTYQ1Lclr36Y1IPwGE+Te0nOZeszklWHw==
+  dependencies:
+    "@babel/runtime" "^7.8.4"
+    ajv "^6.11.0"
+    classnames "^2.2.6"
+    dot-prop-immutable "^2.1.0"
+    lodash.throttle "^4.1.1"
+    memoize-one "^5.1.1"
+    prop-types "^15.7.2"
+    scroll-to-element "^2.0.3"
 
 react-lifecycles-compat@^3.0.4:
   version "3.0.4"
@@ -9081,6 +9120,13 @@ schema-utils@^1.0.0:
     ajv "^6.1.0"
     ajv-errors "^1.0.0"
     ajv-keywords "^3.1.0"
+
+scroll-to-element@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/scroll-to-element/-/scroll-to-element-2.0.3.tgz#99b404fc6a09fe73f3c062cd5b8a14efb6404e4d"
+  integrity sha512-5herPcm9jMfQgRwu94lH5mei+2YhipR4RQ2nAvnBxJb2tG+P7O0ctOKAaAZBXbBejnn+MImh3wrAUA5EcLnjEQ==
+  dependencies:
+    raf "^3.4.0"
 
 scss-tokenizer@^0.2.3:
   version "0.2.3"

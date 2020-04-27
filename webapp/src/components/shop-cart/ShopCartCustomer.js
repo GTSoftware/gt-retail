@@ -6,6 +6,7 @@ import {ShopCartStore} from "../../stores/ShopCartStore";
 import ShopCartService from "../../service/ShopCartService";
 import _ from "lodash";
 import {InputTextarea} from "primereact/inputtextarea";
+import {AddNewCustomerDialog} from "./AddNewCustomerDialog";
 
 
 export class ShopCartCustomer extends Component {
@@ -16,48 +17,55 @@ export class ShopCartCustomer extends Component {
         this.shopCartStore = new ShopCartStore();
 
         this.state = {
-            customerInfo: this.shopCartStore.getCustomerInfo(),
-            filteredCustomers: []
+            customerInfo: null,
+            filteredCustomers: [],
+            showAddNewCustomerDialog: false
         };
 
         this.handleGoNext = this.handleGoNext.bind(this);
         this.handleGoBack = this.handleGoBack.bind(this);
         this.handleSetCustomer = this.handleSetCustomer.bind(this);
         this.filterCustomers = this.filterCustomers.bind(this);
-        this.getFormattedTelefonos = this.getFormattedTelefonos.bind(this);
     }
 
 
     componentDidMount() {
-        if (!this.shopCartStore.getCustomerInfo()) {
+        const {customerInfo} = this.state;
+
+        if (!customerInfo) {
             ShopCartService.getDefaultCustomer(this.handleSetCustomer);
         }
     }
 
     render() {
-        let customerInfo = this.state.customerInfo;
+        const {customerInfo} = this.state;
 
         return (
             <div className="card card-w-title">
+                {this.renderAddNewCustomerDialog()}
                 <div className="p-card-body p-fluid ">
                     <div className="p-grid">
                         <div className="p-col">
                             <label htmlFor="razonSocialField">Razón social: </label>
-                            <AutoComplete minLength={2} placeholder="Comience a escribir para buscar un cliente"
-                                          autoFocus={true}
-                                          delay={500}
-                                          id="razonSocialField" style={{width: "40%"}}
-                                          completeMethod={(event) => this.filterCustomers(event.query)}
-                                          suggestions={this.state.filteredCustomers}
-                                          field="businessName"
-                                          required={true}
-                                          onChange={event => this.handleSetCustomer(event.value)}
-                                          value={this.state.customerInfo}
+                            <div className="p-inputgroup">
+                                <AutoComplete minLength={2} placeholder="Comience a escribir para buscar un cliente"
+                                              autoFocus={true}
+                                              delay={500}
+                                              id="razonSocialField" style={{width: "40%"}}
+                                              completeMethod={(event) => this.filterCustomers(event.query)}
+                                              suggestions={this.state.filteredCustomers}
+                                              field="businessName"
+                                              required={true}
+                                              onChange={event => this.handleSetCustomer(event.value)}
+                                              value={customerInfo || ''}
 
-                            />
-                            <Button icon="fa fa-fw fa-plus"
-                                    tooltip="Cliente nuevo"
-                                    className="p-button-success"/>
+                                />
+                                <Button icon="fa fa-fw fa-plus"
+                                        tooltip="Cliente nuevo"
+                                        className="p-button-success"
+                                        onClick={() => this.setState({showAddNewCustomerDialog: true})}/>
+
+                            </div>
                         </div>
 
                     </div>
@@ -119,6 +127,18 @@ export class ShopCartCustomer extends Component {
         );
     }
 
+    renderAddNewCustomerDialog = () => {
+        const {showAddNewCustomerDialog} = this.state;
+
+        return (
+            showAddNewCustomerDialog &&
+            <AddNewCustomerDialog visible={this.state.showAddNewCustomerDialog}
+                                  modal={true}
+                                  handleNewCustomer={this.handleSetCustomer}
+                                  onHide={() => this.setState({showAddNewCustomerDialog: false})}/>
+        )
+    }
+
     handleSetCustomer(customer) {
         this.setState({customerInfo: customer});
     }
@@ -132,7 +152,7 @@ export class ShopCartCustomer extends Component {
             );
     }
 
-    getFormattedTelefonos(customerInfo) {
+    getFormattedTelefonos = (customerInfo) => {
         const telefonos = _.get(customerInfo, 'phones');
         let formattedTelefonos = '';
 

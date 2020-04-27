@@ -18,21 +18,16 @@ package ar.com.gtsoftware.dto.domain;
 
 import lombok.*;
 
-/**
- * @author rodrigo
- */
-@Data
+@Getter
+@Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class LegalTiposPersoneriaDto {
 
-    private static final long serialVersionUID = 1L;
-
     @EqualsAndHashCode.Include
     private Long id;
     private String nombreTipo;
-
 
 }

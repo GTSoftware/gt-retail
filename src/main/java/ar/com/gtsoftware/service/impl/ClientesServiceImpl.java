@@ -59,11 +59,10 @@ public class ClientesServiceImpl implements ClientesService {
             cliente.setFechaAlta(LocalDateTime.now());
             cliente.setActivo(true);
             cliente.setCliente(true);
-            personasFacade.create(cliente);
 
-        } else {
-            personasFacade.edit(cliente);
         }
+        personasFacade.createOrEdit(cliente);
+
         return personasMapper.entityToDto(personasFacade.find(cliente.getId()), new CycleAvoidingMappingContext());
 
     }
@@ -77,8 +76,10 @@ public class ClientesServiceImpl implements ClientesService {
         cliente.setIdSucursal(sucursalesFacade.find(cliente.getIdSucursal().getId()));
         cliente.setIdTipoDocumento(legalTiposDocumentoFacade.find(cliente.getIdTipoDocumento().getId()));
         cliente.setIdTipoPersoneria(cliente.getIdTipoDocumento().getIdTipoPersoneria());
-        for (PersonasTelefonos tel : cliente.getPersonasTelefonosList()) {
-            tel.setIdPersona(cliente);
+        if (cliente.getPersonasTelefonosList() != null) {
+            for (PersonasTelefonos tel : cliente.getPersonasTelefonosList()) {
+                tel.setIdPersona(cliente);
+            }
         }
     }
 
@@ -107,10 +108,10 @@ public class ClientesServiceImpl implements ClientesService {
             throw new CustomerValidationException("El documento debe ser un número!");
         }
         //Es responsable inscripto y tiene cargado DNI
-        if (cliente.getIdResponsabilidadIva().getId() == 2 && cliente.getIdTipoDocumento().getId() != 2) {
+        if (cliente.getIdResponsabilidadIva().getId() == 2 && cliente.getIdTipoDocumento().getFiscalCodigoTipoDocumento() != 80) {
             throw new CustomerValidationException("Se debe cargar tipo de documento como CUIT para Responsables Inscriptos");
         }
-        if (cliente.getIdTipoDocumento().getId() == 2 && !ValidadorCUIT.getValidate(cliente.getDocumento())) {
+        if (cliente.getIdTipoDocumento().getFiscalCodigoTipoDocumento() == 80 && !ValidadorCUIT.getValidate(cliente.getDocumento())) {
             throw new CustomerValidationException("El número de CUIT ingresado no es válido!");
         }
         PersonasSearchFilter psf = PersonasSearchFilter.builder()

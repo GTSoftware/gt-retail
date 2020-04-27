@@ -31,12 +31,16 @@ public class NewCustomerRequest {
     @Size(max = 200)
     private String nombreFantasia;
     @Size(max = 100)
+    @NotNull
     private String calle;
     @Size(max = 50)
+    @NotNull
     private String altura;
     @Size(max = 3)
+    @NotNull
     private String piso;
     @Size(max = 5)
+    @NotNull
     private String depto;
     @NotNull
     @Size(min = 1, max = 13)

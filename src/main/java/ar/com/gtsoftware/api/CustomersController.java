@@ -1,18 +1,19 @@
 package ar.com.gtsoftware.api;
 
 import ar.com.gtsoftware.api.request.NewCustomerRequest;
-import io.swagger.annotations.ApiResponse;
-import org.springframework.http.HttpStatus;
+import ar.com.gtsoftware.api.response.Customer;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 
 public interface CustomersController {
 
     @PostMapping(path = "/customers/customer")
-    @ResponseStatus(value = HttpStatus.CREATED)
-    @ApiResponse(code = 201, message = "Created")
-    void addNewCustomer(@Valid @RequestBody NewCustomerRequest newCustomerRequest);
+    Customer addNewCustomer(@Valid @RequestBody NewCustomerRequest newCustomerRequest);
+
+    @GetMapping(path = "/customers/customer")
+    Customer getCustomer(@RequestParam Long identificationTypeId, Long identificationNumber);
 }

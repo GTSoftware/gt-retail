@@ -18,17 +18,13 @@ package ar.com.gtsoftware.dto.domain;
 
 import lombok.*;
 
-/**
- * @author Rodrigo M. Tato Rothamel <rotatomel@gmail.com>
- */
-@Data
+@Getter
+@Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class LegalTiposDocumentoDto {
-
-    private static final long serialVersionUID = 1L;
 
     @EqualsAndHashCode.Include
     private Long id;
@@ -41,6 +37,5 @@ public class LegalTiposDocumentoDto {
 
     private Integer fiscalCodigoTipoDocumento;
     private LegalTiposPersoneriaDto idTipoPersoneria;
-
 
 }

@@ -16,7 +16,9 @@
 package ar.com.gtsoftware.dao;
 
 import ar.com.gtsoftware.domain.LegalTiposDocumento;
-import ar.com.gtsoftware.search.AbstractSearchFilter;
+import ar.com.gtsoftware.domain.LegalTiposDocumento_;
+import ar.com.gtsoftware.domain.LegalTiposPersoneria_;
+import ar.com.gtsoftware.search.LegalTiposDocumentoSearchFilter;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -25,7 +27,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 @Repository
-public class LegalTiposDocumentoFacade extends AbstractFacade<LegalTiposDocumento, AbstractSearchFilter> {
+public class LegalTiposDocumentoFacade extends AbstractFacade<LegalTiposDocumento, LegalTiposDocumentoSearchFilter> {
 
 
     private final EntityManager em;
@@ -41,8 +43,15 @@ public class LegalTiposDocumentoFacade extends AbstractFacade<LegalTiposDocument
     }
 
     @Override
-    public Predicate createWhereFromSearchFilter(AbstractSearchFilter sf, CriteriaBuilder cb, Root<LegalTiposDocumento> root) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Predicate createWhereFromSearchFilter(LegalTiposDocumentoSearchFilter sf, CriteriaBuilder cb, Root<LegalTiposDocumento> root) {
+        Predicate p = null;
+
+        if (sf.getIdTipoPersoneria() != null) {
+            Predicate p1 = cb.equal(root.get(LegalTiposDocumento_.idTipoPersoneria).get(LegalTiposPersoneria_.id), sf.getIdTipoPersoneria());
+            p = appendAndPredicate(cb, p, p1);
+        }
+
+        return p;
     }
 
 }

@@ -8,3 +8,14 @@
   margin: 1.2rem -1.5rem;
   clear: both;
 }
+
+.isInvalid {
+  border-color: #db0029 !important;
+}
+
+.Jfv_FieldError {
+  width: 100%;
+  margin-top: .25rem;
+  font-size: 80%;
+  color: #db0029;
+}
