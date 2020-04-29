@@ -18,6 +18,8 @@ package ar.com.gtsoftware.search;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 
+import java.time.LocalDateTime;
+
 /**
  * @author rodrigo
  */
@@ -27,7 +29,6 @@ import org.apache.commons.lang3.StringUtils;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PersonasSearchFilter extends AbstractSearchFilter {
-
 
     private String txt;
     private Integer idPersona;
@@ -40,6 +41,8 @@ public class PersonasSearchFilter extends AbstractSearchFilter {
     private Boolean activo;
     private Boolean cliente;
     private Boolean proveedor;
+    private LocalDateTime fechaAltaDesde;
+    private LocalDateTime fechaAltaHasta;
 
     @Override
     public boolean hasFilter() {
@@ -53,7 +56,12 @@ public class PersonasSearchFilter extends AbstractSearchFilter {
                 || documento != null
                 || activo != null
                 || cliente != null
-                || proveedor != null;
+                || proveedor != null
+                || hasFechasFilter();
+    }
+
+    public boolean hasFechasFilter() {
+        return (fechaAltaDesde != null && fechaAltaHasta != null);
     }
 
 }

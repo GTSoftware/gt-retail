@@ -11,7 +11,7 @@ import ar.com.gtsoftware.api.response.CartItemResponse;
 import ar.com.gtsoftware.api.response.CreatedSaleResponse;
 import ar.com.gtsoftware.api.response.Customer;
 import ar.com.gtsoftware.api.response.DiscountItem;
-import ar.com.gtsoftware.api.transformer.CustomerTransformer;
+import ar.com.gtsoftware.api.transformer.fromDomain.CustomerTransformer;
 import ar.com.gtsoftware.auth.JwtUserDetails;
 import ar.com.gtsoftware.dto.RegistroVentaDto;
 import ar.com.gtsoftware.dto.domain.*;

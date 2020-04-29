@@ -18,7 +18,7 @@ package ar.com.gtsoftware.search;
 import lombok.*;
 import org.apache.commons.collections4.CollectionUtils;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -29,8 +29,8 @@ import java.util.List;
 public class ComprobantesSearchFilter extends AbstractSearchFilter {
 
     private Long idVenta;
-    private Date fechaVentaDesde;
-    private Date fechaVentaHasta;
+    private LocalDateTime fechaVentaDesde;
+    private LocalDateTime fechaVentaHasta;
     private Boolean anulada;
     private Long idUsuario;
     private Long idPersona;

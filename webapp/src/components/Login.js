@@ -52,6 +52,7 @@ export class Login extends Component {
                         <span className="p-float-label p-col-12 login-input--field">
                             <InputText id="username" value={this.state.userCredentials.username}
                                        onChange={(e) => this.handlePropertyChange('username', e.target.value)}
+                                       autoFocus
                                        onKeyPress={this.handleEnterKeyPress}/>
                         <label className="login-input--label" htmlFor="username">Usuario</label>
                     </span>

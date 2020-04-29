@@ -1,4 +1,4 @@
-package ar.com.gtsoftware.api.transformer;
+package ar.com.gtsoftware.api.transformer.fromDomain;
 
 import ar.com.gtsoftware.api.response.Phone;
 import ar.com.gtsoftware.dto.domain.PersonasTelefonosDto;

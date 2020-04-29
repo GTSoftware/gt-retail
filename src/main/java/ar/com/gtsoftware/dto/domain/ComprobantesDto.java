@@ -19,8 +19,8 @@ package ar.com.gtsoftware.dto.domain;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,7 +40,7 @@ public class ComprobantesDto {
     @EqualsAndHashCode.Include
     private Long id;
 
-    private Date fechaComprobante;
+    private LocalDateTime fechaComprobante;
     private BigDecimal total;
     private BigDecimal saldo;
     private String observaciones;

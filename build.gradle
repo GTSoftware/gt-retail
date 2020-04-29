@@ -107,7 +107,7 @@ task appNpmBuild(type: NpmTask) {
 
 appNpmBuild.dependsOn appNpmInstall
 copyWebApp.dependsOn appNpmBuild
-//compileJava.dependsOn copyWebApp
+compileJava.dependsOn copyWebApp
 
 node {
     download = true

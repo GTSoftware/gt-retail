@@ -5,7 +5,6 @@ import {AppFooter} from './AppFooter';
 import {AppMenu} from './AppMenu';
 import {AppProfile} from './AppProfile';
 import {Redirect, Route, Switch} from 'react-router-dom';
-import {Dashboard} from './components/Dashboard';
 import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
@@ -20,6 +19,7 @@ import LoginService from "./service/LoginService.js";
 import {UsersList} from "./components/UsersList";
 import {ShopCart} from "./components/shop-cart/ShopCart";
 import {PageNotFound} from "./components/PageNotFound";
+import {GTDashboard} from "./components/dashboard/GTDashboard";
 
 const ProtectedRoute = ({component: Component, ...rest}) => (
     <Route {...rest} render={(props) => (
@@ -189,7 +189,7 @@ class App extends Component {
                     <Switch>
                         <Route path="/login" render={(props) => <Login {...props} onLoginSuccess={() =>
                             this.setState({userLoggedIn: true})}/>}/>
-                        <ProtectedRoute path="/" exact component={Dashboard}/>
+                        <ProtectedRoute path="/" exact component={GTDashboard}/>
                         <ProtectedRoute path="/users" component={UsersList}/>
                         <ProtectedRoute path="/shop-cart" component={ShopCart}/>
                         <Route component={PageNotFound}/>

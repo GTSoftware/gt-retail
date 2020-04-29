@@ -22,7 +22,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -58,8 +58,8 @@ public class Comprobantes extends BaseEntity {
     @Basic(optional = false)
     @NotNull
     @Column(name = "fecha_comprobante")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaComprobante;
+    //@Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime fechaComprobante;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
     @NotNull

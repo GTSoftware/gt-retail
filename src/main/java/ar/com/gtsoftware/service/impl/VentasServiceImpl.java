@@ -29,6 +29,7 @@ import ar.com.gtsoftware.search.DepositosSearchFilter;
 import ar.com.gtsoftware.search.FiscalLetrasComprobantesSearchFilter;
 import ar.com.gtsoftware.service.PersonasCuentaCorrienteService;
 import ar.com.gtsoftware.service.VentasService;
+import ar.com.gtsoftware.utils.BusinessDateUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
@@ -67,6 +68,7 @@ public class VentasServiceImpl implements VentasService {
     private final NegocioFormasPagoFacade formasPagoFacade;
     private final NegocioPlanesPagoFacade planesPagoFacade;
     private final NegocioPlanesPagoDetalleFacade planesPagoDetalleFacade;
+    private final BusinessDateUtils dateUtils;
 
     private final PersonasCuentaCorrienteService cuentaCorrienteBean;
 
@@ -83,7 +85,7 @@ public class VentasServiceImpl implements VentasService {
             comprobante.setSaldo(comprobante.getTotal());
         }
         comprobante.setIdEstadoComprobante(estadosFacade.find(ID_ESTADO_ACEPTADA));
-        comprobante.setFechaComprobante(new Date());
+        comprobante.setFechaComprobante(dateUtils.getCurrentDateTime());
 
         FiscalLetrasComprobantesSearchFilter lsf = FiscalLetrasComprobantesSearchFilter.builder()
                 .idRespIvaReceptor(comprobante.getIdPersona().getIdResponsabilidadIva().getId())

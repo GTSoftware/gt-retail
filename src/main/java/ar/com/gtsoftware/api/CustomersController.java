@@ -15,5 +15,5 @@ public interface CustomersController {
     Customer addNewCustomer(@Valid @RequestBody NewCustomerRequest newCustomerRequest);
 
     @GetMapping(path = "/customers/customer")
-    Customer getCustomer(@RequestParam Long identificationTypeId, Long identificationNumber);
+    Customer getCustomer(@RequestParam Long identificationTypeId, @RequestParam Long identificationNumber);
 }

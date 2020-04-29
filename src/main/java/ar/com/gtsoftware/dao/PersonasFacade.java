@@ -83,8 +83,12 @@ public class PersonasFacade extends AbstractFacade<Personas, PersonasSearchFilte
             Predicate p1 = cb.equal(persona.get(Personas_.activo), psf.getActivo());
             p = appendAndPredicate(cb, p, p1);
         }
-        return p;
+        if (psf.hasFechasFilter()) {
+            Predicate p1 = cb.between(persona.get(Personas_.fechaAlta), psf.getFechaAltaDesde(), psf.getFechaAltaHasta());
+            p = appendAndPredicate(cb, p1, p);
+        }
 
+        return p;
     }
 
     /**
