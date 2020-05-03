@@ -17,15 +17,23 @@
 
 package ar.com.gtsoftware.service.impl;
 
-import ar.com.gtsoftware.dao.RemitoFacade;
+import ar.com.gtsoftware.dao.*;
 import ar.com.gtsoftware.domain.Remito;
+import ar.com.gtsoftware.domain.RemitoDetalle;
+import ar.com.gtsoftware.domain.RemitoRecepcion;
 import ar.com.gtsoftware.dto.domain.RemitoDto;
 import ar.com.gtsoftware.mappers.RemitoMapper;
+import ar.com.gtsoftware.mappers.helper.CycleAvoidingMappingContext;
 import ar.com.gtsoftware.search.RemitoSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;
 import ar.com.gtsoftware.service.RemitoService;
+import ar.com.gtsoftware.utils.BusinessDateUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.util.Collections;
 
 @Service
 @RequiredArgsConstructor
@@ -37,6 +45,13 @@ public class RemitoServiceImpl
 
     private final RemitoMapper mapper;
 
+    private final UsuariosFacade usuariosFacade;
+    private final RemitoTipoMovimientoFacade tipoMovimientoFacade;
+    private final DepositosFacade depositosFacade;
+    private final BusinessDateUtils dateUtils;
+    private final ProductosFacade productosFacade;
+    private final PersonasFacade personasFacade;
+
     @Override
     protected RemitoFacade getFacade() {
         return facade;
@@ -47,4 +62,59 @@ public class RemitoServiceImpl
         return mapper;
     }
 
+    @Override
+    @Transactional
+    public Long guardarRemito(RemitoDto remitoDto) {
+        Remito remito = mapper.dtoToEntity(remitoDto, new CycleAvoidingMappingContext());
+        completeInformation(remito);
+        //TODO validar cantidades
+
+        final LocalDateTime now = dateUtils.getCurrentDateTime();
+
+        remito.setFechaAlta(now);
+        agregarRemitoRecepcion(remito);
+
+        return facade.createOrEdit(remito).getId();
+    }
+
+    private void agregarRemitoRecepcion(Remito remito) {
+        RemitoRecepcion recepcion = new RemitoRecepcion();
+        recepcion.setRemito(remito);
+        recepcion.setFecha(remito.getFechaAlta());
+        recepcion.setIdUsuario(remito.getIdUsuario());
+
+        if (remito.getIsDestinoInterno()) {
+            recepcion.setIdDeposito(remito.getIdDestinoPrevistoInterno());
+        } else {
+            recepcion.setIdPersona(remito.getIdDestinoPrevistoExterno());
+        }
+
+        remito.setRemitoRecepcionesList(Collections.singletonList(recepcion));
+    }
+
+    private void completeInformation(Remito remito) {
+        remito.setIdUsuario(usuariosFacade.find(remito.getIdUsuario().getId()));
+        remito.setRemitoTipoMovimiento(tipoMovimientoFacade.find(remito.getRemitoTipoMovimiento().getId()));
+
+        if (remito.getIsDestinoInterno()) {
+            remito.setIdDestinoPrevistoInterno(depositosFacade.find(remito.getIdDestinoPrevistoInterno().getId()));
+        } else {
+            remito.setIdDestinoPrevistoExterno(personasFacade.find(remito.getIdDestinoPrevistoExterno()));
+        }
+
+        if (remito.getIsOrigenInterno()) {
+            remito.setIdOrigenInterno(depositosFacade.find(remito.getIdOrigenInterno().getId()));
+        } else {
+            remito.setIdOrigenExterno(personasFacade.find(remito.getIdOrigenExterno().getId()));
+        }
+
+        completeRemitoDetalles(remito);
+    }
+
+    private void completeRemitoDetalles(Remito remito) {
+        for (RemitoDetalle rd : remito.getDetalleList()) {
+            rd.setRemitoCabecera(remito);
+            rd.setIdProducto(productosFacade.find(rd.getIdProducto().getId()));
+        }
+    }
 }

@@ -20,12 +20,9 @@ import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
-/**
- * @author fede
- */
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
@@ -37,7 +34,7 @@ public class RemitoDto {
 
     @EqualsAndHashCode.Include
     private Long id;
-    private Date fechaAlta;
+    private LocalDateTime fechaAlta;
 
     @NotNull
     private UsuariosDto idUsuario;
@@ -58,7 +55,7 @@ public class RemitoDto {
 
     private DepositosDto idDestinoPrevistoInterno;
 
-    private Date fechaCierre;
+    private LocalDateTime fechaCierre;
 
     @NotNull
     private RemitoTipoMovimientoDto remitoTipoMovimiento;

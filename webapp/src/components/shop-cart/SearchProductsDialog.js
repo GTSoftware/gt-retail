@@ -41,7 +41,7 @@ export class SearchProductsDialog extends Component {
             activeSearchTab: 0,
             searchFilter: {
                 activo: true,
-                puedeComprarse: true,
+                puedeVenderse: true,
                 conStock: true,
                 idSucursal: LoginService.getUserDetails().sucursalId,
                 sortFields: [{

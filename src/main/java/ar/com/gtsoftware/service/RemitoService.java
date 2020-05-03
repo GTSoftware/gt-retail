@@ -24,4 +24,5 @@ import ar.com.gtsoftware.search.RemitoSearchFilter;
 public interface RemitoService
         extends EntityService<RemitoDto, RemitoSearchFilter> {
 
+    Long guardarRemito(RemitoDto remitoDto);
 }

@@ -20,26 +20,22 @@ import lombok.*;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
-/**
- * @author fede
- */
-@Data
+@Getter
+@Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class RemitoRecepcionDto implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
     @EqualsAndHashCode.Include
     private Long id;
     @NotNull
     private RemitoDto remito;
 
-    private Date fecha;
+    private LocalDateTime fecha;
 
     @NotNull
     private UsuariosDto idUsuario;

@@ -18,19 +18,12 @@ package ar.com.gtsoftware.search;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 
-/**
- * SearchFilter para la entidad DepositosDto
- *
- * @author Rodrigo Tato mailto:rotatomel@gmail.com
- */
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class DepositosSearchFilter extends AbstractSearchFilter {
-
-    private static final long serialVersionUID = 1L;
 
     private String nombreDeposito;
     private Boolean activo;

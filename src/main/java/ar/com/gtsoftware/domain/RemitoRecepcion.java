@@ -20,11 +20,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.time.LocalDateTime;
 
-/**
- * @author fede
- */
+
 @Entity
 @Table(name = "remitos_recepciones")
 @Getter
@@ -45,8 +43,7 @@ public class RemitoRecepcion extends BaseEntity {
     private Remito remito;
 
     @Column(name = "fecha")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fecha;
+    private LocalDateTime fecha;
 
     @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
     @ManyToOne
@@ -61,8 +58,4 @@ public class RemitoRecepcion extends BaseEntity {
     @ManyToOne
     private Depositos idDeposito;
 
-    @PrePersist
-    public void dateOnCreate() {
-        fecha = new Date();
-    }
 }

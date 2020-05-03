@@ -32,27 +32,27 @@
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
-	<field name="id" class="java.lang.Long"/>
-	<field name="total" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[total]]></fieldDescription>
-	</field>
-	<field name="idCondicionComprobante" class="ar.com.gtsoftware.dto.domain.NegocioCondicionesOperacionesDto">
-		<fieldDescription><![CDATA[idCondicionComprobante]]></fieldDescription>
-	</field>
-	<field name="idSucursal" class="ar.com.gtsoftware.dto.domain.SucursalesDto">
-		<fieldDescription><![CDATA[idSucursal]]></fieldDescription>
-	</field>
-	<field name="fechaComprobante" class="java.util.Date">
-		<fieldDescription><![CDATA[fechaComprobante]]></fieldDescription>
-	</field>
-	<field name="idPersona" class="ar.com.gtsoftware.dto.domain.PersonasDto">
-		<fieldDescription><![CDATA[idPersona]]></fieldDescription>
-	</field>
-	<field name="saldo" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[saldo]]></fieldDescription>
-	</field>
-	<field name="id_1" class="java.lang.Integer">
-		<fieldDescription><![CDATA[id]]></fieldDescription>
+    <field name="id" class="java.lang.Long"/>
+    <field name="total" class="java.math.BigDecimal">
+        <fieldDescription><![CDATA[total]]></fieldDescription>
+    </field>
+    <field name="idCondicionComprobante" class="ar.com.gtsoftware.dto.domain.NegocioCondicionesOperacionesDto">
+        <fieldDescription><![CDATA[idCondicionComprobante]]></fieldDescription>
+    </field>
+    <field name="idSucursal" class="ar.com.gtsoftware.dto.domain.SucursalesDto">
+        <fieldDescription><![CDATA[idSucursal]]></fieldDescription>
+    </field>
+    <field name="fechaComprobante" class="java.time.LocalDateTime">
+        <fieldDescription><![CDATA[fechaComprobante]]></fieldDescription>
+    </field>
+    <field name="idPersona" class="ar.com.gtsoftware.dto.domain.PersonasDto">
+        <fieldDescription><![CDATA[idPersona]]></fieldDescription>
+    </field>
+    <field name="saldo" class="java.math.BigDecimal">
+        <fieldDescription><![CDATA[saldo]]></fieldDescription>
+    </field>
+    <field name="id_1" class="java.lang.Integer">
+        <fieldDescription><![CDATA[id]]></fieldDescription>
 	</field>
 	<field name="comprobantesLineasList" class="java.util.List">
 		<fieldDescription><![CDATA[comprobantesLineasList]]></fieldDescription>

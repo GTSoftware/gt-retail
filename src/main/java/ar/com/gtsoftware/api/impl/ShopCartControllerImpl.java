@@ -230,6 +230,8 @@ class ShopCartControllerImpl implements ShopCartController {
             if (integerPart.signum() != 0) {
                 fixedCantidad = integerPart;
             }
+        } else {
+            fixedCantidad = requestCantidad;
         }
 
         return fixedCantidad;

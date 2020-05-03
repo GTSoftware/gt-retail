@@ -15,7 +15,6 @@ export class AppProfile extends Component {
             expanded: false
         };
         this.onClick = this.onClick.bind(this);
-        this.handleLogOut = this.handleLogOut.bind(this);
     }
 
     onClick(event) {
@@ -51,7 +50,7 @@ export class AppProfile extends Component {
         );
     }
 
-    handleLogOut() {
+    handleLogOut = () => {
         LoginService.performLogout();
 
         if (this.props.onLogout) {

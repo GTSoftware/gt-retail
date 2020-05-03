@@ -11,7 +11,7 @@ import java.util.Date;
 @Getter
 @Setter
 @Builder
-public class ProductSearchResponse {
+public class ProductSearchResult {
     private Long id;
     private String codigoPropio;
     private String descripcion;

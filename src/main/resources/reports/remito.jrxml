@@ -13,30 +13,30 @@
 	<parameter name="empresa.telefono" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="empresa.email" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="empresa.cuit" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="empresa.razon_social" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="empresa.nombre_fantasia" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="empresa.localidad" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="empresa.provincia" class="java.lang.String" isForPrompting="false"/>
-	<queryString>
-		<![CDATA[]]>
-	</queryString>
-	<field name="detalleList" class="java.util.List">
-		<fieldDescription><![CDATA[detalleList]]></fieldDescription>
-	</field>
-	<field name="fechaAlta" class="java.util.Date">
-		<fieldDescription><![CDATA[fechaAlta]]></fieldDescription>
-	</field>
-	<field name="fechaCierre" class="java.util.Date">
-		<fieldDescription><![CDATA[fechaCierre]]></fieldDescription>
-	</field>
-	<field name="id" class="java.lang.Long">
-		<fieldDescription><![CDATA[id]]></fieldDescription>
-	</field>
-	<field name="idDestinoPrevistoExterno" class="ar.com.gtsoftware.dto.domain.PersonasDto">
-		<fieldDescription><![CDATA[idDestinoPrevistoExterno]]></fieldDescription>
-	</field>
-	<field name="idDestinoPrevistoInterno" class="ar.com.gtsoftware.dto.domain.DepositosDto">
-		<fieldDescription><![CDATA[idDestinoPrevistoInterno]]></fieldDescription>
+    <parameter name="empresa.razon_social" class="java.lang.String" isForPrompting="false"/>
+    <parameter name="empresa.nombre_fantasia" class="java.lang.String" isForPrompting="false"/>
+    <parameter name="empresa.localidad" class="java.lang.String" isForPrompting="false"/>
+    <parameter name="empresa.provincia" class="java.lang.String" isForPrompting="false"/>
+    <queryString>
+        <![CDATA[]]>
+    </queryString>
+    <field name="detalleList" class="java.util.List">
+        <fieldDescription><![CDATA[detalleList]]></fieldDescription>
+    </field>
+    <field name="fechaAlta" class="java.time.LocalDateTime">
+        <fieldDescription><![CDATA[fechaAlta]]></fieldDescription>
+    </field>
+    <field name="fechaCierre" class="java.time.LocalDateTime">
+        <fieldDescription><![CDATA[fechaCierre]]></fieldDescription>
+    </field>
+    <field name="id" class="java.lang.Long">
+        <fieldDescription><![CDATA[id]]></fieldDescription>
+    </field>
+    <field name="idDestinoPrevistoExterno" class="ar.com.gtsoftware.dto.domain.PersonasDto">
+        <fieldDescription><![CDATA[idDestinoPrevistoExterno]]></fieldDescription>
+    </field>
+    <field name="idDestinoPrevistoInterno" class="ar.com.gtsoftware.dto.domain.DepositosDto">
+        <fieldDescription><![CDATA[idDestinoPrevistoInterno]]></fieldDescription>
 	</field>
 	<field name="idOrigenExterno" class="ar.com.gtsoftware.dto.domain.PersonasDto">
 		<fieldDescription><![CDATA[idOrigenExterno]]></fieldDescription>
@@ -89,10 +89,10 @@
 				<reportElement x="322" y="40" width="100" height="20" uuid="c5e45c98-dfb7-44b6-829c-bca9f101868f"/>
 				<text><![CDATA[Fecha impresión:]]></text>
 			</staticText>
-			<textField pattern="dd/MM/yyyy h:mm a">
-				<reportElement x="422" y="40" width="127" height="20" uuid="d24ef876-2571-4b81-bd80-ad6bb64cdc31"/>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
-			</textField>
+            <textField pattern="dd/MM/yyyy h:mm a">
+                <reportElement x="422" y="40" width="127" height="20" uuid="d24ef876-2571-4b81-bd80-ad6bb64cdc31"/>
+                <textFieldExpression><![CDATA[java.time.LocalDateTime.now()]]></textFieldExpression>
+            </textField>
 			<staticText>
 				<reportElement x="266" y="0" width="23" height="40" uuid="e954d5f6-1565-42e0-8809-791e5164d1b1"/>
 				<textElement textAlignment="Center">

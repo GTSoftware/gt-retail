@@ -17,7 +17,7 @@ package ar.com.gtsoftware.search;
 
 import lombok.*;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
@@ -33,8 +33,8 @@ import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 @Builder
 public class RemitoSearchFilter extends AbstractSearchFilter {
 
-    private Date fechaAltaDesde;
-    private Date fechaAltaHasta;
+    private LocalDateTime fechaAltaDesde;
+    private LocalDateTime fechaAltaHasta;
     private Long idTipoMovimiento;
     private Long idProducto;
     private String descripcionProducto;
@@ -47,11 +47,6 @@ public class RemitoSearchFilter extends AbstractSearchFilter {
                 || isNotEmpty(descripcionProducto);
     }
 
-    /**
-     * Retorna true si ambos filtros de búsqueda por fecha de alta del remitoDtoCabecera están establecidos.
-     *
-     * @return
-     */
     public boolean hasEntreFechasAltaFilter() {
         return fechaAltaDesde != null && fechaAltaHasta != null;
     }

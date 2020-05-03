@@ -20,10 +20,8 @@ import lombok.*;
 
 import java.util.Date;
 
-/**
- * @author rodrigo
- */
-@Data
+@Getter
+@Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 @AllArgsConstructor
@@ -49,6 +47,5 @@ public class DepositosDto {
     public String toString() {
         return String.format(BUSINESS_STRING, id, nombreDeposito, idSucursal.toString());
     }
-
 
 }

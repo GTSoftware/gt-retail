@@ -192,6 +192,12 @@ public class ProductosFacade extends AbstractFacade<Productos, ProductosSearchFi
             }
             p = appendAndPredicate(cb, p, pstk);
         }
+
+        if (psf.getLlevaControlStock() != null) {
+            Predicate p1 = cb.equal(root.get(Productos_.idTipoProveeduria).get(ProductosTiposProveeduria_.controlStock), psf.getLlevaControlStock());
+            p = appendAndPredicate(cb, p, p1);
+        }
+
         return p;
 
     }

@@ -20,17 +20,13 @@ import lombok.*;
 
 import java.math.BigDecimal;
 
-/**
- * @author fede
- */
-@Data
+@Getter
+@Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class RemitoDetalleDto {
-
-    private static final long serialVersionUID = 1L;
 
     @EqualsAndHashCode.Include
     private Long id;
@@ -43,9 +39,5 @@ public class RemitoDetalleDto {
     @EqualsAndHashCode.Include
     private int nroLinea;
     private Integer version;
-
-    private transient BigDecimal stockTotal;
-    private transient BigDecimal stockDeposito;
-
 
 }

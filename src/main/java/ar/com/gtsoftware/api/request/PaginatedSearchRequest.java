@@ -4,6 +4,7 @@ import ar.com.gtsoftware.search.AbstractSearchFilter;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
@@ -16,5 +17,6 @@ public class PaginatedSearchRequest<T extends AbstractSearchFilter> {
     @Min(1)
     private Integer maxResults;
     @NotNull
+    @Valid
     private T searchFilter;
 }

@@ -47,6 +47,7 @@ public class ProductosSearchFilter extends AbstractSearchFilter {
     private Long idSucursal;
     @Builder.Default
     private boolean buscarEnTodosLados = false;
+    private Boolean llevaControlStock;
 
     @Override
     public boolean hasFilter() {
@@ -64,7 +65,8 @@ public class ProductosSearchFilter extends AbstractSearchFilter {
                 || idMarca != null
                 || conStock != null
                 || stockDebajoMinimo != null
-                || StringUtils.isNotEmpty(codigoFabrica);
+                || StringUtils.isNotEmpty(codigoFabrica)
+                || llevaControlStock != null;
     }
 
 }

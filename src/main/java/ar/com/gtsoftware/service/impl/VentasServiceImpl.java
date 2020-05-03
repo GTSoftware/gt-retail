@@ -37,9 +37,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -97,8 +97,7 @@ public class VentasServiceImpl implements VentasService {
         RegistroVentaDto registro = new RegistroVentaDto();
         registro.setIdComprobante(comprobante.getId());
         if (generarRemitoSalida && !isPresupuesto) {
-            long idRemito = generarRemitoComprobante(comprobante.getId(),
-                    comprobante.getIdUsuario().getId());
+            long idRemito = generarRemitoComprobante(comprobante);
 
             registro.setIdRemito(idRemito);
         }
@@ -171,8 +170,7 @@ public class VentasServiceImpl implements VentasService {
     }
 
     //TODO esto deberìa ir en un bean responsable de manejar el stock :S
-    private long generarRemitoComprobante(long idComprobante, long idUsuario) {
-        Comprobantes venta = facade.find(idComprobante);
+    private long generarRemitoComprobante(Comprobantes venta) {
 
         Remito rem = new Remito();
         List<RemitoDetalle> remitoDetalle = new ArrayList<>(venta.getComprobantesLineasList().size());
@@ -195,13 +193,13 @@ public class VentasServiceImpl implements VentasService {
         if (CollectionUtils.isEmpty(remitoDetalle)) {
             return 0;
         }
-        Date hoy = new Date();
+        LocalDateTime fechaRemito = venta.getFechaComprobante();
 
         rem.setDetalleList(remitoDetalle);
-        rem.setFechaAlta(hoy);
-        rem.setFechaCierre(hoy);
+        rem.setFechaAlta(fechaRemito);
+        rem.setFechaCierre(fechaRemito);
         RemitoRecepcion recepcion = new RemitoRecepcion();
-        recepcion.setFecha(hoy);
+        recepcion.setFecha(fechaRemito);
         recepcion.setRemito(rem);
         recepcion.setIdUsuario(venta.getIdUsuario());
 
@@ -228,7 +226,7 @@ public class VentasServiceImpl implements VentasService {
         //TODO: Seteado en Venta por defecto pero debería ir el que corresponda.
         rem.setRemitoTipoMovimiento(tipoMovimientoFacade.find(ID_TIPO_MOV_VENTA));
         rem.setRemitoRecepcionesList(Collections.singletonList(recepcion));
-        rem.setIdUsuario(usuariosFacade.find(idUsuario));
+        rem.setIdUsuario(venta.getIdUsuario());
 
         remitoFacade.create(rem);
 

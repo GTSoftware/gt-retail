@@ -2,14 +2,14 @@ import axios from 'axios';
 
 export class ProductsService {
 
-    searchProducts(searchOptions, successFunction, errorFunction) {
+    searchProducts(searchOptions, successCallback, errorCallback) {
         let promise = axios.post(`/products/search`, searchOptions);
 
-        if (successFunction) {
-            promise.then(response => successFunction(response.data));
+        if (successCallback) {
+            promise.then(response => successCallback(response.data));
         }
-        if (errorFunction) {
-            promise.catch(error => errorFunction(error.response.data))
+        if (errorCallback) {
+            promise.catch(error => errorCallback(error.response.data))
         }
     }
 

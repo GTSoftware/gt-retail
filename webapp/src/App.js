@@ -20,6 +20,7 @@ import {UsersList} from "./components/UsersList";
 import {ShopCart} from "./components/shop-cart/ShopCart";
 import {PageNotFound} from "./components/PageNotFound";
 import {GTDashboard} from "./components/dashboard/GTDashboard";
+import {ManualDeliveryNote} from "./components/delivery-note/ManualDeliveryNote";
 
 const ProtectedRoute = ({component: Component, ...rest}) => (
     <Route {...rest} render={(props) => (
@@ -39,19 +40,19 @@ class App extends Component {
             staticMenuInactive: false,
             overlayMenuActive: false,
             mobileMenuActive: false,
-            userLoggedIn: false
+            userLoggedIn: false,
+            menu: this.getDefaultMenuItems()
         };
 
         this.onWrapperClick = this.onWrapperClick.bind(this);
         this.onToggleMenu = this.onToggleMenu.bind(this);
         this.onSidebarClick = this.onSidebarClick.bind(this);
         this.onMenuItemClick = this.onMenuItemClick.bind(this);
-        this.createMenu();
     }
 
     componentDidMount() {
         if (LoginService.isUserLoggedIn()) {
-            this.setState({userLoggedIn: true});
+            this.loadLoginStatus();
         }
     }
 
@@ -102,31 +103,48 @@ class App extends Component {
         }
     }
 
-    createMenu() {
-        this.menu = [
+    // createMenu() {
+    //     this.menu = this.getDefaultMenuItems();
+    // }
+
+    getDefaultMenuItems = () => {
+        return [
             {
                 label: 'Dashboard', icon: 'fa fa-fw fa-home', command: () => {
                     window.location = '#/'
                 }
-            },
-            // {
-            //     label: 'Usuarios', icon: 'fa fa-fw fa-users', command: () => {
-            //         window.location = '#/users'
-            //     }
-            // },
-            {
-                label: 'Ventas', icon: 'fa fa-fw fa-shopping-cart',
-                items: [
-                    {
-                        label: 'Nueva',
-                        icon: 'fa fa-fw fa-cart-plus',
-                        command: () => {
-                            window.location = '#/shop-cart'
-                        }
-                    }
-                ]
             }
-        ];
+        ]
+    }
+
+    getRemitosMenuItem = () => {
+        return {
+            label: 'Remitos', icon: 'fa fa-fw fa-truck-loading',
+            items: [
+                {
+                    label: 'Nuevo Remito',
+                    icon: 'fa fa-fw fa-plus',
+                    command: () => {
+                        window.location = '#/delivery-note'
+                    }
+                }
+            ]
+        };
+    }
+
+    getVentasMenuItem = () => {
+        return {
+            label: 'Ventas', icon: 'fa fa-fw fa-shopping-cart',
+            items: [
+                {
+                    label: 'Nueva',
+                    icon: 'fa fa-fw fa-cart-plus',
+                    command: () => {
+                        window.location = '#/shop-cart'
+                    }
+                }
+            ]
+        }
     }
 
     addClass(element, className) {
@@ -181,26 +199,61 @@ class App extends Component {
                     <div className="layout-logo">
                         <img alt="Logo" src={logo} style={{height: "40px"}}/>
                     </div>
-                    <AppProfile onLogout={() => this.setState({userLoggedIn: false})}/>
-                    <AppMenu model={this.menu} onMenuItemClick={this.onMenuItemClick}/>
+                    <AppProfile onLogout={() => this.resetLoginStatus()}/>
+                    <AppMenu model={this.state.menu} onMenuItemClick={this.onMenuItemClick}/>
                 </div>}
 
                 <div className="layout-main">
                     <Switch>
                         <Route path="/login" render={(props) => <Login {...props} onLoginSuccess={() =>
-                            this.setState({userLoggedIn: true})}/>}/>
+                            this.loadLoginStatus()}/>}/>
                         <ProtectedRoute path="/" exact component={GTDashboard}/>
                         <ProtectedRoute path="/users" component={UsersList}/>
                         <ProtectedRoute path="/shop-cart" component={ShopCart}/>
+                        <ProtectedRoute path="/delivery-note"
+                                        component={ManualDeliveryNote}/>
                         <Route component={PageNotFound}/>
                     </Switch>
                 </div>
 
                 {isUserLoggedIn && <AppFooter/>}
 
-                <div className="layout-mask"></div>
+                <div className="layout-mask"/>
             </div>
         );
+    }
+
+    resetLoginStatus = () => {
+        this.setState({
+            userLoggedIn: false,
+            adminUser: false,
+            stockManUser: false,
+            salesManUser: false,
+            menu: this.getDefaultMenuItems()
+        })
+    }
+
+    loadLoginStatus = () => {
+        let roleDependantMenu = this.getDefaultMenuItems();
+        let adminUser = LoginService.hasUserRole('ADMINISTRADORES');
+        let stockManUser = LoginService.hasUserRole('STOCK_MEN')
+        let salesManUser = LoginService.hasUserRole('VENDEDORES')
+
+        if (adminUser || salesManUser) {
+            roleDependantMenu = roleDependantMenu.concat(this.getVentasMenuItem());
+        }
+
+        if (adminUser || stockManUser) {
+            roleDependantMenu = roleDependantMenu.concat(this.getRemitosMenuItem());
+        }
+
+        this.setState({
+            userLoggedIn: true,
+            adminUser: adminUser,
+            stockManUser: stockManUser,
+            salesManUser: salesManUser,
+            menu: roleDependantMenu
+        });
     }
 }
 

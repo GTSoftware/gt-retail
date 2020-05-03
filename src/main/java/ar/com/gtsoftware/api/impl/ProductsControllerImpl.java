@@ -3,7 +3,7 @@ package ar.com.gtsoftware.api.impl;
 import ar.com.gtsoftware.api.ProductsController;
 import ar.com.gtsoftware.api.request.PaginatedSearchRequest;
 import ar.com.gtsoftware.api.response.PaginatedResponse;
-import ar.com.gtsoftware.api.response.ProductSearchResponse;
+import ar.com.gtsoftware.api.response.ProductSearchResult;
 import ar.com.gtsoftware.dto.domain.ProductosDto;
 import ar.com.gtsoftware.enums.Parametros;
 import ar.com.gtsoftware.search.ProductosSearchFilter;
@@ -24,14 +24,14 @@ public class ProductsControllerImpl implements ProductsController {
     private final ParametrosService parametrosService;
 
     @Override
-    public PaginatedResponse<ProductSearchResponse> findBySearchFilter(@Valid PaginatedSearchRequest<ProductosSearchFilter> searchRequest) {
+    public PaginatedResponse<ProductSearchResult> findBySearchFilter(@Valid PaginatedSearchRequest<ProductosSearchFilter> searchRequest) {
         final ProductosSearchFilter searchFilter = searchRequest.getSearchFilter();
         if (searchFilter.getIdListaPrecio() == null) {
             searchFilter.setIdListaPrecio(parametrosService.getLongParam(Parametros.ID_LISTA_VENTA));
         }
 
         final int count = productosService.countBySearchFilter(searchFilter);
-        final PaginatedResponse<ProductSearchResponse> response = PaginatedResponse.<ProductSearchResponse>builder().totalResults(count).build();
+        final PaginatedResponse<ProductSearchResult> response = PaginatedResponse.<ProductSearchResult>builder().totalResults(count).build();
 
         if (count > 0) {
             final List<ProductosDto> productos = productosService.findBySearchFilter(searchFilter,
@@ -43,11 +43,11 @@ public class ProductsControllerImpl implements ProductsController {
         return response;
     }
 
-    private List<ProductSearchResponse> transformProducts(List<ProductosDto> productos) {
-        List<ProductSearchResponse> productSearchResponseList = new ArrayList<>(productos.size());
+    private List<ProductSearchResult> transformProducts(List<ProductosDto> productos) {
+        List<ProductSearchResult> productSearchResults = new ArrayList<>(productos.size());
 
         for (ProductosDto dto : productos) {
-            final ProductSearchResponse productSearchResponse = ProductSearchResponse.builder()
+            final ProductSearchResult productSearchResult = ProductSearchResult.builder()
                     .codigoFabricante(dto.getCodigoFabricante())
                     .codigoPropio(dto.getCodigoPropio())
                     .descripcion(dto.getDescripcion())
@@ -65,10 +65,10 @@ public class ProductsControllerImpl implements ProductsController {
                     .stockActualEnSucursal(dto.getStockActualEnSucursal())
                     .build();
 
-            productSearchResponseList.add(productSearchResponse);
+            productSearchResults.add(productSearchResult);
         }
 
-        return productSearchResponseList;
+        return productSearchResults;
     }
 
 }

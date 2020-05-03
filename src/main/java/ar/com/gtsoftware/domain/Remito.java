@@ -20,12 +20,10 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
-/**
- * @author fede
- */
+
 @Entity
 @Table(name = "remitos")
 @Getter
@@ -41,8 +39,7 @@ public class Remito extends BaseEntity {
     private Long id;
 
     @Column(name = "fecha_alta")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaAlta;
+    private LocalDateTime fechaAlta;
 
     @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
     @ManyToOne
@@ -77,8 +74,7 @@ public class Remito extends BaseEntity {
     private Depositos idDestinoPrevistoInterno;
 
     @Column(name = "fecha_cierre")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaCierre;
+    private LocalDateTime fechaCierre;
 
     @NotNull
     @JoinColumn(name = "id_tipo_movimiento", referencedColumnName = "id_tipo_movimiento")
