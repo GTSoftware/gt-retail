@@ -99,7 +99,7 @@ public class RemitoServiceImpl
         if (remito.getIsDestinoInterno()) {
             remito.setIdDestinoPrevistoInterno(depositosFacade.find(remito.getIdDestinoPrevistoInterno().getId()));
         } else {
-            remito.setIdDestinoPrevistoExterno(personasFacade.find(remito.getIdDestinoPrevistoExterno()));
+            remito.setIdDestinoPrevistoExterno(personasFacade.find(remito.getIdDestinoPrevistoExterno().getId()));
         }
 
         if (remito.getIsOrigenInterno()) {
