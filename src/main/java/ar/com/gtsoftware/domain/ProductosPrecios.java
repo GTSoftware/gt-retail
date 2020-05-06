@@ -21,7 +21,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @author Rodrigo M. Tato Rothamel <rotatomel@gmail.com>
@@ -63,13 +63,6 @@ public class ProductosPrecios extends BaseEntity {
     @Basic(optional = false)
     @NotNull
     @Column(name = "fecha_modificacion")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaModificacion;
-
-    @PreUpdate
-    @PrePersist
-    protected void onUpdate() {
-        fechaModificacion = new Date();
-    }
+    private LocalDateTime fechaModificacion;
 
 }

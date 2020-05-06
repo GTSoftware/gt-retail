@@ -23,7 +23,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -55,13 +55,11 @@ public class Productos extends BaseEntity {
     @Basic(optional = false)
     @NotNull
     @Column(name = "fecha_alta")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaAlta;
+    private LocalDateTime fechaAlta;
     @Basic(optional = false)
     @NotNull
     @Column(name = "fecha_ultima_modificacion")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaUltimaModificacion;
+    private LocalDateTime fechaUltimaModificacion;
     @Basic(optional = false)
     @NotNull
     @Column(name = "activo")
@@ -139,16 +137,4 @@ public class Productos extends BaseEntity {
     @NotNull
     @Column(name = "stock_minimo", scale = 2, precision = 19)
     private BigDecimal stockMinimo;
-
-
-    @PrePersist
-    protected void onCreate() {
-        fechaAlta = new Date();
-        fechaUltimaModificacion = fechaAlta;
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        fechaUltimaModificacion = new Date();
-    }
 }

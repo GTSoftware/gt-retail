@@ -16,7 +16,7 @@ import {Column} from "primereact/column";
 import _ from "lodash";
 import {InputTextarea} from "primereact/inputtextarea";
 import FileOutputsService from "../../service/FileOutputsService";
-import {SearchProductsDialog} from "../shop-cart/SearchProductsDialog";
+import {SearchProductsDialog} from "../core/SearchProductsDialog";
 
 const DELIVERY_DIRECTION = {
     INTERNAL: 'Interno',
@@ -567,7 +567,7 @@ export class ManualDeliveryNote extends Component {
     handleSelectedProduct = (searchProduct) => {
         let {productToSearch} = this.state;
 
-        productToSearch.productId = searchProduct.id;
+        productToSearch.productId = searchProduct.productId;
 
         this.setState({productToSearch: productToSearch});
         this.tryAddProduct();

@@ -11,7 +11,7 @@ import {LoadingButton} from "../core/LoadingButton";
 import {ShopCartStore} from "../../stores/ShopCartStore";
 import {Dialog} from "primereact/dialog";
 import LoginService from "../../service/LoginService";
-import {SearchProductsDialog} from "./SearchProductsDialog";
+import {SearchProductsDialog} from "../core/SearchProductsDialog";
 
 const productColumns = [
     {field: 'codigoPropio', header: 'Código', style: {width: "10%"}},
@@ -412,7 +412,7 @@ export class ShopCartItems extends Component {
     handleSelectedProduct(searchProduct) {
         let productToSearch = this.state.productToSearch;
 
-        productToSearch.productId = searchProduct.id;
+        productToSearch.productId = searchProduct.productId;
 
         this.setState({productToSearch: productToSearch});
         this.tryAddProduct();

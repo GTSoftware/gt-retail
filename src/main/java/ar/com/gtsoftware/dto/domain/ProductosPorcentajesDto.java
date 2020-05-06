@@ -19,7 +19,7 @@ package ar.com.gtsoftware.dto.domain;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -32,7 +32,7 @@ public class ProductosPorcentajesDto {
 
     @EqualsAndHashCode.Include
     private Long id;
-    private Date fechaModificacion;
+    private LocalDateTime fechaModificacion;
     private BigDecimal valor;
 
     private ProductosTiposPorcentajesDto idTipoPorcentaje;

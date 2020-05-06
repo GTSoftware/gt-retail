@@ -21,17 +21,13 @@ import lombok.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-/**
- * @author Rodrigo Tato <rotatomel@gmail.com>
- */
-@Data
+@Getter
+@Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class ProductosTiposPorcentajesDto {
-
-    private static final long serialVersionUID = 1L;
 
     @EqualsAndHashCode.Include
     private Long id;
@@ -39,6 +35,5 @@ public class ProductosTiposPorcentajesDto {
     @Size(min = 1, max = 50)
     private String nombreTipo;
     private boolean porcentaje;
-
 
 }

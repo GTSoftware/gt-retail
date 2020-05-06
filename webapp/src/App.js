@@ -21,6 +21,7 @@ import {ShopCart} from "./components/shop-cart/ShopCart";
 import {PageNotFound} from "./components/PageNotFound";
 import {GTDashboard} from "./components/dashboard/GTDashboard";
 import {ManualDeliveryNote} from "./components/delivery-note/ManualDeliveryNote";
+import {BatchPricing} from "./components/pricing/BatchPricing";
 
 const ProtectedRoute = ({component: Component, ...rest}) => (
     <Route {...rest} render={(props) => (
@@ -103,21 +104,18 @@ class App extends Component {
         }
     }
 
-    // createMenu() {
-    //     this.menu = this.getDefaultMenuItems();
-    // }
-
     getDefaultMenuItems = () => {
         return [
             {
-                label: 'Dashboard', icon: 'fa fa-fw fa-home', command: () => {
+                label: 'Dashboard', icon: 'fa fa-fw fa-home',
+                command: () => {
                     window.location = '#/'
                 }
             }
         ]
     }
 
-    getRemitosMenuItem = () => {
+    getDeliveryNotesMenuItem = () => {
         return {
             label: 'Remitos', icon: 'fa fa-fw fa-truck-loading',
             items: [
@@ -132,7 +130,22 @@ class App extends Component {
         };
     }
 
-    getVentasMenuItem = () => {
+    getProductsMenuItem = () => {
+        return {
+            label: 'Productos', icon: 'fa fa-fw fa-boxes',
+            items: [
+                {
+                    label: 'Actualización masiva de precios',
+                    icon: 'fa fa-fw fa-calculator',
+                    command: () => {
+                        window.location = '#/batch-pricing'
+                    }
+                }
+            ]
+        };
+    }
+
+    getSalesMenuItem = () => {
         return {
             label: 'Ventas', icon: 'fa fa-fw fa-shopping-cart',
             items: [
@@ -212,6 +225,8 @@ class App extends Component {
                         <ProtectedRoute path="/shop-cart" component={ShopCart}/>
                         <ProtectedRoute path="/delivery-note"
                                         component={ManualDeliveryNote}/>
+                        <ProtectedRoute path="/batch-pricing"
+                                        component={BatchPricing}/>
                         <Route component={PageNotFound}/>
                     </Switch>
                 </div>
@@ -230,21 +245,25 @@ class App extends Component {
             stockManUser: false,
             salesManUser: false,
             menu: this.getDefaultMenuItems()
-        })
+        });
     }
 
     loadLoginStatus = () => {
         let roleDependantMenu = this.getDefaultMenuItems();
         let adminUser = LoginService.hasUserRole('ADMINISTRADORES');
-        let stockManUser = LoginService.hasUserRole('STOCK_MEN')
-        let salesManUser = LoginService.hasUserRole('VENDEDORES')
+        let stockManUser = LoginService.hasUserRole('STOCK_MEN');
+        let salesManUser = LoginService.hasUserRole('VENDEDORES');
 
         if (adminUser || salesManUser) {
-            roleDependantMenu = roleDependantMenu.concat(this.getVentasMenuItem());
+            roleDependantMenu = roleDependantMenu.concat(this.getSalesMenuItem());
         }
 
         if (adminUser || stockManUser) {
-            roleDependantMenu = roleDependantMenu.concat(this.getRemitosMenuItem());
+            roleDependantMenu = roleDependantMenu.concat(this.getDeliveryNotesMenuItem());
+        }
+
+        if (adminUser) {
+            roleDependantMenu = roleDependantMenu.concat(this.getProductsMenuItem());
         }
 
         this.setState({

@@ -20,7 +20,7 @@ import lombok.*;
 
 import javax.validation.constraints.Pattern;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -37,8 +37,8 @@ public class ProductosDto {
     private String codigoPropio;
     private String descripcion;
     private String observaciones;
-    private Date fechaAlta;
-    private Date fechaUltimaModificacion;
+    private LocalDateTime fechaAlta;
+    private LocalDateTime fechaUltimaModificacion;
     private boolean activo;
     private BigDecimal costoAdquisicionNeto;
 

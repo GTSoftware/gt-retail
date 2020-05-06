@@ -19,7 +19,7 @@ package ar.com.gtsoftware.dto.domain;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -41,7 +41,7 @@ public class ProductosPreciosDto {
 
     private BigDecimal neto;
 
-    private Date fechaModificacion;
+    private LocalDateTime fechaModificacion;
     private Integer version;
 
 }

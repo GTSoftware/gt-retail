@@ -21,7 +21,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @author Rodrigo Tato <rotatomel@gmail.com>
@@ -43,8 +43,7 @@ public class ProductosPorcentajes extends BaseEntity {
     @Basic(optional = false)
     @NotNull
     @Column(name = "fecha_modificacion")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaModificacion;
+    private LocalDateTime fechaModificacion;
     @NotNull
     @Column(name = "valor", nullable = false, precision = 19, scale = 4)
     private BigDecimal valor;
@@ -57,10 +56,4 @@ public class ProductosPorcentajes extends BaseEntity {
     @ManyToOne(optional = false)
     private Productos idProducto;
 
-
-    @PreUpdate
-    @PrePersist
-    protected void onUpdate() {
-        fechaModificacion = new Date();
-    }
 }

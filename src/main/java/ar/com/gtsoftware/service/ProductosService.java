@@ -17,6 +17,7 @@
 
 package ar.com.gtsoftware.service;
 
+import ar.com.gtsoftware.api.request.BatchPricingUpdateRequest;
 import ar.com.gtsoftware.dto.domain.ProductosDto;
 import ar.com.gtsoftware.search.ProductosSearchFilter;
 
@@ -24,4 +25,5 @@ import ar.com.gtsoftware.search.ProductosSearchFilter;
 public interface ProductosService
         extends EntityService<ProductosDto, ProductosSearchFilter> {
 
+    void updatePrices(BatchPricingUpdateRequest batchUpdateRequest);
 }

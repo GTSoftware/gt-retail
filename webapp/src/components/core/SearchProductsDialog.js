@@ -12,13 +12,13 @@ import {Checkbox} from "primereact/checkbox";
 
 
 const productColumns = [
-    {field: 'id', header: 'Id'},
+    {field: 'productId', header: 'Id'},
     {field: 'codigoPropio', header: 'Código'},
     {field: 'descripcion', header: 'Descripción', style: {width: "30%"}},
     {field: 'precioVenta', header: 'Precio', style: {"fontWeight": "bold"}},
-    {field: 'tipoUnidadVenta.nombreUnidad', header: 'Unidad'},
+    {field: 'saleUnit', header: 'Unidad'},
     {field: 'stockActualEnSucursal', header: 'Stock'},
-    {field: 'marca.nombreMarca', header: 'Marca'}
+    {field: 'brand.brandName', header: 'Marca'}
 ];
 
 export class SearchProductsDialog extends Component {
