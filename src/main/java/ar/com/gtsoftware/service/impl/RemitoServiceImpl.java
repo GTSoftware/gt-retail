@@ -21,10 +21,15 @@ import ar.com.gtsoftware.dao.*;
 import ar.com.gtsoftware.domain.Remito;
 import ar.com.gtsoftware.domain.RemitoDetalle;
 import ar.com.gtsoftware.domain.RemitoRecepcion;
+import ar.com.gtsoftware.dto.ProductoMovimiento;
 import ar.com.gtsoftware.dto.domain.RemitoDto;
+import ar.com.gtsoftware.mappers.ProductosMapper;
 import ar.com.gtsoftware.mappers.RemitoMapper;
 import ar.com.gtsoftware.mappers.helper.CycleAvoidingMappingContext;
+import ar.com.gtsoftware.search.ProductoXDepositoSearchFilter;
+import ar.com.gtsoftware.search.RemitoDetalleSearchFilter;
 import ar.com.gtsoftware.search.RemitoSearchFilter;
+import ar.com.gtsoftware.search.SortField;
 import ar.com.gtsoftware.service.BaseEntityService;
 import ar.com.gtsoftware.service.RemitoService;
 import ar.com.gtsoftware.utils.BusinessDateUtils;
@@ -32,8 +37,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -43,6 +51,8 @@ public class RemitoServiceImpl
 
     private final RemitoFacade facade;
 
+    private final RemitoDetalleFacade remitoDetalleFacade;
+
     private final RemitoMapper mapper;
 
     private final UsuariosFacade usuariosFacade;
@@ -51,6 +61,8 @@ public class RemitoServiceImpl
     private final BusinessDateUtils dateUtils;
     private final ProductosFacade productosFacade;
     private final PersonasFacade personasFacade;
+    private final ProductosMapper productosMapper;
+    private final ProductoXDepositoFacade stockFacade;
 
     @Override
     protected RemitoFacade getFacade() {
@@ -116,5 +128,50 @@ public class RemitoServiceImpl
             rd.setRemitoCabecera(remito);
             rd.setIdProducto(productosFacade.find(rd.getIdProducto().getId()));
         }
+    }
+
+    @Override
+    public List<ProductoMovimiento> getMovimientosProducto(RemitoDetalleSearchFilter sf) {
+        final BigDecimal stockActual = getStockActual(sf.getIdProducto(), sf.getIdDepositoMovimiento());
+        sf.setSortFields(Collections.singletonList(new SortField("remitoCabecera.fechaAlta", false)));
+        final List<RemitoDetalle> remitoDetalles = remitoDetalleFacade.findAllBySearchFilter(sf);
+
+        BigDecimal stockMovimiento = stockActual;
+        List<ProductoMovimiento> productoMovimientos = new ArrayList<>(remitoDetalles.size());
+        for (RemitoDetalle rd : remitoDetalles) {
+            final Remito remitoCabecera = rd.getRemitoCabecera();
+
+            productoMovimientos.add(
+                    ProductoMovimiento.builder()
+                            .cantidad(rd.getCantidad())
+                            .remito(mapper.entityToDto(remitoCabecera, new CycleAvoidingMappingContext()))
+                            .producto(productosMapper.entityToDto(rd.getIdProducto(), new CycleAvoidingMappingContext()))
+                            .stockParcial(stockMovimiento)
+                            .build()
+            );
+
+            if (remitoCabecera.getIsOrigenInterno() && !remitoCabecera.getIsDestinoInterno()) {
+                stockMovimiento = stockMovimiento.add(rd.getCantidad());
+            } else if (!remitoCabecera.getIsOrigenInterno() && remitoCabecera.getIsDestinoInterno()) {
+                stockMovimiento = stockMovimiento.subtract(rd.getCantidad());
+            }
+            if (remitoCabecera.getIsDestinoInterno() && remitoCabecera.getIsOrigenInterno()) {
+                if (remitoCabecera.getIdOrigenInterno().getId().equals(sf.getIdDepositoMovimiento())) {
+                    stockMovimiento = stockMovimiento.add(rd.getCantidad());
+                } else {
+                    stockMovimiento = stockMovimiento.subtract(rd.getCantidad());
+                }
+            }
+        }
+
+        return productoMovimientos;
+    }
+
+    private BigDecimal getStockActual(Long idProducto, Long idDepositoMovimiento) {
+        ProductoXDepositoSearchFilter stockSf = new ProductoXDepositoSearchFilter();
+        stockSf.setIdDeposito(idDepositoMovimiento);
+        stockSf.setIdProducto(idProducto);
+
+        return stockFacade.getStockBySearchFilter(stockSf);
     }
 }

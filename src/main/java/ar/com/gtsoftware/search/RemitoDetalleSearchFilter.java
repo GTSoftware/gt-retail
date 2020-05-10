@@ -19,31 +19,27 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
-import static org.apache.commons.lang3.StringUtils.isNotEmpty;
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class RemitoSearchFilter extends AbstractSearchFilter {
+public class RemitoDetalleSearchFilter extends AbstractSearchFilter {
 
-    private LocalDateTime fechaAltaDesde;
-    private LocalDateTime fechaAltaHasta;
-    private Long idTipoMovimiento;
+    private LocalDateTime fechaRemitoDesde;
+    private LocalDateTime fechaRemitoHasta;
     private Long idProducto;
-    private String descripcionProducto;
+    private Long idDepositoMovimiento;
 
     @Override
     public boolean hasFilter() {
         return hasEntreFechasAltaFilter()
-                || idTipoMovimiento != null
-                || idProducto != null
-                || isNotEmpty(descripcionProducto);
+                || idDepositoMovimiento != null
+                || idProducto != null;
     }
 
     public boolean hasEntreFechasAltaFilter() {
-        return fechaAltaDesde != null && fechaAltaHasta != null;
+        return fechaRemitoDesde != null && fechaRemitoHasta != null;
     }
 
 }

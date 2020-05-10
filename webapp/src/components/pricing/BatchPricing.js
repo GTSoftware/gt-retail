@@ -167,7 +167,8 @@ export class BatchPricing extends Component {
                                  emptyMessage="Aplique filtros para visualizar los productos"
                                  rows={5}
                                  totalRecords={this.state.totalResults}
-                                 products={this.state.filteredProducts}/>
+                                 products={this.state.filteredProducts}
+                                 showAdditionalColumns={true}/>
         )
     }
 

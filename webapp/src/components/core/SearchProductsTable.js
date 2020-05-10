@@ -5,14 +5,23 @@ import PropTypes from 'prop-types';
 
 
 const productColumns = [
-    {field: 'productId', header: 'Id'},
-    {field: 'codigoPropio', header: 'Código'},
-    {field: 'descripcion', header: 'Descripción', style: {width: "30%"}},
-    {field: 'precioVenta', header: 'Precio', style: {"fontWeight": "bold"}},
-    {field: 'saleUnit', header: 'Unidad'},
-    {field: 'stockActualEnSucursal', header: 'Stock'},
-    {field: 'brand.brandName', header: 'Marca'}
+    {field: 'productId', header: 'Id', index: 1},
+    {field: 'codigoPropio', header: 'Código', index: 2},
+    {field: 'descripcion', header: 'Descripción', style: {width: "30%"}, index: 4},
+    {field: 'precioVenta', header: 'Precio', style: {"fontWeight": "bold"}, index: 5},
+    {field: 'saleUnit', header: 'Unidad', index: 6},
+    {field: 'brand.brandName', header: 'Marca', index: 7}
 ];
+
+const productAdditionalColumns = [
+    {field: 'codigoFabricante', header: 'Código fabricante', index: 3},
+    {field: 'fechaUltimaModificacion', header: 'Fecha Ult.Modif', index: 8}
+];
+
+const stockColumns = [
+    {field: 'stockActualEnSucursal', header: 'Stock', index: 6}
+]
+
 
 export class SearchProductsTable extends Component {
 
@@ -21,7 +30,9 @@ export class SearchProductsTable extends Component {
         onPageEvent: PropTypes.func.isRequired,
         rows: PropTypes.number.isRequired,
         totalRecords: PropTypes.number.isRequired,
-        emptyMessage: PropTypes.string
+        emptyMessage: PropTypes.string,
+        showAdditionalColumns: PropTypes.bool,
+        showStockColumns: PropTypes.bool
     }
 
     constructor(props, context) {
@@ -48,6 +59,7 @@ export class SearchProductsTable extends Component {
                        onPage={this.onPageEvent}
                        loading={this.state.loading}
                        emptyMessage={props.emptyMessage}
+                       resizableColumns={true}
                        responsive={true}
                        loadingIcon="fa fa-fw fa-spin fa-spinner">
 
@@ -58,8 +70,26 @@ export class SearchProductsTable extends Component {
     }
 
     renderColumns = () => {
-        let columns = productColumns.map((col, i) => {
+        let sortedColumnFields = this.getProductColumns();
+
+        return sortedColumnFields.map((col, i) => {
             return <Column key={col.field} field={col.field} header={col.header} style={col.style}/>;
+        });
+    }
+
+    getProductColumns = () => {
+        let columns = productColumns.slice();
+
+        if (this.props.showAdditionalColumns) {
+            columns = columns.concat(productAdditionalColumns);
+        }
+
+        if (this.props.showStockColumns) {
+            columns = columns.concat(stockColumns);
+        }
+
+        columns.sort((firstCol, SecondCol) => {
+            return firstCol.index - SecondCol.index;
         });
 
         return columns;
