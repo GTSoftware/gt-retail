@@ -1,6 +1,7 @@
 #!/bin/bash
 #Configuration
 JAVA_HOME="/opt/java/jdk-11.0.6/bin"
+APP_NAME="gt-retail"
 APP_JAR="gt-retail-0.0.1-SNAPSHOT.war"
 SERVER_PORT=8080
 RAND_STR=$(openssl rand -base64 12)
@@ -11,11 +12,11 @@ DB_USER="postgres"
 PROFILE="prod"
 
 #Command execution
-$JAVA_HOME/java -jar $APP_JAR --server.port=$SERVER_PORT \
+nohup $JAVA_HOME/java -jar $APP_JAR --server.port=$SERVER_PORT \
   --jwt.signing.key.secret="$JWT_SIGN_KEY" \
   --spring.jpa.show-sql=false \
   --spring.datasource.url=$DB_URL \
   --spring.profiles.active=$PROFILE \
+  --spring.application.name=$APP_NAME \
   --spring.datasource.username=$DB_USER \
-  --spring.datasource.password=$DB_PASSWRD &
-echo $! >./pid.file &
+  --spring.datasource.password=$DB_PASSWRD & echo $! >./pid.$APP_NAME &

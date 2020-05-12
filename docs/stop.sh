@@ -1,2 +1,4 @@
 #!/bin/bash
-kill $(cat ./pid.file)
+APP_NAME="gt-retail"
+
+kill $(cat ./pid.$APP_NAME)
