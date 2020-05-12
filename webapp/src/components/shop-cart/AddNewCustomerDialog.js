@@ -651,13 +651,11 @@ export class AddNewCustomerDialog extends Component {
         let newFormData = {...oldFormData};
 
         newFormData.provincia = provinces[0];
-        if (newFormData.provincia) {
-            this.customersService.getTowns(newFormData.provincia.id, this.handleTowns);
-        }
 
         this.setState({
             provinces: provinces,
-            formData: newFormData
+            formData: newFormData,
+            filteredTowns: []
         });
     }
 
