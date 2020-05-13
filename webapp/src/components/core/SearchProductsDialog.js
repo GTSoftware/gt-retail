@@ -44,6 +44,7 @@ export class SearchProductsDialog extends Component {
                 puedeVenderse: true,
                 conStock: true,
                 idSucursal: LoginService.getUserDetails().sucursalId,
+                buscarEnTodosLados: false,
                 sortFields: [{
                     fieldName: "descripcion",
                     ascending: true
@@ -102,7 +103,7 @@ export class SearchProductsDialog extends Component {
                                        onKeyPress={this.handleEnterKeyPress}
                             />
                         </div>
-                        <div className="p-col-12 p-lg-4">
+                        <div className="p-col-12 p-lg-2">
                             <Checkbox id="soloStock"
                                       onChange={(e) => {
                                           this.handleSearchFilterPropertyChange('conStock', e.checked)
@@ -110,6 +111,15 @@ export class SearchProductsDialog extends Component {
                                       checked={this.state.searchFilter.conStock}
                             />
                             <label htmlFor="soloStock" className="p-checkbox-label">Solo con stock</label>
+                        </div>
+                        <div className="p-col-12 p-lg-2">
+                            <Checkbox id="buscarTodo"
+                                      onChange={(e) => {
+                                          this.handleSearchFilterPropertyChange('buscarEnTodosLados', e.checked)
+                                      }}
+                                      checked={this.state.searchFilter.buscarEnTodosLados}
+                            />
+                            <label htmlFor="buscarTodo" className="p-checkbox-label">Buscar todo</label>
                         </div>
 
                     </div>

@@ -1,11 +1,9 @@
-import _ from "lodash";
 import React, {Component} from "react";
 import {DeliveryNotesService} from "../../service/DeliveryNotesService";
 import {Growl} from "primereact/growl";
 import {StockService} from "../../service/StockService";
 import {Dropdown} from "primereact/dropdown";
 import {Button} from "primereact/button";
-import {InputText} from "primereact/inputtext";
 import {LoadingButton} from "../core/LoadingButton";
 import {Calendar} from "primereact/calendar";
 import moment from "moment";
@@ -14,6 +12,8 @@ import {SearchProductsDialog} from "../core/SearchProductsDialog";
 import {DataTable} from "primereact/datatable";
 import {Column} from "primereact/column";
 import FileOutputsService from "../../service/FileOutputsService";
+import {AutoComplete} from "primereact/autocomplete";
+import {ProductsService} from "../../service/ProductsService";
 
 
 export class ProductHistory extends Component {
@@ -27,12 +27,14 @@ export class ProductHistory extends Component {
             selectedProduct: null,
             productMovements: [],
             showSearchProductsDialog: false,
+            filteredProducts: [],
             loading: false,
             fromDate: moment().subtract(1, 'months').toDate()
         }
 
         this.deliveryNotesService = new DeliveryNotesService();
         this.stockService = new StockService();
+        this.productsService = new ProductsService();
     }
 
     componentDidMount() {
@@ -47,7 +49,7 @@ export class ProductHistory extends Component {
     }
 
     render() {
-        const {warehouses, warehouse, selectedProduct} = this.state;
+        const {warehouses, warehouse, selectedProduct, filteredProducts} = this.state;
 
         return (
             <div className="card card-w-title">
@@ -59,8 +61,18 @@ export class ProductHistory extends Component {
                     <div className="p-col-8">
                         <label>Producto:</label>
                         <div className="p-inputgroup">
-                            <InputText
-                                value={`[${_.get(selectedProduct, 'productId', '')}] ${_.get(selectedProduct, 'descripcion', '')}`}/>
+                            <AutoComplete minLength={2} placeholder="Comience a escribir para buscar un producto"
+                                          autoFocus={true}
+                                          delay={500}
+                                          id="producto"
+                                          completeMethod={(event) => this.filterProducts(event.query)}
+                                          suggestions={filteredProducts}
+                                          field="descripcion"
+                                          required={true}
+                                          onChange={(event) => this.setState({selectedProduct: event.value})}
+                                          value={selectedProduct || ''}
+
+                            />
 
                             <Button type="button"
                                     className="shop-cart--search-product-button"
@@ -186,6 +198,26 @@ export class ProductHistory extends Component {
             summary: 'No se pudo encontrar el producto',
             detail: error.response.data.message
         });
+    }
+
+    filterProducts = (query) => {
+        let searchOptions = {
+            searchFilter: {
+                activo: true,
+                puedeVenderse: true,
+                buscarEnTodosLados: true,
+                txt: query,
+                sortFields: [{
+                    fieldName: "descripcion",
+                    ascending: true
+                }],
+            },
+            firstResult: 0,
+            maxResults: 5
+        }
+
+        this.productsService.searchProducts(searchOptions,
+            (response) => this.setState({filteredProducts: response.data}));
     }
 
 }
