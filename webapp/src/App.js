@@ -23,6 +23,7 @@ import {GTDashboard} from "./components/dashboard/GTDashboard";
 import {ManualDeliveryNote} from "./components/delivery-note/ManualDeliveryNote";
 import {BatchPricing} from "./components/pricing/BatchPricing";
 import {ProductHistory} from "./components/stock/ProductHistory";
+import {SearchDeliveryNotes} from "./components/delivery-note/SearchDeliveryNotes";
 
 const ProtectedRoute = ({component: Component, ...rest}) => (
     <Route {...rest} render={(props) => (
@@ -120,6 +121,13 @@ class App extends Component {
         return {
             label: 'Remitos', icon: 'fa fa-fw fa-truck-loading',
             items: [
+                {
+                    label: 'Listado de remitos',
+                    icon: 'fa fa-fw fa-list',
+                    command: () => {
+                        window.location = '#/delivery-notes'
+                    }
+                },
                 {
                     label: 'Nuevo Remito',
                     icon: 'fa fa-fw fa-plus',
@@ -237,6 +245,8 @@ class App extends Component {
                                         component={BatchPricing}/>
                         <ProtectedRoute path="/product-history"
                                         component={ProductHistory}/>
+                        <ProtectedRoute path="/delivery-notes"
+                                        component={SearchDeliveryNotes}/>
                         <Route component={PageNotFound}/>
                     </Switch>
                 </div>

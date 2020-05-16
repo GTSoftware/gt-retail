@@ -50,6 +50,25 @@ export class DeliveryNotesService {
         }
     }
 
+    searchDeliveryNotes(searchOptions, successCallback, errorCallback) {
+        let promise = axios.post(`/delivery-notes/search`, searchOptions);
+
+        if (successCallback) {
+            promise.then(response => successCallback(response.data));
+        }
+        if (errorCallback) {
+            promise.catch(error => errorCallback(error));
+        }
+    }
+
+    getDeliveryNoteDetails(deliveryNoteId, successCallback) {
+        let promise = axios.get(`/delivery-notes/${deliveryNoteId}/details`);
+
+        if (successCallback) {
+            promise.then(response => successCallback(response.data));
+        }
+    }
+
 }
 
 function transformPersonSearchData(query) {

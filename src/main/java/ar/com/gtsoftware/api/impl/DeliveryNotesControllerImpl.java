@@ -5,8 +5,9 @@ import ar.com.gtsoftware.api.exception.DeliveryNoteValidationException;
 import ar.com.gtsoftware.api.exception.ProductNotFoundException;
 import ar.com.gtsoftware.api.request.AddDeliveryItemRequest;
 import ar.com.gtsoftware.api.request.AddDeliveryNoteRequest;
-import ar.com.gtsoftware.api.response.DeliveryItemResponse;
-import ar.com.gtsoftware.api.response.Warehouse;
+import ar.com.gtsoftware.api.request.PaginatedSearchRequest;
+import ar.com.gtsoftware.api.response.*;
+import ar.com.gtsoftware.api.transformer.fromDomain.DeliveryNoteSearchResultTransformer;
 import ar.com.gtsoftware.api.transformer.toDomain.RemitoDtoTransformer;
 import ar.com.gtsoftware.auth.Roles;
 import ar.com.gtsoftware.dto.domain.DepositosDto;
@@ -16,6 +17,7 @@ import ar.com.gtsoftware.dto.domain.RemitoTipoMovimientoDto;
 import ar.com.gtsoftware.search.DepositosSearchFilter;
 import ar.com.gtsoftware.search.ProductoXDepositoSearchFilter;
 import ar.com.gtsoftware.search.ProductosSearchFilter;
+import ar.com.gtsoftware.search.RemitoSearchFilter;
 import ar.com.gtsoftware.service.*;
 import ar.com.gtsoftware.utils.SecurityUtils;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +27,7 @@ import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -39,6 +42,7 @@ public class DeliveryNotesControllerImpl implements DeliveryNotesController {
     private final RemitoService remitoService;
     private final RemitoDtoTransformer remitoDtoTransformer;
     private final SecurityUtils securityUtils;
+    private final DeliveryNoteSearchResultTransformer deliveryNoteSearchResultTransformer;
 
     @Override
     public List<Warehouse> getWarehouses() {
@@ -174,5 +178,34 @@ public class DeliveryNotesControllerImpl implements DeliveryNotesController {
         }
 
         return resultQuantity;
+    }
+
+    @Override
+    public PaginatedResponse<DeliveryNoteSearchResult> findBySearchFilter(@Valid PaginatedSearchRequest<RemitoSearchFilter> searchRequest) {
+        final RemitoSearchFilter searchFilter = searchRequest.getSearchFilter();
+        searchFilter.addSortField("fechaAlta", false);
+
+        final int count = remitoService.countBySearchFilter(searchFilter);
+        final PaginatedResponse<DeliveryNoteSearchResult> response = PaginatedResponse.<DeliveryNoteSearchResult>builder().totalResults(count).build();
+
+        if (count > 0) {
+            final List<RemitoDto> remitos = remitoService.findBySearchFilter(searchFilter,
+                    searchRequest.getFirstResult(),
+                    searchRequest.getMaxResults());
+            response.setData(deliveryNoteSearchResultTransformer.transformDeliveryNotes(remitos));
+        }
+
+        return response;
+    }
+
+    @Override
+    public List<DeliveryNoteDetail> getDeliveryNoteDetails(Long deliveryNoteId) {
+        final RemitoDto remito = remitoService.find(deliveryNoteId);
+
+        if (remito != null) {
+            return deliveryNoteSearchResultTransformer.transformDeliveryNoteDetails(remito.getDetalleList());
+        }
+
+        return Collections.emptyList();
     }
 }

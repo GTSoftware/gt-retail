@@ -8,12 +8,11 @@ import {LoadingButton} from "../core/LoadingButton";
 import {Calendar} from "primereact/calendar";
 import moment from "moment";
 import {DEFAULT_DATA_TABLE_PROPS} from "../DefaultProps";
-import {SearchProductsDialog} from "../core/SearchProductsDialog";
 import {DataTable} from "primereact/datatable";
 import {Column} from "primereact/column";
 import FileOutputsService from "../../service/FileOutputsService";
-import {AutoComplete} from "primereact/autocomplete";
-import {ProductsService} from "../../service/ProductsService";
+import {AutocompleteProductFilter} from "../core/AutocompleteProductFilter";
+import {formatDate} from "../../utils/DateUtils";
 
 
 export class ProductHistory extends Component {
@@ -26,15 +25,12 @@ export class ProductHistory extends Component {
             warehouse: null,
             selectedProduct: null,
             productMovements: [],
-            showSearchProductsDialog: false,
-            filteredProducts: [],
             loading: false,
             fromDate: moment().subtract(1, 'months').toDate()
         }
 
         this.deliveryNotesService = new DeliveryNotesService();
         this.stockService = new StockService();
-        this.productsService = new ProductsService();
     }
 
     componentDidMount() {
@@ -49,38 +45,20 @@ export class ProductHistory extends Component {
     }
 
     render() {
-        const {warehouses, warehouse, selectedProduct, filteredProducts} = this.state;
+        const {warehouses, warehouse, selectedProduct} = this.state;
 
         return (
             <div className="card card-w-title">
                 <Growl ref={(el) => this.growl = el}/>
-                {this.renderSearchProductsDialog()}
+
                 <h1>Historia de un producto</h1>
 
                 <div className="p-grid p-fluid">
                     <div className="p-col-8">
                         <label>Producto:</label>
-                        <div className="p-inputgroup">
-                            <AutoComplete minLength={2} placeholder="Comience a escribir para buscar un producto"
-                                          autoFocus={true}
-                                          delay={500}
-                                          id="producto"
-                                          completeMethod={(event) => this.filterProducts(event.query)}
-                                          suggestions={filteredProducts}
-                                          field="descripcion"
-                                          required={true}
-                                          onChange={(event) => this.setState({selectedProduct: event.value})}
-                                          value={selectedProduct || ''}
+                        <AutocompleteProductFilter selectedProduct={selectedProduct}
+                                                   onProductSelect={(product) => this.setState({selectedProduct: product})}/>
 
-                            />
-
-                            <Button type="button"
-                                    className="shop-cart--search-product-button"
-                                    icon="fa fa-fw fa-search"
-                                    tooltip={'Buscar productos'}
-                                    onClick={() => this.setState({showSearchProductsDialog: true})}
-                            />
-                        </div>
                     </div>
                     <div className="p-col-6">
                         <label htmlFor="warehouse">Depósito:</label>
@@ -117,7 +95,9 @@ export class ProductHistory extends Component {
 
                     <DataTable {...this.getItemsTableProps()}>
 
-                        <Column header={"Fecha"} field={"movementDate"}/>
+                        <Column header={"Fecha"} body={(rowData) => {
+                            return formatDate(rowData.movementDate)
+                        }}/>
                         <Column header={"Código"} field={"productCode"}/>
                         <Column header={"Descripción"} field={"productDescription"}/>
                         <Column header={"Unidad"} field={"saleUnit"}/>
@@ -131,15 +111,6 @@ export class ProductHistory extends Component {
                     </DataTable>
                 </div>
             </div>
-        )
-    }
-
-    renderSearchProductsDialog = () => {
-        return (
-            <SearchProductsDialog visible={this.state.showSearchProductsDialog}
-                                  modal={true}
-                                  acceptCallback={(product) => this.setState({selectedProduct: product})}
-                                  onHide={() => this.setState({showSearchProductsDialog: false})}/>
         )
     }
 
@@ -198,26 +169,6 @@ export class ProductHistory extends Component {
             summary: 'No se pudo encontrar el producto',
             detail: error.response.data.message
         });
-    }
-
-    filterProducts = (query) => {
-        let searchOptions = {
-            searchFilter: {
-                activo: true,
-                puedeVenderse: true,
-                buscarEnTodosLados: true,
-                txt: query,
-                sortFields: [{
-                    fieldName: "descripcion",
-                    ascending: true
-                }],
-            },
-            firstResult: 0,
-            maxResults: 5
-        }
-
-        this.productsService.searchProducts(searchOptions,
-            (response) => this.setState({filteredProducts: response.data}));
     }
 
 }
