@@ -19,7 +19,7 @@ import lombok.*;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -35,8 +35,8 @@ public class ComprobantesProveedorSearchFilter extends AbstractSearchFilter {
     private static final long serialVersionUID = 1L;
 
     private Long idComprobante;
-    private Date fechaComprobanteDesde;
-    private Date fechaComprobanteHasta;
+    private LocalDateTime fechaComprobanteDesde;
+    private LocalDateTime fechaComprobanteHasta;
     private Boolean anulada;
     private Long idUsuario;
     private Long idProveedor;

@@ -29,8 +29,8 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 
 /**
@@ -45,7 +45,7 @@ public class WSFEClient {
 
     private static final String NAMESPACE = "http://ar.gov.afip.dif.FEV1/";
     private static final String FECompUltimoAutorizado_Action = "http://ar.gov.afip.dif.FEV1/FECompUltimoAutorizado";
-    private static final SimpleDateFormat SDF_YMD = new SimpleDateFormat("yyyyMMdd");
+    private static final String SUCCESS_RESULT = "A";
 
     public static CAEResponse solicitarCAE(AFIPAuthServices loginTicket, String cuit, FiscalLibroIvaVentas comprobante,
                                            String endpoint) {
@@ -61,21 +61,21 @@ public class WSFEClient {
             printMessage(response);
 
             String resultado = response.getSOAPBody().getElementsByTagName("Resultado").item(0).getTextContent();
-            if (resultado.equals("A")) {
+            if (SUCCESS_RESULT.equals(resultado)) {
 
                 String cae = response.getSOAPBody().getElementsByTagName("CAE").item(0).getTextContent();
 
                 String fechaVencimiento = response.getSOAPBody().getElementsByTagName("CAEFchVto").item(0).getTextContent();
 
                 CAEResponse result = new CAEResponse(Long.parseLong(cae),
-                        SDF_YMD.parse(fechaVencimiento));
+                        LocalDate.parse(fechaVencimiento));
 
                 return result;
             }
 
             throw new RuntimeException(response.getSOAPBody().getTextContent());
 
-        } catch (SOAPException | ParseException ex) {
+        } catch (SOAPException ex) {
             LOG.error(ex);
             throw new RuntimeException("Error al realizar la solicitud", ex);
         }
@@ -121,7 +121,8 @@ public class WSFEClient {
         elementFeDetReq.addChildElement("CbteDesde").addTextNode(comprobante.getNumeroFactura());
         elementFeDetReq.addChildElement("CbteHasta").addTextNode(comprobante.getNumeroFactura());
 
-        elementFeDetReq.addChildElement("CbteFch").addTextNode(SDF_YMD.format(comprobante.getFechaFactura()));
+        final String formattedDate = comprobante.getFechaFactura().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        elementFeDetReq.addChildElement("CbteFch").addTextNode(formattedDate);
         elementFeDetReq.addChildElement("ImpTotal").addTextNode(comprobante.getTotalFactura().abs().toPlainString());
 
         SOAPElement ivaArray = elementFeDetReq.addChildElement("Iva");
@@ -141,9 +142,9 @@ public class WSFEClient {
         elementFeDetReq.addChildElement("ImpIVA").addTextNode(comprobante.getImporteIva().abs().toPlainString());
         elementFeDetReq.addChildElement("ImpTrib").addTextNode(comprobante.getImporteTributos().abs().toPlainString());
 
-        elementFeDetReq.addChildElement("FchServDesde").addTextNode(SDF_YMD.format(comprobante.getFechaFactura()));
-        elementFeDetReq.addChildElement("FchServHasta").addTextNode(SDF_YMD.format(comprobante.getFechaFactura()));
-        elementFeDetReq.addChildElement("FchVtoPago").addTextNode(SDF_YMD.format(comprobante.getFechaFactura()));
+        elementFeDetReq.addChildElement("FchServDesde").addTextNode(formattedDate);
+        elementFeDetReq.addChildElement("FchServHasta").addTextNode(formattedDate);
+        elementFeDetReq.addChildElement("FchVtoPago").addTextNode(formattedDate);
 
         elementFeDetReq.addChildElement("MonId").addTextNode("PES");
         elementFeDetReq.addChildElement("MonCotiz").addTextNode("1");

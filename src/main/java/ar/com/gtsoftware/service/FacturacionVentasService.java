@@ -21,7 +21,7 @@ import ar.com.gtsoftware.dto.domain.FiscalPuntosVentaDto;
 import ar.com.gtsoftware.service.exceptions.ServiceException;
 
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 
 public interface FacturacionVentasService {
@@ -34,7 +34,7 @@ public interface FacturacionVentasService {
     void registrarFacturaVenta(@NotNull Long idComprobante,
                                @NotNull FiscalPuntosVentaDto puntoVentaComprobanteDto,
                                long numeroComprobante,
-                               Date fechaFactura) throws ServiceException;
+                               LocalDateTime fechaFactura) throws ServiceException;
 
     /**
      * Devuelve el próximo número de factura a utilizar para el punto de venta y letra pasados como parámetro

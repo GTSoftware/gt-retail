@@ -12,3 +12,10 @@ export const getEndOfMonth = function () {
     return moment().endOf('month').toDate();
 }
 
+export const getBeginOfToday = function () {
+    return moment().startOf('day').toDate();
+}
+
+export const getEndOfToday = function () {
+    return moment().endOf('day').toDate();
+}

@@ -144,12 +144,9 @@ export class ShopCartCustomer extends Component {
     }
 
     filterCustomers(query) {
-        ShopCartService.searchCustomers(query)
-            .then(
-                (response) => {
-                    this.setState({filteredCustomers: response.data})
-                }
-            );
+        ShopCartService.searchCustomers(query, (customers) => {
+            this.setState({filteredCustomers: customers})
+        });
     }
 
     getFormattedTelefonos = (customerInfo) => {

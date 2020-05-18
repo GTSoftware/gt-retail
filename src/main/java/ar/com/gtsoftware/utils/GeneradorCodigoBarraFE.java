@@ -16,27 +16,33 @@
 package ar.com.gtsoftware.utils;
 
 import ar.com.gtsoftware.domain.FiscalLibroIvaVentas;
+import org.apache.commons.lang3.StringUtils;
 
-import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 
 /**
  * @author Rodrigo M. Tato Rothamel mailto:rotatomel@gmail.com
  */
 public class GeneradorCodigoBarraFE {
 
-    private static final SimpleDateFormat AMD = new SimpleDateFormat("yyyyMMdd");
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyyMMdd");
 
     public static String calcularCodigoBarras(FiscalLibroIvaVentas registro, String cuitEmpresa) {
         StringBuilder result = new StringBuilder();
 
         result.append(cuitEmpresa)
                 .append(registro.getCodigoTipoComprobante().getCodigoTipoComprobante())
-                .append(registro.getPuntoVentaFactura())
-                .append(registro.getCae())
-                .append(AMD.format(registro.getFechaVencimientoCae()));
+                .append(registro.getPuntoVentaFactura());
+        if (registro.getCae() == null) {
+            result.append(StringUtils.repeat("0", 14))
+                    .append("00000000");
+        } else {
+            result.append(registro.getCae())
+                    .append(registro.getFechaVencimientoCae().format(FORMATTER));
+        }
         int digito = calcularDigitoVerificador(result.toString());
-
         result.append(digito);
+
         return result.toString();
     }
 

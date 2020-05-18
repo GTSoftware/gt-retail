@@ -17,7 +17,7 @@ package ar.com.gtsoftware.search;
 
 import lombok.*;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @author Rodrigo M. Tato Rothamel mailto:rotatomel@gmail.com
@@ -33,7 +33,7 @@ public class FiscalPeriodosFiscalesSearchFilter extends AbstractSearchFilter {
 
     private Boolean vigente;
     private Boolean cerrado;
-    private Date fechaActual;
+    private LocalDateTime fechaActual;
 
     @Override
     public boolean hasFilter() {

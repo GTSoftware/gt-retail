@@ -74,8 +74,7 @@ export class ShopCartPayment extends Component {
         const state = this.state;
 
         if (!state.saleType || !state.saleTypes) {
-            ShopCartService.getSaleTypes()
-                .then(response => this.handleSaleTypes(response.data));
+            ShopCartService.getSaleTypes((saleTypes) => this.handleSaleTypes(saleTypes));
         }
         if (!state.saleCondition || !state.saleConditions) {
             ShopCartService.getSaleConditions()

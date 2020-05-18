@@ -37,6 +37,7 @@ import ar.com.gtsoftware.service.FacturacionVentasService;
 import ar.com.gtsoftware.service.afip.WSAAService;
 import ar.com.gtsoftware.service.afip.WSFEClient;
 import ar.com.gtsoftware.service.exceptions.ServiceException;
+import ar.com.gtsoftware.utils.BusinessDateUtils;
 import ar.com.gtsoftware.utils.GeneradorCodigoBarraFE;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -45,8 +46,8 @@ import org.springframework.stereotype.Service;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -70,6 +71,7 @@ public class FacturacionVentasServiceImpl implements FacturacionVentasService {
     private final FiscalPuntosVentaMapper puntosVentaMapper;
 
     private final FiscalAlicuotasIvaMapper alicuotasIvaMapper;
+    private final BusinessDateUtils dateUtils;
 
     /**
      * Registra la factura fiscalmente en el libro de IVA ventas para la venta en el período fiscal y con la fecha de
@@ -81,7 +83,7 @@ public class FacturacionVentasServiceImpl implements FacturacionVentasService {
     public void registrarFacturaVenta(@NotNull Long idComprobante,
                                       @NotNull FiscalPuntosVentaDto puntoVentaComprobanteDto,
                                       long numeroComprobante,
-                                      Date fechaFactura) throws ServiceException {
+                                      LocalDateTime fechaFactura) throws ServiceException {
 
         FiscalPeriodosFiscalesSearchFilter psf = FiscalPeriodosFiscalesSearchFilter.builder()
                 .cerrado(false)
@@ -89,7 +91,7 @@ public class FacturacionVentasServiceImpl implements FacturacionVentasService {
 
         if (fechaFactura == null) {
             psf.setVigente(true);
-            fechaFactura = new Date();
+            fechaFactura = dateUtils.getCurrentDateTime();
         } else {
             psf.setFechaActual(fechaFactura);
         }

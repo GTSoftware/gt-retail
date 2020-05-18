@@ -18,12 +18,20 @@ class ShopCartService {
         }
     }
 
-    searchCustomers(query) {
-        return axios.get(`/shop-cart/customers-search?query=${query}`);
+    searchCustomers(query, successCallback) {
+        let promise = axios.get(`/shop-cart/customers-search?query=${query}`);
+
+        if (successCallback) {
+            promise.then(response => successCallback(response.data));
+        }
     }
 
-    getSaleTypes() {
-        return axios.get(`/shop-cart/sale-types`);
+    getSaleTypes(successCallback) {
+        let promise = axios.get(`/shop-cart/sale-types`);
+
+        if (successCallback) {
+            promise.then(response => successCallback(response.data));
+        }
     }
 
     getSaleConditions() {

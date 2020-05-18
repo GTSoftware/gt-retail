@@ -24,6 +24,7 @@ import {ManualDeliveryNote} from "./components/delivery-note/ManualDeliveryNote"
 import {BatchPricing} from "./components/pricing/BatchPricing";
 import {ProductHistory} from "./components/stock/ProductHistory";
 import {SearchDeliveryNotes} from "./components/delivery-note/SearchDeliveryNotes";
+import {SearchSales} from "./components/sale/SearchSales";
 
 const ProtectedRoute = ({component: Component, ...rest}) => (
     <Route {...rest} render={(props) => (
@@ -171,6 +172,13 @@ class App extends Component {
                     command: () => {
                         window.location = '#/shop-cart'
                     }
+                },
+                {
+                    label: 'Listado de ventas',
+                    icon: 'fa fa-fw fa-list',
+                    command: () => {
+                        window.location = '#/sales'
+                    }
                 }
             ]
         }
@@ -247,6 +255,8 @@ class App extends Component {
                                         component={ProductHistory}/>
                         <ProtectedRoute path="/delivery-notes"
                                         component={SearchDeliveryNotes}/>
+                        <ProtectedRoute path="/sales"
+                                        component={SearchSales}/>
                         <Route component={PageNotFound}/>
                     </Switch>
                 </div>

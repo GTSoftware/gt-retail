@@ -161,10 +161,6 @@ export class SearchDeliveryNotes extends Component {
 
     handleSelectedProduct = (searchProduct) => {
 
-        // let {searchFilter} = this.state;
-        //
-        // searchFilter.product = searchProduct;
-
         this.setState({product: searchProduct});
 
     }
@@ -197,17 +193,4 @@ export class SearchDeliveryNotes extends Component {
         this.setState({loading: true});
     }
 
-    // filterMovements = () => {
-    //     let filter = {
-    //         fromDate: this.state.fromDate,
-    //         productId: this.state.selectedProduct.productId,
-    //         warehouseId: this.state.warehouse.warehouseId
-    //     }
-    //
-    //     this.stockService.getProductMovementsHistory(filter, (movements) => this.setState({
-    //         loading: false,
-    //         productMovements: movements
-    //     }))
-    //     this.setState({loading: true});
-    // }
 }

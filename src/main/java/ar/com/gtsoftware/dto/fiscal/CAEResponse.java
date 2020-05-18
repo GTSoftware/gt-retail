@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * CAE de respuesta para un comprobante
@@ -38,6 +38,6 @@ public class CAEResponse implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private long cae;
-    private Date fechaVencimientoCae;
+    private LocalDate fechaVencimientoCae;
 
 }

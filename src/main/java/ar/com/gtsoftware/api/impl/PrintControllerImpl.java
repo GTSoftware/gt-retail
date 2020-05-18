@@ -67,7 +67,40 @@ public class PrintControllerImpl implements PrintController {
 
     @Override
     public void getInvoice(Long saleId) {
-        throw new UnsupportedOperationException("Not implemented yet");
+        ComprobantesDto comprobante = ventasService.obtenerComprobante(saleId);
+        if (comprobante == null) {
+            handleEntityNotFound("saleId", saleId);
+            return;
+        }
+        List<ComprobantesDto> ventas = Collections.singletonList(comprobante);
+
+
+        JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(ventas);
+        JRBeanCollectionDataSource beanCollectionDataSource1 = new JRBeanCollectionDataSource(ventas);
+        JRBeanCollectionDataSource beanCollectionDataSource2 = new JRBeanCollectionDataSource(ventas);
+        Resource reportResource = resourceLoader.getResource("classpath:reports/facturaConDuplicado.jasper");
+        Resource logoAfip = resourceLoader.getResource("classpath:images/afip.png");
+
+        Map<String, Object> parameters = loadCompanyParameters();
+
+        try {
+            parameters.put("logoAfip", logoAfip.getURI().getPath());
+        } catch (IOException e) {
+            logger.warn("Could not get AFIP logo", e);
+        }
+        parameters.put("codigobarras", comprobante.getCodigoBarrasFactura());
+
+        if (comprobante.getIdRegistro().getLetraFactura().equals("A")) {
+            parameters.put("subreport", "reports/vistaVentas_lineasNeto.jasper");
+        } else {
+            parameters.put("subreport", "reports/vistaVentas_lineas.jasper");
+        }
+        parameters.put("subDataSource", beanCollectionDataSource1);
+        parameters.put("subDataSource2", beanCollectionDataSource2);
+
+        String fileName = String.format("factura-%d", saleId);
+
+        handlePDFExport(fileName, beanCollectionDataSource, reportResource, parameters);
     }
 
     @Override

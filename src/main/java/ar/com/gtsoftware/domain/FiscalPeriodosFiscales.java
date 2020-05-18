@@ -21,7 +21,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @author rodrigo
@@ -48,13 +48,11 @@ public class FiscalPeriodosFiscales extends BaseEntity {
     @Basic(optional = false)
     @NotNull
     @Column(name = "fecha_inicio_periodo")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaInicioPeriodo;
+    private LocalDateTime fechaInicioPeriodo;
     @Basic(optional = false)
     @NotNull
     @Column(name = "fecha_fin_periodo")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaFinPeriodo;
+    private LocalDateTime fechaFinPeriodo;
     @Basic(optional = false)
     @Column(name = "periodo_cerrado")
     private boolean periodoCerrado;

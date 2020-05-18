@@ -19,7 +19,7 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -40,7 +40,7 @@ public class RegistroIVADTO implements Serializable {
     private static final long serialVersionUID = 3L;
 
     private Long idFactura;
-    private Date fechaFactura;
+    private LocalDateTime fechaFactura;
     private String numeroFactura;
     private String tipoDocumento;
     private String tipoComprobante;
@@ -80,7 +80,7 @@ public class RegistroIVADTO implements Serializable {
      *
      * @return
      */
-    public Date getFechaFactura() {
+    public LocalDateTime getFechaFactura() {
         return fechaFactura;
     }
 
@@ -89,7 +89,7 @@ public class RegistroIVADTO implements Serializable {
      *
      * @param fechaFactura
      */
-    public void setFechaFactura(Date fechaFactura) {
+    public void setFechaFactura(LocalDateTime fechaFactura) {
         this.fechaFactura = fechaFactura;
     }
 

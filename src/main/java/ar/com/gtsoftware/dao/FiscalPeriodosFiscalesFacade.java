@@ -24,7 +24,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Repository
 public class FiscalPeriodosFiscalesFacade extends AbstractFacade<FiscalPeriodosFiscales, FiscalPeriodosFiscalesSearchFilter> {
@@ -47,9 +47,9 @@ public class FiscalPeriodosFiscalesFacade extends AbstractFacade<FiscalPeriodosF
 
         Predicate p = null;
         if (psf.getVigente() != null) {
-
-            Predicate p3 = cb.between(cb.currentTimestamp(),
-                    root.get(FiscalPeriodosFiscales_.fechaInicioPeriodo), root.get(FiscalPeriodosFiscales_.fechaFinPeriodo));
+            Predicate p3 = cb.between(cb.literal(LocalDateTime.now()),
+                    root.get(FiscalPeriodosFiscales_.fechaInicioPeriodo),
+                    root.get(FiscalPeriodosFiscales_.fechaFinPeriodo));
             if (psf.getVigente()) {
                 p = appendAndPredicate(cb, p, p3);
             } else {

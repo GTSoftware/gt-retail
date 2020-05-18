@@ -22,7 +22,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -47,8 +48,7 @@ public class FiscalLibroIvaVentas extends BaseEntity {
     @Basic(optional = false)
     @NotNull
     @Column(name = "fecha_factura")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaFactura;
+    private LocalDateTime fechaFactura;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
@@ -101,8 +101,7 @@ public class FiscalLibroIvaVentas extends BaseEntity {
     @Column(name = "cae")
     private Long cae;
     @Column(name = "fecha_vencimiento_cae")
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date fechaVencimientoCae;
+    private LocalDate fechaVencimientoCae;
 
     @Column(name = "importe_neto_no_gravado")
     @NotNull

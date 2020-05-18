@@ -21,7 +21,7 @@ import lombok.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * Clase que representa las compras que se realizan
@@ -40,7 +40,7 @@ public class ProveedoresComprobantesDto {
     @EqualsAndHashCode.Include
     private Long id;
 
-    private Date fechaComprobante;
+    private LocalDateTime fechaComprobante;
     @NotNull
     private BigDecimal total;
 

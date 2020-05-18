@@ -64,6 +64,7 @@ public class ComprobantesDto {
     private BigDecimal totalConSigno;
     private BigDecimal saldoConSigno;
     private Integer version;
+    private String codigoBarrasFactura;
 
 
     public BigDecimal getTotalConSigno() {

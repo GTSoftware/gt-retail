@@ -23,13 +23,16 @@ import ar.com.gtsoftware.domain.*;
 import ar.com.gtsoftware.dto.RegistroVentaDto;
 import ar.com.gtsoftware.dto.domain.ComprobantesDto;
 import ar.com.gtsoftware.enums.NegocioTiposComprobanteEnum;
+import ar.com.gtsoftware.enums.Parametros;
 import ar.com.gtsoftware.mappers.ComprobantesMapper;
 import ar.com.gtsoftware.mappers.helper.CycleAvoidingMappingContext;
 import ar.com.gtsoftware.search.DepositosSearchFilter;
 import ar.com.gtsoftware.search.FiscalLetrasComprobantesSearchFilter;
+import ar.com.gtsoftware.service.ParametrosService;
 import ar.com.gtsoftware.service.PersonasCuentaCorrienteService;
 import ar.com.gtsoftware.service.VentasService;
 import ar.com.gtsoftware.utils.BusinessDateUtils;
+import ar.com.gtsoftware.utils.GeneradorCodigoBarraFE;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
@@ -69,6 +72,7 @@ public class VentasServiceImpl implements VentasService {
     private final NegocioPlanesPagoFacade planesPagoFacade;
     private final NegocioPlanesPagoDetalleFacade planesPagoDetalleFacade;
     private final BusinessDateUtils dateUtils;
+    private final ParametrosService parametrosService;
 
     private final PersonasCuentaCorrienteService cuentaCorrienteBean;
 
@@ -166,7 +170,15 @@ public class VentasServiceImpl implements VentasService {
     @Override
     public ComprobantesDto obtenerComprobante(Long id) {
         Comprobantes comprobante = facade.find(id);
-        return mapper.entityToDto(comprobante, new CycleAvoidingMappingContext());
+        final ComprobantesDto comprobantesDto = mapper.entityToDto(comprobante, new CycleAvoidingMappingContext());
+        if (comprobante != null && comprobante.getIdRegistro() != null) {
+
+            final String cuitEmpresa = parametrosService.getStringParam(Parametros.EMPRESA_CUIT);
+            final String codigoBarras = GeneradorCodigoBarraFE.calcularCodigoBarras(comprobante.getIdRegistro(), cuitEmpresa);
+            comprobantesDto.setCodigoBarrasFactura(codigoBarras);
+        }
+
+        return comprobantesDto;
     }
 
     //TODO esto deberìa ir en un bean responsable de manejar el stock :S

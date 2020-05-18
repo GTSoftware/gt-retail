@@ -19,7 +19,7 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -38,9 +38,9 @@ import java.util.Objects;
 public class LibroIVADTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private final Date fechaGeneracion = new Date();
-    private Date fechaDesde;
-    private Date fechaHasta;
+    private final LocalDateTime fechaGeneracion = LocalDateTime.now();
+    private LocalDateTime fechaDesde;
+    private LocalDateTime fechaHasta;
     private List<RegistroIVADTO> facturasList;
     private BigDecimal importeTotal;
     private BigDecimal importeTotalIVA;
@@ -53,7 +53,7 @@ public class LibroIVADTO implements Serializable {
      *
      * @return fechaDesde
      */
-    public Date getFechaDesde() {
+    public LocalDateTime getFechaDesde() {
         return fechaDesde;
     }
 
@@ -62,7 +62,7 @@ public class LibroIVADTO implements Serializable {
      *
      * @param fechaDesde
      */
-    public void setFechaDesde(Date fechaDesde) {
+    public void setFechaDesde(LocalDateTime fechaDesde) {
         this.fechaDesde = fechaDesde;
     }
 
@@ -71,7 +71,7 @@ public class LibroIVADTO implements Serializable {
      *
      * @return fechaHasta
      */
-    public Date getFechaHasta() {
+    public LocalDateTime getFechaHasta() {
         return fechaHasta;
     }
 
@@ -80,7 +80,7 @@ public class LibroIVADTO implements Serializable {
      *
      * @param fechaHasta
      */
-    public void setFechaHasta(Date fechaHasta) {
+    public void setFechaHasta(LocalDateTime fechaHasta) {
         this.fechaHasta = fechaHasta;
     }
 
@@ -89,7 +89,7 @@ public class LibroIVADTO implements Serializable {
      *
      * @return
      */
-    public Date getFechaGeneracion() {
+    public LocalDateTime getFechaGeneracion() {
         return fechaGeneracion;
     }
 

@@ -123,7 +123,7 @@
                     <subreportParameterExpression><![CDATA[$P{empresa.nombre_fantasia}]]></subreportParameterExpression>
                 </subreportParameter>
                 <dataSourceExpression><![CDATA[$P{subDataSource2}]]></dataSourceExpression>
-                <subreportExpression><![CDATA["factura.jasper"]]></subreportExpression>
+                <subreportExpression><![CDATA["reports/factura.jasper"]]></subreportExpression>
             </subreport>
         </band>
     </detail>

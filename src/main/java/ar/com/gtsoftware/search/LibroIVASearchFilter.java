@@ -17,7 +17,7 @@ package ar.com.gtsoftware.search;
 
 import lombok.*;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -27,8 +27,8 @@ import java.util.Date;
 public class LibroIVASearchFilter extends AbstractSearchFilter {
 
     private Long idPeriodo;
-    private Date fechaDesde;
-    private Date fechaHasta;
+    private LocalDateTime fechaDesde;
+    private LocalDateTime fechaHasta;
     private Boolean anuladas;
 
     @Override
