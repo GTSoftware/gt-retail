@@ -277,6 +277,7 @@ class ShopCartControllerImpl implements ShopCartController {
                 .cantidad(linea.getCantidad())
                 .subTotal(linea.getSubTotal())
                 .discountItem(buildDiscountItem(promotionCartItem))
+                .stockControl(producto.getIdTipoProveeduria().isControlStock())
                 .build();
     }
 

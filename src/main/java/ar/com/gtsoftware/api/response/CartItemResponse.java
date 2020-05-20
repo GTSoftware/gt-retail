@@ -19,6 +19,7 @@ public class CartItemResponse {
     private BigDecimal cantidad;
     private BigDecimal subTotal;
     private boolean cantidadEntera;
+    private boolean stockControl;
     private String unidadVenta;
     private DiscountItem discountItem;
 }

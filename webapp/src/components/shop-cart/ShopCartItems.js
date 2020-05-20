@@ -283,7 +283,7 @@ export class ShopCartItems extends Component {
     }
 
     cantidadTemplate(rowData, column) {
-        if (rowData.stockActualEnSucursal < rowData.cantidad) {
+        if (rowData.stockControl && (rowData.stockActualEnSucursal < rowData.cantidad)) {
             return (
                 <span>
                     <Button icon="fa fa-fw fa-exclamation-triangle"
