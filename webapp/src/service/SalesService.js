@@ -13,4 +13,12 @@ export class SalesService {
         }
     }
 
+    getSalesTotals(searchOptions, successCallback) {
+        let promise = axios.post(`/sales/totals`, searchOptions);
+
+        if (successCallback) {
+            promise.then(response => successCallback(response.data));
+        }
+    }
+
 }

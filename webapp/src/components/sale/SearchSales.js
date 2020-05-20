@@ -15,6 +15,7 @@ import ShopCartService from "../../service/ShopCartService";
 import {MultiSelect} from "primereact/multiselect";
 import {AutoComplete} from "primereact/autocomplete";
 import {TriStateCheckbox} from "primereact/tristatecheckbox";
+import LoginService from "../../service/LoginService";
 
 export class SearchSales extends Component {
 
@@ -24,6 +25,9 @@ export class SearchSales extends Component {
         this.state = {
 
             sales: [],
+            invoicedTotal: 0,
+            notInvoicedTotal: 0,
+
             saleTypes: [],
             filteredCustomers: [],
             loading: false,
@@ -36,7 +40,8 @@ export class SearchSales extends Component {
 
             rows: 10,
             first: 0,
-            totalRecords: 0
+            totalRecords: 0,
+            adminUser: LoginService.hasUserRole('ADMINISTRADORES')
 
         }
 
@@ -151,10 +156,40 @@ export class SearchSales extends Component {
 
                     </DataTable>
 
+                    {this.renderTotalsSection()}
+
                 </div>
 
             </div>
         )
+    }
+
+    renderTotalsSection = () => {
+        const {adminUser} = this.state;
+        let sectionToRender = null;
+
+        if (adminUser) {
+            sectionToRender = (
+                <div className="p-col-12">
+                    <div className="p-col-4">
+                        <label htmlFor="invoicedTotal">Total facturado:</label>
+                        <label style={{"font-weight": "bold"}}>$ {this.state.invoicedTotal.toLocaleString()}</label>
+                    </div>
+                    <div className="p-col-4">
+                        <label htmlFor="invoicedTotal">Total pendiente:</label>
+                        <label style={{"font-weight": "bold"}}>$ {this.state.notInvoicedTotal.toLocaleString()}</label>
+                    </div>
+                    <div className="p-col-4">
+                        <label htmlFor="invoicedTotal">Total:</label>
+                        <label
+                            style={{"font-weight": "bold"}}>$ {(this.state.notInvoicedTotal + this.state.invoicedTotal).toLocaleString()}</label>
+                    </div>
+
+                </div>
+            )
+        }
+
+        return sectionToRender;
     }
 
     getItemsTableProps = () => {
@@ -198,7 +233,7 @@ export class SearchSales extends Component {
     getLinkActions = (rowData) => {
         let buttonToRender = (
             <Button type="button" icon="fa fa-fw fa-print"
-                    label={rowData.saleId}
+                    label={`${rowData.saleId}`}
                     tooltip={"Imprimir presupuesto"}
                     onClick={() => FileOutputsService.getSaleBudget(rowData.saleId)}/>
         );
@@ -220,8 +255,30 @@ export class SearchSales extends Component {
     }
 
     filterSales = (first) => {
+        let searchOptions = this.getPaginatedSearchOptions(first);
+
+        this.salesService.searchSales(searchOptions,
+            (sales) => this.setState({
+                loading: false,
+                sales: sales.data,
+                first: searchOptions.firstResult,
+                totalRecords: sales.totalResults
+            }));
+
+        if (this.state.adminUser && first === 0) {
+            this.salesService.getSalesTotals(searchOptions.searchFilter,
+                (totals) => this.setState({
+                    invoicedTotal: totals.invoicedTotal,
+                    notInvoicedTotal: totals.notInvoicedTotal
+                }));
+        }
+        this.setState({loading: true});
+    }
+
+    getPaginatedSearchOptions = (first) => {
         const {fromDate, toDate, rows, selectedSaleTypes, selectedCustomer, facturada} = this.state;
-        let filter = {
+
+        return {
             firstResult: first || 0,
             maxResults: rows,
             searchFilter: {
@@ -234,16 +291,6 @@ export class SearchSales extends Component {
                 facturada: facturada
             }
         }
-
-        this.salesService.searchSales(filter,
-            (sales) => this.setState({
-                loading: false,
-                sales: sales.data,
-                first: filter.firstResult,
-                totalRecords: sales.totalResults
-            }));
-
-        this.setState({loading: true});
     }
 
     filterCustomers = (query) => {

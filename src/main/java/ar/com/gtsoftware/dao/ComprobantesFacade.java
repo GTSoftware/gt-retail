@@ -126,8 +126,11 @@ public class ComprobantesFacade extends AbstractFacade<Comprobantes, Comprobante
             CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
             CriteriaQuery<BigDecimal> cq = cb.createQuery(BigDecimal.class);
             Root<Comprobantes> root = cq.from(Comprobantes.class);
-            cq.select(cb.sum(cb.prod(root.get(Comprobantes_.total),
-                    root.get(Comprobantes_.tipoComprobante).get(NegocioTiposComprobante_.signo))));
+            cq.select(
+                    cb.coalesce(
+                            cb.sum(cb.prod(root.get(Comprobantes_.total),
+                                    root.get(Comprobantes_.tipoComprobante).get(NegocioTiposComprobante_.signo))),
+                            cb.literal(BigDecimal.ZERO)));
             Predicate p = createWhereFromSearchFilter(sf, cb, root);
             cq.where(p);
             TypedQuery<BigDecimal> q = getEntityManager().createQuery(cq);

@@ -4,6 +4,7 @@ import ar.com.gtsoftware.api.SalesController;
 import ar.com.gtsoftware.api.request.PaginatedSearchRequest;
 import ar.com.gtsoftware.api.request.SaleSearchResult;
 import ar.com.gtsoftware.api.response.PaginatedResponse;
+import ar.com.gtsoftware.api.response.SaleTotalsResponse;
 import ar.com.gtsoftware.api.transformer.fromDomain.SaleSearchResultTransformer;
 import ar.com.gtsoftware.auth.Roles;
 import ar.com.gtsoftware.dto.domain.ComprobantesDto;
@@ -43,5 +44,18 @@ public class SalesControllerImpl implements SalesController {
         }
 
         return response;
+    }
+
+    @Override
+    public SaleTotalsResponse getSalesTotals(ComprobantesSearchFilter searchFilter) {
+        SaleTotalsResponse totalsResponse = new SaleTotalsResponse();
+
+        searchFilter.setFacturada(true);
+        totalsResponse.setInvoicedTotal(comprobantesService.calcularTotalVentas(searchFilter));
+
+        searchFilter.setFacturada(false);
+        totalsResponse.setNotInvoicedTotal(comprobantesService.calcularTotalVentas(searchFilter));
+
+        return totalsResponse;
     }
 }
