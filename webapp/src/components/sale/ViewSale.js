@@ -8,6 +8,7 @@ import {Column} from "primereact/column";
 import {formatDate} from "../../utils/DateUtils";
 import {Button} from "primereact/button";
 import {InvoiceDialog} from "./InvoiceDialog";
+import FileOutputsService from "../../service/FileOutputsService";
 
 export class ViewSale extends Component {
 
@@ -144,13 +145,23 @@ export class ViewSale extends Component {
 
     renderActions = () => {
         const {sale} = this.state;
+        let buttonToRender;
 
-        return !sale.invoiceNumber && <Button type="button"
-                                              icon="fa fa-fw fa-print"
-                                              label={"Facturar"}
-                                              className="p-button-success"
-                                              onClick={() => this.setState({showInvoiceDialog: true})}
-                                              tooltip={'Abre el cuadro de diálogo para facturar el comprobante actual'}/>
+        if (sale.invoiceNumber) {
+            buttonToRender = <Button type="button" icon="fa fa-fw fa-print"
+                                     label={"Imprimir factura"}
+                                     tooltip={"Imprimir factura"}
+                                     onClick={() => FileOutputsService.getInvoice(sale.saleId)}/>
+        } else {
+            buttonToRender = <Button type="button"
+                                     icon="fa fa-fw fa-print"
+                                     label={"Facturar"}
+                                     className="p-button-success"
+                                     onClick={() => this.setState({showInvoiceDialog: true})}
+                                     tooltip={'Abre el cuadro de diálogo para facturar el comprobante actual'}/>
+        }
+
+        return buttonToRender
     }
 
     renderInvoiceDialog = () => {
