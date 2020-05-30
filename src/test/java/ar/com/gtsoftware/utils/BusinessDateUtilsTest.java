@@ -13,6 +13,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 class BusinessDateUtilsTest {
 
     private final static LocalDateTime LOCAL_DATE_TIME = LocalDateTime.of(2020, 2, 13, 13, 13, 4);
+    private final static ZonedDateTime ZONED_DATE_TIME = ZonedDateTime.of(2020, 2, 13, 13, 13, 4, 0, ZoneId.systemDefault());
     private final static LocalDate LOCAL_DATE = LocalDate.of(2020, 2, 13);
 
     @Mock
@@ -61,5 +62,10 @@ class BusinessDateUtilsTest {
     @Test
     public void shouldGetEndDateOfCurrentMonth() {
         assertEquals(LocalDate.of(2020, 2, 29), businessDateUtils.getEndDateOfCurrentMonth());
+    }
+
+    @Test
+    public void shouldGetCurrentZonedDateTime() {
+        assertEquals(ZONED_DATE_TIME, businessDateUtils.getCurrentZonedDateTime());
     }
 }

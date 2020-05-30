@@ -29,10 +29,15 @@ dependencies {
     //implementation 'org.springframework.boot:spring-boot-dependency-tools'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-web-services'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-cache'
     implementation 'org.springframework.boot:spring-boot-starter-logging'
+    implementation 'org.springframework.ws:spring-ws-security'
+    implementation 'org.springframework.ws:spring-ws-core'
+    testImplementation 'org.springframework.ws:spring-ws-test'
+    implementation 'org.glassfish.jaxb:jaxb-runtime'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'org.postgresql:postgresql:42.2.11'
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
@@ -109,7 +114,7 @@ task appNpmBuild(type: NpmTask) {
 
 appNpmBuild.dependsOn appNpmInstall
 copyWebApp.dependsOn appNpmBuild
-compileJava.dependsOn copyWebApp
+//compileJava.dependsOn copyWebApp
 
 node {
     download = true

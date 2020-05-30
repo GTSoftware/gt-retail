@@ -25,7 +25,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.Date;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 @Repository
 public class AFIPAuthServicesFacade extends AbstractFacade<AFIPAuthServices, AFIPAuthServicesSearchFilter> {
@@ -53,11 +54,17 @@ public class AFIPAuthServicesFacade extends AbstractFacade<AFIPAuthServices, AFI
 
         if (asf.getNoExpirado() != null) {
             Predicate p1 = cb.equal(cb.greaterThan(root.get(AFIPAuthServices_.fechaExpiracion),
-                    cb.currentTimestamp()), asf.getNoExpirado());
+                    cb.literal(LocalDateTime.now())), asf.getNoExpirado());
             p = appendAndPredicate(cb, p, p1);
         }
         return p;
 
     }
 
+    @Override
+    public AFIPAuthServices createOrEdit(@NotNull AFIPAuthServices entity) {
+        final AFIPAuthServices authServices = super.createOrEdit(entity);
+        em.flush();
+        return authServices;
+    }
 }

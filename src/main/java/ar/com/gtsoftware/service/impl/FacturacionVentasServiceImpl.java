@@ -24,7 +24,6 @@ package ar.com.gtsoftware.service.impl;
 import ar.com.gtsoftware.dao.*;
 import ar.com.gtsoftware.domain.*;
 import ar.com.gtsoftware.dto.domain.FiscalPuntosVentaDto;
-import ar.com.gtsoftware.dto.fiscal.CAEResponse;
 import ar.com.gtsoftware.dto.fiscal.TotalesAlicuotas;
 import ar.com.gtsoftware.enums.TiposPuntosVenta;
 import ar.com.gtsoftware.mappers.FiscalAlicuotasIvaMapper;
@@ -34,14 +33,14 @@ import ar.com.gtsoftware.search.FiscalPeriodosFiscalesSearchFilter;
 import ar.com.gtsoftware.search.FiscalTiposComprobanteSearchFilter;
 import ar.com.gtsoftware.service.ComprobantesService;
 import ar.com.gtsoftware.service.FacturacionVentasService;
-import ar.com.gtsoftware.service.afip.WSAAService;
-import ar.com.gtsoftware.service.afip.WSFEClient;
+import ar.com.gtsoftware.service.afip.AfipService;
 import ar.com.gtsoftware.service.exceptions.ServiceException;
 import ar.com.gtsoftware.utils.BusinessDateUtils;
 import ar.com.gtsoftware.utils.GeneradorCodigoBarraFE;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -55,7 +54,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FacturacionVentasServiceImpl implements FacturacionVentasService {
 
-    private final WSAAService wSAAService;
+    private final AfipService afipService;
 
     private final ComprobantesFacade ventasFacade;
 
@@ -80,6 +79,7 @@ public class FacturacionVentasServiceImpl implements FacturacionVentasService {
      * @throws ServiceException
      */
     @Override
+    @Transactional
     public void registrarFacturaVenta(@NotNull Long idComprobante,
                                       @NotNull FiscalPuntosVentaDto puntoVentaComprobanteDto,
                                       long numeroComprobante,
@@ -211,17 +211,18 @@ public class FacturacionVentasServiceImpl implements FacturacionVentasService {
 
     private void generarFacturaElectronica(FiscalLibroIvaVentas registro, FiscalPuntosVenta puntoVentaComprobante)
             throws ServiceException {
-        AFIPAuthServices loginTicket = wSAAService.obtenerLoginTicket("wsfe");
-        String cuit = parametrosFacade.findParametroByName("empresa.cuit").getValorParametro();
-        String endpoint = parametrosFacade.findParametroByName("afip.wsfe.endpoint").getValorParametro();
-        int ultimoNro = WSFEClient.obtenerUltimoComprobanteAutorizado(loginTicket, cuit, endpoint,
-                puntoVentaComprobante.getNroPuntoVenta(),
-                Integer.parseInt(registro.getCodigoTipoComprobante().getCodigoTipoComprobante()));
+        //AFIPAuthServices loginTicket = afipService.obtenerLoginTicket("wsfe");
+
+        int ultimoNro = afipService.obtenerUltimoComprobanteAutorizado(
+                puntoVentaComprobante,
+                registro.getCodigoTipoComprobante());
 
         registro.setNumeroFactura(formatNumeroFactura(ultimoNro + 1));
-        CAEResponse caeDto = WSFEClient.solicitarCAE(loginTicket, cuit, registro, endpoint);
-        registro.setCae(caeDto.getCae());
-        registro.setFechaVencimientoCae(caeDto.getFechaVencimientoCae());
+
+        afipService.autorizarComprobante(registro);
+//        CAEResponse caeDto = WSFEClient.solicitarCAE(loginTicket, cuit, registro, endpoint);
+//        registro.setCae(caeDto.getCae());
+//        registro.setFechaVencimientoCae(caeDto.getFechaVencimientoCae());
     }
 
     /**

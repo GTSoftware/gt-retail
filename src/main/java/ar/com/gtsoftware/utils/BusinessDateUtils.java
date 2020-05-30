@@ -3,10 +3,7 @@ package ar.com.gtsoftware.utils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.time.Clock;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 import java.time.temporal.TemporalAdjusters;
 
 @Component
@@ -17,6 +14,10 @@ public class BusinessDateUtils {
 
     public LocalDateTime getCurrentDateTime() {
         return LocalDateTime.now(clock);
+    }
+
+    public ZonedDateTime getCurrentZonedDateTime() {
+        return ZonedDateTime.now(clock);
     }
 
     public LocalDateTime getStartDateTimeOfCurrentMonth() {

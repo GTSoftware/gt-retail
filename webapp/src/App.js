@@ -25,6 +25,7 @@ import {BatchPricing} from "./components/pricing/BatchPricing";
 import {ProductHistory} from "./components/stock/ProductHistory";
 import {SearchDeliveryNotes} from "./components/delivery-note/SearchDeliveryNotes";
 import {SearchSales} from "./components/sale/SearchSales";
+import {ViewSale} from "./components/sale/ViewSale";
 
 const ProtectedRoute = ({component: Component, ...rest}) => (
     <Route {...rest} render={(props) => (
@@ -257,6 +258,8 @@ class App extends Component {
                                         component={SearchDeliveryNotes}/>
                         <ProtectedRoute path="/sales"
                                         component={SearchSales}/>
+                        <ProtectedRoute exact path="/sale/:saleId"
+                                        component={ViewSale}/>
                         <Route component={PageNotFound}/>
                     </Switch>
                 </div>

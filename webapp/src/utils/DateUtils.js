@@ -19,3 +19,7 @@ export const getBeginOfToday = function () {
 export const getEndOfToday = function () {
     return moment().endOf('day').toDate();
 }
+
+export const serializeDate = function (date) {
+    return moment(date).format('YYYY-MM-DDTHH:mm:ss');
+}

@@ -20,7 +20,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
@@ -45,8 +45,7 @@ public class AFIPAuthServices extends GTEntity<String> {
     @Column(name = "sign")
     private String sign;
     @Column(name = "fecha_expiracion")
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date fechaExpiracion;
+    private LocalDateTime fechaExpiracion;
 
     public AFIPAuthServices() {
     }
@@ -75,11 +74,11 @@ public class AFIPAuthServices extends GTEntity<String> {
         this.sign = sign;
     }
 
-    public Date getFechaExpiracion() {
+    public LocalDateTime getFechaExpiracion() {
         return fechaExpiracion;
     }
 
-    public void setFechaExpiracion(Date fechaExpiracion) {
+    public void setFechaExpiracion(LocalDateTime fechaExpiracion) {
         this.fechaExpiracion = fechaExpiracion;
     }
 

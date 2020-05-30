@@ -7,7 +7,7 @@ import {DEFAULT_DATA_TABLE_PROPS} from "../DefaultProps";
 import {Button} from "primereact/button";
 import FileOutputsService from "../../service/FileOutputsService";
 import {LoadingButton} from "../core/LoadingButton";
-import {formatDate, getBeginOfToday, getEndOfToday} from "../../utils/DateUtils";
+import {formatDate, getBeginOfToday, getEndOfToday, serializeDate} from "../../utils/DateUtils";
 import {Calendar} from "primereact/calendar";
 import {SalesService} from "../../service/SalesService";
 import {TabPanel, TabView} from "primereact/tabview";
@@ -173,16 +173,16 @@ export class SearchSales extends Component {
                 <div className="p-col-12">
                     <div className="p-col-4">
                         <label htmlFor="invoicedTotal">Total facturado:</label>
-                        <label style={{"font-weight": "bold"}}>$ {this.state.invoicedTotal.toLocaleString()}</label>
+                        <label style={{fontWeight: "bold"}}>$ {this.state.invoicedTotal.toLocaleString()}</label>
                     </div>
                     <div className="p-col-4">
                         <label htmlFor="invoicedTotal">Total pendiente:</label>
-                        <label style={{"font-weight": "bold"}}>$ {this.state.notInvoicedTotal.toLocaleString()}</label>
+                        <label style={{fontWeight: "bold"}}>$ {this.state.notInvoicedTotal.toLocaleString()}</label>
                     </div>
                     <div className="p-col-4">
                         <label htmlFor="invoicedTotal">Total:</label>
                         <label
-                            style={{"font-weight": "bold"}}>$ {(this.state.notInvoicedTotal + this.state.invoicedTotal).toLocaleString()}</label>
+                            style={{fontWeight: "bold"}}>$ {(this.state.notInvoicedTotal + this.state.invoicedTotal).toLocaleString()}</label>
                     </div>
 
                 </div>
@@ -231,6 +231,12 @@ export class SearchSales extends Component {
     }
 
     getLinkActions = (rowData) => {
+        let viewSaleButton = (
+            <Button type="button" icon="fa fa-fw fa-search"
+                    label={`${rowData.saleId}`}
+                    tooltip={"Ver comprobante"}
+                    onClick={() => window.location = `#/sale/${rowData.saleId}`}/>
+        )
         let buttonToRender = (
             <Button type="button" icon="fa fa-fw fa-print"
                     label={`${rowData.saleId}`}
@@ -247,7 +253,11 @@ export class SearchSales extends Component {
             );
         }
 
-        return buttonToRender;
+        return (
+            <div>
+                {viewSaleButton}
+                {buttonToRender}
+            </div>);
     }
 
     onPageEvent = (event) => {
@@ -282,8 +292,8 @@ export class SearchSales extends Component {
             firstResult: first || 0,
             maxResults: rows,
             searchFilter: {
-                fechaVentaDesde: fromDate,
-                fechaVentaHasta: toDate,
+                fechaVentaDesde: serializeDate(fromDate),
+                fechaVentaHasta: serializeDate(toDate),
                 idTiposComprobanteList: selectedSaleTypes.map((saleType) => {
                     return saleType.id
                 }),

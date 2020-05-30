@@ -10,7 +10,7 @@ import {DEFAULT_DATA_TABLE_PROPS} from "../DefaultProps";
 import {Button} from "primereact/button";
 import FileOutputsService from "../../service/FileOutputsService";
 import {LoadingButton} from "../core/LoadingButton";
-import {formatDate, getBeginOfMonth, getEndOfMonth} from "../../utils/DateUtils";
+import {formatDate, getBeginOfMonth, getEndOfMonth, serializeDate} from "../../utils/DateUtils";
 import {Calendar} from "primereact/calendar";
 import {Dropdown} from "primereact/dropdown";
 
@@ -176,8 +176,8 @@ export class SearchDeliveryNotes extends Component {
             maxResults: rows,
             searchFilter: {
                 idProducto: _.get(product, 'productId', null),
-                fechaAltaDesde: fromDate,
-                fechaAltaHasta: toDate,
+                fechaAltaDesde: serializeDate(fromDate),
+                fechaAltaHasta: serializeDate(toDate),
                 idTipoMovimiento: _.get(deliveryType, 'id', null)
             }
         }

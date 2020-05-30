@@ -1,10 +1,13 @@
 package ar.com.gtsoftware.api.impl;
 
 import ar.com.gtsoftware.api.SalesController;
+import ar.com.gtsoftware.api.exception.SaleNotFoundException;
 import ar.com.gtsoftware.api.request.PaginatedSearchRequest;
 import ar.com.gtsoftware.api.request.SaleSearchResult;
 import ar.com.gtsoftware.api.response.PaginatedResponse;
+import ar.com.gtsoftware.api.response.SaleResponse;
 import ar.com.gtsoftware.api.response.SaleTotalsResponse;
+import ar.com.gtsoftware.api.transformer.fromDomain.SaleResponseTransformer;
 import ar.com.gtsoftware.api.transformer.fromDomain.SaleSearchResultTransformer;
 import ar.com.gtsoftware.auth.Roles;
 import ar.com.gtsoftware.dto.domain.ComprobantesDto;
@@ -24,6 +27,7 @@ public class SalesControllerImpl implements SalesController {
     private final ComprobantesService comprobantesService;
     private final SaleSearchResultTransformer saleSearchResultTransformer;
     private final SecurityUtils securityUtils;
+    private final SaleResponseTransformer saleResponseTransformer;
 
     @Override
     public PaginatedResponse<SaleSearchResult> findBySearchFilter(@Valid PaginatedSearchRequest<ComprobantesSearchFilter> searchRequest) {
@@ -57,5 +61,15 @@ public class SalesControllerImpl implements SalesController {
         totalsResponse.setNotInvoicedTotal(comprobantesService.calcularTotalVentas(searchFilter));
 
         return totalsResponse;
+    }
+
+    @Override
+    public SaleResponse getSale(Long saleId) {
+        final ComprobantesDto comprobante = comprobantesService.find(saleId);
+        if (comprobante == null) {
+            throw new SaleNotFoundException();
+        }
+
+        return saleResponseTransformer.transformSale(comprobante);
     }
 }

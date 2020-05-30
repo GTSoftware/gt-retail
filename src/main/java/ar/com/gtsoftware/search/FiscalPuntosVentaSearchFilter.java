@@ -17,10 +17,11 @@ package ar.com.gtsoftware.search;
 
 import ar.com.gtsoftware.enums.TiposPuntosVenta;
 import lombok.*;
+import org.apache.commons.collections4.CollectionUtils;
 
-/**
- * @author Rodrigo M. Tato Rothamel mailto:rotatomel@gmail.com
- */
+import java.util.List;
+
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -31,14 +32,18 @@ public class FiscalPuntosVentaSearchFilter extends AbstractSearchFilter {
     private Long idSucursal;
     private Boolean activo;
     private Integer nroPuntoVenta;
-    private TiposPuntosVenta tipoPuntoVenta;
+    private List<TiposPuntosVenta> tiposPuntoVenta;
 
     @Override
     public boolean hasFilter() {
         return idSucursal != null
                 || activo != null
                 || nroPuntoVenta != null
-                || tipoPuntoVenta != null;
+                || hasTiposPuntoVentaFilter();
+    }
+
+    public boolean hasTiposPuntoVentaFilter() {
+        return CollectionUtils.isNotEmpty(tiposPuntoVenta);
     }
 
 }
