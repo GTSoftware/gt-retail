@@ -18,38 +18,65 @@
 package ar.com.gtsoftware.rules.helper;
 
 import ar.com.gtsoftware.api.PromotionCartItem;
+import ar.com.gtsoftware.rules.CondicionIlegalException;
 import ar.com.gtsoftware.rules.OfertaDto;
-import ar.com.gtsoftware.search.OfertasSearchFilter;
-import ar.com.gtsoftware.service.OfertasService;
 import lombok.RequiredArgsConstructor;
-import org.kie.api.runtime.StatelessKieSession;
+import org.jeasy.rules.api.*;
+import org.jeasy.rules.core.DefaultRulesEngine;
+import org.jeasy.rules.mvel.MVELRule;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static ar.com.gtsoftware.rules.helper.RuleConditionsTransformer.transformConditions;
 
 @Component
 @RequiredArgsConstructor
 public class OfertasHelper {
 
-    private final OfertasService ofertasService;
-    private final DroolsUtility droolsUtility;
+    private final OfertasFinder ofertasFinder;
 
     public void ejecutarReglasOferta(PromotionCartItem promotionCartItem) {
-        try {
-            StatelessKieSession session = initializeSession();
-            session.setGlobal("promotionCartItem", promotionCartItem);
+        final List<OfertaDto> ofertasList = ofertasFinder.findOfertas();
 
-            session.execute(promotionCartItem.getLinea());
-        } catch (Exception e) {
-            throw new RuntimeException("Imposible inicializar el contexto de reglas.", e);
+        if (!ofertasList.isEmpty()) {
+            List<Rule> offerRules = getOfferRules(ofertasList);
+
+            Facts facts = new Facts();
+            facts.put("promotionCartItem", promotionCartItem);
+            facts.put("linea", promotionCartItem.getLinea());
+
+            Rules rules = new Rules();
+            for (Rule rule : offerRules) {
+                rules.register(rule);
+            }
+            RulesEngineParameters params = new RulesEngineParameters();
+            params.setSkipOnFirstAppliedRule(true);
+
+            RulesEngine engine = new DefaultRulesEngine(params);
+            engine.fire(rules, facts);
         }
     }
 
-    private StatelessKieSession initializeSession() throws Exception {
-        //filter.setIdSucursal(venta.getIdSucursal().getId());
-        final OfertasSearchFilter filter = OfertasSearchFilter.builder().activas(true).build();
 
-        List<OfertaDto> ofertasList = ofertasService.findAllBySearchFilter(filter);
-        return droolsUtility.loadSession(ofertasList);
+    private List<Rule> getOfferRules(List<OfertaDto> ofertasList) {
+        List<Rule> rules = new ArrayList<>(ofertasList.size());
+        for (OfertaDto ofertaDto : ofertasList) {
+            try {
+                rules.add(
+                        new MVELRule()
+                                .name(String.format("%d - %s", ofertaDto.getId(), ofertaDto.getTextoOferta()))
+                                .when(transformConditions(ofertaDto.getCondiciones()))
+                                .then("promotionCartItem.applyDiscount(ar.com.gtsoftware.rules.TipoAccion." + ofertaDto.getTipoAccion() + ", " +
+                                        ofertaDto.getDescuento().toPlainString() + ", '" +
+                                        ofertaDto.getTextoOferta() + "');")
+                );
+            } catch (CondicionIlegalException e) {
+                //
+            }
+        }
+
+        return rules;
     }
 }

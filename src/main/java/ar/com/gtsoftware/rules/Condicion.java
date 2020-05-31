@@ -22,11 +22,6 @@ import lombok.*;
 
 import javax.validation.constraints.NotNull;
 
-import static ar.com.gtsoftware.rules.Operacion.CONTIENE;
-import static ar.com.gtsoftware.rules.Operacion.MULTIPLO;
-import static org.apache.commons.lang3.StringUtils.SPACE;
-import static org.apache.commons.lang3.StringUtils.isEmpty;
-
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
@@ -54,36 +49,5 @@ public class Condicion {
 
     private int version;
 
-    public String buildExpression() throws CondicionIlegalException {
-        validarCondicion();
-
-        if (MULTIPLO == operacion) {
-            return "(" + campo.getRuta() + buildOperador();
-        }
-
-        return campo.getRuta() + buildOperador();
-
-    }
-
-    private void validarCondicion() throws CondicionIlegalException {
-        if (operacion == null || campo == null || isEmpty(valor)) {
-            throw new CondicionIlegalException("Algunos de los elementos de la condición es nulo!");
-        }
-        if (!operacion.soportaTipo(campo.getClase())) {
-            throw new CondicionIlegalException("El campo:" + campo + " no soporta la operación: " + operacion);
-        }
-
-    }
-
-    private String buildOperador() {
-        if (CONTIENE == operacion) {
-            return ".toUpperCase().contains(\"" + valor.toUpperCase() + "\")";
-        }
-        if (MULTIPLO == operacion) {
-            return SPACE + operacion.getOperador() + SPACE + valor + ") == 0";
-        }
-        return SPACE + operacion.getOperador() + SPACE + valor;
-
-    }
 
 }
