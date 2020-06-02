@@ -6,7 +6,7 @@
                  version="2.2">
 
     <named-native-query name="ReporteVentasQueryCount">
-        <query>
+        <query><![CDATA[
             SELECT COUNT(1)
             FROM productos p
             JOIN productos_tipos_unidades u ON p.id_tipo_unidad_venta = u.id_tipo_unidad
@@ -15,15 +15,17 @@
             FROM comprobantes comp
             JOIN comprobantes_lineas cl ON comp.id_comprobante = cl.id_comprobante
             WHERE comp.anulada = false
+            AND comp.id_negocio_tipo_comprobante IN (1, 2)
             AND comp.fecha_comprobante between :fechaDesde and :fechaHasta
             AND cl.id_producto = p.id_producto
-            AND (COALESCE(null, :idSucursal) IS NULL OR comp.id_sucursal = CAST(:idSucursal AS INTEGER))
+            AND (:idSucursal = -1 OR comp.id_sucursal = :idSucursal)
             )
+            ]]>
         </query>
     </named-native-query>
 
     <named-native-query name="ReporteVentasQuery" result-set-mapping="ReporteVentasMapping">
-        <query>
+        <query><![CDATA[
             SELECT
             p.id_producto,
             p.codigo_propio,
@@ -38,35 +40,39 @@
             JOIN comprobantes_lineas cl ON comp.id_comprobante = cl.id_comprobante
             JOIN negocio_tipos_comprobante ntc ON comp.id_negocio_tipo_comprobante = ntc.id_negocio_tipo_comprobante
             WHERE comp.anulada = false
+            AND comp.id_negocio_tipo_comprobante IN (1, 2)
             AND comp.fecha_comprobante between :fechaDesde and :fechaHasta
             AND cl.id_producto = p.id_producto
-            AND (coalesce(null, :idSucursal) IS NULL OR comp.id_sucursal = CAST(:idSucursal AS INTEGER))) AS
+            AND (:idSucursal = -1 OR comp.id_sucursal = :idSucursal)) AS
             cantidad_vendida,
             (SELECT SUM(cl.costo_neto_unitario * cl.cantidad * ntc.signo)
             FROM comprobantes comp
             JOIN comprobantes_lineas cl ON comp.id_comprobante = cl.id_comprobante
             JOIN negocio_tipos_comprobante ntc ON comp.id_negocio_tipo_comprobante = ntc.id_negocio_tipo_comprobante
             WHERE comp.anulada = false
+            AND comp.id_negocio_tipo_comprobante IN (1, 2)
             AND comp.fecha_comprobante between :fechaDesde and :fechaHasta
             AND cl.id_producto = p.id_producto
-            AND (COALESCE(null, :idSucursal) IS NULL OR comp.id_sucursal = CAST(:idSucursal AS INTEGER))) AS
+            AND (:idSucursal = -1 OR comp.id_sucursal = :idSucursal)) AS
             costo_total_ventas,
             (SELECT SUM(cl.sub_total * ntc.signo)
             FROM comprobantes comp
             JOIN comprobantes_lineas cl ON comp.id_comprobante = cl.id_comprobante
             JOIN negocio_tipos_comprobante ntc ON comp.id_negocio_tipo_comprobante = ntc.id_negocio_tipo_comprobante
             WHERE comp.anulada = false
+            AND comp.id_negocio_tipo_comprobante IN (1, 2)
             AND comp.fecha_comprobante BETWEEN :fechaDesde AND :fechaHasta
             AND cl.id_producto = p.id_producto
-            AND (COALESCE(null, :idSucursal) IS NULL OR comp.id_sucursal = CAST(:idSucursal AS INTEGER))) AS
+            AND (:idSucursal = -1 OR comp.id_sucursal = :idSucursal)) AS
             total_precio_venta,
             (SELECT COUNT(distinct comp.id_comprobante)
             FROM comprobantes comp
             JOIN comprobantes_lineas cl on comp.id_comprobante = cl.id_comprobante
             WHERE comp.anulada = false
+            AND comp.id_negocio_tipo_comprobante IN (1, 2)
             AND comp.fecha_comprobante between :fechaDesde and :fechaHasta
             AND cl.id_producto = p.id_producto
-            AND (COALESCE(null, :idSucursal) IS NULL OR comp.id_sucursal = CAST(:idSucursal AS INTEGER))) AS
+            AND (:idSucursal = -1 OR comp.id_sucursal = :idSucursal)) AS
             cant_comprobantes,
             (SELECT '[' || prov.id_persona || '] ' || prov.razon_social
             FROM personas prov where prov.id_persona =
@@ -78,11 +84,12 @@
             FROM comprobantes comp
             JOIN comprobantes_lineas cl on comp.id_comprobante = cl.id_comprobante
             WHERE comp.anulada = false
+            AND comp.id_negocio_tipo_comprobante IN (1, 2)
             AND comp.fecha_comprobante between :fechaDesde and :fechaHasta
             AND cl.id_producto = p.id_producto
-            AND (coalesce(null, :idSucursal) IS NULL OR comp.id_sucursal = CAST(:idSucursal AS INTEGER)))
+            AND (:idSucursal = -1 OR comp.id_sucursal = :idSucursal))
             ORDER BY cant_comprobantes DESC
-        </query>
+        ]]></query>
     </named-native-query>
 
     <sql-result-set-mapping name="ReporteVentasMapping">

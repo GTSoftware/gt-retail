@@ -12,7 +12,7 @@ import {DataTable} from "primereact/datatable";
 import {Column} from "primereact/column";
 import FileOutputsService from "../../service/FileOutputsService";
 import {AutocompleteProductFilter} from "../core/AutocompleteProductFilter";
-import {formatDate} from "../../utils/DateUtils";
+import {formatDate, serializeDate} from "../../utils/DateUtils";
 
 
 export class ProductHistory extends Component {
@@ -149,7 +149,7 @@ export class ProductHistory extends Component {
 
     filterMovements = () => {
         let filter = {
-            fromDate: this.state.fromDate,
+            fromDate: serializeDate(this.state.fromDate),
             productId: this.state.selectedProduct.productId,
             warehouseId: this.state.warehouse.warehouseId
         }

@@ -17,14 +17,14 @@
 
 package ar.com.gtsoftware.search.reportes;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class ReporteVentasSearchFilter extends AbstractReportSearchFilter {
 
@@ -41,9 +41,4 @@ public class ReporteVentasSearchFilter extends AbstractReportSearchFilter {
         return (fechaDesde != null && fechaHasta != null);
     }
 
-    public void setDefaultDatesValues() {
-        LocalDate today = LocalDate.now();
-        fechaDesde = today.withDayOfMonth(1);
-        fechaHasta = today.withDayOfMonth(today.lengthOfMonth());
-    }
 }

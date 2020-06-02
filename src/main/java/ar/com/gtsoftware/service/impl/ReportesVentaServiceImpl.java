@@ -21,6 +21,7 @@ import ar.com.gtsoftware.dto.reportes.VentaPorProducto;
 import ar.com.gtsoftware.dto.reportes.VentaPorProductoReport;
 import ar.com.gtsoftware.search.reportes.ReporteVentasSearchFilter;
 import ar.com.gtsoftware.service.ReportesVentaService;
+import ar.com.gtsoftware.utils.BusinessDateUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -34,16 +35,19 @@ import java.util.List;
 public class ReportesVentaServiceImpl implements ReportesVentaService {
 
     private final EntityManager em;
+    private final BusinessDateUtils dateUtils;
 
     @Override
     public VentaPorProductoReport obtenerReporte(ReporteVentasSearchFilter filter) {
         TypedQuery<BigInteger> qCount = (TypedQuery<BigInteger>) em.createNamedQuery("ReporteVentasQueryCount");
         if (!filter.hasFechasFilter()) {
-            filter.setDefaultDatesValues();
+            setDefaultDates(filter);
         }
+        long idSucursalFilter = filter.getIdSucursal() == null ? -1 : filter.getIdSucursal();
+
         qCount.setParameter("fechaDesde", filter.getFechaDesde());
         qCount.setParameter("fechaHasta", filter.getFechaHasta());
-        qCount.setParameter("idSucursal", filter.getIdSucursal());
+        qCount.setParameter("idSucursal", idSucursalFilter);
 
         int maxRows = qCount.getSingleResult().intValue();
 
@@ -55,12 +59,17 @@ public class ReportesVentaServiceImpl implements ReportesVentaService {
 
         q.setParameter("fechaDesde", filter.getFechaDesde());
         q.setParameter("fechaHasta", filter.getFechaHasta());
-        q.setParameter("idSucursal", filter.getIdSucursal());
+        q.setParameter("idSucursal", idSucursalFilter);
 
         List<VentaPorProducto> items = q.getResultList();
 
         report.setPageRows(items);
 
         return report;
+    }
+
+    private void setDefaultDates(ReporteVentasSearchFilter filter) {
+        filter.setFechaDesde(dateUtils.getStartDateOfCurrentMonth());
+        filter.setFechaHasta(dateUtils.getEndDateOfCurrentMonth());
     }
 }

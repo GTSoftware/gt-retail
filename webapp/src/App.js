@@ -26,6 +26,7 @@ import {ProductHistory} from "./components/stock/ProductHistory";
 import {SearchDeliveryNotes} from "./components/delivery-note/SearchDeliveryNotes";
 import {SearchSales} from "./components/sale/SearchSales";
 import {ViewSale} from "./components/sale/ViewSale";
+import {SalesByProductReport} from "./components/report/SalesByProductReport";
 
 const ProtectedRoute = ({component: Component, ...rest}) => (
     <Route {...rest} render={(props) => (
@@ -185,6 +186,21 @@ class App extends Component {
         }
     }
 
+    getReportsMenuItem = () => {
+        return {
+            label: 'Reportes', icon: 'fa fa-fw fa-chart-line',
+            items: [
+                {
+                    label: 'Ventas por producto',
+                    icon: 'fa fa-fw fa-shopping-cart',
+                    command: () => {
+                        window.location = '#/sales-product'
+                    }
+                }
+            ]
+        };
+    }
+
     addClass(element, className) {
         if (element.classList)
             element.classList.add(className);
@@ -260,6 +276,8 @@ class App extends Component {
                                         component={SearchSales}/>
                         <ProtectedRoute exact path="/sale/:saleId"
                                         component={ViewSale}/>
+                        <ProtectedRoute path="/sales-product"
+                                        component={SalesByProductReport}/>
                         <Route component={PageNotFound}/>
                     </Switch>
                 </div>
@@ -296,7 +314,8 @@ class App extends Component {
         }
 
         if (adminUser) {
-            roleDependantMenu = roleDependantMenu.concat(this.getProductsMenuItem());
+            roleDependantMenu = roleDependantMenu.concat(this.getProductsMenuItem())
+                .concat(this.getReportsMenuItem());
         }
 
         this.setState({
