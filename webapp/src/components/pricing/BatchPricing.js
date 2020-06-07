@@ -12,6 +12,7 @@ import {LoadingButton} from "../core/LoadingButton";
 import {AddPercentDialog} from "./AddPercentDialog";
 import {DataTable} from "primereact/datatable";
 import {Column} from "primereact/column";
+import {InputText} from "primereact/inputtext";
 
 export class BatchPricing extends Component {
 
@@ -29,7 +30,8 @@ export class BatchPricing extends Component {
                 category: null,
                 subCategory: null,
                 brand: null,
-                supplier: null
+                supplier: null,
+                containsText: ''
             },
             loading: false,
             filteredProducts: [],
@@ -152,6 +154,16 @@ export class BatchPricing extends Component {
                               onChange={(e) => this.handleProductsSearchOptionsChange('subCategory', e.value)}
                     />
                 </div>
+                <div className="p-col-12">
+                    <label htmlFor="containsText">Contiene:</label>
+                    <InputText placeholder="La descripción contiene"
+                               id="containsText"
+                               onChange={(e) => this.handleProductsSearchOptionsChange('containsText', e.target.value)}
+                               value={productsSearchOptions.containsText || ''}
+
+                    />
+                </div>
+
                 <div className="p-col-6">
                     <LoadingButton label="Aplicar filtros" icon="fa fa-fw fa-check"
                                    loading={this.state.loading}
@@ -340,6 +352,7 @@ export class BatchPricing extends Component {
             idSubRubro: _.get(productsSearchOptions, 'subCategory.subCategoryId', null),
             idMarca: _.get(productsSearchOptions, 'brand.brandId', null),
             idProveedorHabitual: _.get(productsSearchOptions, 'supplier.personId', null),
+            txt: productsSearchOptions.containsText,
             sortFields: [{
                 fieldName: "descripcion",
                 ascending: true

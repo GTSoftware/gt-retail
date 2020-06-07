@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {DataTable} from "primereact/datatable";
 import {Column} from "primereact/column";
 import PropTypes from 'prop-types';
+import {formatDate} from "../../utils/DateUtils";
 
 
 const productColumns = [
@@ -73,7 +74,11 @@ export class SearchProductsTable extends Component {
         let sortedColumnFields = this.getProductColumns();
 
         return sortedColumnFields.map((col, i) => {
-            return <Column key={col.field} field={col.field} header={col.header} style={col.style}/>;
+            let body = null;
+            if (col.field === 'fechaUltimaModificacion') {
+                body = (rowData) => this.formatDate(rowData, col.field);
+            }
+            return <Column key={col.field} field={col.field} body={body} header={col.header} style={col.style}/>;
         });
     }
 
@@ -109,4 +114,7 @@ export class SearchProductsTable extends Component {
         });
     }
 
+    formatDate = (rowData, fieldName) => {
+        return formatDate(rowData[fieldName]);
+    }
 }
