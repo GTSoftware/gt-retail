@@ -27,6 +27,8 @@ import {SearchDeliveryNotes} from "./components/delivery-note/SearchDeliveryNote
 import {SearchSales} from "./components/sale/SearchSales";
 import {ViewSale} from "./components/sale/ViewSale";
 import {SalesByProductReport} from "./components/report/SalesByProductReport";
+import {SearchPendingSales} from "./components/payment/SearchPendingSales";
+import Helmet from "react-helmet";
 
 const ProtectedRoute = ({component: Component, ...rest}) => (
     <Route {...rest} render={(props) => (
@@ -201,6 +203,21 @@ class App extends Component {
         };
     }
 
+    getPaymentsMenuItem = () => {
+        return {
+            label: 'Caja', icon: 'fa fa-fw fa-cash-register',
+            items: [
+                {
+                    label: 'Comprobantes pendientes de cobro',
+                    icon: 'fa fa-fw fa-file-invoice',
+                    command: () => {
+                        window.location = '#/payment-pending-sales'
+                    }
+                }
+            ]
+        };
+    }
+
     addClass(element, className) {
         if (element.classList)
             element.classList.add(className);
@@ -246,6 +263,11 @@ class App extends Component {
 
         return (
             <div className={wrapperClass} onClick={this.onWrapperClick}>
+                <Helmet>
+                    <title>
+                        {isUserLoggedIn ? LoginService.getUserDetails().completeUserName + " | GT Retail" : "GT Retail"}
+                    </title>
+                </Helmet>
                 {isUserLoggedIn && <AppTopbar onToggleMenu={this.onToggleMenu}/>}
 
                 {isUserLoggedIn &&
@@ -278,6 +300,8 @@ class App extends Component {
                                         component={ViewSale}/>
                         <ProtectedRoute path="/sales-product"
                                         component={SalesByProductReport}/>
+                        <ProtectedRoute path="/payment-pending-sales"
+                                        component={SearchPendingSales}/>
                         <Route component={PageNotFound}/>
                     </Switch>
                 </div>
@@ -300,10 +324,11 @@ class App extends Component {
     }
 
     loadLoginStatus = () => {
+        const adminUser = LoginService.hasUserRole('ADMINISTRADORES');
+        const stockManUser = LoginService.hasUserRole('STOCK_MEN');
+        const salesManUser = LoginService.hasUserRole('VENDEDORES');
+        const cashierUser = LoginService.hasUserRole('CAJEROS');
         let roleDependantMenu = this.getDefaultMenuItems();
-        let adminUser = LoginService.hasUserRole('ADMINISTRADORES');
-        let stockManUser = LoginService.hasUserRole('STOCK_MEN');
-        let salesManUser = LoginService.hasUserRole('VENDEDORES');
 
         if (adminUser || salesManUser) {
             roleDependantMenu = roleDependantMenu.concat(this.getSalesMenuItem());
@@ -318,6 +343,10 @@ class App extends Component {
                 .concat(this.getReportsMenuItem());
         }
 
+        if (adminUser || cashierUser) {
+            roleDependantMenu = roleDependantMenu.concat(this.getPaymentsMenuItem());
+        }
+
         this.setState({
             userLoggedIn: true,
             adminUser: adminUser,
@@ -326,6 +355,7 @@ class App extends Component {
             menu: roleDependantMenu
         });
     }
+
 }
 
 export default App;

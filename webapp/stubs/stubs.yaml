@@ -1,0 +1,44 @@
+- request:
+    url: ^/authenticate$
+    method: POST
+    json: '{"username": "fail", "password": "fail"}'
+  response:
+    - status: 500
+
+- request:
+    url: ^/authenticate$
+    method: POST
+    json: '{"username": "admin", "password": "admin"}'
+  response:
+    - status: 200
+      file: loginResponse.json
+
+- request:
+    url: ^/dashboard/monthly-sales$
+  response:
+    - status: 200
+      body: >
+        [{"period": "2020-01", "amount":12322.21},
+        {"period": "2020-02", "amount":1234}]
+
+- request:
+    url: ^/dashboard/sales-quantity$
+  response:
+    - status: 200
+      body: >
+        12
+
+- request:
+    url: ^/dashboard/new-customers$
+  response:
+    - status: 200
+      body: >
+        5
+
+- request:
+    url: ^/dashboard/stock-break$
+  response:
+    - status: 200
+      body: >
+        []
+

@@ -19,41 +19,42 @@ package ar.com.gtsoftware.service.impl;
 import ar.com.gtsoftware.dao.*;
 import ar.com.gtsoftware.domain.*;
 import ar.com.gtsoftware.dto.PagoValorDTO;
+import ar.com.gtsoftware.dto.PreparedPaymentDto;
+import ar.com.gtsoftware.dto.SaleToPayDto;
 import ar.com.gtsoftware.dto.domain.CajasDto;
+import ar.com.gtsoftware.dto.domain.ComprobantesPagosDto;
+import ar.com.gtsoftware.dto.domain.NegocioFormasPagoDto;
 import ar.com.gtsoftware.dto.domain.RecibosDto;
 import ar.com.gtsoftware.mappers.*;
 import ar.com.gtsoftware.mappers.helper.CycleAvoidingMappingContext;
-import ar.com.gtsoftware.service.CobranzaService;
+import ar.com.gtsoftware.service.PaymentsService;
 import ar.com.gtsoftware.service.PersonasCuentaCorrienteService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 
 @Service
 @RequiredArgsConstructor
-public class CobranzaServiceImpl implements CobranzaService {
+public class PaymentsServiceImpl implements PaymentsService {
 
+    private static final BigDecimal ROUND_AMOUNT = new BigDecimal(5);
     private final RecibosFacade recibosFacade;
     private final ComprobantesFacade comprobantesFacade;
     private final CajasMovimientosFacade cajasMovimientosFacade;
     private final CajasFacade cajasFacade;
-
     private final ComprobantesPagosFacade compPagosFacade;
-
-
     private final PersonasCuentaCorrienteService cuentaCorrienteService;
-    private final ComprobantesPagosFacade pagosFacade;
     private final UsuariosFacade usuariosFacade;
-
     private final ComprobantesPagosMapper comprobantesPagosMapper;
     private final CuponesMapper cuponesMapper;
     private final ChequesTercerosMapper chequesTercerosMapper;
     private final RecibosMapper recibosMapper;
     private final PersonasMapper personasMapper;
-
+    private final ComprobantesMapper comprobantesMapper;
 
     @Override
     public RecibosDto cobrarComprobantes(CajasDto cajasDto, List<PagoValorDTO> pagos) {
@@ -136,7 +137,7 @@ public class CobranzaServiceImpl implements CobranzaService {
             compPago.setFechaUltimoPago(fecha);
 
             if (compPago.isNew()) {
-                pagosFacade.create(compPago);
+                compPagosFacade.create(compPago);
             }
             reciboDet.setIdPagoComprobante(compPago);
 
@@ -166,6 +167,93 @@ public class CobranzaServiceImpl implements CobranzaService {
         generarMovimientoCuenta(recibo.getMontoTotal(), comprobante, descMovimiento);
 
         return recibosMapper.entityToDto(recibo, new CycleAvoidingMappingContext());
+    }
+
+    @Override
+    public PreparedPaymentDto prepareToPay(List<Long> saleIds) {
+        List<Comprobantes> sales = new ArrayList<>(saleIds.size());
+
+        saleIds.forEach(saleId -> sales.add(comprobantesFacade.find(saleId)));
+        validateSales(sales);
+        final PreparedPaymentDto preparedPaymentDto = PreparedPaymentDto.builder()
+                .customer(personasMapper.entityToDto(sales.get(0).getIdPersona(), new CycleAvoidingMappingContext()))
+                .build();
+
+        preparedPaymentDto.setSalesToPay(buildSalesToPay(sales));
+
+        return preparedPaymentDto;
+    }
+
+    private void validateSales(List<Comprobantes> sales) {
+        final Long customerId = sales.get(0).getIdPersona().getId();
+        final Optional<Comprobantes> saleWithDifferentCustomer = sales.stream().filter(s -> !s.getIdPersona().getId().equals(customerId)).findAny();
+        if (saleWithDifferentCustomer.isPresent()) {
+            throw new RuntimeException("The selected sales should be for the same customer");
+        }
+        final Optional<Comprobantes> saleWithNoRemainingAmount = sales.stream().filter(s -> s.getSaldo().signum() == 0).findAny();
+        if (saleWithNoRemainingAmount.isPresent()) {
+            throw new RuntimeException(String.format("The sale with Id: %d should have remaining amount", saleWithNoRemainingAmount.get().getId()));
+        }
+
+    }
+
+    private List<SaleToPayDto> buildSalesToPay(List<Comprobantes> sales) {
+        List<SaleToPayDto> salesToPay = new ArrayList<>();
+        for (Comprobantes sale : sales) {
+            BigDecimal remainingAmount = sale.getSaldo();
+            for (ComprobantesPagos pago : sale.getPagosList()) {
+                if (!pago.getMontoPago().equals(pago.getMontoPagado())) {
+                    final BigDecimal totalPayment = pago.getMontoPago().subtract(pago.getMontoPagado());
+                    remainingAmount = remainingAmount.subtract(totalPayment);
+                    final SaleToPayDto saleToPay = buildSaleToPay(sale, pago, totalPayment);
+
+                    if (!pago.getIdFormaPago().isRequiereValores()) {
+                        saleToPay.setEditableAmount(true);
+                        BigDecimal truncatedPaymentAmount = totalPayment.setScale(0, RoundingMode.HALF_UP);
+                        saleToPay.setMinAllowedPayment(truncatedPaymentAmount
+                                .subtract(ROUND_AMOUNT).max(BigDecimal.ZERO));
+                        saleToPay.setMaxAllowedPayment(truncatedPaymentAmount.add(ROUND_AMOUNT));
+                    }
+                    salesToPay.add(saleToPay);
+                }
+
+            }
+            if (remainingAmount.signum() > 0) {
+                final SaleToPayDto saleToPay = buildUndefinedPayment(sale, remainingAmount);
+
+                salesToPay.add(saleToPay);
+            }
+
+        }
+
+        return salesToPay;
+    }
+
+    private SaleToPayDto buildUndefinedPayment(Comprobantes sale, BigDecimal remainingAmount) {
+        return SaleToPayDto.builder()
+                .sale(comprobantesMapper.entityToDto(sale, new CycleAvoidingMappingContext()))
+                .payment(ComprobantesPagosDto.builder()
+                        .idFormaPago(NegocioFormasPagoDto.builder().id(1L)
+                                .requiereValores(false)
+                                .nombreFormaPago("EFECTIVO")
+                                .build())
+                        .build())
+                .totalPayment(remainingAmount)
+                .maxAllowedPayment(remainingAmount)
+                .minAllowedPayment(BigDecimal.ZERO)
+                .editableAmount(true)
+                .build();
+    }
+
+    private SaleToPayDto buildSaleToPay(Comprobantes sale, ComprobantesPagos pago, BigDecimal totalPayment) {
+        return SaleToPayDto.builder()
+                .sale(comprobantesMapper.entityToDto(sale, new CycleAvoidingMappingContext()))
+                .totalPayment(totalPayment)
+                .payment(comprobantesPagosMapper.entityToDto(pago, new CycleAvoidingMappingContext()))
+                .editableAmount(false)
+                .minAllowedPayment(totalPayment)
+                .maxAllowedPayment(totalPayment)
+                .build();
     }
 
     private void generarMovimientoCuenta(BigDecimal monto, Comprobantes comprobante, String descMovimiento) {

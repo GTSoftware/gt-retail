@@ -16,6 +16,7 @@
 package ar.com.gtsoftware.service;
 
 import ar.com.gtsoftware.dto.PagoValorDTO;
+import ar.com.gtsoftware.dto.PreparedPaymentDto;
 import ar.com.gtsoftware.dto.domain.CajasDto;
 import ar.com.gtsoftware.dto.domain.RecibosDto;
 
@@ -28,7 +29,7 @@ import java.util.List;
  * @author Rodrigo M. Tato Rothamel mailto:rotatomel@gmail.com
  */
 
-public interface CobranzaService {
+public interface PaymentsService {
 
     /**
      * Cobra totalmente uno o más comprobantes
@@ -38,5 +39,7 @@ public interface CobranzaService {
      * @return
      */
     RecibosDto cobrarComprobantes(@NotNull CajasDto caja, List<PagoValorDTO> pagos);
+
+    PreparedPaymentDto prepareToPay(List<Long> saleIds);
 
 }
