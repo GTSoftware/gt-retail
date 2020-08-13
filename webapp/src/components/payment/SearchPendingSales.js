@@ -182,6 +182,7 @@ export class SearchPendingSales extends Component {
         return (
             showPayDialog && <PayDialog visible={showPayDialog}
                                         payingCustomer={prepareToPay.customer}
+                                        banks={prepareToPay.banks}
                                         successCallback={() => this.setState({showPayDialog: false})}
                                         salesToPay={prepareToPay.salesToPay}
                                         onHide={() => this.setState({showPayDialog: false})}/>

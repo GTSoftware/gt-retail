@@ -12,6 +12,7 @@ export class PayDialog extends Component {
     static propTypes = {
         payingCustomer: PropTypes.string.isRequired,
         salesToPay: PropTypes.object.isRequired,
+        banks: PropTypes.array.isRequired,
         successCallback: PropTypes.func.isRequired
     }
 
@@ -23,6 +24,7 @@ export class PayDialog extends Component {
         this.state = {
             salesToPay: this.props.salesToPay,
             payingCustomer: this.props.payingCustomer,
+            banks: this.props.banks,
             loading: false
 
         }

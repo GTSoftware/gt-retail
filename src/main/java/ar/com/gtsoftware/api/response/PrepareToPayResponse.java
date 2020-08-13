@@ -13,4 +13,5 @@ public class PrepareToPayResponse {
 
     private List<SaleToPay> salesToPay;
     private String customer;
+    private List<Bank> banks;
 }

@@ -10,11 +10,9 @@ import ar.com.gtsoftware.auth.JwtUserDetails;
 import ar.com.gtsoftware.auth.Roles;
 import ar.com.gtsoftware.dto.PreparedPaymentDto;
 import ar.com.gtsoftware.dto.SaleToPayDto;
-import ar.com.gtsoftware.dto.domain.ComprobantesDto;
-import ar.com.gtsoftware.dto.domain.ComprobantesPagosDto;
-import ar.com.gtsoftware.dto.domain.NegocioFormasPagoDto;
-import ar.com.gtsoftware.dto.domain.PersonasDto;
+import ar.com.gtsoftware.dto.domain.*;
 import ar.com.gtsoftware.search.ComprobantesSearchFilter;
+import ar.com.gtsoftware.service.BancosService;
 import ar.com.gtsoftware.service.ComprobantesService;
 import ar.com.gtsoftware.service.PaymentsService;
 import ar.com.gtsoftware.utils.SecurityUtils;
@@ -47,6 +45,8 @@ class PaymentPendingSalesControllerImplTest {
     private PaymentPendingSaleTransformer mockPaymentPendingSaleTransformer;
     @Mock
     private PaymentsService mockPaymentsService;
+    @Mock
+    private BancosService mockBancosService;
 
 
     @BeforeEach
@@ -56,7 +56,8 @@ class PaymentPendingSalesControllerImplTest {
                 mockSecurityUtils,
                 mockComprobantesService,
                 mockPaymentsService,
-                mockPaymentPendingSaleTransformer);
+                mockPaymentPendingSaleTransformer,
+                mockBancosService);
 
         when(mockSecurityUtils.getUserDetails()).thenReturn(JwtUserDetails.builder().sucursalId(3L).build());
         when(mockComprobantesService.countBySearchFilter(any())).thenReturn(1);
@@ -103,26 +104,9 @@ class PaymentPendingSalesControllerImplTest {
     }
 
     @Test
-    void shouldPrepareToPay() {
-        SaleToPayDto saleToPayDto = SaleToPayDto.builder()
-                .totalPayment(BigDecimal.TEN)
-                .payment(ComprobantesPagosDto.builder()
-                        .idFormaPago(NegocioFormasPagoDto.builder()
-                                .nombreFormaPago("EFECTIVO")
-                                .id(1L)
-                                .build())
-                        .build())
-                .sale(ComprobantesDto.builder()
-                        .id(1L)
-                        .build())
-                .build();
-        PreparedPaymentDto preparedPaymentDto = PreparedPaymentDto.builder()
-                .customer(PersonasDto.builder().id(1L)
-                        .documento("1234")
-                        .razonSocial("Test, Test")
-                        .build())
-                .salesToPay(Collections.singletonList(saleToPayDto))
-                .build();
+    void shouldPrepareToPayInCash() {
+        SaleToPayDto saleToPayDto = buildDummySaleToPay("EFECTIVO", 1L);
+        PreparedPaymentDto preparedPaymentDto = buildDummyPreparedPayment(saleToPayDto);
         final List<Long> salesIds = Collections.singletonList(1L);
         when(mockPaymentsService.prepareToPay(salesIds)).thenReturn(preparedPaymentDto);
 
@@ -133,8 +117,87 @@ class PaymentPendingSalesControllerImplTest {
         assertThat(response, is(notNullValue()));
         assertThat(response.getSalesToPay().size(), is(1));
         assertThat(response.getCustomer(), is("[1234] Test, Test"));
+        assertThat(response.getBanks().size(), is(0));
+        assertThat(response.getSalesToPay().get(0).getPaymentPlan(), is(""));
 
         verify(mockPaymentsService).prepareToPay(salesIds);
+    }
+
+    @Test
+    void shouldPrepareToPayInCreditCards() {
+        SaleToPayDto saleToPayDto = buildDummySaleToPay("TARJETA DE CREDITO", 2L);
+        saleToPayDto.getPayment().setIdPlan(NegocioPlanesPagoDto.builder()
+                .nombre("MASTERCARD")
+                .build());
+        saleToPayDto.getPayment().setIdDetallePlan(NegocioPlanesPagoDetalleDto.builder()
+                .cuotas(6)
+                .build());
+
+        PreparedPaymentDto preparedPaymentDto = buildDummyPreparedPayment(saleToPayDto);
+        final List<Long> salesIds = Collections.singletonList(1L);
+        when(mockPaymentsService.prepareToPay(salesIds)).thenReturn(preparedPaymentDto);
+
+        SalesToPayRequest request = new SalesToPayRequest();
+        request.setSalesIds(salesIds);
+        final PrepareToPayResponse response = controller.prepareToPay(request);
+
+        assertThat(response, is(notNullValue()));
+        assertThat(response.getSalesToPay().size(), is(1));
+        assertThat(response.getCustomer(), is("[1234] Test, Test"));
+        assertThat(response.getBanks().size(), is(0));
+        assertThat(response.getSalesToPay().get(0).getPaymentPlan(), is("MASTERCARD en 6 pago/s"));
+
+        verify(mockPaymentsService).prepareToPay(salesIds);
+    }
+
+    @Test
+    void shouldPrepareToPayWhenChequesArePresent() {
+        SaleToPayDto saleToPayDto = buildDummySaleToPay("CHEQUE", 4L);
+        PreparedPaymentDto preparedPaymentDto = buildDummyPreparedPayment(saleToPayDto);
+        final List<Long> salesIds = Collections.singletonList(1L);
+        when(mockPaymentsService.prepareToPay(salesIds)).thenReturn(preparedPaymentDto);
+        when(mockBancosService.findAll()).thenReturn(Collections.singletonList(
+                BancosDto.builder()
+                        .id(1L)
+                        .razonSocial("Test Bank")
+                        .build()
+        ));
+
+        SalesToPayRequest request = new SalesToPayRequest();
+        request.setSalesIds(salesIds);
+        final PrepareToPayResponse response = controller.prepareToPay(request);
+
+        assertThat(response, is(notNullValue()));
+        assertThat(response.getSalesToPay().size(), is(1));
+        assertThat(response.getCustomer(), is("[1234] Test, Test"));
+        assertThat(response.getBanks().size(), is(1));
+
+        verify(mockPaymentsService).prepareToPay(salesIds);
+    }
+
+    private SaleToPayDto buildDummySaleToPay(String paymentMethodName, long paymentMethodId) {
+        return SaleToPayDto.builder()
+                .totalPayment(BigDecimal.TEN)
+                .payment(ComprobantesPagosDto.builder()
+                        .idFormaPago(NegocioFormasPagoDto.builder()
+                                .nombreFormaPago(paymentMethodName)
+                                .id(paymentMethodId)
+                                .build())
+                        .build())
+                .sale(ComprobantesDto.builder()
+                        .id(1L)
+                        .build())
+                .build();
+    }
+
+    private PreparedPaymentDto buildDummyPreparedPayment(SaleToPayDto saleToPayDto) {
+        return PreparedPaymentDto.builder()
+                .customer(PersonasDto.builder().id(1L)
+                        .documento("1234")
+                        .razonSocial("Test, Test")
+                        .build())
+                .salesToPay(Collections.singletonList(saleToPayDto))
+                .build();
     }
 
 }

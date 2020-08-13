@@ -14,6 +14,7 @@ public class SaleToPay {
     private Long saleId;
     private Long paymentId;
     private String paymentMethodDescription;
+    private String paymentPlan;
     private Long paymentMethodId;
     private BigDecimal totalPayment;
     private BigDecimal minPayment;
