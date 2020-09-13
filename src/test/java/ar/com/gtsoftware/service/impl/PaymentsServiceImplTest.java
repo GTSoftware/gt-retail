@@ -144,8 +144,7 @@ class PaymentsServiceImplTest {
         assertThat(preparedPaymentDto.getSalesToPay().size(), is(1));
 
         final SaleToPayDto saleToPayDto = preparedPaymentDto.getSalesToPay().get(0);
-        assertThat(saleToPayDto.getPayment(), is(notNullValue()));
-        assertThat(saleToPayDto.getPayment().getId(), is(nullValue()));
+        assertThat(saleToPayDto.getPayment(), is(nullValue()));
         assertThat(saleToPayDto.getSale(), is(notNullValue()));
         assertThat(saleToPayDto.getTotalPayment(), is(BigDecimal.TEN));
         assertThat(saleToPayDto.getMinAllowedPayment(), is(BigDecimal.ZERO));

@@ -8,13 +8,11 @@ import ar.com.gtsoftware.api.transformer.fromDomain.PaymentPendingSaleTransforme
 import ar.com.gtsoftware.auth.Roles;
 import ar.com.gtsoftware.dto.PreparedPaymentDto;
 import ar.com.gtsoftware.dto.SaleToPayDto;
-import ar.com.gtsoftware.dto.domain.BancosDto;
-import ar.com.gtsoftware.dto.domain.ComprobantesDto;
-import ar.com.gtsoftware.dto.domain.NegocioPlanesPagoDto;
-import ar.com.gtsoftware.dto.domain.PersonasDto;
+import ar.com.gtsoftware.dto.domain.*;
 import ar.com.gtsoftware.search.ComprobantesSearchFilter;
 import ar.com.gtsoftware.service.BancosService;
 import ar.com.gtsoftware.service.ComprobantesService;
+import ar.com.gtsoftware.service.NoExtraCostPaymentMethodsService;
 import ar.com.gtsoftware.service.PaymentsService;
 import ar.com.gtsoftware.utils.SecurityUtils;
 import lombok.RequiredArgsConstructor;
@@ -22,10 +20,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 
 @RequiredArgsConstructor
 @RestController
@@ -36,6 +35,7 @@ public class PaymentPendingSalesControllerImpl implements PaymentPendingSalesCon
     private final PaymentsService paymentsService;
     private final PaymentPendingSaleTransformer pendingSaleTransformer;
     private final BancosService bancosService;
+    private final NoExtraCostPaymentMethodsService noExtraCostPaymentMethodsService;
 
     @Override
     public PaginatedResponse<PaymentPendingSale> findBySearchFilter(@Valid PaginatedSearchRequest<ComprobantesSearchFilter> request) {
@@ -66,31 +66,48 @@ public class PaymentPendingSalesControllerImpl implements PaymentPendingSalesCon
 
         final PreparedPaymentDto preparedPaymentDto = paymentsService.prepareToPay(salesIds);
 
+        final List<SaleToPayDto> salesToPay = preparedPaymentDto.getSalesToPay();
         return PrepareToPayResponse.builder()
                 .customer(transformCustomer(preparedPaymentDto.getCustomer()))
-                .salesToPay(transformSalesToPay(preparedPaymentDto.getSalesToPay()))
-                .banks(getBanks(preparedPaymentDto.getSalesToPay()))
+                .salesToPay(transformSalesToPay(salesToPay))
+                .banks(getBanks(salesToPay))
+                .noExtraCostPaymentMethods(getNoExtraCostPaymentMethods(salesToPay))
                 .build();
+    }
+
+    private List<PaymentMethod> getNoExtraCostPaymentMethods(List<SaleToPayDto> salesToPay) {
+        final Optional<SaleToPayDto> undefinedPayment = salesToPay.stream()
+                .filter(sale -> isNull(sale.getPayment()))
+                .findAny();
+        List<PaymentMethod> noExtraCostPaymentMethods = Collections.emptyList();
+
+        if (undefinedPayment.isPresent()) {
+            noExtraCostPaymentMethods = noExtraCostPaymentMethodsService.getNoExtraCostPaymentMethods();
+        }
+
+        return noExtraCostPaymentMethods;
     }
 
     private List<Bank> getBanks(List<SaleToPayDto> salesToPay) {
         final Optional<SaleToPayDto> cheque = salesToPay.stream()
-                .filter(s -> s.getPayment().getIdFormaPago().getId().equals(4L))
+                .filter(sale -> nonNull(sale.getPayment())
+                        && Objects.equals(sale.getPayment().getIdFormaPago().getId(), 4L))
                 .findAny();
+        List<Bank> banks = Collections.emptyList();
+
         if (cheque.isPresent()) {
             final List<BancosDto> bancos = bancosService.findAll();
-            final List<Bank> banks = new ArrayList<>(bancos.size());
-            bancos.forEach(b -> banks.add(
-                    Bank.builder()
-                            .bankId(b.getId())
-                            .bankName(b.getRazonSocial())
-                            .build()
-            ));
-
-            return banks;
+            banks = new ArrayList<>(bancos.size());
+            banks.addAll(
+                    bancos.stream().map(bank ->
+                            Bank.builder()
+                                    .bankId(bank.getId())
+                                    .bankName(bank.getRazonSocial())
+                                    .build()
+                    ).collect(Collectors.toUnmodifiableList()));
         }
 
-        return Collections.emptyList();
+        return banks;
     }
 
     private String transformCustomer(PersonasDto customer) {
@@ -101,25 +118,36 @@ public class PaymentPendingSalesControllerImpl implements PaymentPendingSalesCon
         final List<SaleToPay> salesToPay = new ArrayList<>(salesToPayDto.size());
         salesToPayDto.forEach(saleToPayDto ->
                 salesToPay.add(
-                        SaleToPay.builder()
-                                .maxPayment(saleToPayDto.getMaxAllowedPayment())
-                                .minPayment(saleToPayDto.getMinAllowedPayment())
-                                .editableAmount(saleToPayDto.isEditableAmount())
-                                .paymentId(saleToPayDto.getPayment().getId())
-                                .paymentMethodDescription(saleToPayDto.getPayment().getIdFormaPago().getNombreFormaPago())
-                                .paymentPlan(transformPaymentPlan(saleToPayDto))
-                                .totalPayment(saleToPayDto.getTotalPayment())
-                                .saleId(saleToPayDto.getSale().getId())
-                                .paymentMethodId(saleToPayDto.getPayment().getIdFormaPago().getId())
-                                .build()
+                        buildSaleToPay(saleToPayDto)
                 ));
 
         return salesToPay;
     }
 
+    private SaleToPay buildSaleToPay(SaleToPayDto saleToPayDto) {
+
+        final SaleToPay saleToPay = SaleToPay.builder()
+                .maxPayment(saleToPayDto.getMaxAllowedPayment())
+                .minPayment(saleToPayDto.getMinAllowedPayment())
+                .editableAmount(saleToPayDto.isEditableAmount())
+                .totalPayment(saleToPayDto.getTotalPayment())
+                .saleId(saleToPayDto.getSale().getId())
+                .build();
+
+        final ComprobantesPagosDto payment = saleToPayDto.getPayment();
+        if (nonNull(payment)) {
+            saleToPay.setPaymentId(payment.getId());
+            saleToPay.setPaymentMethodDescription(payment.getIdFormaPago().getNombreFormaPago());
+            saleToPay.setPaymentPlan(transformPaymentPlan(saleToPayDto));
+            saleToPay.setPaymentMethodId(payment.getIdFormaPago().getId());
+        }
+
+        return saleToPay;
+    }
+
     private String transformPaymentPlan(SaleToPayDto saleToPayDto) {
         final NegocioPlanesPagoDto idPlan = saleToPayDto.getPayment().getIdPlan();
-        if (idPlan != null) {
+        if (nonNull(idPlan)) {
             return String.format("%s en %d pago/s",
                     idPlan.getNombre(),
                     saleToPayDto.getPayment().getIdDetallePlan().getCuotas());

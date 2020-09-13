@@ -22,8 +22,6 @@ import ar.com.gtsoftware.dto.PagoValorDTO;
 import ar.com.gtsoftware.dto.PreparedPaymentDto;
 import ar.com.gtsoftware.dto.SaleToPayDto;
 import ar.com.gtsoftware.dto.domain.CajasDto;
-import ar.com.gtsoftware.dto.domain.ComprobantesPagosDto;
-import ar.com.gtsoftware.dto.domain.NegocioFormasPagoDto;
 import ar.com.gtsoftware.dto.domain.RecibosDto;
 import ar.com.gtsoftware.mappers.*;
 import ar.com.gtsoftware.mappers.helper.CycleAvoidingMappingContext;
@@ -232,12 +230,7 @@ public class PaymentsServiceImpl implements PaymentsService {
     private SaleToPayDto buildUndefinedPayment(Comprobantes sale, BigDecimal remainingAmount) {
         return SaleToPayDto.builder()
                 .sale(comprobantesMapper.entityToDto(sale, new CycleAvoidingMappingContext()))
-                .payment(ComprobantesPagosDto.builder()
-                        .idFormaPago(NegocioFormasPagoDto.builder().id(1L)
-                                .requiereValores(false)
-                                .nombreFormaPago("EFECTIVO")
-                                .build())
-                        .build())
+                .payment(null)
                 .totalPayment(remainingAmount)
                 .maxAllowedPayment(remainingAmount)
                 .minAllowedPayment(BigDecimal.ZERO)
