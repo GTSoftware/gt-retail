@@ -185,6 +185,7 @@ export class SearchPendingSales extends Component {
                                         banks={prepareToPay.banks}
                                         successCallback={() => this.setState({showPayDialog: false})}
                                         salesToPay={prepareToPay.salesToPay}
+                                        noExtraCostPaymentMethods={prepareToPay.noExtraCostPaymentMethods}
                                         onHide={() => this.setState({showPayDialog: false})}/>
         );
     }

@@ -42,7 +42,12 @@ public class RegistroIVADTO implements Serializable {
     private Long idFactura;
     private LocalDateTime fechaFactura;
     private String numeroFactura;
+    private String letraFactura;
+    private String puntoVenta;
+    private String numeroComprobante;
     private String tipoDocumento;
+    private Integer tipoDocumentoFiscal;
+    private String codigoTipoComprobante;
     private String tipoComprobante;
     private String documentoCliente;
     private String razonSocialCliente;

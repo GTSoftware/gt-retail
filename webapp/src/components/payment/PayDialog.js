@@ -5,14 +5,16 @@ import {LoadingButton} from "../core/LoadingButton";
 import _ from "lodash";
 import {Growl} from "primereact/growl";
 import {PaymentPendingSalesService} from "../../service/PaymentPendingSalesService";
+import {CashSaleToPay} from "./CashSaleToPay";
 
 
 export class PayDialog extends Component {
 
     static propTypes = {
         payingCustomer: PropTypes.string.isRequired,
-        salesToPay: PropTypes.object.isRequired,
+        salesToPay: PropTypes.array.isRequired,
         banks: PropTypes.array.isRequired,
+        noExtraCostPaymentMethods: PropTypes.array.isRequired,
         successCallback: PropTypes.func.isRequired
     }
 
@@ -22,11 +24,11 @@ export class PayDialog extends Component {
         this.salesService = new PaymentPendingSalesService();
 
         this.state = {
-            salesToPay: this.props.salesToPay,
-            payingCustomer: this.props.payingCustomer,
-            banks: this.props.banks,
+            salesToPay: props.salesToPay,
+            payingCustomer: props.payingCustomer,
+            banks: props.banks,
+            noExtraCostPaymentMethods: props.noExtraCostPaymentMethods,
             loading: false
-
         }
 
     }
@@ -55,7 +57,7 @@ export class PayDialog extends Component {
                         <label htmlFor="customer">Cliente:</label>
                         <label id="customer" style={{fontWeight: "bold"}}>{payingCustomer}</label>
                     </div>
-
+                    {this.renderSalesToPay()}
 
                     <LoadingButton loading={loading}
                                    label="Cobrar"
@@ -92,5 +94,34 @@ export class PayDialog extends Component {
             summary: 'No se pudieron cobrar los comprobantes',
             detail: _.get(error, 'message', '')
         });
+    }
+
+    renderSalesToPay = () => {
+        const salesToPay = this.state.salesToPay;
+
+        return salesToPay.map((saleToPay) => {
+            return this.renderPaymentComponent(saleToPay);
+        });
+    }
+
+    renderPaymentComponent = (saleToPay) => {
+        let paymentComponent;
+        if (saleToPay.paymentMethodId === 1) {
+            paymentComponent = <CashSaleToPay
+                saleId={saleToPay.saleId}
+                totalPayment={saleToPay.totalPayment}
+                editableAmount={saleToPay.editableAmount}
+                minPayment={saleToPay.minPayment}
+                maxPayment={saleToPay.maxPayment}
+                successCallback={(saleId, amount) => {
+                    this.handleConfirmPayment(saleId, amount)
+                }}/>
+        }
+
+        return paymentComponent;
+    }
+
+    handleConfirmPayment = (saleId, amount) => {
+        console.log("SaleId:" + saleId + " Amount: " + amount);
     }
 }

@@ -17,7 +17,6 @@ package ar.com.gtsoftware.dto;
 
 import lombok.*;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -35,9 +34,8 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class LibroIVADTO implements Serializable {
+public class LibroIVADTO {
 
-    private static final long serialVersionUID = 1L;
     private final LocalDateTime fechaGeneracion = LocalDateTime.now();
     private LocalDateTime fechaDesde;
     private LocalDateTime fechaHasta;

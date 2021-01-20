@@ -13,8 +13,8 @@ export class LoadingButton extends Component {
     render() {
         let buttonProps = {...{}, ...this.props};
         let loadingProps = {
-            icon: buttonProps.loading ? loadingIcon : buttonProps.icon,
-            disabled: buttonProps.loading || buttonProps.disabled
+            icon: this.getIcon(buttonProps),
+            disabled: this.isDisabled(buttonProps)
         };
 
         delete buttonProps.loading;
@@ -22,5 +22,15 @@ export class LoadingButton extends Component {
         buttonProps = {...buttonProps, ...loadingProps};
 
         return <Button {...buttonProps} />
+    }
+
+    isDisabled = (buttonProps) => {
+        const {loading, disabled} = buttonProps;
+        return loading || disabled;
+    }
+
+    getIcon = (buttonProps) => {
+        const {loading, icon} = buttonProps;
+        return loading ? loadingIcon : icon;
     }
 }

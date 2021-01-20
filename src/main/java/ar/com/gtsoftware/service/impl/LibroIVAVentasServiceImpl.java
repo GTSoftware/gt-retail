@@ -68,11 +68,11 @@ public class LibroIVAVentasServiceImpl implements LibroIVAService {
      * @throws ServiceException
      */
     @Override
-    public LibroIVADTO obtenerLibroIVA(LibroIVASearchFilter filter) throws ServiceException {
+    public LibroIVADTO obtenerLibroIVA(LibroIVASearchFilter filter) {
         LibroIVADTO libro;
         if (!filter.hasFilter()) {
 
-            throw new ServiceException("Filtro vacío!");
+            throw new RuntimeException("Filtro vacío!");
 
         }
 
@@ -170,13 +170,18 @@ public class LibroIVAVentasServiceImpl implements LibroIVAService {
         facDTO.setIdFactura(factura.getId());
         facDTO.setRazonSocialCliente(factura.getIdPersona().getRazonSocial());
         facDTO.setTipoDocumento(factura.getIdPersona().getIdTipoDocumento().getNombreTipoDocumento());
+        facDTO.setTipoDocumentoFiscal(factura.getIdPersona().getIdTipoDocumento().getFiscalCodigoTipoDocumento());
         facDTO.setTipoComprobante(factura.getCodigoTipoComprobante().getDenominacionComprobante());
+        facDTO.setCodigoTipoComprobante(factura.getCodigoTipoComprobante().getCodigoTipoComprobante());
         facDTO.setCategoriaIVACliente(factura.getIdPersona().getIdResponsabilidadIva().getNombreResponsabildiad());
         if (factura.isAnulada()) {
             facDTO.setRazonSocialCliente("NULA");
         }
         facDTO.setNumeroFactura(String.format(NUMERO_FACTURA_FMT, factura.getLetraFactura(), factura.getPuntoVentaFactura(),
                 factura.getNumeroFactura()));
+        facDTO.setNumeroComprobante(factura.getNumeroFactura());
+        facDTO.setLetraFactura(factura.getLetraFactura());
+        facDTO.setPuntoVenta(factura.getPuntoVentaFactura());
         facDTO.setNetoGravado(BigDecimal.ZERO);
         facDTO.setNoGravado(BigDecimal.ZERO);
         facDTO.setTotalFactura(factura.getTotalFactura());
