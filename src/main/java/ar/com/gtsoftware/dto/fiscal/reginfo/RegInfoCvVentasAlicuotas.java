@@ -25,8 +25,8 @@ public class RegInfoCvVentasAlicuotas {
     @Override
     public String toString() {
         return tipoComprobante +
-                StringUtils.leftPad(puntoVenta, 5, NUMBER_PAD_STR) +
-                StringUtils.leftPad(numeroComprobante, 20, NUMBER_PAD_STR) +
+                StringUtils.leftPad(puntoVenta, 5, NUMBER_PAD) +
+                StringUtils.leftPad(numeroComprobante, 20, NUMBER_PAD) +
                 formatNumber(importeNetoGravado) +
                 numberPad(alicuota, 4) +
                 formatNumber(impuestoLiquidado);

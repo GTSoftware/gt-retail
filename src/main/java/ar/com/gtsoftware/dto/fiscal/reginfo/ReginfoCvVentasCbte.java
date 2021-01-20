@@ -48,13 +48,11 @@ public class ReginfoCvVentasCbte {
 
     private BigDecimal importeDePercepcionesDeImpuestosMunicipales;
 
-
     private BigDecimal importeImpuestosInternos;
 
     private String codigoMoneda;
     //4 enteros y 6 decimales sin punto
     private BigDecimal tipoCambio;
-
 
     private Integer cantidadAlicuotasIVA;
 
@@ -68,11 +66,11 @@ public class ReginfoCvVentasCbte {
     public String toString() {
         return fechaComprobante.format(DATE_TIME_FORMATTER) +
                 tipoComprobante +
-                StringUtils.leftPad(puntoVenta, 5, NUMBER_PAD_STR) +
-                StringUtils.leftPad(numeroComprobante, 20, NUMBER_PAD_STR) +
-                StringUtils.leftPad(numeroComprobanteHasta, 20, NUMBER_PAD_STR) +
+                StringUtils.leftPad(puntoVenta, 5, NUMBER_PAD) +
+                StringUtils.leftPad(numeroComprobante, 20, NUMBER_PAD) +
+                StringUtils.leftPad(numeroComprobanteHasta, 20, NUMBER_PAD) +
                 numberPad(codigoDocumentoComprador, 2) +
-                StringUtils.leftPad(numeroIdentificacionComprador, 20, NUMBER_PAD_STR) +
+                StringUtils.leftPad(numeroIdentificacionComprador, 20, NUMBER_PAD) +
                 StringUtils.rightPad(StringUtils.left(denominacionComprador, 30), 30, StringUtils.SPACE) +
                 formatNumber(importeTotalOperacion) +
                 formatNumber(importeTotalConceptosNoIntegranPrecioNetoGravado) +
@@ -82,7 +80,7 @@ public class ReginfoCvVentasCbte {
                 formatNumber(importeDePercepcionesDeIngresosBrutos) +
                 formatNumber(importeDePercepcionesDeImpuestosMunicipales) +
                 formatNumber(importeImpuestosInternos) +
-                StringUtils.leftPad(codigoMoneda, 3, NUMBER_PAD_STR) +
+                StringUtils.leftPad(codigoMoneda, 3, NUMBER_PAD) +
                 formatTipoCambio(tipoCambio) +
                 cantidadAlicuotasIVA +
                 codigoOperacion +
