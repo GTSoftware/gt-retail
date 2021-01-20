@@ -10,6 +10,7 @@ import ar.com.gtsoftware.dto.fiscal.reginfo.ReginfoCvVentasCbte;
 import ar.com.gtsoftware.enums.Parametros;
 import ar.com.gtsoftware.search.LibroIVASearchFilter;
 import ar.com.gtsoftware.service.ParametrosService;
+import ar.com.gtsoftware.service.impl.LibroIVAComprasServiceImpl;
 import ar.com.gtsoftware.service.impl.LibroIVAVentasServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
@@ -22,13 +23,13 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class RegimenInformativoServiceImpl implements RegimenInformativoService {
-    //    private static final BigDecimal MONTO_MAXIMO_SIN_IDENTIFICAR = BigDecimal.valueOf(1000);
-//    private static final int CODIGO_DOCUMENTO_SIN_IDENTIFICAR = 99;
+
     private static final String SI = "S";
     private static final String NO = "N";
     private static final String PESOS = "PES";
 
     private final LibroIVAVentasServiceImpl libroIVAVentasServiceImpl;
+    private final LibroIVAComprasServiceImpl libroIVAComprasServiceImpl;
     private final ParametrosService parametrosService;
 
     @Override

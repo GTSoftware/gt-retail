@@ -31,7 +31,6 @@ import ar.com.gtsoftware.mappers.FiscalAlicuotasIvaMapper;
 import ar.com.gtsoftware.mappers.FiscalResponsabilidadesIvaMapper;
 import ar.com.gtsoftware.mappers.helper.CycleAvoidingMappingContext;
 import ar.com.gtsoftware.search.LibroIVASearchFilter;
-import ar.com.gtsoftware.service.exceptions.ServiceException;
 import ar.com.gtsoftware.service.fiscal.LibroIVAService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -65,21 +64,19 @@ public class LibroIVAComprasServiceImpl implements LibroIVAService {
      *
      * @param filter
      * @return el libro de IVA
-     * @throws ServiceException
      */
     @Override
-    public LibroIVADTO obtenerLibroIVA(LibroIVASearchFilter filter) throws ServiceException {
+    public LibroIVADTO obtenerLibroIVA(LibroIVASearchFilter filter) {
         LibroIVADTO libro;
         if (!filter.hasFilter()) {
-
-            throw new ServiceException("Filtro vacío!");
-
+            throw new RuntimeException("Filtro vacío!");
         }
 
         if (filter.hasFechasDesdeHasta()) {
             libro = LibroIVADTO.builder()
                     .fechaDesde(filter.getFechaDesde())
-                    .fechaHasta(filter.getFechaHasta()).build();
+                    .fechaHasta(filter.getFechaHasta())
+                    .build();
         } else {
             FiscalPeriodosFiscales periodo = periodosFiscalesFacade.find(filter.getIdPeriodo());
             libro = LibroIVADTO.builder()
@@ -112,14 +109,6 @@ public class LibroIVAComprasServiceImpl implements LibroIVAService {
                         .importeIva(linea.getImporteIva())
                         .netoGravado(linea.getNetoGravado()).build();
                 importesIVA.add(importeIva);
-                /*if (!importesIVA.add(importeIva)) {
-                    for (ImportesAlicuotasIVA imp : importesIVA) {
-                        if (imp.getAlicuota().equals(linea.getIdAlicuotaIva())) {
-                            imp.setImporteIva(imp.getImporteIva().add(linea.getImporteIva()));
-                            imp.setNetoGravado(imp.getNetoGravado().add(linea.getNetoGravado()));
-                        }
-                    }
-                }*/
 
             }
             ArrayList<ImportesAlicuotasIVA> alicuotasIvaList = new ArrayList<>(importesIVA);
@@ -169,13 +158,18 @@ public class LibroIVAComprasServiceImpl implements LibroIVAService {
         facDTO.setIdFactura(factura.getId());
         facDTO.setRazonSocialCliente(factura.getIdPersona().getRazonSocial());
         facDTO.setTipoDocumento(factura.getIdPersona().getIdTipoDocumento().getNombreTipoDocumento());
+        facDTO.setTipoDocumentoFiscal(factura.getIdPersona().getIdTipoDocumento().getFiscalCodigoTipoDocumento());
         facDTO.setTipoComprobante(factura.getCodigoTipoComprobante().getDenominacionComprobante());
+        facDTO.setCodigoTipoComprobante(factura.getCodigoTipoComprobante().getCodigoTipoComprobante());
         facDTO.setCategoriaIVACliente(factura.getIdPersona().getIdResponsabilidadIva().getNombreResponsabildiad());
         if (factura.isAnulada()) {
             facDTO.setRazonSocialCliente("NULA");
         }
         facDTO.setNumeroFactura(String.format(NUMERO_FACTURA_FMT, factura.getLetraFactura(), factura.getPuntoVentaFactura(),
                 factura.getNumeroFactura()));
+        facDTO.setNumeroComprobante(factura.getNumeroFactura());
+        facDTO.setLetraFactura(factura.getLetraFactura());
+        facDTO.setPuntoVenta(factura.getPuntoVentaFactura());
         facDTO.setNetoGravado(BigDecimal.ZERO);
         facDTO.setNoGravado(BigDecimal.ZERO);
         facDTO.setTotalFactura(factura.getTotalFactura());

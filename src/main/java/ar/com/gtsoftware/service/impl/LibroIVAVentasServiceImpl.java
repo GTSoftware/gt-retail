@@ -31,7 +31,6 @@ import ar.com.gtsoftware.mappers.FiscalAlicuotasIvaMapper;
 import ar.com.gtsoftware.mappers.FiscalResponsabilidadesIvaMapper;
 import ar.com.gtsoftware.mappers.helper.CycleAvoidingMappingContext;
 import ar.com.gtsoftware.search.LibroIVASearchFilter;
-import ar.com.gtsoftware.service.exceptions.ServiceException;
 import ar.com.gtsoftware.service.fiscal.LibroIVAService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -65,7 +64,6 @@ public class LibroIVAVentasServiceImpl implements LibroIVAService {
      *
      * @param filter
      * @return el libro de IVA
-     * @throws ServiceException
      */
     @Override
     public LibroIVADTO obtenerLibroIVA(LibroIVASearchFilter filter) {
