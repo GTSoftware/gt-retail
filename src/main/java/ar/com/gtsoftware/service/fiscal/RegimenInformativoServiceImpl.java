@@ -59,17 +59,6 @@ public class RegimenInformativoServiceImpl implements RegimenInformativoService 
                 .build();
     }
 
-    private RegInfoCvVentasAlicuotas buildRegistroAlicuota(ReginfoCvVentasCbte registro, ImportesAlicuotasIVA alicuotasIVA) {
-        return RegInfoCvVentasAlicuotas.builder()
-                .alicuota(alicuotasIVA.getAlicuota().getFiscalCodigoAlicuota())
-                .importeNetoGravado(alicuotasIVA.getNetoGravado())
-                .impuestoLiquidado(alicuotasIVA.getImporteIva())
-                .numeroComprobante(registro.getNumeroComprobante())
-                .puntoVenta(registro.getPuntoVenta())
-                .tipoComprobante(registro.getTipoComprobante())
-                .build();
-    }
-
     private ReginfoCvVentasCbte buildRegistroComprobante(RegistroIVADTO factura) {
         return ReginfoCvVentasCbte.builder()
                 .fechaComprobante(factura.getFechaFactura().toLocalDate())
@@ -94,6 +83,17 @@ public class RegimenInformativoServiceImpl implements RegimenInformativoService 
                 .codigoOperacion("3")//Productos y servicios
                 .otrosTributos(BigDecimal.ZERO)
                 .fechaVencimientoPago(factura.getFechaFactura().toLocalDate())
+                .build();
+    }
+
+    private RegInfoCvVentasAlicuotas buildRegistroAlicuota(ReginfoCvVentasCbte registro, ImportesAlicuotasIVA alicuotasIVA) {
+        return RegInfoCvVentasAlicuotas.builder()
+                .tipoComprobante(registro.getTipoComprobante())
+                .puntoVenta(registro.getPuntoVenta())
+                .numeroComprobante(registro.getNumeroComprobante())
+                .importeNetoGravado(alicuotasIVA.getNetoGravado())
+                .alicuota(alicuotasIVA.getAlicuota().getFiscalCodigoAlicuota())
+                .impuestoLiquidado(alicuotasIVA.getImporteIva())
                 .build();
     }
 
