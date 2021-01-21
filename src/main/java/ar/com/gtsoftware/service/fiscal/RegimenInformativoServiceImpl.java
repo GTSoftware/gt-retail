@@ -131,7 +131,7 @@ public class RegimenInformativoServiceImpl implements RegimenInformativoService 
         .fechaComprobante(factura.getFechaFactura().toLocalDate())
         .tipoComprobante(factura.getCodigoTipoComprobante())
         .puntoVenta(factura.getPuntoVenta())
-        .numeroComprobante(factura.getNumeroFactura())
+        .numeroComprobante(factura.getNumeroComprobante())
         .numeroComprobanteHasta(factura.getNumeroComprobante())
         .codigoDocumentoComprador(factura.getTipoDocumentoFiscal())
         .numeroIdentificacionComprador(factura.getDocumentoCliente())
