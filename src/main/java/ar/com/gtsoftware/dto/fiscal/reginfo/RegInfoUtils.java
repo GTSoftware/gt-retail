@@ -17,6 +17,7 @@ class RegInfoUtils {
     final BigDecimal numberToProcess = getNumberToProcess(number);
     final String numberString =
         numberToProcess
+            .abs()
             .setScale(2, RoundingMode.HALF_UP)
             .toString()
             .replaceAll("\\.", StringUtils.EMPTY);
@@ -29,6 +30,7 @@ class RegInfoUtils {
 
     final String numberString =
         numberToProcess
+            .abs()
             .setScale(6, RoundingMode.HALF_UP)
             .toString()
             .replaceAll("\\.", StringUtils.EMPTY);

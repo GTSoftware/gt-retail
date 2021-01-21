@@ -16,6 +16,7 @@ class RegInfoUtilsTest {
         Arguments.of(BigDecimal.ONE, "0001000000"),
         Arguments.of(BigDecimal.valueOf(0.85), "0000850000"),
         Arguments.of(BigDecimal.valueOf(9999), "9999000000"),
+        Arguments.of(BigDecimal.valueOf(-1), "0001000000"),
         Arguments.of(null, "0000000000"));
   }
 
@@ -25,6 +26,7 @@ class RegInfoUtilsTest {
         Arguments.of(BigDecimal.valueOf(0.85), "000000000000085"),
         Arguments.of(BigDecimal.valueOf(9999), "000000000999900"),
         Arguments.of(BigDecimal.valueOf(9999.99), "000000000999999"),
+        Arguments.of(BigDecimal.valueOf(-1), "000000000000100"),
         Arguments.of(null, "000000000000000"));
   }
 
