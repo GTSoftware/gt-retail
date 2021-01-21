@@ -20,8 +20,5 @@ package ar.com.gtsoftware.service;
 import ar.com.gtsoftware.dto.domain.LegalTiposDocumentoDto;
 import ar.com.gtsoftware.search.LegalTiposDocumentoSearchFilter;
 
-
 public interface LegalTiposDocumentoService
-        extends EntityService<LegalTiposDocumentoDto, LegalTiposDocumentoSearchFilter> {
-
-}
+    extends EntityService<LegalTiposDocumentoDto, LegalTiposDocumentoSearchFilter> {}

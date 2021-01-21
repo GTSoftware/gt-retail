@@ -15,38 +15,40 @@
  */
 package ar.com.gtsoftware.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
 
-/**
- * @author Rodrigo Tato <rotatomel@gmail.com>
- */
+/** @author Rodrigo Tato <rotatomel@gmail.com> */
 @Entity
 @Table(name = "productos_tipos_unidades")
 @Getter
 @Setter
 public class ProductosTiposUnidades extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "productos_tipos_unidades_id_tipo_unidad")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "productos_tipos_unidades_id_tipo_unidad",
-            sequenceName = "productos_tipos_unidades_id_tipo_unidad_seq")
-    @Basic(optional = false)
-    @Column(name = "id_tipo_unidad", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(
+      strategy = GenerationType.SEQUENCE,
+      generator = "productos_tipos_unidades_id_tipo_unidad")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "productos_tipos_unidades_id_tipo_unidad",
+      sequenceName = "productos_tipos_unidades_id_tipo_unidad_seq")
+  @Basic(optional = false)
+  @Column(name = "id_tipo_unidad", nullable = false, updatable = false)
+  private Long id;
 
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 60)
-    @Column(name = "nombre_unidad")
-    private String nombreUnidad;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "cantidad_entera")
-    private boolean cantidadEntera;
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 60)
+  @Column(name = "nombre_unidad")
+  private String nombreUnidad;
 
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "cantidad_entera")
+  private boolean cantidadEntera;
 }

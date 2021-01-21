@@ -1,21 +1,22 @@
 //
-// Este archivo ha sido generado por la arquitectura JavaTM para la implantación de la referencia de enlace (JAXB) XML v2.2.8-b130911.1802 
-// Visite <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
-// Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el esquema de origen. 
-// Generado el: 2020.05.28 a las 09:17:55 PM ART 
+// Este archivo ha sido generado por la arquitectura JavaTM para la implantación de la referencia de
+// enlace (JAXB) XML v2.2.8-b130911.1802
+// Visite <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a>
+// Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el
+// esquema de origen.
+// Generado el: 2020.05.28 a las 09:17:55 PM ART
 //
-
 
 package ar.com.gtsoftware.service.afip.client.fe;
 
 import javax.annotation.Generated;
 import javax.xml.bind.annotation.*;
 
-
 /**
- * <p>Clase Java para FECabResponse complex type.
+ * Clase Java para FECabResponse complex type.
  *
- * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
+ * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta
+ * clase.
  *
  * <pre>
  * &lt;complexType name="FECabResponse">
@@ -36,172 +37,212 @@ import javax.xml.bind.annotation.*;
  * </pre>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "FECabResponse", propOrder = {
-        "cuit",
-        "ptoVta",
-        "cbteTipo",
-        "fchProceso",
-        "cantReg",
-        "resultado",
-        "reproceso"
-})
-@XmlSeeAlso({
-        FECAECabResponse.class,
-        FECAEACabResponse.class
-})
-@Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
+@XmlType(
+    name = "FECabResponse",
+    propOrder = {"cuit", "ptoVta", "cbteTipo", "fchProceso", "cantReg", "resultado", "reproceso"})
+@XmlSeeAlso({FECAECabResponse.class, FECAEACabResponse.class})
+@Generated(
+    value = "com.sun.tools.internal.xjc.Driver",
+    date = "2020-05-28T09:17:55-03:00",
+    comments = "JAXB RI v2.2.8-b130911.1802")
 public class FECabResponse {
 
-    @XmlElement(name = "Cuit")
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    protected long cuit;
-    @XmlElement(name = "PtoVta")
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    protected int ptoVta;
-    @XmlElement(name = "CbteTipo")
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    protected int cbteTipo;
-    @XmlElement(name = "FchProceso")
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    protected String fchProceso;
-    @XmlElement(name = "CantReg")
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    protected int cantReg;
-    @XmlElement(name = "Resultado")
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    protected String resultado;
-    @XmlElement(name = "Reproceso")
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    protected String reproceso;
+  @XmlElement(name = "Cuit")
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  protected long cuit;
 
-    /**
-     * Obtiene el valor de la propiedad cuit.
-     */
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    public long getCuit() {
-        return cuit;
-    }
+  @XmlElement(name = "PtoVta")
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  protected int ptoVta;
 
-    /**
-     * Define el valor de la propiedad cuit.
-     */
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    public void setCuit(long value) {
-        this.cuit = value;
-    }
+  @XmlElement(name = "CbteTipo")
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  protected int cbteTipo;
 
-    /**
-     * Obtiene el valor de la propiedad ptoVta.
-     */
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    public int getPtoVta() {
-        return ptoVta;
-    }
+  @XmlElement(name = "FchProceso")
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  protected String fchProceso;
 
-    /**
-     * Define el valor de la propiedad ptoVta.
-     */
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    public void setPtoVta(int value) {
-        this.ptoVta = value;
-    }
+  @XmlElement(name = "CantReg")
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  protected int cantReg;
 
-    /**
-     * Obtiene el valor de la propiedad cbteTipo.
-     */
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    public int getCbteTipo() {
-        return cbteTipo;
-    }
+  @XmlElement(name = "Resultado")
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  protected String resultado;
 
-    /**
-     * Define el valor de la propiedad cbteTipo.
-     */
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    public void setCbteTipo(int value) {
-        this.cbteTipo = value;
-    }
+  @XmlElement(name = "Reproceso")
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  protected String reproceso;
 
-    /**
-     * Obtiene el valor de la propiedad fchProceso.
-     *
-     * @return possible object is
-     * {@link String }
-     */
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    public String getFchProceso() {
-        return fchProceso;
-    }
+  /** Obtiene el valor de la propiedad cuit. */
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  public long getCuit() {
+    return cuit;
+  }
 
-    /**
-     * Define el valor de la propiedad fchProceso.
-     *
-     * @param value allowed object is
-     *              {@link String }
-     */
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    public void setFchProceso(String value) {
-        this.fchProceso = value;
-    }
+  /** Define el valor de la propiedad cuit. */
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  public void setCuit(long value) {
+    this.cuit = value;
+  }
 
-    /**
-     * Obtiene el valor de la propiedad cantReg.
-     */
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    public int getCantReg() {
-        return cantReg;
-    }
+  /** Obtiene el valor de la propiedad ptoVta. */
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  public int getPtoVta() {
+    return ptoVta;
+  }
 
-    /**
-     * Define el valor de la propiedad cantReg.
-     */
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    public void setCantReg(int value) {
-        this.cantReg = value;
-    }
+  /** Define el valor de la propiedad ptoVta. */
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  public void setPtoVta(int value) {
+    this.ptoVta = value;
+  }
 
-    /**
-     * Obtiene el valor de la propiedad resultado.
-     *
-     * @return possible object is
-     * {@link String }
-     */
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    public String getResultado() {
-        return resultado;
-    }
+  /** Obtiene el valor de la propiedad cbteTipo. */
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  public int getCbteTipo() {
+    return cbteTipo;
+  }
 
-    /**
-     * Define el valor de la propiedad resultado.
-     *
-     * @param value allowed object is
-     *              {@link String }
-     */
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    public void setResultado(String value) {
-        this.resultado = value;
-    }
+  /** Define el valor de la propiedad cbteTipo. */
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  public void setCbteTipo(int value) {
+    this.cbteTipo = value;
+  }
 
-    /**
-     * Obtiene el valor de la propiedad reproceso.
-     *
-     * @return possible object is
-     * {@link String }
-     */
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    public String getReproceso() {
-        return reproceso;
-    }
+  /**
+   * Obtiene el valor de la propiedad fchProceso.
+   *
+   * @return possible object is {@link String }
+   */
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  public String getFchProceso() {
+    return fchProceso;
+  }
 
-    /**
-     * Define el valor de la propiedad reproceso.
-     *
-     * @param value allowed object is
-     *              {@link String }
-     */
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    public void setReproceso(String value) {
-        this.reproceso = value;
-    }
+  /**
+   * Define el valor de la propiedad fchProceso.
+   *
+   * @param value allowed object is {@link String }
+   */
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  public void setFchProceso(String value) {
+    this.fchProceso = value;
+  }
 
+  /** Obtiene el valor de la propiedad cantReg. */
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  public int getCantReg() {
+    return cantReg;
+  }
+
+  /** Define el valor de la propiedad cantReg. */
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  public void setCantReg(int value) {
+    this.cantReg = value;
+  }
+
+  /**
+   * Obtiene el valor de la propiedad resultado.
+   *
+   * @return possible object is {@link String }
+   */
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  public String getResultado() {
+    return resultado;
+  }
+
+  /**
+   * Define el valor de la propiedad resultado.
+   *
+   * @param value allowed object is {@link String }
+   */
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  public void setResultado(String value) {
+    this.resultado = value;
+  }
+
+  /**
+   * Obtiene el valor de la propiedad reproceso.
+   *
+   * @return possible object is {@link String }
+   */
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  public String getReproceso() {
+    return reproceso;
+  }
+
+  /**
+   * Define el valor de la propiedad reproceso.
+   *
+   * @param value allowed object is {@link String }
+   */
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  public void setReproceso(String value) {
+    this.reproceso = value;
+  }
 }

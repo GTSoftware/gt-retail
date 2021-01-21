@@ -17,66 +17,40 @@
 
 package ar.com.gtsoftware.rules;
 
-import lombok.Getter;
-
 import java.math.BigDecimal;
+import lombok.Getter;
 
 @Getter
 public enum Campo {
+  DESCRIPCION("La descripcion del producto", String.class, "descripcion"),
 
-    DESCRIPCION("La descripcion del producto",
-            String.class,
-            "descripcion"),
+  ID_PRODUCTO("El id del producto", Long.class, "idProducto.id"),
 
-    ID_PRODUCTO("El id del producto",
-            Long.class,
-            "idProducto.id"),
+  ID_PROVEEDOR("El id del proveedor habitual", Long.class, "idProducto.idProveedorHabitual.id"),
 
-    ID_PROVEEDOR("El id del proveedor habitual",
-            Long.class,
-            "idProducto.idProveedorHabitual.id"),
+  NOMBRE_RUBRO("El nombre del rubro", String.class, "idProducto.idRubro.nombreRubro"),
 
-    NOMBRE_RUBRO("El nombre del rubro",
-            String.class,
-            "idProducto.idRubro.nombreRubro"),
+  ID_RUBRO("El id del rubro", Long.class, "idProducto.idRubro.id"),
 
-    ID_RUBRO("El id del rubro",
-            Long.class,
-            "idProducto.idRubro.id"),
+  NOMBRE_SUB_RUBRO("El nombre del sub-rubro", String.class, "idProducto.idSubRubro.nombreSubRubro"),
 
-    NOMBRE_SUB_RUBRO("El nombre del sub-rubro",
-            String.class,
-            "idProducto.idSubRubro.nombreSubRubro"),
+  ID_SUB_RUBRO("El id del sub-rubro", Long.class, "idProducto.idSubRubro.id"),
 
-    ID_SUB_RUBRO("El id del sub-rubro",
-            Long.class,
-            "idProducto.idSubRubro.id"),
+  ID_MARCA("El id de marca", Long.class, "idProducto.idMarca.id"),
 
-    ID_MARCA("El id de marca",
-            Long.class,
-            "idProducto.idMarca.id"),
+  NOMBRE_MARCA("El nombre de marca", String.class, "idProducto.idMarca.nombreMarca"),
 
-    NOMBRE_MARCA("El nombre de marca",
-            String.class,
-            "idProducto.idMarca.nombreMarca"),
+  CANTIDAD("La cantidad de venta", BigDecimal.class, "cantidad"),
 
-    CANTIDAD("La cantidad de venta",
-            BigDecimal.class,
-            "cantidad"),
+  PRECIO_UNITARIO("El precio unitario del producto", BigDecimal.class, "precioUnitario");
 
-    PRECIO_UNITARIO("El precio unitario del producto",
-            BigDecimal.class,
-            "precioUnitario");
+  private final String descripcionCampo;
+  private final Class clase;
+  private final String ruta;
 
-    private final String descripcionCampo;
-    private final Class clase;
-    private final String ruta;
-
-
-    Campo(String descripcionCampo, Class clase, String ruta) {
-        this.descripcionCampo = descripcionCampo;
-        this.clase = clase;
-        this.ruta = ruta;
-    }
-
+  Campo(String descripcionCampo, Class clase, String ruta) {
+    this.descripcionCampo = descripcionCampo;
+    this.clase = clase;
+    this.ruta = ruta;
+  }
 }

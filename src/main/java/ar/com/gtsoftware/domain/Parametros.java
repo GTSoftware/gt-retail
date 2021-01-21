@@ -15,114 +15,113 @@
  */
 package ar.com.gtsoftware.domain;
 
+import java.util.Objects;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.Objects;
 
-/**
- * @author rodrigo
- */
+/** @author rodrigo */
 @Entity
 @Table(name = "parametros")
 @XmlRootElement
 public class Parametros extends GTEntity<String> {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
-    @Column(name = "nombre_parametro")
-    private String nombreParametro;
-    @Size(max = 255)
-    @Column(name = "valor_parametro")
-    private String valorParametro;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 1024)
-    @Column(name = "descripcion_parametro")
-    private String descripcionParametro;
+  private static final long serialVersionUID = 1L;
 
-    public Parametros() {
+  @Id
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 255)
+  @Column(name = "nombre_parametro")
+  private String nombreParametro;
+
+  @Size(max = 255)
+  @Column(name = "valor_parametro")
+  private String valorParametro;
+
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 1024)
+  @Column(name = "descripcion_parametro")
+  private String descripcionParametro;
+
+  public Parametros() {}
+
+  public Parametros(String nombreParametro) {
+    this.nombreParametro = nombreParametro;
+  }
+
+  public Parametros(String nombreParametro, String descripcionParametro) {
+    this.nombreParametro = nombreParametro;
+    this.descripcionParametro = descripcionParametro;
+  }
+
+  public String getNombreParametro() {
+    return nombreParametro;
+  }
+
+  public void setNombreParametro(String nombreParametro) {
+    this.nombreParametro = nombreParametro;
+  }
+
+  public String getValorParametro() {
+    return valorParametro;
+  }
+
+  public void setValorParametro(String valorParametro) {
+    this.valorParametro = valorParametro;
+  }
+
+  public String getDescripcionParametro() {
+    return descripcionParametro;
+  }
+
+  public void setDescripcionParametro(String descripcionParametro) {
+    this.descripcionParametro = descripcionParametro;
+  }
+
+  @Override
+  public int hashCode() {
+    int hash = 7;
+    hash = 83 * hash + Objects.hashCode(this.nombreParametro);
+    return hash;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == null) {
+      return false;
     }
-
-    public Parametros(String nombreParametro) {
-        this.nombreParametro = nombreParametro;
+    if (getClass() != obj.getClass()) {
+      return false;
     }
+    final Parametros other = (Parametros) obj;
+    return Objects.equals(this.nombreParametro, other.nombreParametro);
+  }
 
-    public Parametros(String nombreParametro, String descripcionParametro) {
-        this.nombreParametro = nombreParametro;
-        this.descripcionParametro = descripcionParametro;
-    }
+  @Override
+  public String toString() {
+    return String.format("%s=%s", nombreParametro, valorParametro);
+  }
 
-    public String getNombreParametro() {
-        return nombreParametro;
-    }
+  @Override
+  public boolean isNew() {
+    return nombreParametro == null;
+  }
 
-    public void setNombreParametro(String nombreParametro) {
-        this.nombreParametro = nombreParametro;
-    }
+  @Override
+  public String getId() {
+    return nombreParametro;
+  }
 
-    public String getValorParametro() {
-        return valorParametro;
-    }
+  @Override
+  public String calculateId(String id) {
+    return id;
+  }
 
-    public void setValorParametro(String valorParametro) {
-        this.valorParametro = valorParametro;
-    }
-
-    public String getDescripcionParametro() {
-        return descripcionParametro;
-    }
-
-    public void setDescripcionParametro(String descripcionParametro) {
-        this.descripcionParametro = descripcionParametro;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 83 * hash + Objects.hashCode(this.nombreParametro);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Parametros other = (Parametros) obj;
-        return Objects.equals(this.nombreParametro, other.nombreParametro);
-    }
-
-    @Override
-    public String toString() {
-        return String.format("%s=%s", nombreParametro, valorParametro);
-    }
-
-    @Override
-    public boolean isNew() {
-        return nombreParametro == null;
-    }
-
-    @Override
-    public String getId() {
-        return nombreParametro;
-    }
-
-    @Override
-    public String calculateId(String id) {
-        return id;
-    }
-
-    @Override
-    public String getStringId() {
-        return nombreParametro;
-    }
-
+  @Override
+  public String getStringId() {
+    return nombreParametro;
+  }
 }

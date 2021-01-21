@@ -20,29 +20,26 @@ package ar.com.gtsoftware.service;
 import ar.com.gtsoftware.dto.domain.UsuariosDto;
 import ar.com.gtsoftware.dto.domain.UsuariosGruposDto;
 import ar.com.gtsoftware.search.UsuariosSearchFilter;
-
-import javax.validation.constraints.NotNull;
 import java.util.List;
+import javax.validation.constraints.NotNull;
 
+public interface UsuariosService extends EntityService<UsuariosDto, UsuariosSearchFilter> {
 
-public interface UsuariosService
-        extends EntityService<UsuariosDto, UsuariosSearchFilter> {
+  /**
+   * Valida y actualiza la clave del usuario pasado como paràmetro
+   *
+   * @param idUsuario
+   * @param newPassword
+   */
+  void changePassword(@NotNull Long idUsuario, @NotNull String newPassword);
 
-    /**
-     * Valida y actualiza la clave del usuario pasado como paràmetro
-     *
-     * @param idUsuario
-     * @param newPassword
-     */
-    void changePassword(@NotNull Long idUsuario, @NotNull String newPassword);
+  List<UsuariosGruposDto> obtenerRolesDisponibles();
 
-    List<UsuariosGruposDto> obtenerRolesDisponibles();
+  List<UsuariosGruposDto> obtenerRolesUsuario(@NotNull Long idUsuario);
 
-    List<UsuariosGruposDto> obtenerRolesUsuario(@NotNull Long idUsuario);
+  void agregarRol(@NotNull Long idUsuario, @NotNull Long idGrupo);
 
-    void agregarRol(@NotNull Long idUsuario, @NotNull Long idGrupo);
+  void quitarRol(@NotNull Long idUsuario, @NotNull Long idGrupo);
 
-    void quitarRol(@NotNull Long idUsuario, @NotNull Long idGrupo);
-
-    String resetPassword(@NotNull Long idUsuario);
+  String resetPassword(@NotNull Long idUsuario);
 }

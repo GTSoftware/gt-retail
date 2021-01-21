@@ -16,9 +16,8 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
-import lombok.*;
-
 import java.util.Date;
+import lombok.*;
 
 @Getter
 @Setter
@@ -28,24 +27,22 @@ import java.util.Date;
 @Builder
 public class DepositosDto {
 
-    private static final long serialVersionUID = 1L;
-    private static final String BUSINESS_STRING = "[%d] %s Suc: %s";
+  private static final long serialVersionUID = 1L;
+  private static final String BUSINESS_STRING = "[%d] %s Suc: %s";
 
-    @EqualsAndHashCode.Include
-    private Long id;
-    private String nombreDeposito;
-    private String direccion;
-    private Date fechaAlta;
-    private boolean activo;
-    private UbicacionProvinciasDto idProvincia;
-    private UbicacionPaisesDto idPais;
-    private UbicacionLocalidadesDto idLocalidad;
-    private SucursalesDto idSucursal;
-    private Integer version;
+  @EqualsAndHashCode.Include private Long id;
+  private String nombreDeposito;
+  private String direccion;
+  private Date fechaAlta;
+  private boolean activo;
+  private UbicacionProvinciasDto idProvincia;
+  private UbicacionPaisesDto idPais;
+  private UbicacionLocalidadesDto idLocalidad;
+  private SucursalesDto idSucursal;
+  private Integer version;
 
-    @Override
-    public String toString() {
-        return String.format(BUSINESS_STRING, id, nombreDeposito, idSucursal.toString());
-    }
-
+  @Override
+  public String toString() {
+    return String.format(BUSINESS_STRING, id, nombreDeposito, idSucursal.toString());
+  }
 }

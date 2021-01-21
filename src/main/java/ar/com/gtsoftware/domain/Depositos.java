@@ -15,70 +15,84 @@
  */
 package ar.com.gtsoftware.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import java.util.Date;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Date;
+import lombok.Getter;
+import lombok.Setter;
 
-/**
- * @author rodrigo
- */
+/** @author rodrigo */
 @Entity
 @Table(name = "depositos")
 @Getter
 @Setter
 public class Depositos extends BaseEntity {
 
-    private static final String BUSINESS_STRING = "[%d] %s Suc: %s";
+  private static final String BUSINESS_STRING = "[%d] %s Suc: %s";
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "depositos_id_deposito")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "depositos_id_deposito",
-            sequenceName = "depositos_id_deposito_seq")
-    @Basic(optional = false)
-    @Column(name = "id_deposito", nullable = false, updatable = false)
-    private Long id;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 60)
-    @Column(name = "nombre_deposito")
-    private String nombreDeposito;
-    @Size(max = 500)
-    @Column(name = "direccion")
-    private String direccion;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "fecha_alta")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaAlta;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "activo")
-    private boolean activo;
-    //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDepositoMovimiento")
-//    private List<StockMovimientos> stockMovimientosList;
-    @JoinColumn(name = "id_provincia", referencedColumnName = "id_provincia", columnDefinition = "int4")
-    @ManyToOne(optional = false)
-    private UbicacionProvincias idProvincia;
-    @JoinColumn(name = "id_pais", referencedColumnName = "id_pais", columnDefinition = "int4")
-    @ManyToOne(optional = false)
-    private UbicacionPaises idPais;
-    @JoinColumn(name = "id_localidad", referencedColumnName = "id_localidad", columnDefinition = "int4")
-    @ManyToOne(optional = false)
-    private UbicacionLocalidades idLocalidad;
-    @JoinColumn(name = "id_sucursal", referencedColumnName = "id_sucursal", columnDefinition = "int4")
-    @ManyToOne
-    private Sucursales idSucursal;
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "depositos_id_deposito")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "depositos_id_deposito",
+      sequenceName = "depositos_id_deposito_seq")
+  @Basic(optional = false)
+  @Column(name = "id_deposito", nullable = false, updatable = false)
+  private Long id;
 
-    @PrePersist
-    protected void onCreate() {
-        fechaAlta = new Date();
-    }
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 60)
+  @Column(name = "nombre_deposito")
+  private String nombreDeposito;
 
-    public String getBusinessString() {
-        return String.format(BUSINESS_STRING, this.getId(), nombreDeposito, idSucursal.getBusinessString());
-    }
+  @Size(max = 500)
+  @Column(name = "direccion")
+  private String direccion;
+
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "fecha_alta")
+  @Temporal(TemporalType.TIMESTAMP)
+  private Date fechaAlta;
+
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "activo")
+  private boolean activo;
+  //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDepositoMovimiento")
+  //    private List<StockMovimientos> stockMovimientosList;
+  @JoinColumn(
+      name = "id_provincia",
+      referencedColumnName = "id_provincia",
+      columnDefinition = "int4")
+  @ManyToOne(optional = false)
+  private UbicacionProvincias idProvincia;
+
+  @JoinColumn(name = "id_pais", referencedColumnName = "id_pais", columnDefinition = "int4")
+  @ManyToOne(optional = false)
+  private UbicacionPaises idPais;
+
+  @JoinColumn(
+      name = "id_localidad",
+      referencedColumnName = "id_localidad",
+      columnDefinition = "int4")
+  @ManyToOne(optional = false)
+  private UbicacionLocalidades idLocalidad;
+
+  @JoinColumn(name = "id_sucursal", referencedColumnName = "id_sucursal", columnDefinition = "int4")
+  @ManyToOne
+  private Sucursales idSucursal;
+
+  @PrePersist
+  protected void onCreate() {
+    fechaAlta = new Date();
+  }
+
+  public String getBusinessString() {
+    return String.format(
+        BUSINESS_STRING, this.getId(), nombreDeposito, idSucursal.getBusinessString());
+  }
 }

@@ -20,6 +20,4 @@ package ar.com.gtsoftware.service;
 import ar.com.gtsoftware.dto.domain.BancosDto;
 import ar.com.gtsoftware.search.BancosSearchFilter;
 
-public interface BancosService
-        extends EntityService<BancosDto, BancosSearchFilter> {
-}
+public interface BancosService extends EntityService<BancosDto, BancosSearchFilter> {}

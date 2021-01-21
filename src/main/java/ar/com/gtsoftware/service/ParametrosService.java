@@ -19,22 +19,20 @@ package ar.com.gtsoftware.service;
 
 import ar.com.gtsoftware.dto.domain.ParametrosDto;
 import ar.com.gtsoftware.enums.Parametros;
-
-import javax.validation.constraints.NotNull;
 import java.util.List;
-
+import javax.validation.constraints.NotNull;
 
 public interface ParametrosService {
 
-    ParametrosDto createOrEdit(@NotNull ParametrosDto parametro);
+  ParametrosDto createOrEdit(@NotNull ParametrosDto parametro);
 
-    ParametrosDto findParametroByName(@NotNull String nombre);
+  ParametrosDto findParametroByName(@NotNull String nombre);
 
-    List<ParametrosDto> findParametros(@NotNull String txt);
+  List<ParametrosDto> findParametros(@NotNull String txt);
 
-    boolean getBooleanParam(Parametros parametro);
+  boolean getBooleanParam(Parametros parametro);
 
-    Long getLongParam(Parametros parametro);
+  Long getLongParam(Parametros parametro);
 
-    String getStringParam(Parametros parametro);
+  String getStringParam(Parametros parametro);
 }

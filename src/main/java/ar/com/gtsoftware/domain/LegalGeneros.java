@@ -15,45 +15,50 @@
  */
 package ar.com.gtsoftware.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
-/**
- * @author rodrigo
- */
+/** @author rodrigo */
 @Entity
 @Table(name = "legal_generos")
 @Getter
 @Setter
 public class LegalGeneros extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "legal_generos_id_genero")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "legal_generos_id_genero",
-            sequenceName = "legal_generos_id_genero_seq")
-    @Basic(optional = false)
-    @Column(name = "id_genero", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "legal_generos_id_genero")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "legal_generos_id_genero",
+      sequenceName = "legal_generos_id_genero_seq")
+  @Basic(optional = false)
+  @Column(name = "id_genero", nullable = false, updatable = false)
+  private Long id;
 
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 30)
-    @Column(name = "nombre_genero")
-    private String nombreGenero;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 1)
-    @Column(name = "simbolo")
-    private String simbolo;
-    @JoinColumn(name = "id_tipo_personeria", referencedColumnName = "id_tipo_personeria", columnDefinition = "int4")
-    @ManyToOne(optional = false)
-    private LegalTiposPersoneria idTipoPersoneria;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idGenero")
-    private List<Personas> personasList;
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 30)
+  @Column(name = "nombre_genero")
+  private String nombreGenero;
 
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 1)
+  @Column(name = "simbolo")
+  private String simbolo;
+
+  @JoinColumn(
+      name = "id_tipo_personeria",
+      referencedColumnName = "id_tipo_personeria",
+      columnDefinition = "int4")
+  @ManyToOne(optional = false)
+  private LegalTiposPersoneria idTipoPersoneria;
+
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "idGenero")
+  private List<Personas> personasList;
 }

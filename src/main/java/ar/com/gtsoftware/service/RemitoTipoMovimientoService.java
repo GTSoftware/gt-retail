@@ -20,8 +20,5 @@ package ar.com.gtsoftware.service;
 import ar.com.gtsoftware.dto.domain.RemitoTipoMovimientoDto;
 import ar.com.gtsoftware.search.AbstractSearchFilter;
 
-
 public interface RemitoTipoMovimientoService
-        extends EntityService<RemitoTipoMovimientoDto, AbstractSearchFilter> {
-
-}
+    extends EntityService<RemitoTipoMovimientoDto, AbstractSearchFilter> {}

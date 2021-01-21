@@ -16,12 +16,11 @@
 package ar.com.gtsoftware.search;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Clase abstracta que representa una agrupación de criterios de filtrado
@@ -32,98 +31,95 @@ import java.util.List;
  */
 public abstract class AbstractSearchFilter implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    private List<SortField> sortFields;
+  private List<SortField> sortFields;
 
-    private String namedEntityGraph;
+  private String namedEntityGraph;
 
-    /**
-     * Devuelve true si existe al menos un filtro de búsqueda establecido.
-     *
-     * @return true si hay algún filtro para buscar entidades.
-     */
-    @JsonIgnore
-    public boolean hasFilter() {
-        return false;
+  /**
+   * Devuelve true si existe al menos un filtro de búsqueda establecido.
+   *
+   * @return true si hay algún filtro para buscar entidades.
+   */
+  @JsonIgnore
+  public boolean hasFilter() {
+    return false;
+  }
+
+  /**
+   * Devuelve true si existen atributos de ordenamientos para las entidades.
+   *
+   * @return true si hay atributos de ordenamiento.
+   */
+  public boolean hasOrderFields() {
+    return CollectionUtils.isNotEmpty(sortFields);
+  }
+
+  /**
+   * Devuelve true si existen entity graph
+   *
+   * @return
+   */
+  public boolean hasNamedEntityGraph() {
+    return StringUtils.isNotEmpty(namedEntityGraph);
+  }
+
+  /**
+   * Retorna el listado de atributos de ordenamiento.
+   *
+   * @return
+   */
+  public List<SortField> getSortFields() {
+    return sortFields;
+  }
+
+  public void setSortFields(List<SortField> sortFields) {
+    this.sortFields = sortFields;
+  }
+
+  /**
+   * Agrega un nuevo campo de ordenamiento
+   *
+   * @param sortField
+   */
+  public void addSortField(SortField sortField) {
+    if (sortFields == null) {
+      sortFields = new ArrayList<>();
     }
+    sortFields.add(sortField);
+  }
 
-    /**
-     * Devuelve true si existen atributos de ordenamientos para las entidades.
-     *
-     * @return true si hay atributos de ordenamiento.
-     */
-    public boolean hasOrderFields() {
-        return CollectionUtils.isNotEmpty(sortFields);
-    }
+  /**
+   * Método conveniente que evita tener que instanciar un SortField
+   *
+   * @param field
+   * @param ascending
+   */
+  public void addSortField(String field, boolean ascending) {
+    addSortField(new SortField(field, ascending));
+  }
 
-    /**
-     * Devuelve true si existen entity graph
-     *
-     * @return
-     */
-    public boolean hasNamedEntityGraph() {
-        return StringUtils.isNotEmpty(namedEntityGraph);
-    }
+  /** Setea en nulo la lista de campos de ordenamiento */
+  public void clearSortFields() {
+    sortFields = null;
+  }
 
-    /**
-     * Retorna el listado de atributos de ordenamiento.
-     *
-     * @return
-     */
-    public List<SortField> getSortFields() {
-        return sortFields;
-    }
+  /**
+   * Retorna el nombre del Entity graph
+   *
+   * @return
+   */
+  public String getNamedEntityGraph() {
+    return namedEntityGraph;
+  }
 
-    public void setSortFields(List<SortField> sortFields) {
-        this.sortFields = sortFields;
-    }
-
-    /**
-     * Agrega un nuevo campo de ordenamiento
-     *
-     * @param sortField
-     */
-    public void addSortField(SortField sortField) {
-        if (sortFields == null) {
-            sortFields = new ArrayList<>();
-        }
-        sortFields.add(sortField);
-    }
-
-    /**
-     * Método conveniente que evita tener que instanciar un SortField
-     *
-     * @param field
-     * @param ascending
-     */
-    public void addSortField(String field, boolean ascending) {
-        addSortField(new SortField(field, ascending));
-    }
-
-    /**
-     * Setea en nulo la lista de campos de ordenamiento
-     */
-    public void clearSortFields() {
-        sortFields = null;
-    }
-
-    /**
-     * Retorna el nombre del Entity graph
-     *
-     * @return
-     */
-    public String getNamedEntityGraph() {
-        return namedEntityGraph;
-    }
-
-    /**
-     * Establece el nombre del entity graph
-     *
-     * @param namedEntityGraph
-     */
-    public void setNamedEntityGraph(String namedEntityGraph) {
-        this.namedEntityGraph = namedEntityGraph;
-    }
-
+  /**
+   * Establece el nombre del entity graph
+   *
+   * @param namedEntityGraph
+   */
+  public void setNamedEntityGraph(String namedEntityGraph) {
+    this.namedEntityGraph = namedEntityGraph;
+  }
 }

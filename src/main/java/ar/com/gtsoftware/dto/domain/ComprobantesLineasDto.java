@@ -16,15 +16,12 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
-
-/**
- * @author Rodrigo Tato <rotatomel@gmail.com>
- */
+/** @author Rodrigo Tato <rotatomel@gmail.com> */
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -33,30 +30,30 @@ import java.math.BigDecimal;
 @Builder
 public class ComprobantesLineasDto implements Serializable {
 
-    @EqualsAndHashCode.Include
-    private Long id;
-    private BigDecimal precioUnitario;
-    private BigDecimal cantidad;
-    private BigDecimal subTotal;
-    private BigDecimal costoNetoUnitario;
-    private BigDecimal costoBrutoUnitario;
-    private BigDecimal cantidadEntregada;
-    private ComprobantesDto idComprobante;
-    private ProductosDto idProducto;
-    private String descripcion;
-    private Integer version;
-    private Integer item;
+  @EqualsAndHashCode.Include private Long id;
+  private BigDecimal precioUnitario;
+  private BigDecimal cantidad;
+  private BigDecimal subTotal;
+  private BigDecimal costoNetoUnitario;
+  private BigDecimal costoBrutoUnitario;
+  private BigDecimal cantidadEntregada;
+  private ComprobantesDto idComprobante;
+  private ProductosDto idProducto;
+  private String descripcion;
+  private Integer version;
+  private Integer item;
 
-    /**
-     * Retorna la descripción imprimible o mostrable hasta los 90 caracteres.
-     *
-     * @return
-     */
-    public String getDescripcionLinea() {
-        return StringUtils.left(String.format("[%s] %s", idProducto.getCodigoPropio(), descripcion), 90);
-    }
+  /**
+   * Retorna la descripción imprimible o mostrable hasta los 90 caracteres.
+   *
+   * @return
+   */
+  public String getDescripcionLinea() {
+    return StringUtils.left(
+        String.format("[%s] %s", idProducto.getCodigoPropio(), descripcion), 90);
+  }
 
-    public BigDecimal getIva() {
-        return this.idProducto.getIdAlicuotaIva().getValorAlicuota();
-    }
+  public BigDecimal getIva() {
+    return this.idProducto.getIdAlicuotaIva().getValorAlicuota();
+  }
 }

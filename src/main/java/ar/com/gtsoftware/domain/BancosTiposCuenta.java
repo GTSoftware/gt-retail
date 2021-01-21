@@ -15,37 +15,39 @@
  */
 package ar.com.gtsoftware.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
-/**
- * @author rodrigo
- */
+/** @author rodrigo */
 @Entity
 @Table(name = "bancos_tipos_cuenta")
 @Getter
 @Setter
 public class BancosTiposCuenta extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bancos_tipos_cuenta_id_tipo_cuenta_banco")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "bancos_tipos_cuenta_id_tipo_cuenta_banco",
-            sequenceName = "bancos_tipos_cuenta_id_tipo_cuenta_banco_seq")
-    @Basic(optional = false)
-    @Column(name = "id_tipo_cuenta_banco", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(
+      strategy = GenerationType.SEQUENCE,
+      generator = "bancos_tipos_cuenta_id_tipo_cuenta_banco")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "bancos_tipos_cuenta_id_tipo_cuenta_banco",
+      sequenceName = "bancos_tipos_cuenta_id_tipo_cuenta_banco_seq")
+  @Basic(optional = false)
+  @Column(name = "id_tipo_cuenta_banco", nullable = false, updatable = false)
+  private Long id;
 
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 60)
-    @Column(name = "nombre_tipo_cuenta")
-    private String nombreTipoCuenta;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoCuentaBanco")
-    private List<BancosCuentas> bancosCuentasList;
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 60)
+  @Column(name = "nombre_tipo_cuenta")
+  private String nombreTipoCuenta;
 
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoCuentaBanco")
+  private List<BancosCuentas> bancosCuentasList;
 }

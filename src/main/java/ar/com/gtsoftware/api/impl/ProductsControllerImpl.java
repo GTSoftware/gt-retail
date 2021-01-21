@@ -14,198 +14,194 @@ import ar.com.gtsoftware.search.RubrosSearchFilter;
 import ar.com.gtsoftware.search.SubRubroSearchFilter;
 import ar.com.gtsoftware.service.*;
 import ar.com.gtsoftware.utils.SecurityUtils;
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RestController;
-
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
 public class ProductsControllerImpl implements ProductsController {
 
-    private static final String DISPLAY_NAME_FMT = "[%d] %s";
-    private final ProductosService productosService;
-    private final ParametrosService parametrosService;
-    private final ProductosRubrosService rubrosService;
-    private final ProductosSubRubrosService subRubrosService;
-    private final ProductosTiposProveeduriaService tiposProveeduriaService;
-    private final ProductosMarcasService productosMarcasService;
-    private final SecurityUtils securityUtils;
-    private final ProductosTiposPorcentajesService productosTiposPorcentajesService;
+  private static final String DISPLAY_NAME_FMT = "[%d] %s";
+  private final ProductosService productosService;
+  private final ParametrosService parametrosService;
+  private final ProductosRubrosService rubrosService;
+  private final ProductosSubRubrosService subRubrosService;
+  private final ProductosTiposProveeduriaService tiposProveeduriaService;
+  private final ProductosMarcasService productosMarcasService;
+  private final SecurityUtils securityUtils;
+  private final ProductosTiposPorcentajesService productosTiposPorcentajesService;
 
-    @Override
-    public PaginatedResponse<ProductSearchResult> findBySearchFilter(@Valid PaginatedSearchRequest<ProductosSearchFilter> searchRequest) {
-        final ProductosSearchFilter searchFilter = searchRequest.getSearchFilter();
-        if (searchFilter.getIdListaPrecio() == null) {
-            searchFilter.setIdListaPrecio(parametrosService.getLongParam(Parametros.ID_LISTA_VENTA));
-        }
-
-        final int count = productosService.countBySearchFilter(searchFilter);
-        final PaginatedResponse<ProductSearchResult> response = PaginatedResponse.<ProductSearchResult>builder().totalResults(count).build();
-
-        if (count > 0) {
-            final List<ProductosDto> productos = productosService.findBySearchFilter(searchFilter,
-                    searchRequest.getFirstResult(),
-                    searchRequest.getMaxResults());
-            response.setData(transformProducts(productos));
-        }
-
-        return response;
+  @Override
+  public PaginatedResponse<ProductSearchResult> findBySearchFilter(
+      @Valid PaginatedSearchRequest<ProductosSearchFilter> searchRequest) {
+    final ProductosSearchFilter searchFilter = searchRequest.getSearchFilter();
+    if (searchFilter.getIdListaPrecio() == null) {
+      searchFilter.setIdListaPrecio(parametrosService.getLongParam(Parametros.ID_LISTA_VENTA));
     }
 
-    private List<ProductSearchResult> transformProducts(List<ProductosDto> productos) {
-        List<ProductSearchResult> productSearchResults = new ArrayList<>(productos.size());
+    final int count = productosService.countBySearchFilter(searchFilter);
+    final PaginatedResponse<ProductSearchResult> response =
+        PaginatedResponse.<ProductSearchResult>builder().totalResults(count).build();
 
-        for (ProductosDto dto : productos) {
-            final ProductSearchResult productSearchResult = ProductSearchResult.builder()
-                    .codigoFabricante(dto.getCodigoFabricante())
-                    .codigoPropio(dto.getCodigoPropio())
-                    .descripcion(dto.getDescripcion())
-                    .fechaUltimaModificacion(dto.getFechaUltimaModificacion())
-                    .productId(dto.getId())
-                    .brand(transformBrand(dto.getIdMarca()))
-                    .category(transformCategory(dto.getIdRubro()))
-                    .subCategory(transformSubCategory(dto.getIdSubRubro()))
-                    .supplyType(transformSupplyType(dto.getIdTipoProveeduria()))
-                    .purchaseUnit(dto.getIdTipoUnidadCompra().getNombreUnidad())
-                    .saleUnit(dto.getIdTipoUnidadVenta().getNombreUnidad())
-                    .observaciones(dto.getObservaciones())
-                    .precioVenta(dto.getPrecioVenta())
-                    .stockActual(dto.getStockActual())
-                    .stockActualEnSucursal(dto.getStockActualEnSucursal())
-                    .build();
-
-            productSearchResults.add(productSearchResult);
-        }
-
-        return productSearchResults;
+    if (count > 0) {
+      final List<ProductosDto> productos =
+          productosService.findBySearchFilter(
+              searchFilter, searchRequest.getFirstResult(), searchRequest.getMaxResults());
+      response.setData(transformProducts(productos));
     }
 
-    @Override
-    public List<ProductCategory> getProductCategories() {
-        final RubrosSearchFilter sf = new RubrosSearchFilter();
-        sf.addSortField("nombreRubro", true);
+    return response;
+  }
 
-        return transformCategories(rubrosService.findAllBySearchFilter(sf));
+  private List<ProductSearchResult> transformProducts(List<ProductosDto> productos) {
+    List<ProductSearchResult> productSearchResults = new ArrayList<>(productos.size());
+
+    for (ProductosDto dto : productos) {
+      final ProductSearchResult productSearchResult =
+          ProductSearchResult.builder()
+              .codigoFabricante(dto.getCodigoFabricante())
+              .codigoPropio(dto.getCodigoPropio())
+              .descripcion(dto.getDescripcion())
+              .fechaUltimaModificacion(dto.getFechaUltimaModificacion())
+              .productId(dto.getId())
+              .brand(transformBrand(dto.getIdMarca()))
+              .category(transformCategory(dto.getIdRubro()))
+              .subCategory(transformSubCategory(dto.getIdSubRubro()))
+              .supplyType(transformSupplyType(dto.getIdTipoProveeduria()))
+              .purchaseUnit(dto.getIdTipoUnidadCompra().getNombreUnidad())
+              .saleUnit(dto.getIdTipoUnidadVenta().getNombreUnidad())
+              .observaciones(dto.getObservaciones())
+              .precioVenta(dto.getPrecioVenta())
+              .stockActual(dto.getStockActual())
+              .stockActualEnSucursal(dto.getStockActualEnSucursal())
+              .build();
+
+      productSearchResults.add(productSearchResult);
     }
 
-    private List<ProductCategory> transformCategories(List<ProductosRubrosDto> rubrosDtos) {
-        List<ProductCategory> categories = new ArrayList<>(rubrosDtos.size());
-        for (ProductosRubrosDto rubroDto : rubrosDtos) {
-            categories.add(
-                    transformCategory(rubroDto)
-            );
-        }
+    return productSearchResults;
+  }
 
-        return categories;
+  @Override
+  public List<ProductCategory> getProductCategories() {
+    final RubrosSearchFilter sf = new RubrosSearchFilter();
+    sf.addSortField("nombreRubro", true);
+
+    return transformCategories(rubrosService.findAllBySearchFilter(sf));
+  }
+
+  private List<ProductCategory> transformCategories(List<ProductosRubrosDto> rubrosDtos) {
+    List<ProductCategory> categories = new ArrayList<>(rubrosDtos.size());
+    for (ProductosRubrosDto rubroDto : rubrosDtos) {
+      categories.add(transformCategory(rubroDto));
     }
 
-    private ProductCategory transformCategory(ProductosRubrosDto rubroDto) {
-        return ProductCategory.builder()
-                .categoryName(rubroDto.getNombreRubro())
-                .categoryId(rubroDto.getId())
-                .displayName(String.format(DISPLAY_NAME_FMT,
-                        rubroDto.getId(),
-                        rubroDto.getNombreRubro()))
-                .build();
+    return categories;
+  }
+
+  private ProductCategory transformCategory(ProductosRubrosDto rubroDto) {
+    return ProductCategory.builder()
+        .categoryName(rubroDto.getNombreRubro())
+        .categoryId(rubroDto.getId())
+        .displayName(String.format(DISPLAY_NAME_FMT, rubroDto.getId(), rubroDto.getNombreRubro()))
+        .build();
+  }
+
+  @Override
+  public List<ProductSubCategory> getProductSubCategories(Long categoryId) {
+    final SubRubroSearchFilter sf =
+        SubRubroSearchFilter.builder().idProductosRubros(categoryId).build();
+    sf.addSortField("nombreSubRubro", true);
+
+    return transformSubCategories(subRubrosService.findAllBySearchFilter(sf));
+  }
+
+  private List<ProductSubCategory> transformSubCategories(
+      List<ProductosSubRubrosDto> subRubrosDtos) {
+    List<ProductSubCategory> subCategories = new ArrayList<>(subRubrosDtos.size());
+    for (ProductosSubRubrosDto subRubroDto : subRubrosDtos) {
+      subCategories.add(transformSubCategory(subRubroDto));
     }
 
-    @Override
-    public List<ProductSubCategory> getProductSubCategories(Long categoryId) {
-        final SubRubroSearchFilter sf = SubRubroSearchFilter.builder().idProductosRubros(categoryId).build();
-        sf.addSortField("nombreSubRubro", true);
+    return subCategories;
+  }
 
-        return transformSubCategories(subRubrosService.findAllBySearchFilter(sf));
+  private ProductSubCategory transformSubCategory(ProductosSubRubrosDto subRubroDto) {
+    return ProductSubCategory.builder()
+        .categoryId(subRubroDto.getIdRubro().getId())
+        .subCategoryName(subRubroDto.getNombreSubRubro())
+        .subCategoryId(subRubroDto.getId())
+        .displayName(
+            String.format(DISPLAY_NAME_FMT, subRubroDto.getId(), subRubroDto.getNombreSubRubro()))
+        .build();
+  }
+
+  @Override
+  public List<ProductSupplyType> getProductSupplyTypes() {
+    return transformSupplyTypes(tiposProveeduriaService.findAll());
+  }
+
+  private List<ProductSupplyType> transformSupplyTypes(
+      List<ProductosTiposProveeduriaDto> tiposProveeduriaDtos) {
+    List<ProductSupplyType> supplyTypes = new ArrayList<>(tiposProveeduriaDtos.size());
+    for (ProductosTiposProveeduriaDto tipoProveeduria : tiposProveeduriaDtos) {
+      supplyTypes.add(transformSupplyType(tipoProveeduria));
     }
 
-    private List<ProductSubCategory> transformSubCategories(List<ProductosSubRubrosDto> subRubrosDtos) {
-        List<ProductSubCategory> subCategories = new ArrayList<>(subRubrosDtos.size());
-        for (ProductosSubRubrosDto subRubroDto : subRubrosDtos) {
-            subCategories.add(
-                    transformSubCategory(subRubroDto)
-            );
-        }
+    return supplyTypes;
+  }
 
-        return subCategories;
+  private ProductSupplyType transformSupplyType(ProductosTiposProveeduriaDto tipoProveeduria) {
+    return ProductSupplyType.builder()
+        .supplyTypeId(tipoProveeduria.getId())
+        .supplyTypeName(tipoProveeduria.getNombreTipoProveeduria())
+        .displayName(
+            String.format(
+                DISPLAY_NAME_FMT,
+                tipoProveeduria.getId(),
+                tipoProveeduria.getNombreTipoProveeduria()))
+        .build();
+  }
+
+  @Override
+  public List<ProductBrand> getProductBrands() {
+    MarcasSearchFilter sf = new MarcasSearchFilter();
+    sf.addSortField("nombreMarca", true);
+
+    return transformBrands(productosMarcasService.findAllBySearchFilter(sf));
+  }
+
+  private List<ProductBrand> transformBrands(List<ProductosMarcasDto> marcasDtos) {
+    List<ProductBrand> brands = new ArrayList<>(marcasDtos.size());
+    for (ProductosMarcasDto marca : marcasDtos) {
+      brands.add(transformBrand(marca));
     }
 
-    private ProductSubCategory transformSubCategory(ProductosSubRubrosDto subRubroDto) {
-        return ProductSubCategory.builder()
-                .categoryId(subRubroDto.getIdRubro().getId())
-                .subCategoryName(subRubroDto.getNombreSubRubro())
-                .subCategoryId(subRubroDto.getId())
-                .displayName(String.format(DISPLAY_NAME_FMT,
-                        subRubroDto.getId(),
-                        subRubroDto.getNombreSubRubro()))
-                .build();
+    return brands;
+  }
+
+  private ProductBrand transformBrand(ProductosMarcasDto marcaDto) {
+    return ProductBrand.builder()
+        .brandId(marcaDto.getId())
+        .brandName(marcaDto.getNombreMarca())
+        .displayName(String.format(DISPLAY_NAME_FMT, marcaDto.getId(), marcaDto.getNombreMarca()))
+        .build();
+  }
+
+  @Override
+  public void batchUpdatePrices(@Valid BatchPricingUpdateRequest batchUpdateRequest) {
+    if (securityUtils.userHasRole(Roles.ADMINISTRADORES)) {
+      productosService.updatePrices(batchUpdateRequest);
+    } else {
+      throw new UserNotAllowedException();
     }
+  }
 
-    @Override
-    public List<ProductSupplyType> getProductSupplyTypes() {
-        return transformSupplyTypes(tiposProveeduriaService.findAll());
-    }
-
-    private List<ProductSupplyType> transformSupplyTypes(List<ProductosTiposProveeduriaDto> tiposProveeduriaDtos) {
-        List<ProductSupplyType> supplyTypes = new ArrayList<>(tiposProveeduriaDtos.size());
-        for (ProductosTiposProveeduriaDto tipoProveeduria : tiposProveeduriaDtos) {
-            supplyTypes.add(
-                    transformSupplyType(tipoProveeduria)
-            );
-        }
-
-        return supplyTypes;
-    }
-
-    private ProductSupplyType transformSupplyType(ProductosTiposProveeduriaDto tipoProveeduria) {
-        return ProductSupplyType.builder()
-                .supplyTypeId(tipoProveeduria.getId())
-                .supplyTypeName(tipoProveeduria.getNombreTipoProveeduria())
-                .displayName(String.format(DISPLAY_NAME_FMT,
-                        tipoProveeduria.getId(),
-                        tipoProveeduria.getNombreTipoProveeduria()))
-                .build();
-    }
-
-    @Override
-    public List<ProductBrand> getProductBrands() {
-        MarcasSearchFilter sf = new MarcasSearchFilter();
-        sf.addSortField("nombreMarca", true);
-
-        return transformBrands(productosMarcasService.findAllBySearchFilter(sf));
-    }
-
-    private List<ProductBrand> transformBrands(List<ProductosMarcasDto> marcasDtos) {
-        List<ProductBrand> brands = new ArrayList<>(marcasDtos.size());
-        for (ProductosMarcasDto marca : marcasDtos) {
-            brands.add(
-                    transformBrand(marca)
-            );
-        }
-
-        return brands;
-    }
-
-    private ProductBrand transformBrand(ProductosMarcasDto marcaDto) {
-        return ProductBrand.builder()
-                .brandId(marcaDto.getId())
-                .brandName(marcaDto.getNombreMarca())
-                .displayName(String.format(DISPLAY_NAME_FMT, marcaDto.getId(), marcaDto.getNombreMarca()))
-                .build();
-    }
-
-    @Override
-    public void batchUpdatePrices(@Valid BatchPricingUpdateRequest batchUpdateRequest) {
-        if (securityUtils.userHasRole(Roles.ADMINISTRADORES)) {
-            productosService.updatePrices(batchUpdateRequest);
-        } else {
-            throw new UserNotAllowedException();
-        }
-    }
-
-    @Override
-    public List<ProductosTiposPorcentajesDto> getPercentTypes() {
-        return productosTiposPorcentajesService.findAll();
-    }
+  @Override
+  public List<ProductosTiposPorcentajesDto> getPercentTypes() {
+    return productosTiposPorcentajesService.findAll();
+  }
 }

@@ -18,9 +18,7 @@ package ar.com.gtsoftware.dto.domain;
 
 import lombok.*;
 
-/**
- * @author Rodrigo M. Tato Rothamel <rotatomel@gmail.com>
- */
+/** @author Rodrigo M. Tato Rothamel <rotatomel@gmail.com> */
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
@@ -28,14 +26,11 @@ import lombok.*;
 @Builder
 public class ProductosListasPreciosDto {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @EqualsAndHashCode.Include
-    private Long id;
+  @EqualsAndHashCode.Include private Long id;
 
-    private String nombreLista;
-    private boolean activa;
-    private Integer version;
-
-
+  private String nombreLista;
+  private boolean activa;
+  private Integer version;
 }

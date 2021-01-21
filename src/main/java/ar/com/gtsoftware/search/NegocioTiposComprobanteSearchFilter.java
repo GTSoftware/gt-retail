@@ -30,14 +30,13 @@ import org.apache.commons.lang3.StringUtils;
 @AllArgsConstructor
 public class NegocioTiposComprobanteSearchFilter extends AbstractSearchFilter {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    private Boolean activo;
-    private String nombre;
+  private Boolean activo;
+  private String nombre;
 
-    @Override
-    public boolean hasFilter() {
-        return activo != null || StringUtils.isNotEmpty(nombre);
-    }
-
+  @Override
+  public boolean hasFilter() {
+    return activo != null || StringUtils.isNotEmpty(nombre);
+  }
 }

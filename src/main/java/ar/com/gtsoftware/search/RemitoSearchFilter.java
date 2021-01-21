@@ -15,11 +15,10 @@
  */
 package ar.com.gtsoftware.search;
 
-import lombok.*;
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 import java.time.LocalDateTime;
-
-import static org.apache.commons.lang3.StringUtils.isNotEmpty;
+import lombok.*;
 
 @Getter
 @Setter
@@ -28,22 +27,21 @@ import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 @Builder
 public class RemitoSearchFilter extends AbstractSearchFilter {
 
-    private LocalDateTime fechaAltaDesde;
-    private LocalDateTime fechaAltaHasta;
-    private Long idTipoMovimiento;
-    private Long idProducto;
-    private String descripcionProducto;
+  private LocalDateTime fechaAltaDesde;
+  private LocalDateTime fechaAltaHasta;
+  private Long idTipoMovimiento;
+  private Long idProducto;
+  private String descripcionProducto;
 
-    @Override
-    public boolean hasFilter() {
-        return hasEntreFechasAltaFilter()
-                || idTipoMovimiento != null
-                || idProducto != null
-                || isNotEmpty(descripcionProducto);
-    }
+  @Override
+  public boolean hasFilter() {
+    return hasEntreFechasAltaFilter()
+        || idTipoMovimiento != null
+        || idProducto != null
+        || isNotEmpty(descripcionProducto);
+  }
 
-    public boolean hasEntreFechasAltaFilter() {
-        return fechaAltaDesde != null && fechaAltaHasta != null;
-    }
-
+  public boolean hasEntreFechasAltaFilter() {
+    return fechaAltaDesde != null && fechaAltaHasta != null;
+  }
 }

@@ -20,7 +20,5 @@ package ar.com.gtsoftware.service;
 import ar.com.gtsoftware.dto.domain.FiscalAlicuotasIvaDto;
 import ar.com.gtsoftware.search.AbstractSearchFilter;
 
-
 public interface FiscalAlicuotasIvaService
-        extends EntityService<FiscalAlicuotasIvaDto, AbstractSearchFilter> {
-}
+    extends EntityService<FiscalAlicuotasIvaDto, AbstractSearchFilter> {}

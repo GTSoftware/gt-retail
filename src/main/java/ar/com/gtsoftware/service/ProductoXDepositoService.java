@@ -19,12 +19,10 @@ package ar.com.gtsoftware.service;
 
 import ar.com.gtsoftware.dto.domain.ProductoXDepositoDto;
 import ar.com.gtsoftware.search.ProductoXDepositoSearchFilter;
-
 import java.math.BigDecimal;
 
-
 public interface ProductoXDepositoService
-        extends EntityService<ProductoXDepositoDto, ProductoXDepositoSearchFilter> {
+    extends EntityService<ProductoXDepositoDto, ProductoXDepositoSearchFilter> {
 
-    BigDecimal getStockBySearchFilter(ProductoXDepositoSearchFilter sf);
+  BigDecimal getStockBySearchFilter(ProductoXDepositoSearchFilter sf);
 }

@@ -20,20 +20,18 @@ package ar.com.gtsoftware.service;
 import ar.com.gtsoftware.dto.RegistroVentaDto;
 import ar.com.gtsoftware.dto.domain.ComprobantesDto;
 
-/**
- * Capa de servicio para registrar ventas y demás servicios relacionados.
- */
-
+/** Capa de servicio para registrar ventas y demás servicios relacionados. */
 public interface VentasService {
 
-    /**
-     * Guarda la venta y genera el remito de salida si el parámetro <code>generarRemitoSalida</code> se setea en true
-     *
-     * @param comprobantesDto
-     * @param generarRemitoSalida
-     * @return
-     */
-    RegistroVentaDto guardarVenta(ComprobantesDto comprobantesDto, boolean generarRemitoSalida);
+  /**
+   * Guarda la venta y genera el remito de salida si el parámetro <code>generarRemitoSalida</code>
+   * se setea en true
+   *
+   * @param comprobantesDto
+   * @param generarRemitoSalida
+   * @return
+   */
+  RegistroVentaDto guardarVenta(ComprobantesDto comprobantesDto, boolean generarRemitoSalida);
 
-    ComprobantesDto obtenerComprobante(Long id);
+  ComprobantesDto obtenerComprobante(Long id);
 }

@@ -16,14 +16,13 @@
  */
 package ar.com.gtsoftware.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import java.math.BigDecimal;
+import java.util.Date;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.math.BigDecimal;
-import java.util.Date;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Transferencia de valores entre cajas
@@ -36,40 +35,44 @@ import java.util.Date;
 @Setter
 public class CajasTransferencias extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cajas_transferencias_id_transferencia")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "cajas_transferencias_id_transferencia",
-            sequenceName = "cajas_transferencias_id_transferencia_seq")
-    @Basic(optional = false)
-    @Column(name = "id_transferencia", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(
+      strategy = GenerationType.SEQUENCE,
+      generator = "cajas_transferencias_id_transferencia")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "cajas_transferencias_id_transferencia",
+      sequenceName = "cajas_transferencias_id_transferencia_seq")
+  @Basic(optional = false)
+  @Column(name = "id_transferencia", nullable = false, updatable = false)
+  private Long id;
 
-    @NotNull
-    @JoinColumn(name = "id_caja_origen", referencedColumnName = "id_caja")
-    @ManyToOne
-    private Cajas idCajaOrigen;
+  @NotNull
+  @JoinColumn(name = "id_caja_origen", referencedColumnName = "id_caja")
+  @ManyToOne
+  private Cajas idCajaOrigen;
 
-    @NotNull
-    @JoinColumn(name = "id_caja_destino", referencedColumnName = "id_caja")
-    @ManyToOne
-    private Cajas idCajaDestino;
+  @NotNull
+  @JoinColumn(name = "id_caja_destino", referencedColumnName = "id_caja")
+  @ManyToOne
+  private Cajas idCajaDestino;
 
-    @NotNull
-    @Column(name = "fecha_transferencia")
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date fechaTransferencia;
+  @NotNull
+  @Column(name = "fecha_transferencia")
+  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+  private Date fechaTransferencia;
 
-    @NotNull
-    @Column(name = "monto")
-    private BigDecimal monto;
+  @NotNull
+  @Column(name = "monto")
+  private BigDecimal monto;
 
-    @Column(name = "observaciones")
-    @Size(max = 90)
-    private String observaciones;
+  @Column(name = "observaciones")
+  @Size(max = 90)
+  private String observaciones;
 
-    @NotNull
-    @JoinColumn(name = "id_forma_pago", referencedColumnName = "id_forma_pago")
-    @ManyToOne
-    private NegocioFormasPago idFormaPago;
-
+  @NotNull
+  @JoinColumn(name = "id_forma_pago", referencedColumnName = "id_forma_pago")
+  @ManyToOne
+  private NegocioFormasPago idFormaPago;
 }

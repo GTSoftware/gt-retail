@@ -16,11 +16,10 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
-import lombok.*;
-
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import lombok.*;
 
 /**
  * Arqueos de caja realizadados por los cajeros. Delimitan un cierre y apertura de caja.
@@ -34,22 +33,19 @@ import java.util.List;
 @Builder
 public class CajasArqueosDto {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @EqualsAndHashCode.Include
-    private Long id;
-    private UsuariosDto idUsuario;
-    private UsuariosDto idUsuarioControl;
-    private SucursalesDto idSucursal;
-    private CajasDto idCaja;
-    private Date fechaArqueo;
-    private Date fechaControl;
-    private BigDecimal saldoInicial;
-    private BigDecimal saldoFinal;
-    private String obvervacionesControl;
+  @EqualsAndHashCode.Include private Long id;
+  private UsuariosDto idUsuario;
+  private UsuariosDto idUsuarioControl;
+  private SucursalesDto idSucursal;
+  private CajasDto idCaja;
+  private Date fechaArqueo;
+  private Date fechaControl;
+  private BigDecimal saldoInicial;
+  private BigDecimal saldoFinal;
+  private String obvervacionesControl;
 
-    private List<CajasArqueosDetalleDto> detalleArqueo;
-    private Integer version;
-
-
+  private List<CajasArqueosDetalleDto> detalleArqueo;
+  private Integer version;
 }

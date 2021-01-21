@@ -17,11 +17,9 @@
 
 package ar.com.gtsoftware.dto.reportes;
 
-
-import lombok.*;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
+import lombok.*;
 
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -30,18 +28,16 @@ import java.math.BigDecimal;
 @Builder
 public class VentaPorProducto implements Serializable {
 
-    @EqualsAndHashCode.Include
-    private Long idProducto;
-    private String codigoProducto;
-    private String codigoFabrica;
-    private String descripcionProducto;
-    private String unidadVenta;
-    private BigDecimal stockMinimo;
-    private BigDecimal stockTotalActual;
-    private BigDecimal cantidadVendida;
-    private BigDecimal costoTotalVentas;
-    private BigDecimal totalAPrecioVenta;
-    private Integer cantidadComprobantes;
-    private String proveedor;
-
+  @EqualsAndHashCode.Include private Long idProducto;
+  private String codigoProducto;
+  private String codigoFabrica;
+  private String descripcionProducto;
+  private String unidadVenta;
+  private BigDecimal stockMinimo;
+  private BigDecimal stockTotalActual;
+  private BigDecimal cantidadVendida;
+  private BigDecimal costoTotalVentas;
+  private BigDecimal totalAPrecioVenta;
+  private Integer cantidadComprobantes;
+  private String proveedor;
 }

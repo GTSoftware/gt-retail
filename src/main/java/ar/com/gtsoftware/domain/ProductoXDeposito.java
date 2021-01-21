@@ -15,16 +15,14 @@
  */
 package ar.com.gtsoftware.domain;
 
+import java.math.BigDecimal;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
-
 /**
- * Reperesenta a las existencias de stock de un determinado producto en un
- * depósito determinado
+ * Reperesenta a las existencias de stock de un determinado producto en un depósito determinado
  *
  * @author fede
  */
@@ -34,26 +32,38 @@ import java.math.BigDecimal;
 @Setter
 public class ProductoXDeposito extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "productos_x_depositos_id_producto_x_deposito")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "productos_x_depositos_id_producto_x_deposito",
-            sequenceName = "productos_x_depositos_id_producto_x_deposito_seq")
-    @Basic(optional = false)
-    @Column(name = "id_producto_x_deposito", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(
+      strategy = GenerationType.SEQUENCE,
+      generator = "productos_x_depositos_id_producto_x_deposito")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "productos_x_depositos_id_producto_x_deposito",
+      sequenceName = "productos_x_depositos_id_producto_x_deposito_seq")
+  @Basic(optional = false)
+  @Column(name = "id_producto_x_deposito", nullable = false, updatable = false)
+  private Long id;
 
-    @JoinColumn(name = "id_producto", referencedColumnName = "id_producto", insertable = false, updatable = false)
-    @NotNull
-    @ManyToOne
-    private Productos producto;
+  @JoinColumn(
+      name = "id_producto",
+      referencedColumnName = "id_producto",
+      insertable = false,
+      updatable = false)
+  @NotNull
+  @ManyToOne
+  private Productos producto;
 
-    @JoinColumn(name = "id_deposito", referencedColumnName = "id_deposito", insertable = false, updatable = false)
-    @NotNull
-    @ManyToOne
-    private Depositos deposito;
+  @JoinColumn(
+      name = "id_deposito",
+      referencedColumnName = "id_deposito",
+      insertable = false,
+      updatable = false)
+  @NotNull
+  @ManyToOne
+  private Depositos deposito;
 
-    @NotNull
-    @Column(name = "stock")
-    private BigDecimal stock;
-
+  @NotNull
+  @Column(name = "stock")
+  private BigDecimal stock;
 }

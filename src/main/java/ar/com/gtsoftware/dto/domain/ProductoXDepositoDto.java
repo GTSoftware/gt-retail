@@ -16,14 +16,12 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
+import java.math.BigDecimal;
+import javax.validation.constraints.NotNull;
 import lombok.*;
 
-import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
-
 /**
- * Reperesenta a las existencias de stock de un determinado producto en un
- * depósito determinado
+ * Reperesenta a las existencias de stock de un determinado producto en un depósito determinado
  *
  * @author fede
  */
@@ -34,20 +32,14 @@ import java.math.BigDecimal;
 @Builder
 public class ProductoXDepositoDto {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @EqualsAndHashCode.Include
-    private Long id;
+  @EqualsAndHashCode.Include private Long id;
 
-    @NotNull
-    private ProductosDto producto;
+  @NotNull private ProductosDto producto;
 
-    @NotNull
-    private DepositosDto deposito;
+  @NotNull private DepositosDto deposito;
 
-    @NotNull
-    private BigDecimal stock;
-    private Integer version;
-
-
+  @NotNull private BigDecimal stock;
+  private Integer version;
 }

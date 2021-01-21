@@ -16,9 +16,8 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
-import lombok.*;
-
 import java.io.Serializable;
+import lombok.*;
 
 /**
  * Clase que mapea a la tabla fiscal_tipos_comprobante para regímenes informativos
@@ -32,18 +31,21 @@ import java.io.Serializable;
 @Builder
 public class FiscalTiposComprobanteDto implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @EqualsAndHashCode.Include
-    private String codigoTipoComprobante;
-    private String denominacionComprobante;
+  private static final long serialVersionUID = 1L;
+  @EqualsAndHashCode.Include private String codigoTipoComprobante;
+  private String denominacionComprobante;
 
-    private String letra;
+  private String letra;
 
-    private NegocioTiposComprobanteDto tipoComprobante;
+  private NegocioTiposComprobanteDto tipoComprobante;
 
-    @Override
-    public String toString() {
-        return "FiscalTiposComprobanteDto{" + "codigoTipoComprobante=" + codigoTipoComprobante + ", denominacionComprobante=" + denominacionComprobante + '}';
-    }
-
+  @Override
+  public String toString() {
+    return "FiscalTiposComprobanteDto{"
+        + "codigoTipoComprobante="
+        + codigoTipoComprobante
+        + ", denominacionComprobante="
+        + denominacionComprobante
+        + '}';
+  }
 }

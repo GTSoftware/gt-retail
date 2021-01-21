@@ -17,11 +17,10 @@
 package ar.com.gtsoftware.dto.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
-
+import java.util.Date;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Date;
+import lombok.*;
 
 /**
  * Clase que representa a los usuarios del sistema
@@ -35,25 +34,22 @@ import java.util.Date;
 @Builder
 public class UsuariosDto {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @EqualsAndHashCode.Include
-    private Long id;
+  @EqualsAndHashCode.Include private Long id;
 
-    @NotNull
-    @Size(min = 1, max = 100)
-    private String nombreUsuario;
-    @NotNull
-    @Size(min = 1, max = 60)
-    private String login;
-    @JsonIgnore
-    private String password;
+  @NotNull
+  @Size(min = 1, max = 100)
+  private String nombreUsuario;
 
-    @NotNull
-    private Date fechaAlta;
-    private Integer version;
+  @NotNull
+  @Size(min = 1, max = 60)
+  private String login;
 
-    private SucursalesDto idSucursal;
+  @JsonIgnore private String password;
 
+  @NotNull private Date fechaAlta;
+  private Integer version;
 
+  private SucursalesDto idSucursal;
 }

@@ -29,45 +29,43 @@ import ar.com.gtsoftware.mappers.helper.CycleAvoidingMappingContext;
 import ar.com.gtsoftware.search.OrdenCompraSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;
 import ar.com.gtsoftware.service.ProveedoresOrdenesCompraService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class ProveedoresOrdenesCompraServiceImpl
-        extends BaseEntityService<ProveedoresOrdenesCompraDto, OrdenCompraSearchFilter, ProveedoresOrdenesCompra>
-        implements ProveedoresOrdenesCompraService {
+    extends BaseEntityService<
+        ProveedoresOrdenesCompraDto, OrdenCompraSearchFilter, ProveedoresOrdenesCompra>
+    implements ProveedoresOrdenesCompraService {
 
-    private final ProveedoresOrdenesCompraFacade facade;
-    private final ProveedoresOrdenesCompraEstadosFacade estadosFacade;
+  private final ProveedoresOrdenesCompraFacade facade;
+  private final ProveedoresOrdenesCompraEstadosFacade estadosFacade;
 
-    private final ProveedoresOrdenesCompraMapper mapper;
+  private final ProveedoresOrdenesCompraMapper mapper;
 
-    private final ProveedoresOrdenesCompraEstadosMapper estadosMapper;
+  private final ProveedoresOrdenesCompraEstadosMapper estadosMapper;
 
-    @Override
-    protected ProveedoresOrdenesCompraFacade getFacade() {
-        return facade;
-    }
+  @Override
+  protected ProveedoresOrdenesCompraFacade getFacade() {
+    return facade;
+  }
 
-    @Override
-    protected ProveedoresOrdenesCompraMapper getMapper() {
-        return mapper;
-    }
+  @Override
+  protected ProveedoresOrdenesCompraMapper getMapper() {
+    return mapper;
+  }
 
-    @Override
-    public List<ProveedoresOrdenesCompraEstadosDto> obtenerEstados() {
-        List<ProveedoresOrdenesCompraEstados> allEstados = estadosFacade.findAll();
-        return estadosMapper.entitiesToDtos(allEstados, new CycleAvoidingMappingContext());
+  @Override
+  public List<ProveedoresOrdenesCompraEstadosDto> obtenerEstados() {
+    List<ProveedoresOrdenesCompraEstados> allEstados = estadosFacade.findAll();
+    return estadosMapper.entitiesToDtos(allEstados, new CycleAvoidingMappingContext());
+  }
 
-    }
-
-    @Override
-    public ProveedoresOrdenesCompraEstadosDto obtenerEstado(Long id) {
-        ProveedoresOrdenesCompraEstados estado = estadosFacade.find(id);
-        return estadosMapper.entityToDto(estado, new CycleAvoidingMappingContext());
-
-    }
+  @Override
+  public ProveedoresOrdenesCompraEstadosDto obtenerEstado(Long id) {
+    ProveedoresOrdenesCompraEstados estado = estadosFacade.find(id);
+    return estadosMapper.entityToDto(estado, new CycleAvoidingMappingContext());
+  }
 }

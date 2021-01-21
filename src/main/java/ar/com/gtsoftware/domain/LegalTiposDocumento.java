@@ -15,51 +15,60 @@
  */
 package ar.com.gtsoftware.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
-/**
- * @author Rodrigo M. Tato Rothamel <rotatomel@gmail.com>
- */
+/** @author Rodrigo M. Tato Rothamel <rotatomel@gmail.com> */
 @Entity
 @Table(name = "legal_tipos_documento")
 @Getter
 @Setter
 public class LegalTiposDocumento extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "legal_tipos_documento_id_tipo_documento")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "legal_tipos_documento_id_tipo_documento",
-            sequenceName = "legal_tipos_documento_id_tipo_documento_seq")
-    @Basic(optional = false)
-    @Column(name = "id_tipo_documento", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(
+      strategy = GenerationType.SEQUENCE,
+      generator = "legal_tipos_documento_id_tipo_documento")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "legal_tipos_documento_id_tipo_documento",
+      sequenceName = "legal_tipos_documento_id_tipo_documento_seq")
+  @Basic(optional = false)
+  @Column(name = "id_tipo_documento", nullable = false, updatable = false)
+  private Long id;
 
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "nombre_tipo_documento")
-    private String nombreTipoDocumento;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "cantidad_caracteres_minimo")
-    private int cantidadCaracteresMinimo;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "cantidad_caracteres_maximo")
-    private int cantidadCaracteresMaximo;
-    @Basic(optional = true)
-    @Column(name = "fiscal_codigo_tipo_documento")
-    private Integer fiscalCodigoTipoDocumento;
-    @JoinColumn(name = "id_tipo_personeria", referencedColumnName = "id_tipo_personeria", columnDefinition = "int4")
-    @ManyToOne(optional = false)
-    private LegalTiposPersoneria idTipoPersoneria;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoDocumento")
-    private List<Personas> personasList;
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 100)
+  @Column(name = "nombre_tipo_documento")
+  private String nombreTipoDocumento;
 
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "cantidad_caracteres_minimo")
+  private int cantidadCaracteresMinimo;
+
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "cantidad_caracteres_maximo")
+  private int cantidadCaracteresMaximo;
+
+  @Basic(optional = true)
+  @Column(name = "fiscal_codigo_tipo_documento")
+  private Integer fiscalCodigoTipoDocumento;
+
+  @JoinColumn(
+      name = "id_tipo_personeria",
+      referencedColumnName = "id_tipo_personeria",
+      columnDefinition = "int4")
+  @ManyToOne(optional = false)
+  private LegalTiposPersoneria idTipoPersoneria;
+
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoDocumento")
+  private List<Personas> personasList;
 }

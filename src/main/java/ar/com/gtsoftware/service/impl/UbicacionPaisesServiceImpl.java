@@ -27,24 +27,23 @@ import ar.com.gtsoftware.service.UbicacionPaisesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-
 @Service
 @RequiredArgsConstructor
 public class UbicacionPaisesServiceImpl
-        extends BaseEntityService<UbicacionPaisesDto, PaisesSearchFilter, UbicacionPaises>
-        implements UbicacionPaisesService {
+    extends BaseEntityService<UbicacionPaisesDto, PaisesSearchFilter, UbicacionPaises>
+    implements UbicacionPaisesService {
 
-    private final UbicacionPaisesFacade facade;
+  private final UbicacionPaisesFacade facade;
 
-    private final UbicacionPaisesMapper mapper;
+  private final UbicacionPaisesMapper mapper;
 
-    @Override
-    protected UbicacionPaisesFacade getFacade() {
-        return facade;
-    }
+  @Override
+  protected UbicacionPaisesFacade getFacade() {
+    return facade;
+  }
 
-    @Override
-    protected UbicacionPaisesMapper getMapper() {
-        return mapper;
-    }
+  @Override
+  protected UbicacionPaisesMapper getMapper() {
+    return mapper;
+  }
 }

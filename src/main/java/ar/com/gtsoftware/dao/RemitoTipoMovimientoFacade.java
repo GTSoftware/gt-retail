@@ -17,32 +17,32 @@ package ar.com.gtsoftware.dao;
 
 import ar.com.gtsoftware.domain.RemitoTipoMovimiento;
 import ar.com.gtsoftware.search.AbstractSearchFilter;
-import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.springframework.stereotype.Repository;
 
 @Repository
-public class RemitoTipoMovimientoFacade extends AbstractFacade<RemitoTipoMovimiento, AbstractSearchFilter> {
+public class RemitoTipoMovimientoFacade
+    extends AbstractFacade<RemitoTipoMovimiento, AbstractSearchFilter> {
 
+  private final EntityManager em;
 
-    private final EntityManager em;
+  public RemitoTipoMovimientoFacade(EntityManager em) {
+    super(RemitoTipoMovimiento.class);
+    this.em = em;
+  }
 
-    public RemitoTipoMovimientoFacade(EntityManager em) {
-        super(RemitoTipoMovimiento.class);
-        this.em = em;
-    }
+  @Override
+  protected EntityManager getEntityManager() {
+    return this.em;
+  }
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return this.em;
-    }
-
-    @Override
-    protected Predicate createWhereFromSearchFilter(AbstractSearchFilter sf, CriteriaBuilder cb, Root<RemitoTipoMovimiento> root) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+  @Override
+  protected Predicate createWhereFromSearchFilter(
+      AbstractSearchFilter sf, CriteriaBuilder cb, Root<RemitoTipoMovimiento> root) {
+    throw new UnsupportedOperationException(
+        "Not supported yet."); // To change body of generated methods, choose Tools | Templates.
+  }
 }

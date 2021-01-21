@@ -30,16 +30,12 @@ import org.apache.commons.lang3.StringUtils;
 @Builder
 public class PlanesPagoSearchFilter extends AbstractSearchFilter {
 
+  private Long idFormaPago;
+  private String nombre;
+  private Boolean activo;
 
-    private Long idFormaPago;
-    private String nombre;
-    private Boolean activo;
-
-    @Override
-    public boolean hasFilter() {
-        return StringUtils.isNotEmpty(nombre)
-                || activo != null
-                || idFormaPago != null;
-    }
-
+  @Override
+  public boolean hasFilter() {
+    return StringUtils.isNotEmpty(nombre) || activo != null || idFormaPago != null;
+  }
 }

@@ -15,16 +15,13 @@
  */
 package ar.com.gtsoftware.search;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import lombok.*;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
-/**
- * @author Rodrigo Tato <rotatomel@gmail.com>
- */
+/** @author Rodrigo Tato <rotatomel@gmail.com> */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -32,38 +29,37 @@ import java.util.List;
 @Builder
 public class ComprobantesProveedorSearchFilter extends AbstractSearchFilter {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    private Long idComprobante;
-    private LocalDateTime fechaComprobanteDesde;
-    private LocalDateTime fechaComprobanteHasta;
-    private Boolean anulada;
-    private Long idUsuario;
-    private Long idProveedor;
-    private Long idSucursal;
-    private Boolean registradaEnLibroIVA;
-    private String numeroFactura;
-    private List<Long> idTiposComprobanteList;
+  private Long idComprobante;
+  private LocalDateTime fechaComprobanteDesde;
+  private LocalDateTime fechaComprobanteHasta;
+  private Boolean anulada;
+  private Long idUsuario;
+  private Long idProveedor;
+  private Long idSucursal;
+  private Boolean registradaEnLibroIVA;
+  private String numeroFactura;
+  private List<Long> idTiposComprobanteList;
 
-    @Override
-    public boolean hasFilter() {
-        return idComprobante != null
-                || hasFechasFilter()
-                || anulada != null
-                || idUsuario != null
-                || idSucursal != null
-                || idProveedor != null
-                || registradaEnLibroIVA != null
-                || StringUtils.isNotEmpty(numeroFactura)
-                || hasTiposComprobanteFilter();
-    }
+  @Override
+  public boolean hasFilter() {
+    return idComprobante != null
+        || hasFechasFilter()
+        || anulada != null
+        || idUsuario != null
+        || idSucursal != null
+        || idProveedor != null
+        || registradaEnLibroIVA != null
+        || StringUtils.isNotEmpty(numeroFactura)
+        || hasTiposComprobanteFilter();
+  }
 
+  public boolean hasTiposComprobanteFilter() {
+    return CollectionUtils.isNotEmpty(idTiposComprobanteList);
+  }
 
-    public boolean hasTiposComprobanteFilter() {
-        return CollectionUtils.isNotEmpty(idTiposComprobanteList);
-    }
-
-    public boolean hasFechasFilter() {
-        return fechaComprobanteDesde != null && fechaComprobanteHasta != null;
-    }
+  public boolean hasFechasFilter() {
+    return fechaComprobanteDesde != null && fechaComprobanteHasta != null;
+  }
 }

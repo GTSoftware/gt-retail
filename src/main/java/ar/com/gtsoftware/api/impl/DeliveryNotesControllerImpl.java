@@ -20,192 +20,201 @@ import ar.com.gtsoftware.search.ProductosSearchFilter;
 import ar.com.gtsoftware.search.RemitoSearchFilter;
 import ar.com.gtsoftware.service.*;
 import ar.com.gtsoftware.utils.SecurityUtils;
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RestController;
-
-import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import javax.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
 public class DeliveryNotesControllerImpl implements DeliveryNotesController {
 
-    private final RemitoTipoMovimientoService tipoMovimientoService;
-    private final DepositosService depositosService;
-    private final ProductosService productosService;
-    private final ProductoXDepositoService productoXDepositoService;
-    private final RemitoService remitoService;
-    private final RemitoDtoTransformer remitoDtoTransformer;
-    private final SecurityUtils securityUtils;
-    private final DeliveryNoteSearchResultTransformer deliveryNoteSearchResultTransformer;
+  private final RemitoTipoMovimientoService tipoMovimientoService;
+  private final DepositosService depositosService;
+  private final ProductosService productosService;
+  private final ProductoXDepositoService productoXDepositoService;
+  private final RemitoService remitoService;
+  private final RemitoDtoTransformer remitoDtoTransformer;
+  private final SecurityUtils securityUtils;
+  private final DeliveryNoteSearchResultTransformer deliveryNoteSearchResultTransformer;
 
-    @Override
-    public List<Warehouse> getWarehouses() {
-        Long branchId = null;
-        if (!securityUtils.userHasRole(Roles.ADMINISTRADORES)
-                && securityUtils.userHasRole(Roles.STOCK_MEN)) {
-            branchId = securityUtils.getUserDetails().getSucursalId();
-        }
-        final DepositosSearchFilter sf = DepositosSearchFilter.builder()
-                .activo(true)
-                .idSucursal(branchId)
-                .build();
-        sf.addSortField("idSucursal.id", true);
-        sf.addSortField("nombreDeposito", true);
-        final List<DepositosDto> depositosDto = depositosService.findAllBySearchFilter(sf);
+  @Override
+  public List<Warehouse> getWarehouses() {
+    Long branchId = null;
+    if (!securityUtils.userHasRole(Roles.ADMINISTRADORES)
+        && securityUtils.userHasRole(Roles.STOCK_MEN)) {
+      branchId = securityUtils.getUserDetails().getSucursalId();
+    }
+    final DepositosSearchFilter sf =
+        DepositosSearchFilter.builder().activo(true).idSucursal(branchId).build();
+    sf.addSortField("idSucursal.id", true);
+    sf.addSortField("nombreDeposito", true);
+    final List<DepositosDto> depositosDto = depositosService.findAllBySearchFilter(sf);
 
-        return transformWarehouses(depositosDto);
+    return transformWarehouses(depositosDto);
+  }
+
+  // TODO move to proper transformer
+  private List<Warehouse> transformWarehouses(List<DepositosDto> depositosDto) {
+    List<Warehouse> warehouses = new ArrayList<>(depositosDto.size());
+    for (DepositosDto deposito : depositosDto) {
+      warehouses.add(
+          Warehouse.builder()
+              .branchId(deposito.getIdSucursal().getId())
+              .branchName(deposito.getIdSucursal().getNombreSucursal())
+              .warehouseId(deposito.getId())
+              .warehouseName(deposito.getNombreDeposito())
+              .displayName(
+                  String.format(
+                      "%s - %s (%d)",
+                      deposito.getNombreDeposito(),
+                      deposito.getIdSucursal().getNombreSucursal(),
+                      deposito.getIdSucursal().getId()))
+              .build());
     }
 
-    //TODO move to proper transformer
-    private List<Warehouse> transformWarehouses(List<DepositosDto> depositosDto) {
-        List<Warehouse> warehouses = new ArrayList<>(depositosDto.size());
-        for (DepositosDto deposito : depositosDto) {
-            warehouses.add(
-                    Warehouse.builder()
-                            .branchId(deposito.getIdSucursal().getId())
-                            .branchName(deposito.getIdSucursal().getNombreSucursal())
-                            .warehouseId(deposito.getId())
-                            .warehouseName(deposito.getNombreDeposito())
-                            .displayName(String.format("%s - %s (%d)", deposito.getNombreDeposito(),
-                                    deposito.getIdSucursal().getNombreSucursal(),
-                                    deposito.getIdSucursal().getId()))
-                            .build()
-            );
-        }
+    return warehouses;
+  }
 
-        return warehouses;
+  @Override
+  public List<RemitoTipoMovimientoDto> getDeliveryTypes() {
+    return tipoMovimientoService.findAll();
+  }
+
+  @Override
+  public DeliveryItemResponse addProduct(@Valid AddDeliveryItemRequest addDeliveryItemRequest) {
+
+    ProductosSearchFilter psf =
+        ProductosSearchFilter.builder()
+            .activo(true)
+            .llevaControlStock(true)
+            .codigoPropio(addDeliveryItemRequest.getProductCode())
+            .idProducto(addDeliveryItemRequest.getProductId())
+            .codigoFabrica(addDeliveryItemRequest.getSupplierCode())
+            .build();
+
+    ProductosDto productosDto = productosService.findFirstBySearchFilter(psf);
+
+    if (productosDto != null) {
+      DeliveryItemResponse response =
+          DeliveryItemResponse.builder()
+              .description(productosDto.getDescripcion())
+              .productCode(productosDto.getCodigoPropio())
+              .productId(productosDto.getId())
+              .supplierCode(productosDto.getCodigoFabricante())
+              .purchaseUnits(productosDto.getIdTipoUnidadCompra().getNombreUnidad())
+              .saleUnits(productosDto.getIdTipoUnidadVenta().getNombreUnidad())
+              .quantity(fixQuantity(productosDto, addDeliveryItemRequest))
+              .build();
+
+      addStock(response, addDeliveryItemRequest);
+
+      return response;
     }
 
-    @Override
-    public List<RemitoTipoMovimientoDto> getDeliveryTypes() {
-        return tipoMovimientoService.findAll();
+    throw new ProductNotFoundException();
+  }
+
+  @Override
+  public Long saveDeliveryNote(@Valid AddDeliveryNoteRequest addDeliveryNoteRequest) {
+    RemitoDto remitoDto = remitoDtoTransformer.transformAddDeliveryNote(addDeliveryNoteRequest);
+
+    if (!remitoDto.getIsDestinoInterno() && !remitoDto.getIsOrigenInterno()) {
+      throw new DeliveryNoteValidationException("No se puede realizar un remito externo-externo");
     }
 
-    @Override
-    public DeliveryItemResponse addProduct(@Valid AddDeliveryItemRequest addDeliveryItemRequest) {
-
-        ProductosSearchFilter psf = ProductosSearchFilter.builder()
-                .activo(true)
-                .llevaControlStock(true)
-                .codigoPropio(addDeliveryItemRequest.getProductCode())
-                .idProducto(addDeliveryItemRequest.getProductId())
-                .codigoFabrica(addDeliveryItemRequest.getSupplierCode())
-                .build();
-
-        ProductosDto productosDto = productosService.findFirstBySearchFilter(psf);
-
-        if (productosDto != null) {
-            DeliveryItemResponse response = DeliveryItemResponse.builder()
-                    .description(productosDto.getDescripcion())
-                    .productCode(productosDto.getCodigoPropio())
-                    .productId(productosDto.getId())
-                    .supplierCode(productosDto.getCodigoFabricante())
-                    .purchaseUnits(productosDto.getIdTipoUnidadCompra().getNombreUnidad())
-                    .saleUnits(productosDto.getIdTipoUnidadVenta().getNombreUnidad())
-                    .quantity(fixQuantity(productosDto, addDeliveryItemRequest))
-                    .build();
-
-            addStock(response, addDeliveryItemRequest);
-
-            return response;
-        }
-
-        throw new ProductNotFoundException();
+    if (Objects.equals(remitoDto.getIdDestinoPrevistoInterno(), remitoDto.getIdOrigenInterno())) {
+      throw new DeliveryNoteValidationException("No se puede realizar entre el mismo depósito");
     }
 
-    @Override
-    public Long saveDeliveryNote(@Valid AddDeliveryNoteRequest addDeliveryNoteRequest) {
-        RemitoDto remitoDto = remitoDtoTransformer.transformAddDeliveryNote(addDeliveryNoteRequest);
+    return remitoService.guardarRemito(remitoDto);
+  }
 
-        if (!remitoDto.getIsDestinoInterno() && !remitoDto.getIsOrigenInterno()) {
-            throw new DeliveryNoteValidationException("No se puede realizar un remito externo-externo");
-        }
+  private void addStock(
+      DeliveryItemResponse response, AddDeliveryItemRequest addDeliveryItemRequest) {
+    ProductoXDepositoSearchFilter totalStockSF =
+        ProductoXDepositoSearchFilter.builder().idProducto(response.getProductId()).build();
+    response.setTotalStock(productoXDepositoService.getStockBySearchFilter(totalStockSF));
 
-        if (Objects.equals(remitoDto.getIdDestinoPrevistoInterno(), remitoDto.getIdOrigenInterno())) {
-            throw new DeliveryNoteValidationException("No se puede realizar entre el mismo depósito");
-        }
-
-        return remitoService.guardarRemito(remitoDto);
+    if (addDeliveryItemRequest.getOriginWarehouseId() != null) {
+      ProductoXDepositoSearchFilter sf =
+          ProductoXDepositoSearchFilter.builder()
+              .idDeposito(addDeliveryItemRequest.getOriginWarehouseId())
+              .idProducto(response.getProductId())
+              .build();
+      response.setOriginWarehouseStock(productoXDepositoService.getStockBySearchFilter(sf));
+      response.setOriginWarehouseNewStock(
+          response.getOriginWarehouseStock().subtract(response.getQuantity()));
     }
 
-    private void addStock(DeliveryItemResponse response, AddDeliveryItemRequest addDeliveryItemRequest) {
-        ProductoXDepositoSearchFilter totalStockSF = ProductoXDepositoSearchFilter.builder()
-                .idProducto(response.getProductId())
-                .build();
-        response.setTotalStock(productoXDepositoService.getStockBySearchFilter(totalStockSF));
+    if (addDeliveryItemRequest.getDestinationWarehouseId() != null) {
+      ProductoXDepositoSearchFilter sf =
+          ProductoXDepositoSearchFilter.builder()
+              .idDeposito(addDeliveryItemRequest.getDestinationWarehouseId())
+              .idProducto(response.getProductId())
+              .build();
+      response.setDestinationWarehouseStock(productoXDepositoService.getStockBySearchFilter(sf));
+      response.setDestinationWarehouseNewStock(
+          response.getDestinationWarehouseStock().add(response.getQuantity()));
+    }
+  }
 
-        if (addDeliveryItemRequest.getOriginWarehouseId() != null) {
-            ProductoXDepositoSearchFilter sf = ProductoXDepositoSearchFilter.builder()
-                    .idDeposito(addDeliveryItemRequest.getOriginWarehouseId())
-                    .idProducto(response.getProductId())
-                    .build();
-            response.setOriginWarehouseStock(productoXDepositoService.getStockBySearchFilter(sf));
-            response.setOriginWarehouseNewStock(response.getOriginWarehouseStock().subtract(response.getQuantity()));
-        }
+  private BigDecimal fixQuantity(
+      ProductosDto productosDto, AddDeliveryItemRequest addDeliveryItemRequest) {
+    BigDecimal resultQuantity = BigDecimal.ONE;
+    BigDecimal requestQuantity =
+        addDeliveryItemRequest.getQuantity().setScale(2, RoundingMode.HALF_UP);
 
-        if (addDeliveryItemRequest.getDestinationWarehouseId() != null) {
-            ProductoXDepositoSearchFilter sf = ProductoXDepositoSearchFilter.builder()
-                    .idDeposito(addDeliveryItemRequest.getDestinationWarehouseId())
-                    .idProducto(response.getProductId())
-                    .build();
-            response.setDestinationWarehouseStock(productoXDepositoService.getStockBySearchFilter(sf));
-            response.setDestinationWarehouseNewStock(response.getDestinationWarehouseStock().add(response.getQuantity()));
-        }
-
+    if (addDeliveryItemRequest.isUsePurchaseUnits()) {
+      requestQuantity = requestQuantity.multiply(productosDto.getUnidadesCompraUnidadesVenta());
     }
 
-    private BigDecimal fixQuantity(ProductosDto productosDto, AddDeliveryItemRequest addDeliveryItemRequest) {
-        BigDecimal resultQuantity = BigDecimal.ONE;
-        BigDecimal requestQuantity = addDeliveryItemRequest.getQuantity().setScale(2, RoundingMode.HALF_UP);
-
-        if (addDeliveryItemRequest.isUsePurchaseUnits()) {
-            requestQuantity = requestQuantity.multiply(productosDto.getUnidadesCompraUnidadesVenta());
-        }
-
-        if (productosDto.getIdTipoUnidadVenta().isCantidadEntera()) {
-            BigDecimal integerPart = requestQuantity.setScale(0, RoundingMode.DOWN);
-            if (integerPart.signum() != 0) {
-                resultQuantity = integerPart;
-            }
-        } else {
-            resultQuantity = requestQuantity;
-        }
-
-        return resultQuantity;
+    if (productosDto.getIdTipoUnidadVenta().isCantidadEntera()) {
+      BigDecimal integerPart = requestQuantity.setScale(0, RoundingMode.DOWN);
+      if (integerPart.signum() != 0) {
+        resultQuantity = integerPart;
+      }
+    } else {
+      resultQuantity = requestQuantity;
     }
 
-    @Override
-    public PaginatedResponse<DeliveryNoteSearchResult> findBySearchFilter(@Valid PaginatedSearchRequest<RemitoSearchFilter> searchRequest) {
-        final RemitoSearchFilter searchFilter = searchRequest.getSearchFilter();
-        searchFilter.addSortField("fechaAlta", false);
+    return resultQuantity;
+  }
 
-        final int count = remitoService.countBySearchFilter(searchFilter);
-        final PaginatedResponse<DeliveryNoteSearchResult> response = PaginatedResponse.<DeliveryNoteSearchResult>builder().totalResults(count).build();
+  @Override
+  public PaginatedResponse<DeliveryNoteSearchResult> findBySearchFilter(
+      @Valid PaginatedSearchRequest<RemitoSearchFilter> searchRequest) {
+    final RemitoSearchFilter searchFilter = searchRequest.getSearchFilter();
+    searchFilter.addSortField("fechaAlta", false);
 
-        if (count > 0) {
-            final List<RemitoDto> remitos = remitoService.findBySearchFilter(searchFilter,
-                    searchRequest.getFirstResult(),
-                    searchRequest.getMaxResults());
-            response.setData(deliveryNoteSearchResultTransformer.transformDeliveryNotes(remitos));
-        }
+    final int count = remitoService.countBySearchFilter(searchFilter);
+    final PaginatedResponse<DeliveryNoteSearchResult> response =
+        PaginatedResponse.<DeliveryNoteSearchResult>builder().totalResults(count).build();
 
-        return response;
+    if (count > 0) {
+      final List<RemitoDto> remitos =
+          remitoService.findBySearchFilter(
+              searchFilter, searchRequest.getFirstResult(), searchRequest.getMaxResults());
+      response.setData(deliveryNoteSearchResultTransformer.transformDeliveryNotes(remitos));
     }
 
-    @Override
-    public List<DeliveryNoteDetail> getDeliveryNoteDetails(Long deliveryNoteId) {
-        final RemitoDto remito = remitoService.find(deliveryNoteId);
+    return response;
+  }
 
-        if (remito != null) {
-            return deliveryNoteSearchResultTransformer.transformDeliveryNoteDetails(remito.getDetalleList());
-        }
+  @Override
+  public List<DeliveryNoteDetail> getDeliveryNoteDetails(Long deliveryNoteId) {
+    final RemitoDto remito = remitoService.find(deliveryNoteId);
 
-        return Collections.emptyList();
+    if (remito != null) {
+      return deliveryNoteSearchResultTransformer.transformDeliveryNoteDetails(
+          remito.getDetalleList());
     }
+
+    return Collections.emptyList();
+  }
 }

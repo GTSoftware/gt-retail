@@ -15,54 +15,57 @@
  */
 package ar.com.gtsoftware.domain;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-
-/**
- * @author Rodrigo M. Tato Rothamel <rotatomel@gmail.com>
- */
+/** @author Rodrigo M. Tato Rothamel <rotatomel@gmail.com> */
 @Entity
-@Table(name = "productos_precios", uniqueConstraints = @UniqueConstraint(columnNames = {"id_producto", "id_lista_precio"}))
+@Table(
+    name = "productos_precios",
+    uniqueConstraints = @UniqueConstraint(columnNames = {"id_producto", "id_lista_precio"}))
 @Getter
 @Setter
 public class ProductosPrecios extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "productos_precios_productos_precios_id")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "productos_precios_productos_precios_id",
-            sequenceName = "productos_precios_productos_precios_id_seq")
-    @Basic(optional = false)
-    @Column(name = "productos_precios_id", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(
+      strategy = GenerationType.SEQUENCE,
+      generator = "productos_precios_productos_precios_id")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "productos_precios_productos_precios_id",
+      sequenceName = "productos_precios_productos_precios_id_seq")
+  @Basic(optional = false)
+  @Column(name = "productos_precios_id", nullable = false, updatable = false)
+  private Long id;
 
-    @JoinColumn(name = "id_producto", referencedColumnName = "id_producto")
-    @ManyToOne(optional = false)
-    private Productos idProducto;
+  @JoinColumn(name = "id_producto", referencedColumnName = "id_producto")
+  @ManyToOne(optional = false)
+  private Productos idProducto;
 
-    @JoinColumn(name = "id_lista_precio", referencedColumnName = "id_lista_precio")
-    @ManyToOne(optional = false)
-    private ProductosListasPrecios idListaPrecios;
+  @JoinColumn(name = "id_lista_precio", referencedColumnName = "id_lista_precio")
+  @ManyToOne(optional = false)
+  private ProductosListasPrecios idListaPrecios;
 
-    @Basic(optional = false)
-    @Column(name = "utilidad")
-    private BigDecimal utilidad;
+  @Basic(optional = false)
+  @Column(name = "utilidad")
+  private BigDecimal utilidad;
 
-    @Basic(optional = false)
-    @Column(name = "precio")
-    private BigDecimal precio;
+  @Basic(optional = false)
+  @Column(name = "precio")
+  private BigDecimal precio;
 
-    @Basic(optional = false)
-    @Column(name = "neto")
-    private BigDecimal neto;
+  @Basic(optional = false)
+  @Column(name = "neto")
+  private BigDecimal neto;
 
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "fecha_modificacion")
-    private LocalDateTime fechaModificacion;
-
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "fecha_modificacion")
+  private LocalDateTime fechaModificacion;
 }

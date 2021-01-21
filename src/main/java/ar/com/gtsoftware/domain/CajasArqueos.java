@@ -15,15 +15,14 @@
  */
 package ar.com.gtsoftware.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Arqueos de caja realizadados por los cajeros. Delimitan un cierre y apertura de caja.
@@ -36,54 +35,57 @@ import java.util.List;
 @Setter
 public class CajasArqueos extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "caja_arqueos_id_arqueo")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "caja_arqueos_id_arqueo",
-            sequenceName = "caja_arqueos_id_arqueo_seq")
-    @Basic(optional = false)
-    @Column(name = "id_arqueo", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "caja_arqueos_id_arqueo")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "caja_arqueos_id_arqueo",
+      sequenceName = "caja_arqueos_id_arqueo_seq")
+  @Basic(optional = false)
+  @Column(name = "id_arqueo", nullable = false, updatable = false)
+  private Long id;
 
-    @NotNull
-    @ManyToOne
-    @JoinColumn(name = "id_usuario_arqueo", referencedColumnName = "id_usuario")
-    private Usuarios idUsuario;
+  @NotNull
+  @ManyToOne
+  @JoinColumn(name = "id_usuario_arqueo", referencedColumnName = "id_usuario")
+  private Usuarios idUsuario;
 
-    @ManyToOne
-    @JoinColumn(name = "id_usuario_control", referencedColumnName = "id_usuario")
-    private Usuarios idUsuarioControl;
+  @ManyToOne
+  @JoinColumn(name = "id_usuario_control", referencedColumnName = "id_usuario")
+  private Usuarios idUsuarioControl;
 
-    @NotNull
-    @ManyToOne
-    @JoinColumn(name = "id_sucursal", referencedColumnName = "id_sucursal")
-    private Sucursales idSucursal;
+  @NotNull
+  @ManyToOne
+  @JoinColumn(name = "id_sucursal", referencedColumnName = "id_sucursal")
+  private Sucursales idSucursal;
 
-    @NotNull
-    @ManyToOne
-    @JoinColumn(name = "id_caja", referencedColumnName = "id_caja")
-    private Cajas idCaja;
+  @NotNull
+  @ManyToOne
+  @JoinColumn(name = "id_caja", referencedColumnName = "id_caja")
+  private Cajas idCaja;
 
-    @NotNull
-    @Column(name = "fecha_arqueo")
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date fechaArqueo;
+  @NotNull
+  @Column(name = "fecha_arqueo")
+  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+  private Date fechaArqueo;
 
-    @Column(name = "fecha_control")
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date fechaControl;
+  @Column(name = "fecha_control")
+  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+  private Date fechaControl;
 
-    @NotNull
-    @Column(name = "saldo_inicial")
-    private BigDecimal saldoInicial;
-    @NotNull
-    @Column(name = "saldo_final")
-    private BigDecimal saldoFinal;
+  @NotNull
+  @Column(name = "saldo_inicial")
+  private BigDecimal saldoInicial;
 
-    @Column(name = "observaciones_control")
-    @Size(max = 500)
-    private String obvervacionesControl;
+  @NotNull
+  @Column(name = "saldo_final")
+  private BigDecimal saldoFinal;
 
-    @OneToMany(mappedBy = "idArqueo", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CajasArqueosDetalle> detalleArqueo;
+  @Column(name = "observaciones_control")
+  @Size(max = 500)
+  private String obvervacionesControl;
 
+  @OneToMany(mappedBy = "idArqueo", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<CajasArqueosDetalle> detalleArqueo;
 }

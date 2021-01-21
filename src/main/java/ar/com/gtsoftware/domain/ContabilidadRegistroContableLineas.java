@@ -15,61 +15,72 @@
  */
 package ar.com.gtsoftware.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import java.math.BigDecimal;
+import java.util.Date;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.math.BigDecimal;
-import java.util.Date;
+import lombok.Getter;
+import lombok.Setter;
 
-/**
- * @author rodrigo
- */
+/** @author rodrigo */
 @Entity
 @Table(name = "contabilidad_registro_contable_lineas")
 @Getter
 @Setter
 public class ContabilidadRegistroContableLineas extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contabilidad_registro_contable_lineas_id_linea_registro")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "contabilidad_registro_contable_lineas_id_linea_registro",
-            sequenceName = "contabilidad_registro_contable_lineas_id_linea_registro_seq")
-    @Basic(optional = false)
-    @Column(name = "id_linea_registro", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(
+      strategy = GenerationType.SEQUENCE,
+      generator = "contabilidad_registro_contable_lineas_id_linea_registro")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "contabilidad_registro_contable_lineas_id_linea_registro",
+      sequenceName = "contabilidad_registro_contable_lineas_id_linea_registro_seq")
+  @Basic(optional = false)
+  @Column(name = "id_linea_registro", nullable = false, updatable = false)
+  private Long id;
 
-    @Size(max = 1024)
-    @Column(name = "descripcion_linea")
-    private String descripcionLinea;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "cantidad")
-    private BigDecimal cantidad;
-    @Size(max = 20)
-    @Column(name = "unidad_medida")
-    private String unidadMedida;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "fecha_vencimiento")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaVencimiento;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "importe_debe")
-    private BigDecimal importeDebe;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "importe_haber")
-    private BigDecimal importeHaber;
-    @JoinColumn(name = "id_registro_contable", referencedColumnName = "id_registro", columnDefinition = "int4")
-    @ManyToOne(optional = false)
-    private ContabilidadRegistroContable idRegistroContable;
-    @JoinColumn(name = "id_cuenta", referencedColumnName = "id_cuenta", columnDefinition = "int4")
-    @ManyToOne(optional = false)
-    private ContabilidadPlanCuentas idCuenta;
+  @Size(max = 1024)
+  @Column(name = "descripcion_linea")
+  private String descripcionLinea;
+  // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these
+  // annotations to enforce field validation
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "cantidad")
+  private BigDecimal cantidad;
 
+  @Size(max = 20)
+  @Column(name = "unidad_medida")
+  private String unidadMedida;
+
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "fecha_vencimiento")
+  @Temporal(TemporalType.TIMESTAMP)
+  private Date fechaVencimiento;
+
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "importe_debe")
+  private BigDecimal importeDebe;
+
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "importe_haber")
+  private BigDecimal importeHaber;
+
+  @JoinColumn(
+      name = "id_registro_contable",
+      referencedColumnName = "id_registro",
+      columnDefinition = "int4")
+  @ManyToOne(optional = false)
+  private ContabilidadRegistroContable idRegistroContable;
+
+  @JoinColumn(name = "id_cuenta", referencedColumnName = "id_cuenta", columnDefinition = "int4")
+  @ManyToOne(optional = false)
+  private ContabilidadPlanCuentas idCuenta;
 }

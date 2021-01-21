@@ -10,6 +10,6 @@ import lombok.Setter;
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Phone {
-    private String phoneNumber;
-    private String reference;
+  private String phoneNumber;
+  private String reference;
 }

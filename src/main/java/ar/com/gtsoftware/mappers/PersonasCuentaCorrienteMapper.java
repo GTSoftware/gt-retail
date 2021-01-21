@@ -21,8 +21,8 @@ import ar.com.gtsoftware.domain.PersonasCuentaCorriente;
 import ar.com.gtsoftware.dto.domain.PersonasCuentaCorrienteDto;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring",
-        uses = {PersonasMapper.class})
-public interface PersonasCuentaCorrienteMapper extends
-        GenericMapper<PersonasCuentaCorriente, PersonasCuentaCorrienteDto> {
-}
+@Mapper(
+    componentModel = "spring",
+    uses = {PersonasMapper.class})
+public interface PersonasCuentaCorrienteMapper
+    extends GenericMapper<PersonasCuentaCorriente, PersonasCuentaCorrienteDto> {}

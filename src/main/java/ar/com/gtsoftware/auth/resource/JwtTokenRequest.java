@@ -1,9 +1,8 @@
 package ar.com.gtsoftware.auth.resource;
 
-import lombok.*;
-
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import javax.validation.constraints.NotNull;
+import lombok.*;
 
 @Getter
 @Setter
@@ -12,11 +11,8 @@ import java.io.Serializable;
 @Builder
 public class JwtTokenRequest implements Serializable {
 
-    private static final long serialVersionUID = -5616176897013108345L;
+  private static final long serialVersionUID = -5616176897013108345L;
 
-    @NotNull
-    private String username;
-    @NotNull
-    private String password;
-
+  @NotNull private String username;
+  @NotNull private String password;
 }

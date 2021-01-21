@@ -16,14 +16,11 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
-import lombok.*;
-
 import java.math.BigDecimal;
 import java.util.Date;
+import lombok.*;
 
-/**
- * @author rodrigo
- */
+/** @author rodrigo */
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
@@ -31,15 +28,12 @@ import java.util.Date;
 @Builder
 public class PersonasCuentaCorrienteDto {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @EqualsAndHashCode.Include
-    private Long id;
-    private Date fechaMovimiento;
-    private BigDecimal importeMovimiento;
-    private String descripcionMovimiento;
-    private PersonasDto idPersona;
-    private Integer version;
-
-
+  @EqualsAndHashCode.Include private Long id;
+  private Date fechaMovimiento;
+  private BigDecimal importeMovimiento;
+  private String descripcionMovimiento;
+  private PersonasDto idPersona;
+  private Integer version;
 }

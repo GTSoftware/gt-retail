@@ -15,17 +15,16 @@
  */
 package ar.com.gtsoftware.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import java.math.BigDecimal;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.math.BigDecimal;
-import java.util.Date;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * CuponesDto de tarjetas de crédito o débito
@@ -38,38 +37,37 @@ import java.util.Date;
 @Setter
 public class Cupones extends Valores {
 
-    @NotNull
-    @Column(name = "nro_cupon")
-    private Integer nroCupon;
+  @NotNull
+  @Column(name = "nro_cupon")
+  private Integer nroCupon;
 
-    @Column(name = "codigo_autorizacion")
-    private Integer codigoAutorizacion;
+  @Column(name = "codigo_autorizacion")
+  private Integer codigoAutorizacion;
 
-    @Column(name = "nro_lote")
-    private Integer nroLote;
+  @Column(name = "nro_lote")
+  private Integer nroLote;
 
-    @NotNull
-    @Column(name = "fecha_origen")
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date fechaOrigen;
+  @NotNull
+  @Column(name = "fecha_origen")
+  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+  private Date fechaOrigen;
 
-    @Column(name = "fecha_presentacion")
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date fechaPresentacion;
+  @Column(name = "fecha_presentacion")
+  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+  private Date fechaPresentacion;
 
-    @Column(name = "fecha_acreditacion")
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date fechaAcreditacion;
+  @Column(name = "fecha_acreditacion")
+  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+  private Date fechaAcreditacion;
 
-    @NotNull
-    @Column(name = "cant_cuotas")
-    private Integer cantCuotas;
+  @NotNull
+  @Column(name = "cant_cuotas")
+  private Integer cantCuotas;
 
-    @Column(name = "notas")
-    @Size(max = 255)
-    private String notas;
+  @Column(name = "notas")
+  @Size(max = 255)
+  private String notas;
 
-    @Column(name = "coeficiente")
-    private BigDecimal coeficiente;
-
+  @Column(name = "coeficiente")
+  private BigDecimal coeficiente;
 }

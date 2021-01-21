@@ -21,19 +21,19 @@ import ar.com.gtsoftware.dto.domain.ProveedoresComprobantesDto;
 import ar.com.gtsoftware.search.ComprobantesProveedorSearchFilter;
 import ar.com.gtsoftware.service.exceptions.ServiceException;
 
-
 public interface ComprobantesProveedorService
-        extends EntityService<ProveedoresComprobantesDto, ComprobantesProveedorSearchFilter> {
+    extends EntityService<ProveedoresComprobantesDto, ComprobantesProveedorSearchFilter> {
 
-    /**
-     * Almacena el comprobante pasado por parámetro (o lo modifica si ya existe) y genera el asiento correspondiente
-     * en el libreo de IVA Compras
-     *
-     * @param comprobante
-     * @return
-     * @throws ServiceException
-     */
-    ProveedoresComprobantesDto guardarYFiscalizar(ProveedoresComprobantesDto comprobante) throws ServiceException;
+  /**
+   * Almacena el comprobante pasado por parámetro (o lo modifica si ya existe) y genera el asiento
+   * correspondiente en el libreo de IVA Compras
+   *
+   * @param comprobante
+   * @return
+   * @throws ServiceException
+   */
+  ProveedoresComprobantesDto guardarYFiscalizar(ProveedoresComprobantesDto comprobante)
+      throws ServiceException;
 
-    void eliminarComprobante(ProveedoresComprobantesDto comprobante) throws ServiceException;
+  void eliminarComprobante(ProveedoresComprobantesDto comprobante) throws ServiceException;
 }

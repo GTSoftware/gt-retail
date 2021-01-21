@@ -18,13 +18,13 @@ package ar.com.gtsoftware.dto;
 import ar.com.gtsoftware.dto.domain.ChequesTercerosDto;
 import ar.com.gtsoftware.dto.domain.ComprobantesPagosDto;
 import ar.com.gtsoftware.dto.domain.CuponesDto;
-import lombok.*;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
+import lombok.*;
 
 /**
- * Relaciona un pago de comprobante junto con el valor (de ser necesario) requerido para la forma de pago.
+ * Relaciona un pago de comprobante junto con el valor (de ser necesario) requerido para la forma de
+ * pago.
  *
  * @author Rodrigo M. Tato Rothamel mailto:rotatomel@gmail.com
  */
@@ -35,22 +35,19 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class PagoValorDTO implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @EqualsAndHashCode.Include
-    private final int item;
-    private ComprobantesPagosDto pago;
-    private CuponesDto cupon;
-    private ChequesTercerosDto cheque;
-    @Builder.Default
-    private boolean montoEditable = false;
-    private BigDecimal montoMaximo;
-    private BigDecimal montoRealPagado;
-    private BigDecimal montoMinimoConRedondeo;
-    private BigDecimal montoMaximoConRedondeo;
+  @EqualsAndHashCode.Include private final int item;
+  private ComprobantesPagosDto pago;
+  private CuponesDto cupon;
+  private ChequesTercerosDto cheque;
+  @Builder.Default private boolean montoEditable = false;
+  private BigDecimal montoMaximo;
+  private BigDecimal montoRealPagado;
+  private BigDecimal montoMinimoConRedondeo;
+  private BigDecimal montoMaximoConRedondeo;
 
-    public BigDecimal getMontoRealPagadoConSigno() {
-        return pago.getIdComprobante().getTipoComprobante().getSigno().multiply(montoRealPagado);
-    }
-
+  public BigDecimal getMontoRealPagadoConSigno() {
+    return pago.getIdComprobante().getTipoComprobante().getSigno().multiply(montoRealPagado);
+  }
 }

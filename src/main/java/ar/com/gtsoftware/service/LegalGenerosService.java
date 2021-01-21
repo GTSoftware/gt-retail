@@ -20,8 +20,4 @@ package ar.com.gtsoftware.service;
 import ar.com.gtsoftware.dto.domain.LegalGenerosDto;
 import ar.com.gtsoftware.search.GenerosSearchFilter;
 
-
-public interface LegalGenerosService
-        extends EntityService<LegalGenerosDto, GenerosSearchFilter> {
-
-}
+public interface LegalGenerosService extends EntityService<LegalGenerosDto, GenerosSearchFilter> {}

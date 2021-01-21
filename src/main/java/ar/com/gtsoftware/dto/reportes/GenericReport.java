@@ -17,32 +17,29 @@
 
 package ar.com.gtsoftware.dto.reportes;
 
-
 import java.io.Serializable;
 import java.util.List;
 
-/**
- * Clase abstracta de la que heredan los reportes
- */
+/** Clase abstracta de la que heredan los reportes */
 public abstract class GenericReport<T extends Serializable> implements Serializable {
 
-    private final int totalRows;
+  private final int totalRows;
 
-    private List<T> pageRows;
+  private List<T> pageRows;
 
-    public GenericReport(int totalRows) {
-        this.totalRows = totalRows;
-    }
+  public GenericReport(int totalRows) {
+    this.totalRows = totalRows;
+  }
 
-    public List<T> getPageRows() {
-        return pageRows;
-    }
+  public List<T> getPageRows() {
+    return pageRows;
+  }
 
-    public void setPageRows(List<T> pageRows) {
-        this.pageRows = pageRows;
-    }
+  public void setPageRows(List<T> pageRows) {
+    this.pageRows = pageRows;
+  }
 
-    public int getTotalRows() {
-        return totalRows;
-    }
+  public int getTotalRows() {
+    return totalRows;
+  }
 }

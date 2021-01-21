@@ -23,5 +23,4 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface LegalTiposDocumentoMapper
-        extends GenericMapper<LegalTiposDocumento, LegalTiposDocumentoDto> {
-}
+    extends GenericMapper<LegalTiposDocumento, LegalTiposDocumentoDto> {}

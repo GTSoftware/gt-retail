@@ -21,12 +21,14 @@ import ar.com.gtsoftware.domain.ProveedoresComprobantes;
 import ar.com.gtsoftware.dto.domain.ProveedoresComprobantesDto;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring",
-        uses = {NegocioTiposComprobanteMapper.class,
-                UsuariosMapper.class,
-                SucursalesMapper.class,
-                PersonasMapper.class,
-                FiscalLibroIvaComprasMapper.class})
+@Mapper(
+    componentModel = "spring",
+    uses = {
+      NegocioTiposComprobanteMapper.class,
+      UsuariosMapper.class,
+      SucursalesMapper.class,
+      PersonasMapper.class,
+      FiscalLibroIvaComprasMapper.class
+    })
 public interface ProveedoresComprobantesMapper
-        extends GenericMapper<ProveedoresComprobantes, ProveedoresComprobantesDto> {
-}
+    extends GenericMapper<ProveedoresComprobantes, ProveedoresComprobantesDto> {}

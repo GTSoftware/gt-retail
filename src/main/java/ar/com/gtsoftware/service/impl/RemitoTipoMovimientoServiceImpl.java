@@ -30,21 +30,20 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class RemitoTipoMovimientoServiceImpl
-        extends BaseEntityService<RemitoTipoMovimientoDto, AbstractSearchFilter, RemitoTipoMovimiento>
-        implements RemitoTipoMovimientoService {
+    extends BaseEntityService<RemitoTipoMovimientoDto, AbstractSearchFilter, RemitoTipoMovimiento>
+    implements RemitoTipoMovimientoService {
 
-    private final RemitoTipoMovimientoFacade facade;
+  private final RemitoTipoMovimientoFacade facade;
 
-    private final RemitoTipoMovimientoMapper mapper;
+  private final RemitoTipoMovimientoMapper mapper;
 
+  @Override
+  protected RemitoTipoMovimientoFacade getFacade() {
+    return facade;
+  }
 
-    @Override
-    protected RemitoTipoMovimientoFacade getFacade() {
-        return facade;
-    }
-
-    @Override
-    protected RemitoTipoMovimientoMapper getMapper() {
-        return mapper;
-    }
+  @Override
+  protected RemitoTipoMovimientoMapper getMapper() {
+    return mapper;
+  }
 }

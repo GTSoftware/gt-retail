@@ -15,38 +15,37 @@
  */
 package ar.com.gtsoftware.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
-/**
- * @author rodrigo
- */
+/** @author rodrigo */
 @Entity
 @Table(name = "ubicacion_paises")
 @Getter
 @Setter
 public class UbicacionPaises extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ubicacion_paises_id_pais")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "ubicacion_paises_id_pais",
-            sequenceName = "ubicacion_paises_id_pais_seq")
-    @Basic(optional = false)
-    @Column(name = "id_pais", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ubicacion_paises_id_pais")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "ubicacion_paises_id_pais",
+      sequenceName = "ubicacion_paises_id_pais_seq")
+  @Basic(optional = false)
+  @Column(name = "id_pais", nullable = false, updatable = false)
+  private Long id;
 
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 60)
-    @Column(name = "nombre_pais")
-    private String nombrePais;
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 60)
+  @Column(name = "nombre_pais")
+  private String nombrePais;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPais")
-    private List<UbicacionProvincias> ubicacionProvinciasList;
-
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPais")
+  private List<UbicacionProvincias> ubicacionProvinciasList;
 }

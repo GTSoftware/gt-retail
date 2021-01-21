@@ -15,14 +15,13 @@
  */
 package ar.com.gtsoftware.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Date;
-import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Los planes de pago para cada tipo de pago
@@ -35,41 +34,45 @@ import java.util.List;
 @Setter
 public class NegocioPlanesPago extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "negocio_planes_pago_id_plan")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "negocio_planes_pago_id_plan",
-            sequenceName = "negocio_planes_pago_id_plan_seq")
-    @Basic(optional = false)
-    @Column(name = "id_plan", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "negocio_planes_pago_id_plan")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "negocio_planes_pago_id_plan",
+      sequenceName = "negocio_planes_pago_id_plan_seq")
+  @Basic(optional = false)
+  @Column(name = "id_plan", nullable = false, updatable = false)
+  private Long id;
 
-    @JoinColumn(name = "id_forma_pago", referencedColumnName = "id_forma_pago")
-    @ManyToOne
-    @NotNull
-    private NegocioFormasPago idFormaPago;
+  @JoinColumn(name = "id_forma_pago", referencedColumnName = "id_forma_pago")
+  @ManyToOne
+  @NotNull
+  private NegocioFormasPago idFormaPago;
 
-    @Column(name = "nombre")
-    @Size(max = 60)
-    @NotNull
-    private String nombre;
+  @Column(name = "nombre")
+  @Size(max = 60)
+  @NotNull
+  private String nombre;
 
-    @Column(name = "fecha_activo_desde")
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    @NotNull
-    private Date fechaActivoDesde;
+  @Column(name = "fecha_activo_desde")
+  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+  @NotNull
+  private Date fechaActivoDesde;
 
-    @Column(name = "fecha_activo_hasta")
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    @NotNull
-    private Date fechaActivoHasta;
+  @Column(name = "fecha_activo_hasta")
+  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+  @NotNull
+  private Date fechaActivoHasta;
 
-    @ManyToMany
-    @JoinTable(name = "negocio_planes_pago_listas",
-            joinColumns = @JoinColumn(name = "id_plan", referencedColumnName = "id_plan"),
-            inverseJoinColumns = @JoinColumn(name = "id_lista_precio", referencedColumnName = "id_lista_precio"))
-    private List<ProductosListasPrecios> listasPrecioHabilitadas;
+  @ManyToMany
+  @JoinTable(
+      name = "negocio_planes_pago_listas",
+      joinColumns = @JoinColumn(name = "id_plan", referencedColumnName = "id_plan"),
+      inverseJoinColumns =
+          @JoinColumn(name = "id_lista_precio", referencedColumnName = "id_lista_precio"))
+  private List<ProductosListasPrecios> listasPrecioHabilitadas;
 
-    @OneToMany(mappedBy = "idPlan", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<NegocioPlanesPagoDetalle> negocioPlanesPagoDetalles;
-
+  @OneToMany(mappedBy = "idPlan", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<NegocioPlanesPagoDetalle> negocioPlanesPagoDetalles;
 }

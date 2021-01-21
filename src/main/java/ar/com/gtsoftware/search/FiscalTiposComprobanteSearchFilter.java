@@ -18,9 +18,7 @@ package ar.com.gtsoftware.search;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 
-/**
- * @author Rodrigo M. Tato Rothamel mailto:rotatomel@gmail.com
- */
+/** @author Rodrigo M. Tato Rothamel mailto:rotatomel@gmail.com */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -28,13 +26,11 @@ import org.apache.commons.lang3.StringUtils;
 @Builder
 public class FiscalTiposComprobanteSearchFilter extends AbstractSearchFilter {
 
+  private String letra;
+  private Long idTipoComprobante;
 
-    private String letra;
-    private Long idTipoComprobante;
-
-    @Override
-    public boolean hasFilter() {
-        return StringUtils.isNotEmpty(letra) || idTipoComprobante != null;
-    }
-
+  @Override
+  public boolean hasFilter() {
+    return StringUtils.isNotEmpty(letra) || idTipoComprobante != null;
+  }
 }

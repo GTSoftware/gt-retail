@@ -29,21 +29,22 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class ProductosListasPreciosServiceImpl extends BaseEntityService<ProductosListasPreciosDto,
-        ProductosListasPreciosSearchFilter, ProductosListasPrecios>
-        implements ProductosListasPreciosService {
+public class ProductosListasPreciosServiceImpl
+    extends BaseEntityService<
+        ProductosListasPreciosDto, ProductosListasPreciosSearchFilter, ProductosListasPrecios>
+    implements ProductosListasPreciosService {
 
-    private final ProductosListasPreciosFacade facade;
+  private final ProductosListasPreciosFacade facade;
 
-    private final ProductosListasPreciosMapper mapper;
+  private final ProductosListasPreciosMapper mapper;
 
-    @Override
-    public ProductosListasPreciosFacade getFacade() {
-        return facade;
-    }
+  @Override
+  public ProductosListasPreciosFacade getFacade() {
+    return facade;
+  }
 
-    @Override
-    public ProductosListasPreciosMapper getMapper() {
-        return mapper;
-    }
+  @Override
+  public ProductosListasPreciosMapper getMapper() {
+    return mapper;
+  }
 }

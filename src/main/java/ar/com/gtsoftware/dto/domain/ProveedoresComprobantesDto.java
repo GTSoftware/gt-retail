@@ -16,12 +16,11 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
-import lombok.*;
-
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import lombok.*;
 
 /**
  * Clase que representa las compras que se realizan
@@ -35,50 +34,50 @@ import java.time.LocalDateTime;
 @Builder
 public class ProveedoresComprobantesDto {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @EqualsAndHashCode.Include
-    private Long id;
+  @EqualsAndHashCode.Include private Long id;
 
-    private LocalDateTime fechaComprobante;
-    @NotNull
-    private BigDecimal total;
+  private LocalDateTime fechaComprobante;
+  @NotNull private BigDecimal total;
 
-    @Size(max = 1024)
-    private String observaciones;
-    private boolean anulada;
+  @Size(max = 1024)
+  private String observaciones;
 
-    @Size(max = 1)
-    private String letra;
-    @NotNull
-    private NegocioTiposComprobanteDto tipoComprobante;
+  private boolean anulada;
 
-    private UsuariosDto idUsuario;
-    private SucursalesDto idSucursal;
-    private PersonasDto idProveedor;
+  @Size(max = 1)
+  private String letra;
 
+  @NotNull private NegocioTiposComprobanteDto tipoComprobante;
 
-    private FiscalLibroIvaComprasDto idRegistro;
+  private UsuariosDto idUsuario;
+  private SucursalesDto idSucursal;
+  private PersonasDto idProveedor;
 
-    private BigDecimal totalConSigno;
-    private Integer version;
+  private FiscalLibroIvaComprasDto idRegistro;
 
+  private BigDecimal totalConSigno;
+  private Integer version;
 
-    public BigDecimal getTotalConSigno() {
-        if (totalConSigno == null) {
-            totalConSigno = total.multiply(tipoComprobante.getSigno());
-        }
-        return totalConSigno;
+  public BigDecimal getTotalConSigno() {
+    if (totalConSigno == null) {
+      totalConSigno = total.multiply(tipoComprobante.getSigno());
     }
+    return totalConSigno;
+  }
 
-    @Override
-    public String toString() {
-        if (idRegistro != null) {
-            return String.format("[%d] %s %s %s-%s", getId(), tipoComprobante.getNombreComprobante(), letra,
-                    idRegistro.getPuntoVentaFactura(), idRegistro.getNumeroFactura());
-        }
-        return String.format("[%d] %s", getId(), tipoComprobante.getNombreComprobante());
+  @Override
+  public String toString() {
+    if (idRegistro != null) {
+      return String.format(
+          "[%d] %s %s %s-%s",
+          getId(),
+          tipoComprobante.getNombreComprobante(),
+          letra,
+          idRegistro.getPuntoVentaFactura(),
+          idRegistro.getNumeroFactura());
     }
-
-
+    return String.format("[%d] %s", getId(), tipoComprobante.getNombreComprobante());
+  }
 }

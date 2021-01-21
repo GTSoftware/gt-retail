@@ -18,9 +18,7 @@ package ar.com.gtsoftware.search;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 
-/**
- * @author Rodrigo Tato <rotatomel@gmail.com>
- */
+/** @author Rodrigo Tato <rotatomel@gmail.com> */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -28,15 +26,12 @@ import org.apache.commons.lang3.StringUtils;
 @Builder
 public class ProvinciasSearchFilter extends AbstractSearchFilter {
 
-    private Integer idProvincia;
-    private String nombreProvincia;
-    private Long idPais;
+  private Integer idProvincia;
+  private String nombreProvincia;
+  private Long idPais;
 
-    @Override
-    public boolean hasFilter() {
-        return idProvincia != null
-                || StringUtils.isNotEmpty(nombreProvincia)
-                || idPais != null;
-    }
-
+  @Override
+  public boolean hasFilter() {
+    return idProvincia != null || StringUtils.isNotEmpty(nombreProvincia) || idPais != null;
+  }
 }

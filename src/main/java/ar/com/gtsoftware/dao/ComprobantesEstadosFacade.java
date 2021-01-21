@@ -17,32 +17,32 @@ package ar.com.gtsoftware.dao;
 
 import ar.com.gtsoftware.domain.ComprobantesEstados;
 import ar.com.gtsoftware.search.AbstractSearchFilter;
-import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.springframework.stereotype.Repository;
 
 @Repository
-public class ComprobantesEstadosFacade extends AbstractFacade<ComprobantesEstados, AbstractSearchFilter> {
+public class ComprobantesEstadosFacade
+    extends AbstractFacade<ComprobantesEstados, AbstractSearchFilter> {
 
+  private final EntityManager em;
 
-    private final EntityManager em;
+  public ComprobantesEstadosFacade(EntityManager em) {
+    super(ComprobantesEstados.class);
+    this.em = em;
+  }
 
-    public ComprobantesEstadosFacade(EntityManager em) {
-        super(ComprobantesEstados.class);
-        this.em = em;
-    }
+  @Override
+  protected EntityManager getEntityManager() {
+    return em;
+  }
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
-
-    @Override
-    public Predicate createWhereFromSearchFilter(AbstractSearchFilter sf, CriteriaBuilder cb, Root<ComprobantesEstados> root) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+  @Override
+  public Predicate createWhereFromSearchFilter(
+      AbstractSearchFilter sf, CriteriaBuilder cb, Root<ComprobantesEstados> root) {
+    throw new UnsupportedOperationException(
+        "Not supported yet."); // To change body of generated methods, choose Tools | Templates.
+  }
 }

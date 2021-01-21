@@ -22,6 +22,5 @@ import ar.com.gtsoftware.search.reportes.AbstractReportSearchFilter;
 
 public interface ReportsService<R extends GenericReport, S extends AbstractReportSearchFilter> {
 
-    R obtenerReporte(S filter);
-
+  R obtenerReporte(S filter);
 }

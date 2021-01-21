@@ -15,61 +15,68 @@
  */
 package ar.com.gtsoftware.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "usuarios")
 @Getter
 @Setter
-@NamedEntityGraph(name = "rolesUsuarios", attributeNodes = @NamedAttributeNode("usuariosGruposList"))
+@NamedEntityGraph(
+    name = "rolesUsuarios",
+    attributeNodes = @NamedAttributeNode("usuariosGruposList"))
 public class Usuarios extends BaseEntity implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "usuarios_id_usuario")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "usuarios_id_usuario",
-            sequenceName = "usuarios_id_usuario_seq")
-    @Basic(optional = false)
-    @Column(name = "id_usuario", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "usuarios_id_usuario")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "usuarios_id_usuario",
+      sequenceName = "usuarios_id_usuario_seq")
+  @Basic(optional = false)
+  @Column(name = "id_usuario", nullable = false, updatable = false)
+  private Long id;
 
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "nombre_usuario")
-    private String nombreUsuario;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 60)
-    @Column(name = "login")
-    private String login;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 64)
-    @Column(name = "password")
-    private String password;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "fecha_alta")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaAlta;
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-    @JoinTable(name = "usuarios_gruposx",
-            joinColumns = {
-                    @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")},
-            inverseJoinColumns = {
-                    @JoinColumn(name = "id_grupo", referencedColumnName = "id_grupo")})
-    private List<UsuariosGrupos> usuariosGruposList;
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 100)
+  @Column(name = "nombre_usuario")
+  private String nombreUsuario;
 
-    @JoinColumn(name = "id_sucursal", referencedColumnName = "id_sucursal", columnDefinition = "int4")
-    @ManyToOne
-    private Sucursales idSucursal;
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 60)
+  @Column(name = "login")
+  private String login;
 
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 64)
+  @Column(name = "password")
+  private String password;
+
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "fecha_alta")
+  @Temporal(TemporalType.TIMESTAMP)
+  private Date fechaAlta;
+
+  @ManyToMany(
+      cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+  @JoinTable(
+      name = "usuarios_gruposx",
+      joinColumns = {@JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")},
+      inverseJoinColumns = {@JoinColumn(name = "id_grupo", referencedColumnName = "id_grupo")})
+  private List<UsuariosGrupos> usuariosGruposList;
+
+  @JoinColumn(name = "id_sucursal", referencedColumnName = "id_sucursal", columnDefinition = "int4")
+  @ManyToOne
+  private Sucursales idSucursal;
 }

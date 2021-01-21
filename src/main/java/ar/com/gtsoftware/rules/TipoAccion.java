@@ -21,15 +21,14 @@ import lombok.Getter;
 
 @Getter
 public enum TipoAccion {
+  DESCUENTO_PORCENTAJE("Se aplicará el porcentaje sobre el sub-total del ítem.", "Porcentaje"),
+  DESCUENTO_MONTO_FIJO("Se aplicará el monto fijo de descuento.", "Monto fijo");
 
-    DESCUENTO_PORCENTAJE("Se aplicará el porcentaje sobre el sub-total del ítem.", "Porcentaje"),
-    DESCUENTO_MONTO_FIJO("Se aplicará el monto fijo de descuento.", "Monto fijo");
+  private final String descripcion;
+  private final String nombre;
 
-    private final String descripcion;
-    private final String nombre;
-
-    TipoAccion(String descripcion, String nombre) {
-        this.descripcion = descripcion;
-        this.nombre = nombre;
-    }
+  TipoAccion(String descripcion, String nombre) {
+    this.descripcion = descripcion;
+    this.nombre = nombre;
+  }
 }

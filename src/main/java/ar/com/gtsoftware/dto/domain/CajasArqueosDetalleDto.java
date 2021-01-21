@@ -16,9 +16,8 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
-import lombok.*;
-
 import java.math.BigDecimal;
+import lombok.*;
 
 /**
  * Detalle del arqueo.
@@ -32,19 +31,16 @@ import java.math.BigDecimal;
 @Builder
 public class CajasArqueosDetalleDto {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @EqualsAndHashCode.Include
-    private Long id;
-    private CajasArqueosDto idArqueo;
-    private NegocioFormasPagoDto idFormaPago;
-    private BigDecimal montoSistema;
-    private BigDecimal montoDeclarado;
-    private BigDecimal diferencia;
-    private String descargo;
-    private Integer version;
+  @EqualsAndHashCode.Include private Long id;
+  private CajasArqueosDto idArqueo;
+  private NegocioFormasPagoDto idFormaPago;
+  private BigDecimal montoSistema;
+  private BigDecimal montoDeclarado;
+  private BigDecimal diferencia;
+  private String descargo;
+  private Integer version;
 
-    private transient int item;
-
-
+  private transient int item;
 }

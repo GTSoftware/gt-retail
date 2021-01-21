@@ -16,10 +16,9 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
-import lombok.*;
-
 import java.math.BigDecimal;
 import java.util.Date;
+import lombok.*;
 
 @Getter
 @Setter
@@ -29,37 +28,33 @@ import java.util.Date;
 @Builder
 public class ComprobantesPagosDto {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @EqualsAndHashCode.Include
-    private Long id;
+  @EqualsAndHashCode.Include private Long id;
 
-    private ComprobantesDto idComprobante;
+  private ComprobantesDto idComprobante;
 
-    private NegocioFormasPagoDto idFormaPago;
+  private NegocioFormasPagoDto idFormaPago;
 
-    private NegocioPlanesPagoDto idPlan;
+  private NegocioPlanesPagoDto idPlan;
 
-    private NegocioPlanesPagoDetalleDto idDetallePlan;
+  private NegocioPlanesPagoDetalleDto idDetallePlan;
 
-    private BigDecimal montoPago;
+  private BigDecimal montoPago;
 
-    private BigDecimal montoPagado;
+  private BigDecimal montoPagado;
 
-    private Date fechaPago;
+  private Date fechaPago;
 
-    private Date fechaUltimoPago;
-    private Integer version;
+  private Date fechaUltimoPago;
+  private Integer version;
 
-
-    /**
-     * Retorna el total con signo del pago
-     *
-     * @return
-     */
-    public BigDecimal getMontoPagoConSigno() {
-        return idComprobante.getTipoComprobante().getSigno().multiply(montoPago);
-    }
-
-
+  /**
+   * Retorna el total con signo del pago
+   *
+   * @return
+   */
+  public BigDecimal getMontoPagoConSigno() {
+    return idComprobante.getTipoComprobante().getSigno().multiply(montoPago);
+  }
 }

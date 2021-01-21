@@ -20,8 +20,5 @@ package ar.com.gtsoftware.service;
 import ar.com.gtsoftware.dto.domain.ProductosTiposProveeduriaDto;
 import ar.com.gtsoftware.search.AbstractSearchFilter;
 
-
 public interface ProductosTiposProveeduriaService
-        extends EntityService<ProductosTiposProveeduriaDto, AbstractSearchFilter> {
-
-}
+    extends EntityService<ProductosTiposProveeduriaDto, AbstractSearchFilter> {}

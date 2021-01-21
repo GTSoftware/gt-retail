@@ -20,9 +20,9 @@ package ar.com.gtsoftware.service;
 import ar.com.gtsoftware.dto.reportes.QuiebreStockReport;
 import ar.com.gtsoftware.search.reportes.ReporteQuiebreStockSearchFilter;
 
+public interface ReporteQuiebreStockService
+    extends ReportsService<QuiebreStockReport, ReporteQuiebreStockSearchFilter> {
 
-public interface ReporteQuiebreStockService extends ReportsService<QuiebreStockReport, ReporteQuiebreStockSearchFilter> {
-
-    @Override
-    QuiebreStockReport obtenerReporte(ReporteQuiebreStockSearchFilter filter);
+  @Override
+  QuiebreStockReport obtenerReporte(ReporteQuiebreStockSearchFilter filter);
 }

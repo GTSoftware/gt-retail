@@ -17,16 +17,17 @@
 
 package ar.com.gtsoftware.mappers;
 
-
 import ar.com.gtsoftware.domain.ProveedoresOrdenesCompra;
 import ar.com.gtsoftware.dto.domain.ProveedoresOrdenesCompraDto;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring",
-        uses = {UsuariosMapper.class,
-                PersonasMapper.class,
-                ProveedoresOrdenesCompraLineasMapper.class,
-                ProveedoresOrdenesCompraEstadosMapper.class})
+@Mapper(
+    componentModel = "spring",
+    uses = {
+      UsuariosMapper.class,
+      PersonasMapper.class,
+      ProveedoresOrdenesCompraLineasMapper.class,
+      ProveedoresOrdenesCompraEstadosMapper.class
+    })
 public interface ProveedoresOrdenesCompraMapper
-        extends GenericMapper<ProveedoresOrdenesCompra, ProveedoresOrdenesCompraDto> {
-}
+    extends GenericMapper<ProveedoresOrdenesCompra, ProveedoresOrdenesCompraDto> {}

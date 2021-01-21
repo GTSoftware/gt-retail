@@ -16,9 +16,8 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
-import lombok.*;
-
 import java.math.BigDecimal;
+import lombok.*;
 
 /**
  * Representa a los tipos de comprobante soportados por el sistema
@@ -33,15 +32,13 @@ import java.math.BigDecimal;
 @Builder
 public class NegocioTiposComprobanteDto {
 
-    @EqualsAndHashCode.Include
-    private Long id;
+  @EqualsAndHashCode.Include private Long id;
 
-    private String nombreComprobante;
+  private String nombreComprobante;
 
-    private BigDecimal signo;
+  private BigDecimal signo;
 
-    private boolean activo;
+  private boolean activo;
 
-    private boolean porDefecto;
-
+  private boolean porDefecto;
 }

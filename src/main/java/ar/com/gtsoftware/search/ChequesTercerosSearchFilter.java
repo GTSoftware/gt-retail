@@ -15,10 +15,9 @@
  */
 package ar.com.gtsoftware.search;
 
+import java.util.Date;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
-
-import java.util.Date;
 
 /**
  * Search filter para cheques de terceros
@@ -32,50 +31,49 @@ import java.util.Date;
 @Builder
 public class ChequesTercerosSearchFilter extends AbstractSearchFilter {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    private String cuitOriginante;
-    private String nombreOriginante;
-    private Long idBanco;
-    private Date fechaOrigenDesde;
-    private Date fechaOrigenHasta;
-    private Boolean noVencidos;
-    private Boolean noCobrados;
+  private String cuitOriginante;
+  private String nombreOriginante;
+  private Long idBanco;
+  private Date fechaOrigenDesde;
+  private Date fechaOrigenHasta;
+  private Boolean noVencidos;
+  private Boolean noCobrados;
 
+  @Override
+  public boolean hasFilter() {
+    return hasFilterBanco()
+        || hasFilterCuitOriginante()
+        || hasFilterFechaOrigen()
+        || hasFilterNoCobrados()
+        || hasFilterNoVencidos()
+        || hasFilterNombreOriginante();
+  }
 
-    @Override
-    public boolean hasFilter() {
-        return hasFilterBanco()
-                || hasFilterCuitOriginante()
-                || hasFilterFechaOrigen()
-                || hasFilterNoCobrados()
-                || hasFilterNoVencidos()
-                || hasFilterNombreOriginante();
-    }
+  public boolean hasFilterCuitOriginante() {
+    return StringUtils.isNotEmpty(cuitOriginante);
+  }
 
-    public boolean hasFilterCuitOriginante() {
-        return StringUtils.isNotEmpty(cuitOriginante);
-    }
+  public boolean hasFilterNombreOriginante() {
+    return StringUtils.isNotEmpty(nombreOriginante);
+  }
 
-    public boolean hasFilterNombreOriginante() {
-        return StringUtils.isNotEmpty(nombreOriginante);
-    }
+  public boolean hasFilterBanco() {
+    return idBanco != null;
+  }
 
-    public boolean hasFilterBanco() {
-        return idBanco != null;
-    }
+  public boolean hasFilterFechaOrigen() {
+    return fechaOrigenDesde != null
+        && fechaOrigenHasta != null
+        && (fechaOrigenHasta.compareTo(fechaOrigenDesde) >= 0);
+  }
 
-    public boolean hasFilterFechaOrigen() {
-        return fechaOrigenDesde != null && fechaOrigenHasta != null && (fechaOrigenHasta.compareTo(fechaOrigenDesde) >= 0);
-    }
+  public boolean hasFilterNoVencidos() {
+    return noVencidos != null;
+  }
 
-    public boolean hasFilterNoVencidos() {
-        return noVencidos != null;
-    }
-
-    public boolean hasFilterNoCobrados() {
-        return noCobrados != null;
-    }
-
-
+  public boolean hasFilterNoCobrados() {
+    return noCobrados != null;
+  }
 }

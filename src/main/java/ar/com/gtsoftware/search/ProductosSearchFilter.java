@@ -15,10 +15,9 @@
  */
 package ar.com.gtsoftware.search;
 
+import javax.validation.constraints.Size;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
-
-import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -27,46 +26,47 @@ import javax.validation.constraints.Size;
 @Builder
 public class ProductosSearchFilter extends AbstractSearchFilter {
 
-    private String txt;
-    private Long idProducto;
-    @Size(max = 100)
-    private String codigoPropio;
-    private String codigoFabrica;
-    private Boolean activo;
-    private Boolean puedeComprarse;
-    private Boolean puedeVenderse;
-    private Long idSubRubro;
-    private Long idRubro;
-    private Long idProveedorHabitual;
-    private Long idConStockEnDeposito;
-    private Long idListaPrecio;
-    private Long idTipoProveeduria;
-    private Long idMarca;
-    private Boolean conStock;
-    private Boolean stockDebajoMinimo;
-    private Long idSucursal;
-    @Builder.Default
-    private boolean buscarEnTodosLados = false;
-    private Boolean llevaControlStock;
+  private String txt;
+  private Long idProducto;
 
-    @Override
-    public boolean hasFilter() {
-        return (StringUtils.isNotEmpty(txt)
-                || idProducto != null
-                || StringUtils.isNotEmpty(codigoPropio)
-                || activo != null || puedeComprarse != null
-                || puedeVenderse != null
-                || idRubro != null
-                || idSubRubro != null
-                || idProveedorHabitual != null
-                || idConStockEnDeposito != null
-                || idListaPrecio != null)
-                || idTipoProveeduria != null
-                || idMarca != null
-                || conStock != null
-                || stockDebajoMinimo != null
-                || StringUtils.isNotEmpty(codigoFabrica)
-                || llevaControlStock != null;
-    }
+  @Size(max = 100)
+  private String codigoPropio;
 
+  private String codigoFabrica;
+  private Boolean activo;
+  private Boolean puedeComprarse;
+  private Boolean puedeVenderse;
+  private Long idSubRubro;
+  private Long idRubro;
+  private Long idProveedorHabitual;
+  private Long idConStockEnDeposito;
+  private Long idListaPrecio;
+  private Long idTipoProveeduria;
+  private Long idMarca;
+  private Boolean conStock;
+  private Boolean stockDebajoMinimo;
+  private Long idSucursal;
+  @Builder.Default private boolean buscarEnTodosLados = false;
+  private Boolean llevaControlStock;
+
+  @Override
+  public boolean hasFilter() {
+    return (StringUtils.isNotEmpty(txt)
+            || idProducto != null
+            || StringUtils.isNotEmpty(codigoPropio)
+            || activo != null
+            || puedeComprarse != null
+            || puedeVenderse != null
+            || idRubro != null
+            || idSubRubro != null
+            || idProveedorHabitual != null
+            || idConStockEnDeposito != null
+            || idListaPrecio != null)
+        || idTipoProveeduria != null
+        || idMarca != null
+        || conStock != null
+        || stockDebajoMinimo != null
+        || StringUtils.isNotEmpty(codigoFabrica)
+        || llevaControlStock != null;
+  }
 }

@@ -19,7 +19,7 @@ package ar.com.gtsoftware.dto.reportes;
 
 public class QuiebreStockReport extends GenericReport<ProductoConQuiebreStock> {
 
-    public QuiebreStockReport(int totalRows) {
-        super(totalRows);
-    }
+  public QuiebreStockReport(int totalRows) {
+    super(totalRows);
+  }
 }

@@ -15,40 +15,43 @@
  */
 package ar.com.gtsoftware.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
-/**
- * @author rodrigo
- */
+/** @author rodrigo */
 @Entity
 @Table(name = "contabilidad_tipos_comprobantes")
 @Getter
 @Setter
 public class ContabilidadTiposComprobantes extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contabilidad_tipos_comprobantes_id_tipo_comprobante")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "contabilidad_tipos_comprobantes_id_tipo_comprobante",
-            sequenceName = "contabilidad_tipos_comprobantes_id_tipo_comprobante_seq")
-    @Basic(optional = false)
-    @Column(name = "id_tipo_comprobante", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(
+      strategy = GenerationType.SEQUENCE,
+      generator = "contabilidad_tipos_comprobantes_id_tipo_comprobante")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "contabilidad_tipos_comprobantes_id_tipo_comprobante",
+      sequenceName = "contabilidad_tipos_comprobantes_id_tipo_comprobante_seq")
+  @Basic(optional = false)
+  @Column(name = "id_tipo_comprobante", nullable = false, updatable = false)
+  private Long id;
 
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "nombre_tipo")
-    private String nombreTipo;
-    @Size(max = 2000)
-    @Column(name = "descripcion_tipo")
-    private String descripcionTipo;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoComprobante")
-    private List<ContabilidadRegistroContable> contabilidadRegistroContableList;
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 100)
+  @Column(name = "nombre_tipo")
+  private String nombreTipo;
 
+  @Size(max = 2000)
+  @Column(name = "descripcion_tipo")
+  private String descripcionTipo;
+
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoComprobante")
+  private List<ContabilidadRegistroContable> contabilidadRegistroContableList;
 }

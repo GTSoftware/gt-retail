@@ -1,34 +1,33 @@
 package ar.com.gtsoftware.dto.fiscal.reginfo;
 
+import static ar.com.gtsoftware.dto.fiscal.reginfo.RegInfoUtils.*;
+
+import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 
-import java.math.BigDecimal;
-
-import static ar.com.gtsoftware.dto.fiscal.reginfo.RegInfoUtils.*;
-
 @AllArgsConstructor
 @Builder
 @Data
 @NoArgsConstructor
 public class RegInfoCvVentasAlicuotas {
-    private String tipoComprobante;
-    private String puntoVenta;
-    private String numeroComprobante;
-    private BigDecimal importeNetoGravado;
-    private Integer alicuota;
-    private BigDecimal impuestoLiquidado;
+  private String tipoComprobante;
+  private String puntoVenta;
+  private String numeroComprobante;
+  private BigDecimal importeNetoGravado;
+  private Integer alicuota;
+  private BigDecimal impuestoLiquidado;
 
-    @Override
-    public String toString() {
-        return tipoComprobante +
-                StringUtils.leftPad(puntoVenta, 5, NUMBER_PAD) +
-                StringUtils.leftPad(numeroComprobante, 20, NUMBER_PAD) +
-                formatNumber(importeNetoGravado) +
-                numberPad(alicuota, 4) +
-                formatNumber(impuestoLiquidado);
-    }
+  @Override
+  public String toString() {
+    return tipoComprobante
+        + StringUtils.leftPad(puntoVenta, 5, NUMBER_PAD)
+        + StringUtils.leftPad(numeroComprobante, 20, NUMBER_PAD)
+        + formatNumber(importeNetoGravado)
+        + numberPad(alicuota, 4)
+        + formatNumber(impuestoLiquidado);
+  }
 }

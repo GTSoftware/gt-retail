@@ -30,20 +30,21 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class LegalTiposDocumentoServiceImpl
-        extends BaseEntityService<LegalTiposDocumentoDto, LegalTiposDocumentoSearchFilter, LegalTiposDocumento>
-        implements LegalTiposDocumentoService {
+    extends BaseEntityService<
+        LegalTiposDocumentoDto, LegalTiposDocumentoSearchFilter, LegalTiposDocumento>
+    implements LegalTiposDocumentoService {
 
-    private final LegalTiposDocumentoFacade facade;
+  private final LegalTiposDocumentoFacade facade;
 
-    private final LegalTiposDocumentoMapper mapper;
+  private final LegalTiposDocumentoMapper mapper;
 
-    @Override
-    protected LegalTiposDocumentoFacade getFacade() {
-        return facade;
-    }
+  @Override
+  protected LegalTiposDocumentoFacade getFacade() {
+    return facade;
+  }
 
-    @Override
-    protected LegalTiposDocumentoMapper getMapper() {
-        return mapper;
-    }
+  @Override
+  protected LegalTiposDocumentoMapper getMapper() {
+    return mapper;
+  }
 }

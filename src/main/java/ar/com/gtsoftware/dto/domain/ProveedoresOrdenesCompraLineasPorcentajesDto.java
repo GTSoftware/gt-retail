@@ -16,15 +16,14 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
-import lombok.*;
-
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import javax.validation.constraints.NotNull;
+import lombok.*;
 
 /**
- * Representa a los coeficientes de descuentos o recargos comerciales que aplican a una línea particular de una Orden de
- * Compra
+ * Representa a los coeficientes de descuentos o recargos comerciales que aplican a una línea
+ * particular de una Orden de Compra
  *
  * @author Rodrigo M. Tato Rothamel
  */
@@ -35,19 +34,14 @@ import java.math.BigDecimal;
 @Builder
 public class ProveedoresOrdenesCompraLineasPorcentajesDto implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @EqualsAndHashCode.Include
-    private Long id;
+  @EqualsAndHashCode.Include private Long id;
 
-    @NotNull
-    private ProveedoresOrdenesCompraLineasDto idLineaOrdenCompra;
+  @NotNull private ProveedoresOrdenesCompraLineasDto idLineaOrdenCompra;
 
-    @NotNull
-    private ProductosTiposPorcentajesDto idTipoPorcentaje;
+  @NotNull private ProductosTiposPorcentajesDto idTipoPorcentaje;
 
-    @NotNull
-    private BigDecimal valor;
-    private Integer version;
-
+  @NotNull private BigDecimal valor;
+  private Integer version;
 }

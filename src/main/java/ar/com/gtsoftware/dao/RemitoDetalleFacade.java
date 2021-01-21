@@ -19,52 +19,60 @@ import ar.com.gtsoftware.domain.RemitoDetalle;
 import ar.com.gtsoftware.domain.RemitoDetalle_;
 import ar.com.gtsoftware.domain.Remito_;
 import ar.com.gtsoftware.search.RemitoDetalleSearchFilter;
-import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.springframework.stereotype.Repository;
 
 @Repository
 public class RemitoDetalleFacade extends AbstractFacade<RemitoDetalle, RemitoDetalleSearchFilter> {
 
+  private final EntityManager em;
 
-    private final EntityManager em;
+  public RemitoDetalleFacade(EntityManager em) {
+    super(RemitoDetalle.class);
+    this.em = em;
+  }
 
-    public RemitoDetalleFacade(EntityManager em) {
-        super(RemitoDetalle.class);
-        this.em = em;
+  @Override
+  protected EntityManager getEntityManager() {
+    return this.em;
+  }
+
+  @Override
+  protected Predicate createWhereFromSearchFilter(
+      RemitoDetalleSearchFilter sf, CriteriaBuilder cb, Root<RemitoDetalle> root) {
+    Predicate p = null;
+
+    if (sf.hasEntreFechasAltaFilter()) {
+      Predicate p1 =
+          cb.between(
+              root.get(RemitoDetalle_.remitoCabecera).get(Remito_.fechaAlta),
+              sf.getFechaRemitoDesde(),
+              sf.getFechaRemitoHasta());
+      p = appendAndPredicate(cb, p1, p);
     }
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return this.em;
+    if (sf.getIdDepositoMovimiento() != null) {
+      Predicate p1 =
+          cb.equal(
+              root.get(RemitoDetalle_.remitoCabecera).get(Remito_.idOrigenInterno),
+              sf.getIdDepositoMovimiento());
+      Predicate p2 =
+          cb.equal(
+              root.get(RemitoDetalle_.remitoCabecera).get(Remito_.idDestinoPrevistoInterno),
+              sf.getIdDepositoMovimiento());
+      Predicate p3 = cb.or(p1, p2);
+
+      p = appendAndPredicate(cb, p3, p);
     }
 
-    @Override
-    protected Predicate createWhereFromSearchFilter(RemitoDetalleSearchFilter sf, CriteriaBuilder cb, Root<RemitoDetalle> root) {
-        Predicate p = null;
+    if (sf.getIdProducto() != null) {
+      Predicate p1 = cb.equal(root.get(RemitoDetalle_.idProducto), sf.getIdProducto());
 
-        if (sf.hasEntreFechasAltaFilter()) {
-            Predicate p1 = cb.between(root.get(RemitoDetalle_.remitoCabecera).get(Remito_.fechaAlta), sf.getFechaRemitoDesde(), sf.getFechaRemitoHasta());
-            p = appendAndPredicate(cb, p1, p);
-        }
-
-        if (sf.getIdDepositoMovimiento() != null) {
-            Predicate p1 = cb.equal(root.get(RemitoDetalle_.remitoCabecera).get(Remito_.idOrigenInterno), sf.getIdDepositoMovimiento());
-            Predicate p2 = cb.equal(root.get(RemitoDetalle_.remitoCabecera).get(Remito_.idDestinoPrevistoInterno), sf.getIdDepositoMovimiento());
-            Predicate p3 = cb.or(p1, p2);
-
-            p = appendAndPredicate(cb, p3, p);
-        }
-
-        if (sf.getIdProducto() != null) {
-            Predicate p1 = cb.equal(root.get(RemitoDetalle_.idProducto), sf.getIdProducto());
-
-            p = appendAndPredicate(cb, p1, p);
-        }
-        return p;
+      p = appendAndPredicate(cb, p1, p);
     }
-
+    return p;
+  }
 }

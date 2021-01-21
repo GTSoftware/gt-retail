@@ -19,38 +19,37 @@ import ar.com.gtsoftware.domain.PersonasTelefonos;
 import ar.com.gtsoftware.domain.PersonasTelefonos_;
 import ar.com.gtsoftware.domain.Personas_;
 import ar.com.gtsoftware.search.PersonasTelefonosSearchFilter;
-import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.springframework.stereotype.Repository;
 
 @Repository
-public class PersonasTelefonosFacade extends AbstractFacade<PersonasTelefonos, PersonasTelefonosSearchFilter> {
+public class PersonasTelefonosFacade
+    extends AbstractFacade<PersonasTelefonos, PersonasTelefonosSearchFilter> {
 
+  private final EntityManager em;
 
-    private final EntityManager em;
+  public PersonasTelefonosFacade(EntityManager em) {
+    super(PersonasTelefonos.class);
+    this.em = em;
+  }
 
-    public PersonasTelefonosFacade(EntityManager em) {
-        super(PersonasTelefonos.class);
-        this.em = em;
+  @Override
+  protected EntityManager getEntityManager() {
+    return em;
+  }
+
+  @Override
+  protected Predicate createWhereFromSearchFilter(
+      PersonasTelefonosSearchFilter psf, CriteriaBuilder cb, Root<PersonasTelefonos> root) {
+
+    Predicate p = null;
+    if (psf.getIdPersona() != null) {
+      p = cb.equal(root.get(PersonasTelefonos_.idPersona).get(Personas_.id), psf.getIdPersona());
     }
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
-
-    @Override
-    protected Predicate createWhereFromSearchFilter(PersonasTelefonosSearchFilter psf, CriteriaBuilder cb, Root<PersonasTelefonos> root) {
-
-        Predicate p = null;
-        if (psf.getIdPersona() != null) {
-            p = cb.equal(root.get(PersonasTelefonos_.idPersona).get(Personas_.id), psf.getIdPersona());
-        }
-
-        return p;
-    }
-
+    return p;
+  }
 }

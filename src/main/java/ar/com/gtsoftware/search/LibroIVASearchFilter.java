@@ -15,9 +15,8 @@
  */
 package ar.com.gtsoftware.search;
 
-import lombok.*;
-
 import java.time.LocalDateTime;
+import lombok.*;
 
 @Getter
 @Setter
@@ -26,21 +25,17 @@ import java.time.LocalDateTime;
 @Builder
 public class LibroIVASearchFilter extends AbstractSearchFilter {
 
-    private Long idPeriodo;
-    private LocalDateTime fechaDesde;
-    private LocalDateTime fechaHasta;
-    private Boolean anuladas;
+  private Long idPeriodo;
+  private LocalDateTime fechaDesde;
+  private LocalDateTime fechaHasta;
+  private Boolean anuladas;
 
-    @Override
-    public boolean hasFilter() {
-        return idPeriodo != null
-                || hasFechasDesdeHasta()
-                || anuladas != null;
-    }
+  @Override
+  public boolean hasFilter() {
+    return idPeriodo != null || hasFechasDesdeHasta() || anuladas != null;
+  }
 
-
-    public boolean hasFechasDesdeHasta() {
-        return (fechaDesde != null && fechaHasta != null) && (fechaDesde.compareTo(fechaHasta) <= 0);
-    }
-
+  public boolean hasFechasDesdeHasta() {
+    return (fechaDesde != null && fechaHasta != null) && (fechaDesde.compareTo(fechaHasta) <= 0);
+  }
 }

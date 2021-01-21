@@ -21,10 +21,7 @@ import ar.com.gtsoftware.domain.RecibosDetalle;
 import ar.com.gtsoftware.dto.domain.RecibosDetalleDto;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring",
-        uses = {RecibosMapper.class,
-                NegocioFormasPagoMapper.class,
-                ComprobantesPagosMapper.class})
-public interface RecibosDetalleMapper
-        extends GenericMapper<RecibosDetalle, RecibosDetalleDto> {
-}
+@Mapper(
+    componentModel = "spring",
+    uses = {RecibosMapper.class, NegocioFormasPagoMapper.class, ComprobantesPagosMapper.class})
+public interface RecibosDetalleMapper extends GenericMapper<RecibosDetalle, RecibosDetalleDto> {}

@@ -20,54 +20,55 @@ import ar.com.gtsoftware.domain.FiscalLibroIvaCompras;
 import ar.com.gtsoftware.domain.FiscalLibroIvaComprasLineas;
 import ar.com.gtsoftware.domain.FiscalLibroIvaComprasLineas_;
 import ar.com.gtsoftware.search.AbstractSearchFilter;
-import org.springframework.stereotype.Repository;
-
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.List;
+import org.springframework.stereotype.Repository;
 
 @Repository
-public class FiscalLibroIvaComprasLineasFacade extends AbstractFacade<FiscalLibroIvaComprasLineas, AbstractSearchFilter> {
+public class FiscalLibroIvaComprasLineasFacade
+    extends AbstractFacade<FiscalLibroIvaComprasLineas, AbstractSearchFilter> {
 
+  private final EntityManager em;
 
-    private final EntityManager em;
+  public FiscalLibroIvaComprasLineasFacade(EntityManager em) {
+    super(FiscalLibroIvaComprasLineas.class);
+    this.em = em;
+  }
 
-    public FiscalLibroIvaComprasLineasFacade(EntityManager em) {
-        super(FiscalLibroIvaComprasLineas.class);
-        this.em = em;
-    }
+  @Override
+  protected EntityManager getEntityManager() {
+    return em;
+  }
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
+  /**
+   * Devuelve las líneas de factura para la factura pasada como parámetro
+   *
+   * @param factura
+   * @return una lista con las líneas de la factura
+   */
+  public List<FiscalLibroIvaComprasLineas> getLineasFactura(FiscalLibroIvaCompras factura) {
+    CriteriaBuilder cb = em.getCriteriaBuilder();
+    CriteriaQuery<FiscalLibroIvaComprasLineas> cq =
+        cb.createQuery(FiscalLibroIvaComprasLineas.class);
+    Root<FiscalLibroIvaComprasLineas> lineaFactura = cq.from(FiscalLibroIvaComprasLineas.class);
+    cq.select(lineaFactura);
+    Predicate p = cb.equal(lineaFactura.get(FiscalLibroIvaComprasLineas_.idRegistro), factura);
 
-    /**
-     * Devuelve las líneas de factura para la factura pasada como parámetro
-     *
-     * @param factura
-     * @return una lista con las líneas de la factura
-     */
-    public List<FiscalLibroIvaComprasLineas> getLineasFactura(FiscalLibroIvaCompras factura) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<FiscalLibroIvaComprasLineas> cq = cb.createQuery(FiscalLibroIvaComprasLineas.class);
-        Root<FiscalLibroIvaComprasLineas> lineaFactura = cq.from(FiscalLibroIvaComprasLineas.class);
-        cq.select(lineaFactura);
-        Predicate p = cb.equal(lineaFactura.get(FiscalLibroIvaComprasLineas_.idRegistro), factura);
+    cq.where(p);
+    TypedQuery<FiscalLibroIvaComprasLineas> q = em.createQuery(cq);
 
-        cq.where(p);
-        TypedQuery<FiscalLibroIvaComprasLineas> q = em.createQuery(cq);
+    return q.getResultList();
+  }
 
-        return q.getResultList();
-    }
-
-    @Override
-    public Predicate createWhereFromSearchFilter(AbstractSearchFilter sf, CriteriaBuilder cb, Root<FiscalLibroIvaComprasLineas> root) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+  @Override
+  public Predicate createWhereFromSearchFilter(
+      AbstractSearchFilter sf, CriteriaBuilder cb, Root<FiscalLibroIvaComprasLineas> root) {
+    throw new UnsupportedOperationException(
+        "Not supported yet."); // To change body of generated methods, choose Tools | Templates.
+  }
 }

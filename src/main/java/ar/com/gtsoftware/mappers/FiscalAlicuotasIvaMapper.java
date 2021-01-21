@@ -23,6 +23,4 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface FiscalAlicuotasIvaMapper
-        extends GenericMapper<FiscalAlicuotasIva, FiscalAlicuotasIvaDto> {
-
-}
+    extends GenericMapper<FiscalAlicuotasIva, FiscalAlicuotasIvaDto> {}

@@ -15,43 +15,45 @@
  */
 package ar.com.gtsoftware.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
 
-/**
- * @author rodrigo
- */
+/** @author rodrigo */
 @Entity
 @Table(name = "ubicacion_localidades")
 @Getter
 @Setter
 public class UbicacionLocalidades extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ubicacion_localidades_id_localidad")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "ubicacion_localidades_id_localidad",
-            sequenceName = "ubicacion_localidades_id_localidad_seq")
-    @Basic(optional = false)
-    @Column(name = "id_localidad", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(
+      strategy = GenerationType.SEQUENCE,
+      generator = "ubicacion_localidades_id_localidad")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "ubicacion_localidades_id_localidad",
+      sequenceName = "ubicacion_localidades_id_localidad_seq")
+  @Basic(optional = false)
+  @Column(name = "id_localidad", nullable = false, updatable = false)
+  private Long id;
 
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "nombre_localidad")
-    private String nombreLocalidad;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
-    @Column(name = "codigo_postal")
-    private String codigoPostal;
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 100)
+  @Column(name = "nombre_localidad")
+  private String nombreLocalidad;
 
-    @JoinColumn(name = "id_provincia", referencedColumnName = "id_provincia")
-    @ManyToOne(optional = false)
-    private UbicacionProvincias idProvincia;
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 20)
+  @Column(name = "codigo_postal")
+  private String codigoPostal;
 
+  @JoinColumn(name = "id_provincia", referencedColumnName = "id_provincia")
+  @ManyToOne(optional = false)
+  private UbicacionProvincias idProvincia;
 }

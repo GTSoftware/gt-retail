@@ -21,9 +21,8 @@ import ar.com.gtsoftware.domain.ProductoXDeposito;
 import ar.com.gtsoftware.dto.domain.ProductoXDepositoDto;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring",
-        uses = {DepositosMapper.class,
-                ProductosMapper.class})
+@Mapper(
+    componentModel = "spring",
+    uses = {DepositosMapper.class, ProductosMapper.class})
 public interface ProductoXDepositoMapper
-        extends GenericMapper<ProductoXDeposito, ProductoXDepositoDto> {
-}
+    extends GenericMapper<ProductoXDeposito, ProductoXDepositoDto> {}

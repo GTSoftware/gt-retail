@@ -17,59 +17,61 @@ package ar.com.gtsoftware.dao;
 
 import ar.com.gtsoftware.domain.*;
 import ar.com.gtsoftware.search.RemitoSearchFilter;
-import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
+import org.springframework.stereotype.Repository;
 
 @Repository
 public class RemitoFacade extends AbstractFacade<Remito, RemitoSearchFilter> {
 
+  private final EntityManager em;
 
-    private final EntityManager em;
+  public RemitoFacade(EntityManager em) {
+    super(Remito.class);
+    this.em = em;
+  }
 
-    public RemitoFacade(EntityManager em) {
-        super(Remito.class);
-        this.em = em;
+  @Override
+  protected EntityManager getEntityManager() {
+    return this.em;
+  }
+
+  @Override
+  protected Predicate createWhereFromSearchFilter(
+      RemitoSearchFilter sf, CriteriaBuilder cb, Root<Remito> root) {
+    Predicate p = null;
+    if (sf.hasEntreFechasAltaFilter()) {
+      Predicate p1 =
+          cb.between(root.get(Remito_.fechaAlta), sf.getFechaAltaDesde(), sf.getFechaAltaHasta());
+      p = appendAndPredicate(cb, p1, p);
     }
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return this.em;
+    if (sf.getIdTipoMovimiento() != null) {
+      Predicate p1 =
+          cb.equal(
+              root.get(Remito_.remitoTipoMovimiento).get(RemitoTipoMovimiento_.id),
+              sf.getIdTipoMovimiento());
+      p = appendAndPredicate(cb, p1, p);
     }
 
-    @Override
-    protected Predicate createWhereFromSearchFilter(RemitoSearchFilter sf, CriteriaBuilder cb, Root<Remito> root) {
-        Predicate p = null;
-        if (sf.hasEntreFechasAltaFilter()) {
-            Predicate p1 = cb.between(root.get(Remito_.fechaAlta), sf.getFechaAltaDesde(), sf.getFechaAltaHasta());
-            p = appendAndPredicate(cb, p1, p);
-        }
+    if (sf.getIdProducto() != null) {
+      Subquery<Long> subQRemDetProd = cb.createQuery().subquery(Long.class);
+      Root<RemitoDetalle> fromSubQ = subQRemDetProd.from(RemitoDetalle.class);
 
-        if (sf.getIdTipoMovimiento() != null) {
-            Predicate p1 = cb.equal(root.get(Remito_.remitoTipoMovimiento).get(RemitoTipoMovimiento_.id),
-                    sf.getIdTipoMovimiento());
-            p = appendAndPredicate(cb, p1, p);
-        }
+      subQRemDetProd.select(fromSubQ.get(RemitoDetalle_.id));
 
-        if (sf.getIdProducto() != null) {
-            Subquery<Long> subQRemDetProd = cb.createQuery().subquery(Long.class);
-            Root<RemitoDetalle> fromSubQ = subQRemDetProd.from(RemitoDetalle.class);
+      Predicate ps1 =
+          cb.equal(fromSubQ.get(RemitoDetalle_.idProducto).get(Productos_.id), sf.getIdProducto());
+      Predicate ps2 = cb.equal(fromSubQ.get(RemitoDetalle_.remitoCabecera), root);
+      subQRemDetProd.where(cb.and(ps1, ps2));
 
-            subQRemDetProd.select(fromSubQ.get(RemitoDetalle_.id));
+      Predicate p1 = cb.exists(subQRemDetProd);
 
-            Predicate ps1 = cb.equal(fromSubQ.get(RemitoDetalle_.idProducto).get(Productos_.id), sf.getIdProducto());
-            Predicate ps2 = cb.equal(fromSubQ.get(RemitoDetalle_.remitoCabecera), root);
-            subQRemDetProd.where(cb.and(ps1, ps2));
-
-            Predicate p1 = cb.exists(subQRemDetProd);
-
-            p = appendAndPredicate(cb, p1, p);
-        }
-        return p;
+      p = appendAndPredicate(cb, p1, p);
     }
-
+    return p;
+  }
 }

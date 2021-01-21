@@ -8,8 +8,8 @@ import lombok.Setter;
 @Setter
 @Builder
 public class ProductSubCategory {
-    private Long subCategoryId;
-    private Long categoryId;
-    private String subCategoryName;
-    private String displayName;
+  private Long subCategoryId;
+  private Long categoryId;
+  private String subCategoryName;
+  private String displayName;
 }

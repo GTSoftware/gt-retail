@@ -30,20 +30,20 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class FiscalAlicuotasIvaServiceImpl
-        extends BaseEntityService<FiscalAlicuotasIvaDto, AbstractSearchFilter, FiscalAlicuotasIva>
-        implements FiscalAlicuotasIvaService {
+    extends BaseEntityService<FiscalAlicuotasIvaDto, AbstractSearchFilter, FiscalAlicuotasIva>
+    implements FiscalAlicuotasIvaService {
 
-    private final FiscalAlicuotasIvaFacade facade;
+  private final FiscalAlicuotasIvaFacade facade;
 
-    private final FiscalAlicuotasIvaMapper mapper;
+  private final FiscalAlicuotasIvaMapper mapper;
 
-    @Override
-    protected FiscalAlicuotasIvaFacade getFacade() {
-        return facade;
-    }
+  @Override
+  protected FiscalAlicuotasIvaFacade getFacade() {
+    return facade;
+  }
 
-    @Override
-    protected FiscalAlicuotasIvaMapper getMapper() {
-        return mapper;
-    }
+  @Override
+  protected FiscalAlicuotasIvaMapper getMapper() {
+    return mapper;
+  }
 }

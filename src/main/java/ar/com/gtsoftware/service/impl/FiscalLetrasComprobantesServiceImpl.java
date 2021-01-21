@@ -17,31 +17,32 @@
 
 package ar.com.gtsoftware.service.impl;
 
+import static java.util.Objects.isNull;
+
 import ar.com.gtsoftware.dao.FiscalLetrasComprobantesFacade;
 import ar.com.gtsoftware.domain.FiscalLetrasComprobantes;
 import ar.com.gtsoftware.search.FiscalLetrasComprobantesSearchFilter;
 import ar.com.gtsoftware.service.FiscalLetrasComprobantesService;
+import javax.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import javax.validation.constraints.NotNull;
-
-import static java.util.Objects.isNull;
 
 @Service
 @RequiredArgsConstructor
 public class FiscalLetrasComprobantesServiceImpl implements FiscalLetrasComprobantesService {
 
-    private final FiscalLetrasComprobantesFacade facade;
+  private final FiscalLetrasComprobantesFacade facade;
 
-    @Override
-    public String obtenerLetra(@NotNull Long idResponsabilidadIvaEmisor, @NotNull Long idResponsabilidadIvaReceptor) {
-        FiscalLetrasComprobantesSearchFilter sf = FiscalLetrasComprobantesSearchFilter.builder()
-                .idRespIvaEmisor(idResponsabilidadIvaEmisor)
-                .idRespIvaReceptor(idResponsabilidadIvaReceptor).build();
-        FiscalLetrasComprobantes letra = facade.findFirstBySearchFilter(sf);
+  @Override
+  public String obtenerLetra(
+      @NotNull Long idResponsabilidadIvaEmisor, @NotNull Long idResponsabilidadIvaReceptor) {
+    FiscalLetrasComprobantesSearchFilter sf =
+        FiscalLetrasComprobantesSearchFilter.builder()
+            .idRespIvaEmisor(idResponsabilidadIvaEmisor)
+            .idRespIvaReceptor(idResponsabilidadIvaReceptor)
+            .build();
+    FiscalLetrasComprobantes letra = facade.findFirstBySearchFilter(sf);
 
-        return isNull(letra) ? null : letra.getLetraComprobante();
-
-    }
+    return isNull(letra) ? null : letra.getLetraComprobante();
+  }
 }

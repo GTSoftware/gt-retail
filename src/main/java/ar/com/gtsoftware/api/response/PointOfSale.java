@@ -8,8 +8,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PointOfSale {
-    private int posNumber;
-    private String posType;
-    private String displayName;
-    private boolean byDefault;
+  private int posNumber;
+  private String posType;
+  private String displayName;
+  private boolean byDefault;
 }

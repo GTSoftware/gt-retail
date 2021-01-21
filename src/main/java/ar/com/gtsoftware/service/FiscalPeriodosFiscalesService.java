@@ -20,7 +20,5 @@ package ar.com.gtsoftware.service;
 import ar.com.gtsoftware.dto.domain.FiscalPeriodosFiscalesDto;
 import ar.com.gtsoftware.search.FiscalPeriodosFiscalesSearchFilter;
 
-
 public interface FiscalPeriodosFiscalesService
-        extends EntityService<FiscalPeriodosFiscalesDto, FiscalPeriodosFiscalesSearchFilter> {
-}
+    extends EntityService<FiscalPeriodosFiscalesDto, FiscalPeriodosFiscalesSearchFilter> {}

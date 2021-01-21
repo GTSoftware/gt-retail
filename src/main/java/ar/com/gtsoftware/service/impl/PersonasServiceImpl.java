@@ -27,24 +27,23 @@ import ar.com.gtsoftware.service.PersonasService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-
 @Service
 @RequiredArgsConstructor
 public class PersonasServiceImpl
-        extends BaseEntityService<PersonasDto, PersonasSearchFilter, Personas>
-        implements PersonasService {
+    extends BaseEntityService<PersonasDto, PersonasSearchFilter, Personas>
+    implements PersonasService {
 
-    private final PersonasFacade facade;
+  private final PersonasFacade facade;
 
-    private final PersonasMapper mapper;
+  private final PersonasMapper mapper;
 
-    @Override
-    protected PersonasFacade getFacade() {
-        return facade;
-    }
+  @Override
+  protected PersonasFacade getFacade() {
+    return facade;
+  }
 
-    @Override
-    protected PersonasMapper getMapper() {
-        return mapper;
-    }
+  @Override
+  protected PersonasMapper getMapper() {
+    return mapper;
+  }
 }

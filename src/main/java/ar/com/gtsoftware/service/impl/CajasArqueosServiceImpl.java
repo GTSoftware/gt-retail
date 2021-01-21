@@ -27,23 +27,22 @@ import ar.com.gtsoftware.service.CajasArqueosService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-
 @Service
 @RequiredArgsConstructor
 public class CajasArqueosServiceImpl
-        extends BaseEntityService<CajasArqueosDto, CajasArqueosSearchFilter, CajasArqueos>
-        implements CajasArqueosService {
+    extends BaseEntityService<CajasArqueosDto, CajasArqueosSearchFilter, CajasArqueos>
+    implements CajasArqueosService {
 
-    private final CajasArqueosFacade facade;
-    private final CajasArqueosMapper mapper;
+  private final CajasArqueosFacade facade;
+  private final CajasArqueosMapper mapper;
 
-    @Override
-    protected CajasArqueosFacade getFacade() {
-        return facade;
-    }
+  @Override
+  protected CajasArqueosFacade getFacade() {
+    return facade;
+  }
 
-    @Override
-    protected CajasArqueosMapper getMapper() {
-        return mapper;
-    }
+  @Override
+  protected CajasArqueosMapper getMapper() {
+    return mapper;
+  }
 }

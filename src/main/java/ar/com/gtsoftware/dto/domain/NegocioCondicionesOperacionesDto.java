@@ -26,13 +26,11 @@ import lombok.*;
 @Builder
 public class NegocioCondicionesOperacionesDto {
 
-    @EqualsAndHashCode.Include
-    private Long id;
-    private String nombreCondicion;
-    private boolean activo;
-    private boolean venta;
-    private boolean compra;
-    private boolean pagoTotal;
-    private boolean porDefecto;
-
+  @EqualsAndHashCode.Include private Long id;
+  private String nombreCondicion;
+  private boolean activo;
+  private boolean venta;
+  private boolean compra;
+  private boolean pagoTotal;
+  private boolean porDefecto;
 }

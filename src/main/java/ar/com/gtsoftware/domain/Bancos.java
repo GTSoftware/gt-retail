@@ -15,13 +15,12 @@
  */
 package ar.com.gtsoftware.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Clase que almacena la información de los bancos
@@ -36,27 +35,31 @@ import java.util.List;
 @Setter
 public class Bancos extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bancos_id_banco")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "bancos_id_banco",
-            sequenceName = "bancos_id_banco_seq")
-    @Basic(optional = false)
-    @Column(name = "id_banco", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bancos_id_banco")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "bancos_id_banco",
+      sequenceName = "bancos_id_banco_seq")
+  @Basic(optional = false)
+  @Column(name = "id_banco", nullable = false, updatable = false)
+  private Long id;
 
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 200)
-    @Column(name = "razon_social")
-    private String razonSocial;
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 200)
+  @Column(name = "razon_social")
+  private String razonSocial;
 
-    @Size(max = 1024)
-    @Column(name = "observaciones")
-    private String observaciones;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idBanco")
-    private List<BancosCuentas> bancosCuentasList;
-    @JoinColumn(name = "id_persona", referencedColumnName = "id_persona")
-    @ManyToOne(optional = false)
-    private Personas idPersona;
+  @Size(max = 1024)
+  @Column(name = "observaciones")
+  private String observaciones;
 
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "idBanco")
+  private List<BancosCuentas> bancosCuentasList;
+
+  @JoinColumn(name = "id_persona", referencedColumnName = "id_persona")
+  @ManyToOne(optional = false)
+  private Personas idPersona;
 }

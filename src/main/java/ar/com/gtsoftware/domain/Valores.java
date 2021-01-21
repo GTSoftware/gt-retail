@@ -15,12 +15,11 @@
  */
 package ar.com.gtsoftware.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import java.math.BigDecimal;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Son los documentos que representan cupones o cheques.
@@ -35,19 +34,21 @@ import java.math.BigDecimal;
 @Setter
 public class Valores extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "valores_id_valor")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "valores_id_valor",
-            sequenceName = "valores_id_valor_seq")
-    @Basic(optional = false)
-    @Column(name = "id_valor", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "valores_id_valor")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "valores_id_valor",
+      sequenceName = "valores_id_valor_seq")
+  @Basic(optional = false)
+  @Column(name = "id_valor", nullable = false, updatable = false)
+  private Long id;
 
-    @NotNull
-    @Column(name = "monto")
-    private BigDecimal monto;
+  @NotNull
+  @Column(name = "monto")
+  private BigDecimal monto;
 
-    @OneToOne(mappedBy = "idValor")
-    private RecibosDetalle reciboDetalle;
-
+  @OneToOne(mappedBy = "idValor")
+  private RecibosDetalle reciboDetalle;
 }

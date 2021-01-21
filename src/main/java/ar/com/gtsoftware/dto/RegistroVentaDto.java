@@ -17,17 +17,16 @@
 
 package ar.com.gtsoftware.dto;
 
+import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.io.Serializable;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegistroVentaDto implements Serializable {
 
-    long idComprobante;
-    Long idRemito;
+  long idComprobante;
+  Long idRemito;
 }

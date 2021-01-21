@@ -15,27 +15,22 @@
  */
 package ar.com.gtsoftware.domain;
 
+import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
-
-/**
- * @author fede
- */
+/** @author fede */
 @Entity
 @Table(name = "remitos_movimientos_tipos")
 @Getter
 @Setter
 public class RemitoTipoMovimiento extends BaseEntity {
 
-    @Id
-    @Basic(optional = false)
-    @Column(name = "id_tipo_movimiento", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @Basic(optional = false)
+  @Column(name = "id_tipo_movimiento", nullable = false, updatable = false)
+  private Long id;
 
-
-    @Column(name = "nombre_tipo")
-    private String nombreTipo;
-
+  @Column(name = "nombre_tipo")
+  private String nombreTipo;
 }

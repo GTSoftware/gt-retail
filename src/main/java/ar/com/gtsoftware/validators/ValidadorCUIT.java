@@ -15,40 +15,38 @@
  */
 package ar.com.gtsoftware.validators;
 
-/**
- * @author Rodrigo Tato <rotatomel@gmail.com>
- */
+/** @author Rodrigo Tato <rotatomel@gmail.com> */
 public abstract class ValidadorCUIT {
 
-    private static final String coef = "5432765432"; //coeficiente
+  private static final String coef = "5432765432"; // coeficiente
 
-    //método para determinar el CUIT
-    public static boolean getValidate(String numCUIT) {
-        try {
-            int su = 0;
-            int lCuit = numCUIT.length();
-            if (lCuit < 11) {
-                //numCUIT = "00000000000";
-                return false;
-            }
-            for (int i = 1; i < 11; i++) {
-                String Cd1 = coef.substring(i - 1, i);
-                String Cd2 = numCUIT.substring(i - 1, i);
-                int cf = Integer.parseInt(Cd1); //casteo...
-                int ct = Integer.parseInt(Cd2); //casteo...
-                su += (cf * ct);
-            }
-            int md = su / 11;
-            int re = su - (md * 11);
-            if (re > 1) {
-                re = 11 - re;
-            }
-            String CdDv = numCUIT.substring(lCuit - 1, lCuit);
-            int dv = Integer.parseInt(CdDv); //casteo...
-            return dv == re;
+  // método para determinar el CUIT
+  public static boolean getValidate(String numCUIT) {
+    try {
+      int su = 0;
+      int lCuit = numCUIT.length();
+      if (lCuit < 11) {
+        // numCUIT = "00000000000";
+        return false;
+      }
+      for (int i = 1; i < 11; i++) {
+        String Cd1 = coef.substring(i - 1, i);
+        String Cd2 = numCUIT.substring(i - 1, i);
+        int cf = Integer.parseInt(Cd1); // casteo...
+        int ct = Integer.parseInt(Cd2); // casteo...
+        su += (cf * ct);
+      }
+      int md = su / 11;
+      int re = su - (md * 11);
+      if (re > 1) {
+        re = 11 - re;
+      }
+      String CdDv = numCUIT.substring(lCuit - 1, lCuit);
+      int dv = Integer.parseInt(CdDv); // casteo...
+      return dv == re;
 
-        } catch (NumberFormatException e) {
-            return false;
-        }
+    } catch (NumberFormatException e) {
+      return false;
     }
+  }
 }

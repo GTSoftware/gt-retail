@@ -18,9 +18,7 @@ package ar.com.gtsoftware.search;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 
-/**
- * @author Rodrigo Tato <rotatomel@gmail.com>
- */
+/** @author Rodrigo Tato <rotatomel@gmail.com> */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -28,17 +26,16 @@ import org.apache.commons.lang3.StringUtils;
 @Builder
 public class GenerosSearchFilter extends AbstractSearchFilter {
 
-    private Integer idGenero;
-    private String nombreGenero;
-    private String simbolo;
-    private Long idTipoPersoneria;
+  private Integer idGenero;
+  private String nombreGenero;
+  private String simbolo;
+  private Long idTipoPersoneria;
 
-    @Override
-    public boolean hasFilter() {
-        return idGenero != null
-                || StringUtils.isNotEmpty(nombreGenero)
-                || StringUtils.isNotEmpty(simbolo)
-                || idTipoPersoneria != null;
-    }
-
+  @Override
+  public boolean hasFilter() {
+    return idGenero != null
+        || StringUtils.isNotEmpty(nombreGenero)
+        || StringUtils.isNotEmpty(simbolo)
+        || idTipoPersoneria != null;
+  }
 }

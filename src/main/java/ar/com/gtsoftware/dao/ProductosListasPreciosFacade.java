@@ -18,46 +18,48 @@ package ar.com.gtsoftware.dao;
 import ar.com.gtsoftware.domain.ProductosListasPrecios;
 import ar.com.gtsoftware.domain.ProductosListasPrecios_;
 import ar.com.gtsoftware.search.ProductosListasPreciosSearchFilter;
-import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.springframework.stereotype.Repository;
 
 @Repository
-public class ProductosListasPreciosFacade extends AbstractFacade<ProductosListasPrecios, ProductosListasPreciosSearchFilter> {
+public class ProductosListasPreciosFacade
+    extends AbstractFacade<ProductosListasPrecios, ProductosListasPreciosSearchFilter> {
 
+  private final EntityManager em;
 
-    private final EntityManager em;
+  public ProductosListasPreciosFacade(EntityManager em) {
+    super(ProductosListasPrecios.class);
+    this.em = em;
+  }
 
-    public ProductosListasPreciosFacade(EntityManager em) {
-        super(ProductosListasPrecios.class);
-        this.em = em;
+  @Override
+  protected EntityManager getEntityManager() {
+    return em;
+  }
+
+  @Override
+  protected Predicate createWhereFromSearchFilter(
+      ProductosListasPreciosSearchFilter psf,
+      CriteriaBuilder cb,
+      Root<ProductosListasPrecios> root) {
+
+    Predicate p = null;
+
+    if (psf.getNombre() != null && !psf.getNombre().isEmpty()) {
+      String s = psf.getNombre().toUpperCase();
+      Predicate p1 =
+          cb.like(root.get(ProductosListasPrecios_.nombreLista), String.format("%%%s%%", s));
+
+      p = appendAndPredicate(cb, p, p1);
     }
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
+    if (psf.getActiva() != null) {
+      Predicate p1 = cb.equal(root.get(ProductosListasPrecios_.activa), psf.getActiva());
+      p = appendAndPredicate(cb, p, p1);
     }
-
-    @Override
-    protected Predicate createWhereFromSearchFilter(ProductosListasPreciosSearchFilter psf, CriteriaBuilder cb, Root<ProductosListasPrecios> root) {
-
-        Predicate p = null;
-
-        if (psf.getNombre() != null && !psf.getNombre().isEmpty()) {
-            String s = psf.getNombre().toUpperCase();
-            Predicate p1 = cb.like(root.get(ProductosListasPrecios_.nombreLista), String.format("%%%s%%", s));
-
-            p = appendAndPredicate(cb, p, p1);
-        }
-
-        if (psf.getActiva() != null) {
-            Predicate p1 = cb.equal(root.get(ProductosListasPrecios_.activa), psf.getActiva());
-            p = appendAndPredicate(cb, p, p1);
-        }
-        return p;
-    }
-
+    return p;
+  }
 }

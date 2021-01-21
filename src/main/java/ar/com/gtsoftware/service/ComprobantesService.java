@@ -20,17 +20,13 @@ package ar.com.gtsoftware.service;
 import ar.com.gtsoftware.dto.domain.ComprobantesDto;
 import ar.com.gtsoftware.search.ComprobantesSearchFilter;
 import ar.com.gtsoftware.service.exceptions.ServiceException;
-
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-
+import javax.validation.constraints.NotNull;
 
 public interface ComprobantesService
-        extends EntityService<ComprobantesDto, ComprobantesSearchFilter> {
+    extends EntityService<ComprobantesDto, ComprobantesSearchFilter> {
 
+  BigDecimal calcularTotalVentas(@NotNull ComprobantesSearchFilter sf);
 
-    BigDecimal calcularTotalVentas(@NotNull ComprobantesSearchFilter sf);
-
-    void anularVenta(@NotNull Long idComprobante) throws ServiceException;
-
+  void anularVenta(@NotNull Long idComprobante) throws ServiceException;
 }

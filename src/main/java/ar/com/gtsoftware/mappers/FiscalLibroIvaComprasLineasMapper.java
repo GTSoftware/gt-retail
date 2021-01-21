@@ -21,9 +21,8 @@ import ar.com.gtsoftware.domain.FiscalLibroIvaComprasLineas;
 import ar.com.gtsoftware.dto.domain.FiscalLibroIvaComprasLineasDto;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring",
-        uses = {FiscalLibroIvaComprasMapper.class,
-                FiscalAlicuotasIvaMapper.class})
+@Mapper(
+    componentModel = "spring",
+    uses = {FiscalLibroIvaComprasMapper.class, FiscalAlicuotasIvaMapper.class})
 public interface FiscalLibroIvaComprasLineasMapper
-        extends GenericMapper<FiscalLibroIvaComprasLineas, FiscalLibroIvaComprasLineasDto> {
-}
+    extends GenericMapper<FiscalLibroIvaComprasLineas, FiscalLibroIvaComprasLineasDto> {}

@@ -21,10 +21,7 @@ import ar.com.gtsoftware.domain.ChequesTerceros;
 import ar.com.gtsoftware.dto.domain.ChequesTercerosDto;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring",
-        uses = {BancosMapper.class})
-public interface ChequesTercerosMapper
-        extends GenericMapper<ChequesTerceros, ChequesTercerosDto> {
-
-
-}
+@Mapper(
+    componentModel = "spring",
+    uses = {BancosMapper.class})
+public interface ChequesTercerosMapper extends GenericMapper<ChequesTerceros, ChequesTercerosDto> {}

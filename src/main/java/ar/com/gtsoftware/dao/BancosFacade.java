@@ -18,42 +18,38 @@ package ar.com.gtsoftware.dao;
 import ar.com.gtsoftware.domain.Bancos;
 import ar.com.gtsoftware.domain.Bancos_;
 import ar.com.gtsoftware.search.BancosSearchFilter;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Repository;
 
-/**
- * @author rodrigo
- */
+/** @author rodrigo */
 @Repository
 public class BancosFacade extends AbstractFacade<Bancos, BancosSearchFilter> {
 
+  private final EntityManager em;
 
-    private final EntityManager em;
+  public BancosFacade(EntityManager em) {
+    super(Bancos.class);
+    this.em = em;
+  }
 
-    public BancosFacade(EntityManager em) {
-        super(Bancos.class);
-        this.em = em;
+  @Override
+  protected EntityManager getEntityManager() {
+    return em;
+  }
+
+  @Override
+  public Predicate createWhereFromSearchFilter(
+      BancosSearchFilter sf, CriteriaBuilder cb, Root<Bancos> root) {
+    Predicate p = null;
+    if (StringUtils.isNotEmpty(sf.getNombreBanco())) {
+      String s = sf.getNombreBanco().toUpperCase();
+      p = cb.like(root.get(Bancos_.razonSocial), String.format("%%%s%%", s));
     }
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
-
-    @Override
-    public Predicate createWhereFromSearchFilter(BancosSearchFilter sf, CriteriaBuilder cb, Root<Bancos> root) {
-        Predicate p = null;
-        if (StringUtils.isNotEmpty(sf.getNombreBanco())) {
-            String s = sf.getNombreBanco().toUpperCase();
-            p = cb.like(root.get(Bancos_.razonSocial), String.format("%%%s%%", s));
-        }
-
-        return p;
-    }
-
+    return p;
+  }
 }

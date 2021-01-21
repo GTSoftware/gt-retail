@@ -16,10 +16,8 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
-import lombok.*;
-
 import java.math.BigDecimal;
-
+import lombok.*;
 
 @Getter
 @Setter
@@ -29,14 +27,12 @@ import java.math.BigDecimal;
 @Builder
 public class NegocioPlanesPagoDetalleDto {
 
-    @EqualsAndHashCode.Include
-    private Long id;
+  @EqualsAndHashCode.Include private Long id;
 
-    private boolean activo;
+  private boolean activo;
 
-    private int cuotas;
+  private int cuotas;
 
-    private BigDecimal coeficienteInteres;
-    private Integer version;
-
+  private BigDecimal coeficienteInteres;
+  private Integer version;
 }

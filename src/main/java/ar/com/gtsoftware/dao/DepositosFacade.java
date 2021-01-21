@@ -15,52 +15,52 @@
  */
 package ar.com.gtsoftware.dao;
 
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
+
 import ar.com.gtsoftware.domain.Depositos;
 import ar.com.gtsoftware.domain.Depositos_;
 import ar.com.gtsoftware.domain.Sucursales_;
 import ar.com.gtsoftware.search.DepositosSearchFilter;
-import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-
-import static org.apache.commons.lang3.StringUtils.isNotEmpty;
+import org.springframework.stereotype.Repository;
 
 @Repository
 public class DepositosFacade extends AbstractFacade<Depositos, DepositosSearchFilter> {
 
+  private final EntityManager em;
 
-    private final EntityManager em;
+  public DepositosFacade(EntityManager em) {
+    super(Depositos.class);
+    this.em = em;
+  }
 
-    public DepositosFacade(EntityManager em) {
-        super(Depositos.class);
-        this.em = em;
+  @Override
+  protected EntityManager getEntityManager() {
+    return em;
+  }
+
+  @Override
+  public Predicate createWhereFromSearchFilter(
+      DepositosSearchFilter sf, CriteriaBuilder cb, Root<Depositos> root) {
+    Predicate p = null;
+
+    if (sf.getActivo() != null) {
+      Predicate p1 = cb.equal(root.get(Depositos_.activo), sf.getActivo());
+      p = appendAndPredicate(cb, p, p1);
     }
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
+    if (sf.getIdSucursal() != null) {
+      Predicate p1 =
+          cb.equal(root.get(Depositos_.idSucursal).get(Sucursales_.id), sf.getIdSucursal());
+      p = appendAndPredicate(cb, p, p1);
     }
-
-    @Override
-    public Predicate createWhereFromSearchFilter(DepositosSearchFilter sf, CriteriaBuilder cb, Root<Depositos> root) {
-        Predicate p = null;
-
-        if (sf.getActivo() != null) {
-            Predicate p1 = cb.equal(root.get(Depositos_.activo), sf.getActivo());
-            p = appendAndPredicate(cb, p, p1);
-        }
-
-        if (sf.getIdSucursal() != null) {
-            Predicate p1 = cb.equal(root.get(Depositos_.idSucursal).get(Sucursales_.id), sf.getIdSucursal());
-            p = appendAndPredicate(cb, p, p1);
-        }
-        if (isNotEmpty(sf.getNombreDeposito())) {
-            throw new UnsupportedOperationException("La busqueda por nombre de deposito no està implementada aun");
-        }
-        return p;
+    if (isNotEmpty(sf.getNombreDeposito())) {
+      throw new UnsupportedOperationException(
+          "La busqueda por nombre de deposito no està implementada aun");
     }
-
+    return p;
+  }
 }

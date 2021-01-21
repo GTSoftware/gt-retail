@@ -15,55 +15,60 @@
  */
 package ar.com.gtsoftware.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
 
-/**
- * @author Rodrigo Tato mailto:rotatomel@gmail.com
- */
+/** @author Rodrigo Tato mailto:rotatomel@gmail.com */
 @Entity
 @Table(name = "negocio_condiciones_operaciones")
 @Getter
 @Setter
 public class NegocioCondicionesOperaciones extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ventas_condiciones_id_condicion_venta")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "ventas_condiciones_id_condicion_venta",
-            sequenceName = "ventas_condiciones_id_condicion_venta_seq")
-    @Basic(optional = false)
-    @Column(name = "id_condicion", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(
+      strategy = GenerationType.SEQUENCE,
+      generator = "ventas_condiciones_id_condicion_venta")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "ventas_condiciones_id_condicion_venta",
+      sequenceName = "ventas_condiciones_id_condicion_venta_seq")
+  @Basic(optional = false)
+  @Column(name = "id_condicion", nullable = false, updatable = false)
+  private Long id;
 
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 60)
-    @Column(name = "nombre_condicion")
-    private String nombreCondicion;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "activo")
-    private boolean activo;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "venta")
-    private boolean venta;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "compra")
-    private boolean compra;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "pago_total")
-    private boolean pagoTotal;
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 60)
+  @Column(name = "nombre_condicion")
+  private String nombreCondicion;
 
-    @Override
-    public String toString() {
-        return "ar.com.gtsoftware.model.NegocioCondicionesOperacionesDto[ idCondicion=" + id + " ]";
-    }
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "activo")
+  private boolean activo;
 
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "venta")
+  private boolean venta;
+
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "compra")
+  private boolean compra;
+
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "pago_total")
+  private boolean pagoTotal;
+
+  @Override
+  public String toString() {
+    return "ar.com.gtsoftware.model.NegocioCondicionesOperacionesDto[ idCondicion=" + id + " ]";
+  }
 }

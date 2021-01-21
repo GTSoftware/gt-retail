@@ -4,33 +4,33 @@ import ar.com.gtsoftware.dto.reportes.ProductoConQuiebreStock;
 import ar.com.gtsoftware.dto.reportes.QuiebreStockReport;
 import ar.com.gtsoftware.search.reportes.ReporteQuiebreStockSearchFilter;
 import ar.com.gtsoftware.service.ReporteQuiebreStockService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
-
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
 public class ReporteQuiebreStockServiceImpl implements ReporteQuiebreStockService {
 
-    private final EntityManager em;
+  private final EntityManager em;
 
-    @Override
-    public QuiebreStockReport obtenerReporte(ReporteQuiebreStockSearchFilter filter) {
+  @Override
+  public QuiebreStockReport obtenerReporte(ReporteQuiebreStockSearchFilter filter) {
 
-        TypedQuery<ProductoConQuiebreStock> q = em.createNamedQuery("QuiebreStockQuery", ProductoConQuiebreStock.class);
+    TypedQuery<ProductoConQuiebreStock> q =
+        em.createNamedQuery("QuiebreStockQuery", ProductoConQuiebreStock.class);
 
-        q.setParameter("fechaDesde", filter.getFechaDesde());
-        q.setParameter("fechaHasta", filter.getFechaHasta());
-        q.setParameter("idSucursal", filter.getIdSucursal());
+    q.setParameter("fechaDesde", filter.getFechaDesde());
+    q.setParameter("fechaHasta", filter.getFechaHasta());
+    q.setParameter("idSucursal", filter.getIdSucursal());
 
-        List<ProductoConQuiebreStock> items = q.getResultList();
+    List<ProductoConQuiebreStock> items = q.getResultList();
 
-        QuiebreStockReport report = new QuiebreStockReport(items.size());
-        report.setPageRows(items);
+    QuiebreStockReport report = new QuiebreStockReport(items.size());
+    report.setPageRows(items);
 
-        return report;
-    }
+    return report;
+  }
 }

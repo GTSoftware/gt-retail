@@ -19,7 +19,7 @@ package ar.com.gtsoftware.dto.reportes;
 
 public class VentasMensualesReport extends GenericReport<VentaMensual> {
 
-    public VentasMensualesReport(int totalRows) {
-        super(totalRows);
-    }
+  public VentasMensualesReport(int totalRows) {
+    super(totalRows);
+  }
 }

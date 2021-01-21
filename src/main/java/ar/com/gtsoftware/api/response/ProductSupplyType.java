@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 @Builder
 public class ProductSupplyType {
-    private Long supplyTypeId;
-    private String supplyTypeName;
-    private String displayName;
+  private Long supplyTypeId;
+  private String supplyTypeName;
+  private String displayName;
 }

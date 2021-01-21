@@ -17,9 +17,8 @@
 
 package ar.com.gtsoftware.search.reportes;
 
-import lombok.*;
-
 import java.time.LocalDate;
+import lombok.*;
 
 @Getter
 @Setter
@@ -28,17 +27,15 @@ import java.time.LocalDate;
 @Builder
 public class ReporteQuiebreStockSearchFilter extends AbstractReportSearchFilter {
 
-    private LocalDate fechaDesde, fechaHasta;
-    private Long idSucursal;
+  private LocalDate fechaDesde, fechaHasta;
+  private Long idSucursal;
 
-    @Override
-    public boolean hasFilter() {
-        return hasFechasFilter()
-                || idSucursal != null;
-    }
+  @Override
+  public boolean hasFilter() {
+    return hasFechasFilter() || idSucursal != null;
+  }
 
-    public boolean hasFechasFilter() {
-        return (fechaDesde != null && fechaHasta != null);
-    }
-
+  public boolean hasFechasFilter() {
+    return (fechaDesde != null && fechaHasta != null);
+  }
 }

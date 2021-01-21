@@ -19,10 +19,8 @@ package ar.com.gtsoftware.service;
 
 import javax.validation.constraints.NotNull;
 
-
 public interface FiscalLetrasComprobantesService {
 
-    String obtenerLetra(@NotNull Long idResponsabilidadIvaEmisor,
-                        @NotNull Long idResponsabilidadIvaReceptor);
-
+  String obtenerLetra(
+      @NotNull Long idResponsabilidadIvaEmisor, @NotNull Long idResponsabilidadIvaReceptor);
 }

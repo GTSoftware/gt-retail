@@ -15,13 +15,12 @@
  */
 package ar.com.gtsoftware.dto.fiscal;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * Clase para representar un ticket de autorización para los WS de AFIP
@@ -34,13 +33,13 @@ import java.time.LocalDateTime;
 @Builder
 public class AuthTicket implements Serializable {
 
-    private String token;
-    private String sign;
-    private LocalDateTime expirationDate;
+  private String token;
+  private String sign;
+  private LocalDateTime expirationDate;
 
-    @Override
-    public String toString() {
-        return String.format("AuthTicket{token=%s, sign=%s, expirationDate=%s}", token, sign, expirationDate);
-    }
-
+  @Override
+  public String toString() {
+    return String.format(
+        "AuthTicket{token=%s, sign=%s, expirationDate=%s}", token, sign, expirationDate);
+  }
 }

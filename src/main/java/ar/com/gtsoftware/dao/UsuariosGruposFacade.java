@@ -17,34 +17,32 @@ package ar.com.gtsoftware.dao;
 
 import ar.com.gtsoftware.domain.UsuariosGrupos;
 import ar.com.gtsoftware.search.AbstractSearchFilter;
-import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.springframework.stereotype.Repository;
 
-/**
- * @author rodrigo
- */
+/** @author rodrigo */
 @Repository
 public class UsuariosGruposFacade extends AbstractFacade<UsuariosGrupos, AbstractSearchFilter> {
 
-    private final EntityManager em;
+  private final EntityManager em;
 
-    public UsuariosGruposFacade(EntityManager em) {
-        super(UsuariosGrupos.class);
-        this.em = em;
-    }
+  public UsuariosGruposFacade(EntityManager em) {
+    super(UsuariosGrupos.class);
+    this.em = em;
+  }
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
+  @Override
+  protected EntityManager getEntityManager() {
+    return em;
+  }
 
-    @Override
-    public Predicate createWhereFromSearchFilter(AbstractSearchFilter sf, CriteriaBuilder cb, Root<UsuariosGrupos> root) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+  @Override
+  public Predicate createWhereFromSearchFilter(
+      AbstractSearchFilter sf, CriteriaBuilder cb, Root<UsuariosGrupos> root) {
+    throw new UnsupportedOperationException(
+        "Not supported yet."); // To change body of generated methods, choose Tools | Templates.
+  }
 }

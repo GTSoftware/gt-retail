@@ -30,19 +30,20 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class ComprobantesPagosServiceImpl
-        extends BaseEntityService<ComprobantesPagosDto, ComprobantesPagosSearchFilter, ComprobantesPagos>
-        implements ComprobantesPagosService {
+    extends BaseEntityService<
+        ComprobantesPagosDto, ComprobantesPagosSearchFilter, ComprobantesPagos>
+    implements ComprobantesPagosService {
 
-    private final ComprobantesPagosFacade facade;
-    private final ComprobantesPagosMapper mapper;
+  private final ComprobantesPagosFacade facade;
+  private final ComprobantesPagosMapper mapper;
 
-    @Override
-    protected ComprobantesPagosFacade getFacade() {
-        return facade;
-    }
+  @Override
+  protected ComprobantesPagosFacade getFacade() {
+    return facade;
+  }
 
-    @Override
-    protected ComprobantesPagosMapper getMapper() {
-        return mapper;
-    }
+  @Override
+  protected ComprobantesPagosMapper getMapper() {
+    return mapper;
+  }
 }

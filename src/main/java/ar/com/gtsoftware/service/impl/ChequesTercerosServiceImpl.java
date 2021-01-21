@@ -30,20 +30,19 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class ChequesTercerosServiceImpl
-        extends BaseEntityService<ChequesTercerosDto, ChequesTercerosSearchFilter, ChequesTerceros>
-        implements ChequesTercerosService {
+    extends BaseEntityService<ChequesTercerosDto, ChequesTercerosSearchFilter, ChequesTerceros>
+    implements ChequesTercerosService {
 
-    private final ChequesTercerosFacade facade;
-    private final ChequesTercerosMapper mapper;
+  private final ChequesTercerosFacade facade;
+  private final ChequesTercerosMapper mapper;
 
+  @Override
+  protected ChequesTercerosFacade getFacade() {
+    return facade;
+  }
 
-    @Override
-    protected ChequesTercerosFacade getFacade() {
-        return facade;
-    }
-
-    @Override
-    protected ChequesTercerosMapper getMapper() {
-        return mapper;
-    }
+  @Override
+  protected ChequesTercerosMapper getMapper() {
+    return mapper;
+  }
 }

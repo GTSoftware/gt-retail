@@ -16,10 +16,9 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
-import lombok.*;
-
 import java.math.BigDecimal;
 import java.util.Date;
+import lombok.*;
 
 /**
  * Movimientos de cajas
@@ -33,15 +32,12 @@ import java.util.Date;
 @Builder
 public class CajasMovimientosDto {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @EqualsAndHashCode.Include
-    private Long id;
-    private CajasDto idCaja;
-    private Date fechaMovimiento;
-    private BigDecimal montoMovimiento;
-    private String descripcion;
-    private Integer version;
-
-
+  @EqualsAndHashCode.Include private Long id;
+  private CajasDto idCaja;
+  private Date fechaMovimiento;
+  private BigDecimal montoMovimiento;
+  private String descripcion;
+  private Integer version;
 }

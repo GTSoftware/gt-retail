@@ -20,14 +20,13 @@ package ar.com.gtsoftware.service;
 import ar.com.gtsoftware.dto.domain.NegocioTiposComprobanteDto;
 import ar.com.gtsoftware.search.NegocioTiposComprobanteSearchFilter;
 
-
 public interface NegocioTiposComprobanteService
-        extends EntityService<NegocioTiposComprobanteDto, NegocioTiposComprobanteSearchFilter> {
+    extends EntityService<NegocioTiposComprobanteDto, NegocioTiposComprobanteSearchFilter> {
 
-    /**
-     * Obtiene el tipo de comprobante para Factura
-     *
-     * @return
-     */
-    NegocioTiposComprobanteDto getTipoFactura();
+  /**
+   * Obtiene el tipo de comprobante para Factura
+   *
+   * @return
+   */
+  NegocioTiposComprobanteDto getTipoFactura();
 }

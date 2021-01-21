@@ -16,10 +16,9 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
-import lombok.*;
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import lombok.*;
 
 @Getter
 @Setter
@@ -29,12 +28,11 @@ import javax.validation.constraints.Size;
 @Builder
 public class UbicacionPaisesDto {
 
-    @EqualsAndHashCode.Include
-    private Long id;
-    @NotNull
-    @Size(min = 1, max = 60)
-    private String nombrePais;
+  @EqualsAndHashCode.Include private Long id;
 
-    private Integer version;
+  @NotNull
+  @Size(min = 1, max = 60)
+  private String nombrePais;
 
+  private Integer version;
 }

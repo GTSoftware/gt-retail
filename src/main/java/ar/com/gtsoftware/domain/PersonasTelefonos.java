@@ -15,18 +15,14 @@
  */
 package ar.com.gtsoftware.domain;
 
-
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
-/**
- * @author rodrigo
- */
+/** @author rodrigo */
 @Entity
 @Table(name = "personas_telefonos")
 @Getter
@@ -34,25 +30,31 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 public class PersonasTelefonos extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "personas_telefonos_id_telefono")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "personas_telefonos_id_telefono",
-            sequenceName = "personas_telefonos_id_telefono_seq")
-    @Basic(optional = false)
-    @Column(name = "id_telefono", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "personas_telefonos_id_telefono")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "personas_telefonos_id_telefono",
+      sequenceName = "personas_telefonos_id_telefono_seq")
+  @Basic(optional = false)
+  @Column(name = "id_telefono", nullable = false, updatable = false)
+  private Long id;
 
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "numero")
-    //@Pattern(regexp = "(?<=\\s|:)\\(?(?:(0?[1-3]\\d{1,2})\\)?(?:\\s|-)?)?((?:\\d[\\d-]{5}|15[\\s\\d-]{7})\\d+)", message = "Número de teléfono no válido")
-    private String numero;
-    @Size(max = 100)
-    @Column(name = "referencia")
-    private String referencia;
-    @JoinColumn(name = "id_persona", referencedColumnName = "id_persona", columnDefinition = "int4")
-    @ManyToOne(optional = false)
-    private Personas idPersona;
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 50)
+  @Column(name = "numero")
+  // @Pattern(regexp =
+  // "(?<=\\s|:)\\(?(?:(0?[1-3]\\d{1,2})\\)?(?:\\s|-)?)?((?:\\d[\\d-]{5}|15[\\s\\d-]{7})\\d+)",
+  // message = "Número de teléfono no válido")
+  private String numero;
 
+  @Size(max = 100)
+  @Column(name = "referencia")
+  private String referencia;
+
+  @JoinColumn(name = "id_persona", referencedColumnName = "id_persona", columnDefinition = "int4")
+  @ManyToOne(optional = false)
+  private Personas idPersona;
 }

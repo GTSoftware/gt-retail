@@ -23,5 +23,4 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface NegocioCondicionesOperacionesMapper
-        extends GenericMapper<NegocioCondicionesOperaciones, NegocioCondicionesOperacionesDto> {
-}
+    extends GenericMapper<NegocioCondicionesOperaciones, NegocioCondicionesOperacionesDto> {}

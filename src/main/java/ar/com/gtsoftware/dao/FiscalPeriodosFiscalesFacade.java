@@ -18,57 +18,64 @@ package ar.com.gtsoftware.dao;
 import ar.com.gtsoftware.domain.FiscalPeriodosFiscales;
 import ar.com.gtsoftware.domain.FiscalPeriodosFiscales_;
 import ar.com.gtsoftware.search.FiscalPeriodosFiscalesSearchFilter;
-import org.springframework.stereotype.Repository;
-
+import java.time.LocalDateTime;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.time.LocalDateTime;
+import org.springframework.stereotype.Repository;
 
 @Repository
-public class FiscalPeriodosFiscalesFacade extends AbstractFacade<FiscalPeriodosFiscales, FiscalPeriodosFiscalesSearchFilter> {
+public class FiscalPeriodosFiscalesFacade
+    extends AbstractFacade<FiscalPeriodosFiscales, FiscalPeriodosFiscalesSearchFilter> {
 
+  private final EntityManager em;
 
-    private final EntityManager em;
+  public FiscalPeriodosFiscalesFacade(EntityManager em) {
+    super(FiscalPeriodosFiscales.class);
+    this.em = em;
+  }
 
-    public FiscalPeriodosFiscalesFacade(EntityManager em) {
-        super(FiscalPeriodosFiscales.class);
-        this.em = em;
+  @Override
+  protected EntityManager getEntityManager() {
+    return em;
+  }
+
+  @Override
+  public Predicate createWhereFromSearchFilter(
+      FiscalPeriodosFiscalesSearchFilter psf,
+      CriteriaBuilder cb,
+      Root<FiscalPeriodosFiscales> root) {
+
+    Predicate p = null;
+    if (psf.getVigente() != null) {
+      Predicate p3 =
+          cb.between(
+              cb.literal(LocalDateTime.now()),
+              root.get(FiscalPeriodosFiscales_.fechaInicioPeriodo),
+              root.get(FiscalPeriodosFiscales_.fechaFinPeriodo));
+      if (psf.getVigente()) {
+        p = appendAndPredicate(cb, p, p3);
+      } else {
+        p = appendAndPredicate(cb, p, cb.not(p3));
+      }
     }
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
+    if (psf.getCerrado() != null) {
+      Predicate p1 = cb.equal(root.get(FiscalPeriodosFiscales_.periodoCerrado), psf.getCerrado());
+      p = appendAndPredicate(cb, p, p1);
     }
 
-    @Override
-    public Predicate createWhereFromSearchFilter(FiscalPeriodosFiscalesSearchFilter psf, CriteriaBuilder cb, Root<FiscalPeriodosFiscales> root) {
-
-        Predicate p = null;
-        if (psf.getVigente() != null) {
-            Predicate p3 = cb.between(cb.literal(LocalDateTime.now()),
-                    root.get(FiscalPeriodosFiscales_.fechaInicioPeriodo),
-                    root.get(FiscalPeriodosFiscales_.fechaFinPeriodo));
-            if (psf.getVigente()) {
-                p = appendAndPredicate(cb, p, p3);
-            } else {
-                p = appendAndPredicate(cb, p, cb.not(p3));
-            }
-        }
-
-        if (psf.getCerrado() != null) {
-            Predicate p1 = cb.equal(root.get(FiscalPeriodosFiscales_.periodoCerrado), psf.getCerrado());
-            p = appendAndPredicate(cb, p, p1);
-        }
-
-        if (psf.getFechaActual() != null) {
-            Predicate pDesde = cb.lessThanOrEqualTo(root.get(FiscalPeriodosFiscales_.fechaInicioPeriodo), psf.getFechaActual());
-            Predicate pHasta = cb.greaterThanOrEqualTo(root.get(FiscalPeriodosFiscales_.fechaFinPeriodo), psf.getFechaActual());
-            p = appendAndPredicate(cb, p, pDesde);
-            p = appendAndPredicate(cb, p, pHasta);
-        }
-        return p;
+    if (psf.getFechaActual() != null) {
+      Predicate pDesde =
+          cb.lessThanOrEqualTo(
+              root.get(FiscalPeriodosFiscales_.fechaInicioPeriodo), psf.getFechaActual());
+      Predicate pHasta =
+          cb.greaterThanOrEqualTo(
+              root.get(FiscalPeriodosFiscales_.fechaFinPeriodo), psf.getFechaActual());
+      p = appendAndPredicate(cb, p, pDesde);
+      p = appendAndPredicate(cb, p, pHasta);
     }
-
+    return p;
+  }
 }

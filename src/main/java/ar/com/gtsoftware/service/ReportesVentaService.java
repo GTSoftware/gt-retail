@@ -20,10 +20,9 @@ package ar.com.gtsoftware.service;
 import ar.com.gtsoftware.dto.reportes.VentaPorProductoReport;
 import ar.com.gtsoftware.search.reportes.ReporteVentasSearchFilter;
 
+public interface ReportesVentaService
+    extends ReportsService<VentaPorProductoReport, ReporteVentasSearchFilter> {
 
-public interface ReportesVentaService extends ReportsService<VentaPorProductoReport, ReporteVentasSearchFilter> {
-
-    @Override
-    VentaPorProductoReport obtenerReporte(ReporteVentasSearchFilter filter);
-
+  @Override
+  VentaPorProductoReport obtenerReporte(ReporteVentasSearchFilter filter);
 }

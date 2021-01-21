@@ -16,10 +16,9 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
-import lombok.*;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
+import lombok.*;
 
 /**
  * Clase que almacena la información de el detalle de la factura para el libro de iva ventas
@@ -33,15 +32,13 @@ import java.math.BigDecimal;
 @Builder
 public class FiscalLibroIvaVentasLineasDto implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @EqualsAndHashCode.Include
-    private Long id;
-    private BigDecimal netoGravado;
-    private BigDecimal noGravado;
-    private BigDecimal importeIva;
-    private FiscalLibroIvaVentasDto idRegistro;
-    private FiscalAlicuotasIvaDto idAlicuotaIva;
-    private Integer version;
-
+  @EqualsAndHashCode.Include private Long id;
+  private BigDecimal netoGravado;
+  private BigDecimal noGravado;
+  private BigDecimal importeIva;
+  private FiscalLibroIvaVentasDto idRegistro;
+  private FiscalAlicuotasIvaDto idAlicuotaIva;
+  private Integer version;
 }

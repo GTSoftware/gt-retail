@@ -15,40 +15,41 @@
  */
 package ar.com.gtsoftware.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
-/**
- * @author rodrigo
- */
+/** @author rodrigo */
 @Entity
 @Table(name = "contabilidad_libros")
 @Getter
 @Setter
 public class ContabilidadLibros extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contabilidad_libros_id_libro")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "contabilidad_libros_id_libro",
-            sequenceName = "contabilidad_libros_id_libro_seq")
-    @Basic(optional = false)
-    @Column(name = "id_libro", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contabilidad_libros_id_libro")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "contabilidad_libros_id_libro",
+      sequenceName = "contabilidad_libros_id_libro_seq")
+  @Basic(optional = false)
+  @Column(name = "id_libro", nullable = false, updatable = false)
+  private Long id;
 
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "nombre_libro")
-    private String nombreLibro;
-    @Size(max = 255)
-    @Column(name = "descripcion_libro")
-    private String descripcionLibro;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idLibro")
-    private List<ContabilidadRegistroContable> contabilidadRegistroContableList;
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 100)
+  @Column(name = "nombre_libro")
+  private String nombreLibro;
 
+  @Size(max = 255)
+  @Column(name = "descripcion_libro")
+  private String descripcionLibro;
+
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "idLibro")
+  private List<ContabilidadRegistroContable> contabilidadRegistroContableList;
 }

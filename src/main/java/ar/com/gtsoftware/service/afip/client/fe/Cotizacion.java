@@ -1,10 +1,11 @@
 //
-// Este archivo ha sido generado por la arquitectura JavaTM para la implantación de la referencia de enlace (JAXB) XML v2.2.8-b130911.1802 
-// Visite <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
-// Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el esquema de origen. 
-// Generado el: 2020.05.28 a las 09:17:55 PM ART 
+// Este archivo ha sido generado por la arquitectura JavaTM para la implantación de la referencia de
+// enlace (JAXB) XML v2.2.8-b130911.1802
+// Visite <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a>
+// Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el
+// esquema de origen.
+// Generado el: 2020.05.28 a las 09:17:55 PM ART
 //
-
 
 package ar.com.gtsoftware.service.afip.client.fe;
 
@@ -14,11 +15,11 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Clase Java para Cotizacion complex type.
+ * Clase Java para Cotizacion complex type.
  *
- * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
+ * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta
+ * clase.
  *
  * <pre>
  * &lt;complexType name="Cotizacion">
@@ -35,82 +36,103 @@ import javax.xml.bind.annotation.XmlType;
  * </pre>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Cotizacion", propOrder = {
-        "monId",
-        "monCotiz",
-        "fchCotiz"
-})
-@Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
+@XmlType(
+    name = "Cotizacion",
+    propOrder = {"monId", "monCotiz", "fchCotiz"})
+@Generated(
+    value = "com.sun.tools.internal.xjc.Driver",
+    date = "2020-05-28T09:17:55-03:00",
+    comments = "JAXB RI v2.2.8-b130911.1802")
 public class Cotizacion {
 
-    @XmlElement(name = "MonId")
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    protected String monId;
-    @XmlElement(name = "MonCotiz")
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    protected double monCotiz;
-    @XmlElement(name = "FchCotiz")
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    protected String fchCotiz;
+  @XmlElement(name = "MonId")
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  protected String monId;
 
-    /**
-     * Obtiene el valor de la propiedad monId.
-     *
-     * @return possible object is
-     * {@link String }
-     */
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    public String getMonId() {
-        return monId;
-    }
+  @XmlElement(name = "MonCotiz")
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  protected double monCotiz;
 
-    /**
-     * Define el valor de la propiedad monId.
-     *
-     * @param value allowed object is
-     *              {@link String }
-     */
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    public void setMonId(String value) {
-        this.monId = value;
-    }
+  @XmlElement(name = "FchCotiz")
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  protected String fchCotiz;
 
-    /**
-     * Obtiene el valor de la propiedad monCotiz.
-     */
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    public double getMonCotiz() {
-        return monCotiz;
-    }
+  /**
+   * Obtiene el valor de la propiedad monId.
+   *
+   * @return possible object is {@link String }
+   */
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  public String getMonId() {
+    return monId;
+  }
 
-    /**
-     * Define el valor de la propiedad monCotiz.
-     */
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    public void setMonCotiz(double value) {
-        this.monCotiz = value;
-    }
+  /**
+   * Define el valor de la propiedad monId.
+   *
+   * @param value allowed object is {@link String }
+   */
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  public void setMonId(String value) {
+    this.monId = value;
+  }
 
-    /**
-     * Obtiene el valor de la propiedad fchCotiz.
-     *
-     * @return possible object is
-     * {@link String }
-     */
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    public String getFchCotiz() {
-        return fchCotiz;
-    }
+  /** Obtiene el valor de la propiedad monCotiz. */
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  public double getMonCotiz() {
+    return monCotiz;
+  }
 
-    /**
-     * Define el valor de la propiedad fchCotiz.
-     *
-     * @param value allowed object is
-     *              {@link String }
-     */
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    public void setFchCotiz(String value) {
-        this.fchCotiz = value;
-    }
+  /** Define el valor de la propiedad monCotiz. */
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  public void setMonCotiz(double value) {
+    this.monCotiz = value;
+  }
 
+  /**
+   * Obtiene el valor de la propiedad fchCotiz.
+   *
+   * @return possible object is {@link String }
+   */
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  public String getFchCotiz() {
+    return fchCotiz;
+  }
+
+  /**
+   * Define el valor de la propiedad fchCotiz.
+   *
+   * @param value allowed object is {@link String }
+   */
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  public void setFchCotiz(String value) {
+    this.fchCotiz = value;
+  }
 }

@@ -16,11 +16,10 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
-import lombok.*;
-
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import javax.validation.constraints.NotNull;
+import lombok.*;
 
 @Getter
 @Setter
@@ -30,19 +29,15 @@ import java.time.LocalDateTime;
 @Builder
 public class RemitoRecepcionDto implements Serializable {
 
-    @EqualsAndHashCode.Include
-    private Long id;
-    @NotNull
-    private RemitoDto remito;
+  @EqualsAndHashCode.Include private Long id;
+  @NotNull private RemitoDto remito;
 
-    private LocalDateTime fecha;
+  private LocalDateTime fecha;
 
-    @NotNull
-    private UsuariosDto idUsuario;
+  @NotNull private UsuariosDto idUsuario;
 
-    private PersonasDto idPersona;
+  private PersonasDto idPersona;
 
-    private DepositosDto idDeposito;
-    private Integer version;
-
+  private DepositosDto idDeposito;
+  private Integer version;
 }

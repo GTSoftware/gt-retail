@@ -17,9 +17,7 @@ package ar.com.gtsoftware.search;
 
 import lombok.*;
 
-/**
- * @author fede
- */
+/** @author fede */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -27,29 +25,26 @@ import lombok.*;
 @Builder
 public class ProductoXDepositoSearchFilter extends AbstractSearchFilter {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    private Long idDeposito;
-    private Long idProducto;
-    private Long idSucursal;
+  private Long idDeposito;
+  private Long idProducto;
+  private Long idSucursal;
 
-    @Override
-    public boolean hasFilter() {
-        return hasIdDeposito()
-                || hasIdProducto()
-                || hasIdSucursal();
-    }
+  @Override
+  public boolean hasFilter() {
+    return hasIdDeposito() || hasIdProducto() || hasIdSucursal();
+  }
 
-    public boolean hasIdProducto() {
-        return idProducto != null;
-    }
+  public boolean hasIdProducto() {
+    return idProducto != null;
+  }
 
-    public boolean hasIdDeposito() {
-        return idDeposito != null;
-    }
+  public boolean hasIdDeposito() {
+    return idDeposito != null;
+  }
 
-    public boolean hasIdSucursal() {
-        return idSucursal != null;
-    }
-
+  public boolean hasIdSucursal() {
+    return idSucursal != null;
+  }
 }

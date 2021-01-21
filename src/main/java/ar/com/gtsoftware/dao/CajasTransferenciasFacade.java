@@ -22,8 +22,7 @@ import ar.com.gtsoftware.domain.Cajas_;
 import ar.com.gtsoftware.domain.NegocioFormasPago_;
 import ar.com.gtsoftware.search.CajasSearchFilter;
 import ar.com.gtsoftware.search.CajasTransferenciasSearchFilter;
-import org.springframework.stereotype.Repository;
-
+import java.math.BigDecimal;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -31,104 +30,123 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
+import org.springframework.stereotype.Repository;
 
 @Repository
-public class CajasTransferenciasFacade extends AbstractFacade<CajasTransferencias, CajasTransferenciasSearchFilter> {
+public class CajasTransferenciasFacade
+    extends AbstractFacade<CajasTransferencias, CajasTransferenciasSearchFilter> {
 
+  private final EntityManager em;
 
-    private final EntityManager em;
+  public CajasTransferenciasFacade(EntityManager em) {
+    super(CajasTransferencias.class);
+    this.em = em;
+  }
 
-    public CajasTransferenciasFacade(EntityManager em) {
-        super(CajasTransferencias.class);
-        this.em = em;
+  @Override
+  protected EntityManager getEntityManager() {
+    return em;
+  }
+
+  @Override
+  public Predicate createWhereFromSearchFilter(
+      CajasTransferenciasSearchFilter psf, CriteriaBuilder cb, Root<CajasTransferencias> root) {
+    Predicate p = null;
+    if (psf.hasFechasFilter()) {
+      Predicate p1 =
+          cb.between(
+              root.get(CajasTransferencias_.fechaTransferencia),
+              psf.getFechaDesde(),
+              psf.getFechaHasta());
+      p = appendAndPredicate(cb, p1, p);
     }
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
+    if (psf.getIdCajaOrigen() != null) {
+      Predicate p1 =
+          cb.equal(
+              root.get(CajasTransferencias_.idCajaOrigen).get(Cajas_.id), psf.getIdCajaOrigen());
+      p = appendAndPredicate(cb, p1, p);
+    }
+    if (psf.getIdCajaDestino() != null) {
+      Predicate p1 =
+          cb.equal(
+              root.get(CajasTransferencias_.idCajaDestino).get(Cajas_.id), psf.getIdCajaDestino());
+      p = appendAndPredicate(cb, p1, p);
+    }
+    if (psf.getIdFormaPago() != null) {
+      Predicate p1 =
+          cb.equal(
+              root.get(CajasTransferencias_.idFormaPago).get(NegocioFormasPago_.id),
+              psf.getIdFormaPago());
+      p = appendAndPredicate(cb, p1, p);
+    }
+    if (psf.getIdCaja() != null) {
+      Predicate p1 =
+          cb.equal(root.get(CajasTransferencias_.idCajaOrigen).get(Cajas_.id), psf.getIdCaja());
+      Predicate p2 =
+          cb.equal(root.get(CajasTransferencias_.idCajaDestino).get(Cajas_.id), psf.getIdCaja());
+      p = appendAndPredicate(cb, cb.or(p1, p2), p);
+    }
+    return p;
+  }
+
+  public BigDecimal obtenerTotalTransferenciasEmitidas(@NotNull CajasSearchFilter csf) {
+    if (csf.getIdCaja() == null) {
+      throw new IllegalArgumentException("El idCaja no debe ser nulo");
     }
 
-    @Override
-    public Predicate createWhereFromSearchFilter(CajasTransferenciasSearchFilter psf, CriteriaBuilder cb, Root<CajasTransferencias> root) {
-        Predicate p = null;
-        if (psf.hasFechasFilter()) {
-            Predicate p1 = cb.between(root.get(CajasTransferencias_.fechaTransferencia), psf.getFechaDesde(), psf.getFechaHasta());
-            p = appendAndPredicate(cb, p1, p);
-        }
+    CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+    CriteriaQuery<BigDecimal> cq = cb.createQuery(BigDecimal.class);
+    Root<CajasTransferencias> root = cq.from(CajasTransferencias.class);
 
-        if (psf.getIdCajaOrigen() != null) {
-            Predicate p1 = cb.equal(root.get(CajasTransferencias_.idCajaOrigen).get(Cajas_.id), psf.getIdCajaOrigen());
-            p = appendAndPredicate(cb, p1, p);
-        }
-        if (psf.getIdCajaDestino() != null) {
-            Predicate p1 = cb.equal(root.get(CajasTransferencias_.idCajaDestino).get(Cajas_.id), psf.getIdCajaDestino());
-            p = appendAndPredicate(cb, p1, p);
-        }
-        if (psf.getIdFormaPago() != null) {
-            Predicate p1 = cb.equal(root.get(CajasTransferencias_.idFormaPago).get(NegocioFormasPago_.id), psf.getIdFormaPago());
-            p = appendAndPredicate(cb, p1, p);
-        }
-        if (psf.getIdCaja() != null) {
-            Predicate p1 = cb.equal(root.get(CajasTransferencias_.idCajaOrigen).get(Cajas_.id), psf.getIdCaja());
-            Predicate p2 = cb.equal(root.get(CajasTransferencias_.idCajaDestino).get(Cajas_.id), psf.getIdCaja());
-            p = appendAndPredicate(cb, cb.or(p1, p2), p);
-        }
-        return p;
-
+    CriteriaBuilder.Coalesce<BigDecimal> coalesce = cb.coalesce();
+    coalesce.value(cb.neg(cb.sum(root.get(CajasTransferencias_.monto))));
+    coalesce.value(BigDecimal.ZERO);
+    cq.select(coalesce);
+    Predicate p =
+        cb.equal(root.get(CajasTransferencias_.idCajaOrigen).get(Cajas_.id), csf.getIdCaja());
+    Predicate p1 = null;
+    if (csf.getIdFormaPago() != null) {
+      p1 =
+          cb.equal(
+              root.get(CajasTransferencias_.idFormaPago).get(NegocioFormasPago_.id),
+              csf.getIdFormaPago());
     }
 
-    public BigDecimal obtenerTotalTransferenciasEmitidas(@NotNull CajasSearchFilter csf) {
-        if (csf.getIdCaja() == null) {
-            throw new IllegalArgumentException("El idCaja no debe ser nulo");
-        }
+    p = appendAndPredicate(cb, p, p1);
 
-        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
-        CriteriaQuery<BigDecimal> cq = cb.createQuery(BigDecimal.class);
-        Root<CajasTransferencias> root = cq.from(CajasTransferencias.class);
+    cq.where(p);
+    TypedQuery<BigDecimal> q = getEntityManager().createQuery(cq);
+    return q.getSingleResult();
+  }
 
-        CriteriaBuilder.Coalesce<BigDecimal> coalesce = cb.coalesce();
-        coalesce.value(cb.neg(cb.sum(root.get(CajasTransferencias_.monto))));
-        coalesce.value(BigDecimal.ZERO);
-        cq.select(coalesce);
-        Predicate p = cb.equal(root.get(CajasTransferencias_.idCajaOrigen).get(Cajas_.id), csf.getIdCaja());
-        Predicate p1 = null;
-        if (csf.getIdFormaPago() != null) {
-            p1 = cb.equal(root.get(CajasTransferencias_.idFormaPago).get(NegocioFormasPago_.id), csf.getIdFormaPago());
-        }
-
-        p = appendAndPredicate(cb, p, p1);
-
-        cq.where(p);
-        TypedQuery<BigDecimal> q = getEntityManager().createQuery(cq);
-        return q.getSingleResult();
-
+  public BigDecimal obtenerTotalTransferenciasRecibidas(@NotNull CajasSearchFilter csf) {
+    if (csf.getIdCaja() == null) {
+      throw new IllegalArgumentException("El idCaja no debe ser nulo");
     }
 
-    public BigDecimal obtenerTotalTransferenciasRecibidas(@NotNull CajasSearchFilter csf) {
-        if (csf.getIdCaja() == null) {
-            throw new IllegalArgumentException("El idCaja no debe ser nulo");
-        }
+    CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+    CriteriaQuery<BigDecimal> cq = cb.createQuery(BigDecimal.class);
+    Root<CajasTransferencias> root = cq.from(CajasTransferencias.class);
 
-        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
-        CriteriaQuery<BigDecimal> cq = cb.createQuery(BigDecimal.class);
-        Root<CajasTransferencias> root = cq.from(CajasTransferencias.class);
-
-        CriteriaBuilder.Coalesce<BigDecimal> coalesce = cb.coalesce();
-        coalesce.value(cb.sum(root.get(CajasTransferencias_.monto)));
-        coalesce.value(BigDecimal.ZERO);
-        cq.select(coalesce);
-        Predicate p = cb.equal(root.get(CajasTransferencias_.idCajaDestino).get(Cajas_.id), csf.getIdCaja());
-        Predicate p1 = null;
-        if (csf.getIdFormaPago() != null) {
-            p1 = cb.equal(root.get(CajasTransferencias_.idFormaPago).get(NegocioFormasPago_.id), csf.getIdFormaPago());
-        }
-
-        p = appendAndPredicate(cb, p, p1);
-
-        cq.where(p);
-        TypedQuery<BigDecimal> q = getEntityManager().createQuery(cq);
-        return q.getSingleResult();
-
+    CriteriaBuilder.Coalesce<BigDecimal> coalesce = cb.coalesce();
+    coalesce.value(cb.sum(root.get(CajasTransferencias_.monto)));
+    coalesce.value(BigDecimal.ZERO);
+    cq.select(coalesce);
+    Predicate p =
+        cb.equal(root.get(CajasTransferencias_.idCajaDestino).get(Cajas_.id), csf.getIdCaja());
+    Predicate p1 = null;
+    if (csf.getIdFormaPago() != null) {
+      p1 =
+          cb.equal(
+              root.get(CajasTransferencias_.idFormaPago).get(NegocioFormasPago_.id),
+              csf.getIdFormaPago());
     }
+
+    p = appendAndPredicate(cb, p, p1);
+
+    cq.where(p);
+    TypedQuery<BigDecimal> q = getEntityManager().createQuery(cq);
+    return q.getSingleResult();
+  }
 }

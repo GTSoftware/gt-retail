@@ -15,43 +15,45 @@
  */
 package ar.com.gtsoftware.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
-/**
- * @author rodrigo
- */
+/** @author rodrigo */
 @Entity
 @Table(name = "contabilidad_monedas")
 @Getter
 @Setter
 public class ContabilidadMonedas extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contabilidad_monedas_id_moneda")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "contabilidad_monedas_id_moneda",
-            sequenceName = "contabilidad_monedas_id_moneda_seq")
-    @Basic(optional = false)
-    @Column(name = "id_moneda", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contabilidad_monedas_id_moneda")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "contabilidad_monedas_id_moneda",
+      sequenceName = "contabilidad_monedas_id_moneda_seq")
+  @Basic(optional = false)
+  @Column(name = "id_moneda", nullable = false, updatable = false)
+  private Long id;
 
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "nombre_moneda")
-    private String nombreMoneda;
-    @Size(max = 10)
-    @Column(name = "nombre_corto_moneda")
-    private String nombreCortoMoneda;
-    @Size(max = 5)
-    @Column(name = "simbolo_moneda")
-    private String simboloMoneda;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMoneda")
-    private List<BancosCuentas> bancosCuentasList;
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 100)
+  @Column(name = "nombre_moneda")
+  private String nombreMoneda;
 
+  @Size(max = 10)
+  @Column(name = "nombre_corto_moneda")
+  private String nombreCortoMoneda;
+
+  @Size(max = 5)
+  @Column(name = "simbolo_moneda")
+  private String simboloMoneda;
+
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMoneda")
+  private List<BancosCuentas> bancosCuentasList;
 }

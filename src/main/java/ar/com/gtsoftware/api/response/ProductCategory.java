@@ -9,7 +9,7 @@ import lombok.Setter;
 @Builder
 public class ProductCategory {
 
-    private Long categoryId;
-    private String categoryName;
-    private String displayName;
+  private Long categoryId;
+  private String categoryName;
+  private String displayName;
 }

@@ -30,18 +30,18 @@ import org.apache.commons.lang3.StringUtils;
 @Builder
 public class FormasPagoSearchFilter extends AbstractSearchFilter {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    private String nombre;
-    private Boolean disponibleVenta;
-    private Boolean disponibleCompra;
-    private Boolean requierePlanes;
+  private String nombre;
+  private Boolean disponibleVenta;
+  private Boolean disponibleCompra;
+  private Boolean requierePlanes;
 
-    @Override
-    public boolean hasFilter() {
-        return StringUtils.isNotEmpty(nombre) || disponibleCompra != null || disponibleVenta != null
-                || requierePlanes != null;
-    }
-
-
+  @Override
+  public boolean hasFilter() {
+    return StringUtils.isNotEmpty(nombre)
+        || disponibleCompra != null
+        || disponibleVenta != null
+        || requierePlanes != null;
+  }
 }

@@ -15,8 +15,8 @@
  */
 package ar.com.gtsoftware.search;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import javax.validation.constraints.NotNull;
 
 /**
  * Clase para mantener la información del tipo de orden de cada campo
@@ -25,54 +25,50 @@ import java.io.Serializable;
  */
 public class SortField implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @NotNull
-    private String fieldName;
-    private boolean ascending;
+  private static final long serialVersionUID = 1L;
+  @NotNull private String fieldName;
+  private boolean ascending;
 
-    public SortField(String fieldName, boolean ascending) {
-        this.fieldName = fieldName;
-        this.ascending = ascending;
-    }
+  public SortField(String fieldName, boolean ascending) {
+    this.fieldName = fieldName;
+    this.ascending = ascending;
+  }
 
-    public SortField() {
-    }
+  public SortField() {}
 
-    /**
-     * Retorna el nombre del campo por el cual ordenar
-     *
-     * @return
-     */
-    public String getFieldName() {
-        return fieldName;
-    }
+  /**
+   * Retorna el nombre del campo por el cual ordenar
+   *
+   * @return
+   */
+  public String getFieldName() {
+    return fieldName;
+  }
 
-    /**
-     * Establece el nombre del campo por el cual se va a ordenar
-     *
-     * @param fieldName
-     */
-    public void setFieldName(String fieldName) {
-        this.fieldName = fieldName;
-    }
+  /**
+   * Establece el nombre del campo por el cual se va a ordenar
+   *
+   * @param fieldName
+   */
+  public void setFieldName(String fieldName) {
+    this.fieldName = fieldName;
+  }
 
-    /**
-     * Determina si es en orden ascendente o descendente. true es ascendente,
-     * false descendente
-     *
-     * @return
-     */
-    public boolean isAscending() {
-        return ascending;
-    }
+  /**
+   * Determina si es en orden ascendente o descendente. true es ascendente, false descendente
+   *
+   * @return
+   */
+  public boolean isAscending() {
+    return ascending;
+  }
 
-    /**
-     * Establece si es en orden ascendente o descendente
-     *
-     * @param ascending
-     */
-    public void setAscending(boolean ascending) {
-        this.ascending = ascending;
-    }
-
+  /**
+   * Establece si es en orden ascendente o descendente
+   *
+   * @param ascending
+   */
+  public void setAscending(boolean ascending) {
+    this.ascending = ascending;
+  }
 }

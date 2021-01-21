@@ -16,13 +16,12 @@
 package ar.com.gtsoftware.dto.fiscal;
 
 import ar.com.gtsoftware.dto.domain.FiscalAlicuotasIvaDto;
+import java.io.Serializable;
+import java.math.BigDecimal;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.io.Serializable;
-import java.math.BigDecimal;
 
 @Getter
 @Setter
@@ -30,31 +29,27 @@ import java.math.BigDecimal;
 @Builder
 public class TotalesAlicuotas implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @EqualsAndHashCode.Include
-    private FiscalAlicuotasIvaDto alicuota;
-    @Builder.Default
-    private BigDecimal importeIva = BigDecimal.ZERO;
-    @Builder.Default
-    private BigDecimal noGravado = BigDecimal.ZERO;
-    @Builder.Default
-    private BigDecimal netoGravado = BigDecimal.ZERO;
-    @Builder.Default
-    private BigDecimal importeExento = BigDecimal.ZERO;
+  @EqualsAndHashCode.Include private FiscalAlicuotasIvaDto alicuota;
+  @Builder.Default private BigDecimal importeIva = BigDecimal.ZERO;
+  @Builder.Default private BigDecimal noGravado = BigDecimal.ZERO;
+  @Builder.Default private BigDecimal netoGravado = BigDecimal.ZERO;
+  @Builder.Default private BigDecimal importeExento = BigDecimal.ZERO;
 
-    /**
-     * Suma los totales de this con los recibidos de subTotal siempre que correspondan a la misma alícuota
-     *
-     * @param subTotal
-     */
-    public void add(TotalesAlicuotas subTotal) {
-        if (!this.equals(subTotal)) {
-            throw new IllegalArgumentException("No se pueden sumar alícuotas diferentes!");
-        }
-        this.importeExento = this.importeExento.add(subTotal.getImporteExento());
-        this.importeIva = this.importeIva.add(subTotal.getImporteIva());
-        this.netoGravado = this.netoGravado.add(subTotal.getNetoGravado());
-        this.noGravado = this.noGravado.add(subTotal.getNoGravado());
+  /**
+   * Suma los totales de this con los recibidos de subTotal siempre que correspondan a la misma
+   * alícuota
+   *
+   * @param subTotal
+   */
+  public void add(TotalesAlicuotas subTotal) {
+    if (!this.equals(subTotal)) {
+      throw new IllegalArgumentException("No se pueden sumar alícuotas diferentes!");
     }
+    this.importeExento = this.importeExento.add(subTotal.getImporteExento());
+    this.importeIva = this.importeIva.add(subTotal.getImporteIva());
+    this.netoGravado = this.netoGravado.add(subTotal.getNetoGravado());
+    this.noGravado = this.noGravado.add(subTotal.getNoGravado());
+  }
 }

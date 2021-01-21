@@ -19,13 +19,11 @@ package ar.com.gtsoftware.domain;
 
 import ar.com.gtsoftware.rules.Campo;
 import ar.com.gtsoftware.rules.Operacion;
-import lombok.Getter;
-import lombok.Setter;
-
+import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
-
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "ofertas_condiciones")
@@ -33,31 +31,35 @@ import java.io.Serializable;
 @Setter
 public class OfertasCondiciones extends BaseEntity implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ofertas_condiciones_id_oferta_condicion")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "ofertas_condiciones_id_oferta_condicion",
-            sequenceName = "ofertas_condiciones_id_oferta_condicion_seq")
-    @Basic(optional = false)
-    @Column(name = "id_oferta_condicion", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(
+      strategy = GenerationType.SEQUENCE,
+      generator = "ofertas_condiciones_id_oferta_condicion")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "ofertas_condiciones_id_oferta_condicion",
+      sequenceName = "ofertas_condiciones_id_oferta_condicion_seq")
+  @Basic(optional = false)
+  @Column(name = "id_oferta_condicion", nullable = false, updatable = false)
+  private Long id;
 
-    @JoinColumn(name = "id_oferta", referencedColumnName = "id_oferta")
-    @ManyToOne(optional = false)
-    @NotNull
-    private Ofertas idOferta;
+  @JoinColumn(name = "id_oferta", referencedColumnName = "id_oferta")
+  @ManyToOne(optional = false)
+  @NotNull
+  private Ofertas idOferta;
 
-    @Column(name = "operacion")
-    @Enumerated(EnumType.STRING)
-    @NotNull
-    private Operacion operacion;
+  @Column(name = "operacion")
+  @Enumerated(EnumType.STRING)
+  @NotNull
+  private Operacion operacion;
 
-    @Column(name = "campo")
-    @Enumerated(EnumType.STRING)
-    @NotNull
-    private Campo campo;
+  @Column(name = "campo")
+  @Enumerated(EnumType.STRING)
+  @NotNull
+  private Campo campo;
 
-    @Column(name = "valor")
-    @NotNull
-    private String valor;
-
+  @Column(name = "valor")
+  @NotNull
+  private String valor;
 }

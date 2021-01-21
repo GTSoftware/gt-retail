@@ -19,44 +19,48 @@ import ar.com.gtsoftware.domain.FiscalTiposComprobante;
 import ar.com.gtsoftware.domain.FiscalTiposComprobante_;
 import ar.com.gtsoftware.domain.NegocioTiposComprobante_;
 import ar.com.gtsoftware.search.FiscalTiposComprobanteSearchFilter;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Repository;
 
 @Repository
-public class FiscalTiposComprobanteFacade extends AbstractFacade<FiscalTiposComprobante, FiscalTiposComprobanteSearchFilter> {
+public class FiscalTiposComprobanteFacade
+    extends AbstractFacade<FiscalTiposComprobante, FiscalTiposComprobanteSearchFilter> {
 
+  private final EntityManager em;
 
-    private final EntityManager em;
+  public FiscalTiposComprobanteFacade(EntityManager em) {
+    super(FiscalTiposComprobante.class);
+    this.em = em;
+  }
 
-    public FiscalTiposComprobanteFacade(EntityManager em) {
-        super(FiscalTiposComprobante.class);
-        this.em = em;
+  @Override
+  protected EntityManager getEntityManager() {
+    return em;
+  }
+
+  @Override
+  public Predicate createWhereFromSearchFilter(
+      FiscalTiposComprobanteSearchFilter ftsf,
+      CriteriaBuilder cb,
+      Root<FiscalTiposComprobante> root) {
+
+    Predicate p = null;
+    if (StringUtils.isNotEmpty(ftsf.getLetra())) {
+      Predicate p1 = cb.equal(root.get(FiscalTiposComprobante_.letra), ftsf.getLetra());
+      p = appendAndPredicate(cb, p, p1);
+    }
+    if (ftsf.getIdTipoComprobante() != null) {
+      Predicate p1 =
+          cb.equal(
+              root.get(FiscalTiposComprobante_.tipoComprobante).get(NegocioTiposComprobante_.id),
+              ftsf.getIdTipoComprobante());
+      p = appendAndPredicate(cb, p, p1);
     }
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
-
-    @Override
-    public Predicate createWhereFromSearchFilter(FiscalTiposComprobanteSearchFilter ftsf, CriteriaBuilder cb, Root<FiscalTiposComprobante> root) {
-
-        Predicate p = null;
-        if (StringUtils.isNotEmpty(ftsf.getLetra())) {
-            Predicate p1 = cb.equal(root.get(FiscalTiposComprobante_.letra), ftsf.getLetra());
-            p = appendAndPredicate(cb, p, p1);
-        }
-        if (ftsf.getIdTipoComprobante() != null) {
-            Predicate p1 = cb.equal(root.get(FiscalTiposComprobante_.tipoComprobante).get(NegocioTiposComprobante_.id), ftsf.getIdTipoComprobante());
-            p = appendAndPredicate(cb, p, p1);
-        }
-
-        return p;
-    }
-
+    return p;
+  }
 }

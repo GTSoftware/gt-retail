@@ -23,5 +23,4 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface FiscalResponsabilidadesIvaMapper
-        extends GenericMapper<FiscalResponsabilidadesIva, FiscalResponsabilidadesIvaDto> {
-}
+    extends GenericMapper<FiscalResponsabilidadesIva, FiscalResponsabilidadesIvaDto> {}

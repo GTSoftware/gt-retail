@@ -17,32 +17,32 @@ package ar.com.gtsoftware.dao;
 
 import ar.com.gtsoftware.domain.ContabilidadTiposCuenta;
 import ar.com.gtsoftware.search.AbstractSearchFilter;
-import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.springframework.stereotype.Repository;
 
 @Repository
-public class ContabilidadTiposCuentaFacade extends AbstractFacade<ContabilidadTiposCuenta, AbstractSearchFilter> {
+public class ContabilidadTiposCuentaFacade
+    extends AbstractFacade<ContabilidadTiposCuenta, AbstractSearchFilter> {
 
+  private final EntityManager em;
 
-    private final EntityManager em;
+  public ContabilidadTiposCuentaFacade(EntityManager em) {
+    super(ContabilidadTiposCuenta.class);
+    this.em = em;
+  }
 
-    public ContabilidadTiposCuentaFacade(EntityManager em) {
-        super(ContabilidadTiposCuenta.class);
-        this.em = em;
-    }
+  @Override
+  protected EntityManager getEntityManager() {
+    return em;
+  }
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
-
-    @Override
-    public Predicate createWhereFromSearchFilter(AbstractSearchFilter sf, CriteriaBuilder cb, Root<ContabilidadTiposCuenta> root) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+  @Override
+  public Predicate createWhereFromSearchFilter(
+      AbstractSearchFilter sf, CriteriaBuilder cb, Root<ContabilidadTiposCuenta> root) {
+    throw new UnsupportedOperationException(
+        "Not supported yet."); // To change body of generated methods, choose Tools | Templates.
+  }
 }

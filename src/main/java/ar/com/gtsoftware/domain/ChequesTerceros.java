@@ -15,13 +15,12 @@
  */
 package ar.com.gtsoftware.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import java.util.Date;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Date;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Cheques de terceros recibidos
@@ -34,41 +33,40 @@ import java.util.Date;
 @Setter
 public class ChequesTerceros extends Valores {
 
-    @NotNull
-    @Column(name = "nro_cheque")
-    @Size(max = 30, min = 1)
-    private String nroCheque;
+  @NotNull
+  @Column(name = "nro_cheque")
+  @Size(max = 30, min = 1)
+  private String nroCheque;
 
-    @NotNull
-    @Column(name = "cuit_originante")
-    @Size(max = 11, min = 1)
-    private String cuitOriginante;
+  @NotNull
+  @Column(name = "cuit_originante")
+  @Size(max = 11, min = 1)
+  private String cuitOriginante;
 
-    @NotNull
-    @Column(name = "razon_social_originante")
-    @Size(max = 200, min = 1)
-    private String razonSocialOriginante;
+  @NotNull
+  @Column(name = "razon_social_originante")
+  @Size(max = 200, min = 1)
+  private String razonSocialOriginante;
 
-    @NotNull
-    @Column(name = "fecha_origen")
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date fechaOrigen;
+  @NotNull
+  @Column(name = "fecha_origen")
+  @Temporal(javax.persistence.TemporalType.DATE)
+  private Date fechaOrigen;
 
-    @Column(name = "fecha_vencimiento")
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date fechaVencimiento;
+  @Column(name = "fecha_vencimiento")
+  @Temporal(javax.persistence.TemporalType.DATE)
+  private Date fechaVencimiento;
 
-    @Column(name = "fecha_cobro")
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date fechaCobro;
+  @Column(name = "fecha_cobro")
+  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+  private Date fechaCobro;
 
-    @NotNull
-    @ManyToOne
-    @JoinColumn(name = "id_banco", referencedColumnName = "id_banco")
-    private Bancos idBanco;
+  @NotNull
+  @ManyToOne
+  @JoinColumn(name = "id_banco", referencedColumnName = "id_banco")
+  private Bancos idBanco;
 
-    @Column(name = "notas")
-    @Size(max = 255)
-    private String notas;
-
+  @Column(name = "notas")
+  @Size(max = 255)
+  private String notas;
 }

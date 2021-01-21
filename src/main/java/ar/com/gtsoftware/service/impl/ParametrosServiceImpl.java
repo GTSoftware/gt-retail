@@ -23,53 +23,55 @@ import ar.com.gtsoftware.enums.Parametros;
 import ar.com.gtsoftware.mappers.ParametrosMapper;
 import ar.com.gtsoftware.mappers.helper.CycleAvoidingMappingContext;
 import ar.com.gtsoftware.service.ParametrosService;
+import java.util.List;
+import javax.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import javax.validation.constraints.NotNull;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class ParametrosServiceImpl implements ParametrosService {
 
+  private final ParametrosMapper mapper;
 
-    private final ParametrosMapper mapper;
+  private final ParametrosFacade facade;
 
-    private final ParametrosFacade facade;
+  @Override
+  public ParametrosDto createOrEdit(@NotNull ParametrosDto parametrosDto) {
+    return mapper.entityToDto(
+        facade.createOrEdit(mapper.dtoToEntity(parametrosDto, new CycleAvoidingMappingContext())),
+        new CycleAvoidingMappingContext());
+  }
 
-    @Override
-    public ParametrosDto createOrEdit(@NotNull ParametrosDto parametrosDto) {
-        return mapper.entityToDto(facade.createOrEdit(mapper.dtoToEntity(parametrosDto,
-                new CycleAvoidingMappingContext())),
-                new CycleAvoidingMappingContext());
-    }
+  @Override
+  public ParametrosDto findParametroByName(@NotNull String nombre) {
+    return mapper.entityToDto(
+        facade.findParametroByName(nombre), new CycleAvoidingMappingContext());
+  }
 
-    @Override
-    public ParametrosDto findParametroByName(@NotNull String nombre) {
-        return mapper.entityToDto(facade.findParametroByName(nombre), new CycleAvoidingMappingContext());
-    }
+  @Override
+  public List<ParametrosDto> findParametros(@NotNull String txt) {
+    return mapper.entitiesToDtos(facade.findParametros(txt), new CycleAvoidingMappingContext());
+  }
 
-    @Override
-    public List<ParametrosDto> findParametros(@NotNull String txt) {
-        return mapper.entitiesToDtos(facade.findParametros(txt), new CycleAvoidingMappingContext());
-    }
+  @Override
+  public boolean getBooleanParam(Parametros parametro) {
+    ar.com.gtsoftware.domain.Parametros parametroEntity =
+        facade.findParametroByName(parametro.getNombreParametro());
+    return Boolean.parseBoolean(parametroEntity.getValorParametro());
+  }
 
-    @Override
-    public boolean getBooleanParam(Parametros parametro) {
-        ar.com.gtsoftware.domain.Parametros parametroEntity = facade.findParametroByName(parametro.getNombreParametro());
-        return Boolean.parseBoolean(parametroEntity.getValorParametro());
-    }
+  @Override
+  public Long getLongParam(Parametros parametro) {
+    ar.com.gtsoftware.domain.Parametros parametroEntity =
+        facade.findParametroByName(parametro.getNombreParametro());
+    return Long.parseLong(parametroEntity.getValorParametro());
+  }
 
-    @Override
-    public Long getLongParam(Parametros parametro) {
-        ar.com.gtsoftware.domain.Parametros parametroEntity = facade.findParametroByName(parametro.getNombreParametro());
-        return Long.parseLong(parametroEntity.getValorParametro());
-    }
-
-    @Override
-    public String getStringParam(Parametros parametro) {
-        ar.com.gtsoftware.domain.Parametros parametroEntity = facade.findParametroByName(parametro.getNombreParametro());
-        return parametroEntity.getValorParametro();
-    }
+  @Override
+  public String getStringParam(Parametros parametro) {
+    ar.com.gtsoftware.domain.Parametros parametroEntity =
+        facade.findParametroByName(parametro.getNombreParametro());
+    return parametroEntity.getValorParametro();
+  }
 }

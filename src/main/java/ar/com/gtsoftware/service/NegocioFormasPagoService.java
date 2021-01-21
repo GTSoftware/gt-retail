@@ -20,8 +20,5 @@ package ar.com.gtsoftware.service;
 import ar.com.gtsoftware.dto.domain.NegocioFormasPagoDto;
 import ar.com.gtsoftware.search.FormasPagoSearchFilter;
 
-
 public interface NegocioFormasPagoService
-        extends EntityService<NegocioFormasPagoDto, FormasPagoSearchFilter> {
-
-}
+    extends EntityService<NegocioFormasPagoDto, FormasPagoSearchFilter> {}

@@ -15,34 +15,31 @@
  */
 package ar.com.gtsoftware.domain;
 
-/**
- * @author Rodrigo Tato <rotatomel@gmail.com>
- */
+/** @author Rodrigo Tato <rotatomel@gmail.com> */
 public abstract class BaseEntity extends GTEntity<Long> {
 
-    @Override
-    public boolean isNew() {
-        return getId() == null;
-    }
+  @Override
+  public boolean isNew() {
+    return getId() == null;
+  }
 
-    @Override
-    public String getStringId() {
-        if (getId() != null) {
-            return getId().toString();
-        }
+  @Override
+  public String getStringId() {
+    if (getId() != null) {
+      return getId().toString();
+    }
+    return null;
+  }
+
+  @Override
+  public Long calculateId(String id) {
+    if (id != null) {
+      try {
+        return Long.parseLong(id);
+      } catch (NumberFormatException e) {
         return null;
+      }
     }
-
-    @Override
-    public Long calculateId(String id) {
-        if (id != null) {
-            try {
-                return Long.parseLong(id);
-            } catch (NumberFormatException e) {
-                return null;
-            }
-        }
-        return null;
-    }
-
+    return null;
+  }
 }

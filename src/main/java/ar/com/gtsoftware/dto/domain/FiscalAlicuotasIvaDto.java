@@ -16,13 +16,10 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
+import java.math.BigDecimal;
 import lombok.*;
 
-import java.math.BigDecimal;
-
-/**
- * @author Rodrigo M. Tato Rothamel <rotatomel@gmail.com>
- */
+/** @author Rodrigo M. Tato Rothamel <rotatomel@gmail.com> */
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
@@ -30,16 +27,13 @@ import java.math.BigDecimal;
 @Builder
 public class FiscalAlicuotasIvaDto {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @EqualsAndHashCode.Include
-    private Long id;
-    private String nombreAlicuotaIva;
-    private BigDecimal valorAlicuota;
-    private boolean gravarIva;
-    private boolean activo;
-    private Integer fiscalCodigoAlicuota;
-    private Integer version;
-
-
+  @EqualsAndHashCode.Include private Long id;
+  private String nombreAlicuotaIva;
+  private BigDecimal valorAlicuota;
+  private boolean gravarIva;
+  private boolean activo;
+  private Integer fiscalCodigoAlicuota;
+  private Integer version;
 }

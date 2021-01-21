@@ -15,51 +15,57 @@
  */
 package ar.com.gtsoftware.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
-/**
- * @author rodrigo
- */
+/** @author rodrigo */
 @Entity
 @Table(name = "productos_tipos_proveeduria")
 @Getter
 @Setter
 public class ProductosTiposProveeduria extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "productos_tipos_proveeduria_id_tipo_proveeduria")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "productos_tipos_proveeduria_id_tipo_proveeduria",
-            sequenceName = "productos_tipos_proveeduria_id_tipo_proveeduria_seq")
-    @Basic(optional = false)
-    @Column(name = "id_tipo_proveeduria", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(
+      strategy = GenerationType.SEQUENCE,
+      generator = "productos_tipos_proveeduria_id_tipo_proveeduria")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "productos_tipos_proveeduria_id_tipo_proveeduria",
+      sequenceName = "productos_tipos_proveeduria_id_tipo_proveeduria_seq")
+  @Basic(optional = false)
+  @Column(name = "id_tipo_proveeduria", nullable = false, updatable = false)
+  private Long id;
 
-    @Size(max = 60)
-    @Column(name = "nombre_tipo_proveeduria")
-    private String nombreTipoProveeduria;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "puede_comprarse")
-    private boolean puedeComprarse;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "puede_venderse")
-    private boolean puedeVenderse;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "control_stock")
-    private boolean controlStock;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "cambiar_precio_venta")
-    private boolean cambiarPrecioVenta;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoProveeduria")
-    private List<Productos> productosList;
+  @Size(max = 60)
+  @Column(name = "nombre_tipo_proveeduria")
+  private String nombreTipoProveeduria;
 
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "puede_comprarse")
+  private boolean puedeComprarse;
+
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "puede_venderse")
+  private boolean puedeVenderse;
+
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "control_stock")
+  private boolean controlStock;
+
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "cambiar_precio_venta")
+  private boolean cambiarPrecioVenta;
+
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoProveeduria")
+  private List<Productos> productosList;
 }

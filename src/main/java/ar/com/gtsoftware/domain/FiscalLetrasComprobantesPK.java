@@ -15,65 +15,63 @@
  */
 package ar.com.gtsoftware.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
+import lombok.Getter;
+import lombok.Setter;
 
-/**
- * @author rodrigo
- */
+/** @author rodrigo */
 @Embeddable
 @Getter
 @Setter
 public class FiscalLetrasComprobantesPK implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "id_resoponsabildiad_iva_emisor")
-    private int idResoponsabildiadIvaEmisor;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "id_resoponsabildiad_iva_receptor")
-    private int idResoponsabildiadIvaReceptor;
+  private static final long serialVersionUID = 1L;
 
-    public FiscalLetrasComprobantesPK() {
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "id_resoponsabildiad_iva_emisor")
+  private int idResoponsabildiadIvaEmisor;
+
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "id_resoponsabildiad_iva_receptor")
+  private int idResoponsabildiadIvaReceptor;
+
+  public FiscalLetrasComprobantesPK() {}
+
+  public FiscalLetrasComprobantesPK(
+      int idResoponsabildiadIvaEmisor, int idResoponsabildiadIvaReceptor) {
+    this.idResoponsabildiadIvaEmisor = idResoponsabildiadIvaEmisor;
+    this.idResoponsabildiadIvaReceptor = idResoponsabildiadIvaReceptor;
+  }
+
+  @Override
+  public int hashCode() {
+    int hash = 0;
+    hash += idResoponsabildiadIvaEmisor;
+    hash += idResoponsabildiadIvaReceptor;
+    return hash;
+  }
+
+  @Override
+  public boolean equals(Object object) {
+    // TODO: Warning - this method won't work in the case the id fields are not set
+    if (!(object instanceof FiscalLetrasComprobantesPK)) {
+      return false;
     }
-
-    public FiscalLetrasComprobantesPK(int idResoponsabildiadIvaEmisor, int idResoponsabildiadIvaReceptor) {
-        this.idResoponsabildiadIvaEmisor = idResoponsabildiadIvaEmisor;
-        this.idResoponsabildiadIvaReceptor = idResoponsabildiadIvaReceptor;
+    FiscalLetrasComprobantesPK other = (FiscalLetrasComprobantesPK) object;
+    if (this.idResoponsabildiadIvaEmisor != other.idResoponsabildiadIvaEmisor) {
+      return false;
     }
+    return this.idResoponsabildiadIvaReceptor == other.idResoponsabildiadIvaReceptor;
+  }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += idResoponsabildiadIvaEmisor;
-        hash += idResoponsabildiadIvaReceptor;
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof FiscalLetrasComprobantesPK)) {
-            return false;
-        }
-        FiscalLetrasComprobantesPK other = (FiscalLetrasComprobantesPK) object;
-        if (this.idResoponsabildiadIvaEmisor != other.idResoponsabildiadIvaEmisor) {
-            return false;
-        }
-        return this.idResoponsabildiadIvaReceptor == other.idResoponsabildiadIvaReceptor;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("%s-%s", idResoponsabildiadIvaEmisor, idResoponsabildiadIvaReceptor);
-    }
-
+  @Override
+  public String toString() {
+    return String.format("%s-%s", idResoponsabildiadIvaEmisor, idResoponsabildiadIvaReceptor);
+  }
 }

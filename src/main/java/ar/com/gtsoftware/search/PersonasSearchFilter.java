@@ -15,14 +15,11 @@
  */
 package ar.com.gtsoftware.search;
 
+import java.time.LocalDateTime;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 
-import java.time.LocalDateTime;
-
-/**
- * @author rodrigo
- */
+/** @author rodrigo */
 @Getter
 @Setter
 @Builder
@@ -30,38 +27,37 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class PersonasSearchFilter extends AbstractSearchFilter {
 
-    private String txt;
-    private Integer idPersona;
-    private String razonSocial;
-    private String apellidos;
-    private String nombres;
-    private String nombreFantasia;
-    private Long idTipoDocumento;
-    private String documento;
-    private Boolean activo;
-    private Boolean cliente;
-    private Boolean proveedor;
-    private LocalDateTime fechaAltaDesde;
-    private LocalDateTime fechaAltaHasta;
+  private String txt;
+  private Integer idPersona;
+  private String razonSocial;
+  private String apellidos;
+  private String nombres;
+  private String nombreFantasia;
+  private Long idTipoDocumento;
+  private String documento;
+  private Boolean activo;
+  private Boolean cliente;
+  private Boolean proveedor;
+  private LocalDateTime fechaAltaDesde;
+  private LocalDateTime fechaAltaHasta;
 
-    @Override
-    public boolean hasFilter() {
-        return StringUtils.isNotEmpty(txt)
-                || idPersona != null
-                || StringUtils.isNotEmpty(razonSocial)
-                || StringUtils.isNotEmpty(apellidos)
-                || StringUtils.isNotEmpty(nombres)
-                || StringUtils.isNotEmpty(nombreFantasia)
-                || idTipoDocumento != null
-                || documento != null
-                || activo != null
-                || cliente != null
-                || proveedor != null
-                || hasFechasFilter();
-    }
+  @Override
+  public boolean hasFilter() {
+    return StringUtils.isNotEmpty(txt)
+        || idPersona != null
+        || StringUtils.isNotEmpty(razonSocial)
+        || StringUtils.isNotEmpty(apellidos)
+        || StringUtils.isNotEmpty(nombres)
+        || StringUtils.isNotEmpty(nombreFantasia)
+        || idTipoDocumento != null
+        || documento != null
+        || activo != null
+        || cliente != null
+        || proveedor != null
+        || hasFechasFilter();
+  }
 
-    public boolean hasFechasFilter() {
-        return (fechaAltaDesde != null && fechaAltaHasta != null);
-    }
-
+  public boolean hasFechasFilter() {
+    return (fechaAltaDesde != null && fechaAltaHasta != null);
+  }
 }

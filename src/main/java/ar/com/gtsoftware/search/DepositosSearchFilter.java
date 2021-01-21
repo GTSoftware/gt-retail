@@ -25,16 +25,12 @@ import org.apache.commons.lang3.StringUtils;
 @Builder
 public class DepositosSearchFilter extends AbstractSearchFilter {
 
-    private String nombreDeposito;
-    private Boolean activo;
-    private Long idSucursal;
+  private String nombreDeposito;
+  private Boolean activo;
+  private Long idSucursal;
 
-
-    @Override
-    public boolean hasFilter() {
-        return StringUtils.isNotEmpty(nombreDeposito)
-                || activo != null
-                || idSucursal != null;
-    }
-
+  @Override
+  public boolean hasFilter() {
+    return StringUtils.isNotEmpty(nombreDeposito) || activo != null || idSucursal != null;
+  }
 }

@@ -16,12 +16,11 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
-import lombok.*;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.*;
 
 /**
  * Clase que representa las ventas que se realizan
@@ -35,78 +34,79 @@ import java.util.List;
 @Builder
 public class ComprobantesDto {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @EqualsAndHashCode.Include
-    private Long id;
+  @EqualsAndHashCode.Include private Long id;
 
-    private LocalDateTime fechaComprobante;
-    private BigDecimal total;
-    private BigDecimal saldo;
-    private String observaciones;
-    private String remitente;
-    private String nroRemito;
-    private boolean anulada;
-    private String letra;
+  private LocalDateTime fechaComprobante;
+  private BigDecimal total;
+  private BigDecimal saldo;
+  private String observaciones;
+  private String remitente;
+  private String nroRemito;
+  private boolean anulada;
+  private String letra;
 
-    private NegocioTiposComprobanteDto tipoComprobante;
+  private NegocioTiposComprobanteDto tipoComprobante;
 
-    private List<ComprobantesLineasDto> comprobantesLineasList;
-    private UsuariosDto idUsuario;
-    private SucursalesDto idSucursal;
-    private PersonasDto idPersona;
-    private NegocioCondicionesOperacionesDto idCondicionComprobante;
-    private ComprobantesEstadosDto idEstadoComprobante;
-    private FiscalLibroIvaVentasDto idRegistro;
+  private List<ComprobantesLineasDto> comprobantesLineasList;
+  private UsuariosDto idUsuario;
+  private SucursalesDto idSucursal;
+  private PersonasDto idPersona;
+  private NegocioCondicionesOperacionesDto idCondicionComprobante;
+  private ComprobantesEstadosDto idEstadoComprobante;
+  private FiscalLibroIvaVentasDto idRegistro;
 
-    private List<ComprobantesPagosDto> pagosList;
+  private List<ComprobantesPagosDto> pagosList;
 
-    private BigDecimal totalConSigno;
-    private BigDecimal saldoConSigno;
-    private Integer version;
-    private String codigoBarrasFactura;
+  private BigDecimal totalConSigno;
+  private BigDecimal saldoConSigno;
+  private Integer version;
+  private String codigoBarrasFactura;
 
-
-    public BigDecimal getTotalConSigno() {
-        if (total != null && tipoComprobante != null) {
-            if (totalConSigno == null) {
-                totalConSigno = total.multiply(tipoComprobante.getSigno());
-            }
-        }
-        return totalConSigno;
+  public BigDecimal getTotalConSigno() {
+    if (total != null && tipoComprobante != null) {
+      if (totalConSigno == null) {
+        totalConSigno = total.multiply(tipoComprobante.getSigno());
+      }
     }
+    return totalConSigno;
+  }
 
-    public BigDecimal getSaldoConSigno() {
-        if (saldo != null && tipoComprobante != null) {
-            if (saldoConSigno == null) {
-                saldoConSigno = saldo.multiply(tipoComprobante.getSigno());
-            }
-        }
-        return saldoConSigno;
+  public BigDecimal getSaldoConSigno() {
+    if (saldo != null && tipoComprobante != null) {
+      if (saldoConSigno == null) {
+        saldoConSigno = saldo.multiply(tipoComprobante.getSigno());
+      }
     }
+    return saldoConSigno;
+  }
 
-    public void addPago(ComprobantesPagosDto pago) {
-        if (pagosList == null) {
-            pagosList = new ArrayList<>(3);
-        }
-        pagosList.add(pago);
+  public void addPago(ComprobantesPagosDto pago) {
+    if (pagosList == null) {
+      pagosList = new ArrayList<>(3);
     }
+    pagosList.add(pago);
+  }
 
-    public void addLineaVenta(ComprobantesLineasDto linea) {
-        if (comprobantesLineasList == null) {
-            comprobantesLineasList = new ArrayList<>();
-        }
-        comprobantesLineasList.add(linea);
+  public void addLineaVenta(ComprobantesLineasDto linea) {
+    if (comprobantesLineasList == null) {
+      comprobantesLineasList = new ArrayList<>();
     }
+    comprobantesLineasList.add(linea);
+  }
 
-    @Override
-    public String toString() {
-        if (idRegistro != null) {
-            return String.format("[%d] %s %s %s-%s", getId(), tipoComprobante.getNombreComprobante(), letra,
-                    idRegistro.getPuntoVentaFactura(), idRegistro.getNumeroFactura());
-        }
-        return String.format("[%d] %s", getId(), tipoComprobante.getNombreComprobante());
+  @Override
+  public String toString() {
+    if (idRegistro != null) {
+      return String.format(
+          "[%d] %s %s %s-%s",
+          getId(),
+          tipoComprobante.getNombreComprobante(),
+          letra,
+          idRegistro.getPuntoVentaFactura(),
+          idRegistro.getNumeroFactura());
     }
-
-
+    return String.format("[%d] %s", getId(), tipoComprobante.getNombreComprobante());
+  }
 }

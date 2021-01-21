@@ -15,16 +15,15 @@
  */
 package ar.com.gtsoftware.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Clase que almacena la información de las facturas del libro de iva compras
@@ -37,97 +36,119 @@ import java.util.List;
 @Setter
 public class FiscalLibroIvaCompras extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "fiscal_libro_iva_compras_id_registro")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "fiscal_libro_iva_compras_id_registro",
-            sequenceName = "fiscal_libro_iva_compras_id_registro_seq")
-    @Basic(optional = false)
-    @Column(name = "id_registro", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(
+      strategy = GenerationType.SEQUENCE,
+      generator = "fiscal_libro_iva_compras_id_registro")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "fiscal_libro_iva_compras_id_registro",
+      sequenceName = "fiscal_libro_iva_compras_id_registro_seq")
+  @Basic(optional = false)
+  @Column(name = "id_registro", nullable = false, updatable = false)
+  private Long id;
 
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "fecha_factura")
-    private LocalDateTime fechaFactura;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
-    @Column(name = "documento")
-    private String documento;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2)
-    @Column(name = "letra_factura")
-    private String letraFactura;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 5)
-    @Column(name = "punto_venta_factura")
-    private String puntoVentaFactura;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 9)
-    @Column(name = "numero_factura")
-    private String numeroFactura;
-    @Basic(optional = false)
-    @Column(name = "anulada")
-    private boolean anulada;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @NotNull
-    @Column(name = "total_factura")
-    private BigDecimal totalFactura;
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "fecha_factura")
+  private LocalDateTime fechaFactura;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "codigo_tipo_comprobante", referencedColumnName = "codigo_tipo_comprobante")
-    private FiscalTiposComprobante codigoTipoComprobante;
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 20)
+  @Column(name = "documento")
+  private String documento;
 
-    @OneToMany(mappedBy = "idRegistro")
-    private List<ProveedoresComprobantes> comprobantesList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idRegistro", orphanRemoval = true)
-    private List<FiscalLibroIvaComprasLineas> fiscalLibroIvaComprasLineasList;
-    @JoinColumn(name = "id_persona", referencedColumnName = "id_persona")
-    @ManyToOne(optional = false)
-    private Personas idPersona;
-    @JoinColumn(name = "id_responsabilidad_iva", referencedColumnName = "id_resoponsabildiad_iva")
-    @ManyToOne(optional = false)
-    private FiscalResponsabilidadesIva idResponsabilidadIva;
-    @JoinColumn(name = "id_periodo_fiscal", referencedColumnName = "id_periodo_fiscal")
-    @ManyToOne(optional = false)
-    private FiscalPeriodosFiscales idPeriodoFiscal;
-    @JoinColumn(name = "id_registro_contable", referencedColumnName = "id_registro")
-    @ManyToOne(optional = true)
-    private ContabilidadRegistroContable idRegistroContable;
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 2)
+  @Column(name = "letra_factura")
+  private String letraFactura;
 
-    @Column(name = "cae")
-    private Long cae;
-    @Column(name = "fecha_vencimiento_cae")
-    private LocalDate fechaVencimientoCae;
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 5)
+  @Column(name = "punto_venta_factura")
+  private String puntoVentaFactura;
 
-    @Column(name = "importe_neto_no_gravado")
-    @NotNull
-    private BigDecimal importeNetoNoGravado;
-    @Column(name = "importe_exento")
-    @NotNull
-    private BigDecimal importeExento;
-    @Column(name = "importe_neto_gravado")
-    @NotNull
-    private BigDecimal importeNetoGravado;
-    @Column(name = "importe_tributos")
-    @NotNull
-    private BigDecimal importeTributos;
-    @Column(name = "importe_iva")
-    @NotNull
-    private BigDecimal importeIva;
-    @Column(name = "importe_percepcion_iva")
-    @NotNull
-    private BigDecimal importePercepcionIva;
-    @Column(name = "importe_percepcion_ingresos_brutos")
-    @NotNull
-    private BigDecimal importePercepcionIngresosBrutos;
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 9)
+  @Column(name = "numero_factura")
+  private String numeroFactura;
 
-    @Override
-    public String toString() {
-        return "ar.com.gtsoftware.model.FiscalLibroIvaComprasDto[ idFactura=" + id + " ]";
-    }
+  @Basic(optional = false)
+  @Column(name = "anulada")
+  private boolean anulada;
+  // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these
+  // annotations to enforce field validation
+  @NotNull
+  @Column(name = "total_factura")
+  private BigDecimal totalFactura;
 
+  @ManyToOne(optional = false)
+  @JoinColumn(name = "codigo_tipo_comprobante", referencedColumnName = "codigo_tipo_comprobante")
+  private FiscalTiposComprobante codigoTipoComprobante;
+
+  @OneToMany(mappedBy = "idRegistro")
+  private List<ProveedoresComprobantes> comprobantesList;
+
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "idRegistro", orphanRemoval = true)
+  private List<FiscalLibroIvaComprasLineas> fiscalLibroIvaComprasLineasList;
+
+  @JoinColumn(name = "id_persona", referencedColumnName = "id_persona")
+  @ManyToOne(optional = false)
+  private Personas idPersona;
+
+  @JoinColumn(name = "id_responsabilidad_iva", referencedColumnName = "id_resoponsabildiad_iva")
+  @ManyToOne(optional = false)
+  private FiscalResponsabilidadesIva idResponsabilidadIva;
+
+  @JoinColumn(name = "id_periodo_fiscal", referencedColumnName = "id_periodo_fiscal")
+  @ManyToOne(optional = false)
+  private FiscalPeriodosFiscales idPeriodoFiscal;
+
+  @JoinColumn(name = "id_registro_contable", referencedColumnName = "id_registro")
+  @ManyToOne(optional = true)
+  private ContabilidadRegistroContable idRegistroContable;
+
+  @Column(name = "cae")
+  private Long cae;
+
+  @Column(name = "fecha_vencimiento_cae")
+  private LocalDate fechaVencimientoCae;
+
+  @Column(name = "importe_neto_no_gravado")
+  @NotNull
+  private BigDecimal importeNetoNoGravado;
+
+  @Column(name = "importe_exento")
+  @NotNull
+  private BigDecimal importeExento;
+
+  @Column(name = "importe_neto_gravado")
+  @NotNull
+  private BigDecimal importeNetoGravado;
+
+  @Column(name = "importe_tributos")
+  @NotNull
+  private BigDecimal importeTributos;
+
+  @Column(name = "importe_iva")
+  @NotNull
+  private BigDecimal importeIva;
+
+  @Column(name = "importe_percepcion_iva")
+  @NotNull
+  private BigDecimal importePercepcionIva;
+
+  @Column(name = "importe_percepcion_ingresos_brutos")
+  @NotNull
+  private BigDecimal importePercepcionIngresosBrutos;
+
+  @Override
+  public String toString() {
+    return "ar.com.gtsoftware.model.FiscalLibroIvaComprasDto[ idFactura=" + id + " ]";
+  }
 }

@@ -9,10 +9,10 @@ import lombok.Setter;
 @Builder
 public class LegalTiposDocumentoSearchFilter extends AbstractSearchFilter {
 
-    private Long idTipoPersoneria;
+  private Long idTipoPersoneria;
 
-    @Override
-    public boolean hasFilter() {
-        return idTipoPersoneria != null;
-    }
+  @Override
+  public boolean hasFilter() {
+    return idTipoPersoneria != null;
+  }
 }

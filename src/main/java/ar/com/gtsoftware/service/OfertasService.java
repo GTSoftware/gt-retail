@@ -20,8 +20,4 @@ package ar.com.gtsoftware.service;
 import ar.com.gtsoftware.rules.OfertaDto;
 import ar.com.gtsoftware.search.OfertasSearchFilter;
 
-
-public interface OfertasService
-        extends EntityService<OfertaDto, OfertasSearchFilter> {
-
-}
+public interface OfertasService extends EntityService<OfertaDto, OfertasSearchFilter> {}

@@ -16,15 +16,11 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
-import lombok.*;
-
 import java.io.Serializable;
 import java.util.Date;
+import lombok.*;
 
-/**
- * @author Rodrigo M. Tato Rothamel mailto:rotatomel@gmail.com
- */
-
+/** @author Rodrigo M. Tato Rothamel mailto:rotatomel@gmail.com */
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
@@ -32,13 +28,11 @@ import java.util.Date;
 @Builder
 public class AFIPAuthServicesDto implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @EqualsAndHashCode.Include
-    private String nombreServicio;
-    private String token;
-    private String sign;
-    private Date fechaExpiracion;
-    private Integer version;
-
+  @EqualsAndHashCode.Include private String nombreServicio;
+  private String token;
+  private String sign;
+  private Date fechaExpiracion;
+  private Integer version;
 }

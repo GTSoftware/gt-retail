@@ -17,64 +17,65 @@ package ar.com.gtsoftware.dao;
 
 import ar.com.gtsoftware.domain.*;
 import ar.com.gtsoftware.search.RecibosSearchFilter;
-import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.springframework.stereotype.Repository;
 
 @Repository
 public class RecibosFacade extends AbstractFacade<Recibos, RecibosSearchFilter> {
 
+  private final EntityManager em;
 
-    private final EntityManager em;
+  public RecibosFacade(EntityManager em) {
+    super(Recibos.class);
+    this.em = em;
+  }
 
-    public RecibosFacade(EntityManager em) {
-        super(Recibos.class);
-        this.em = em;
+  @Override
+  protected EntityManager getEntityManager() {
+    return em;
+  }
+
+  @Override
+  public Predicate createWhereFromSearchFilter(
+      RecibosSearchFilter rsf, CriteriaBuilder cb, Root<Recibos> root) {
+    Predicate p = null;
+
+    if (rsf.getIdRecibo() != null) {
+      Predicate p1 = cb.equal(root.get(Recibos_.id), rsf.getIdRecibo());
+      p = appendAndPredicate(cb, p1, p);
     }
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
+    if (rsf.getFechaDesde() != null && rsf.getFechaHasta() != null) {
+      Predicate p1 =
+          cb.between(root.get(Recibos_.fechaRecibo), rsf.getFechaDesde(), rsf.getFechaHasta());
+      p = appendAndPredicate(cb, p1, p);
     }
 
-    @Override
-    public Predicate createWhereFromSearchFilter(RecibosSearchFilter rsf, CriteriaBuilder cb, Root<Recibos> root) {
-        Predicate p = null;
-
-        if (rsf.getIdRecibo() != null) {
-            Predicate p1 = cb.equal(root.get(Recibos_.id), rsf.getIdRecibo());
-            p = appendAndPredicate(cb, p1, p);
-
-        }
-
-        if (rsf.getFechaDesde() != null && rsf.getFechaHasta() != null) {
-            Predicate p1 = cb.between(root.get(Recibos_.fechaRecibo), rsf.getFechaDesde(), rsf.getFechaHasta());
-            p = appendAndPredicate(cb, p1, p);
-        }
-
-        if (rsf.getIdCaja() != null) {
-            Predicate p1 = cb.equal(root.get(Recibos_.idCaja).get(Cajas_.id), rsf.getIdCaja());
-            p = appendAndPredicate(cb, p1, p);
-        }
-
-        if (rsf.getIdPersona() != null) {
-            Predicate p1 = cb.equal(root.get(Recibos_.idPersona).get(Personas_.id), rsf.getIdPersona());
-            p = appendAndPredicate(cb, p1, p);
-        }
-
-        if (rsf.getIdUsuario() != null) {
-            Predicate p1 = cb.equal(root.get(Recibos_.idUsuario).get(Usuarios_.id), rsf.getIdUsuario());
-            p = appendAndPredicate(cb, p1, p);
-        }
-
-        if (rsf.getIdSucursal() != null) {
-            Predicate p1 = cb.equal(root.get(Recibos_.idCaja).get(Cajas_.idSucursal).get(Sucursales_.id), rsf.getIdSucursal());
-            p = appendAndPredicate(cb, p1, p);
-        }
-        return p;
+    if (rsf.getIdCaja() != null) {
+      Predicate p1 = cb.equal(root.get(Recibos_.idCaja).get(Cajas_.id), rsf.getIdCaja());
+      p = appendAndPredicate(cb, p1, p);
     }
 
+    if (rsf.getIdPersona() != null) {
+      Predicate p1 = cb.equal(root.get(Recibos_.idPersona).get(Personas_.id), rsf.getIdPersona());
+      p = appendAndPredicate(cb, p1, p);
+    }
+
+    if (rsf.getIdUsuario() != null) {
+      Predicate p1 = cb.equal(root.get(Recibos_.idUsuario).get(Usuarios_.id), rsf.getIdUsuario());
+      p = appendAndPredicate(cb, p1, p);
+    }
+
+    if (rsf.getIdSucursal() != null) {
+      Predicate p1 =
+          cb.equal(
+              root.get(Recibos_.idCaja).get(Cajas_.idSucursal).get(Sucursales_.id),
+              rsf.getIdSucursal());
+      p = appendAndPredicate(cb, p1, p);
+    }
+    return p;
+  }
 }

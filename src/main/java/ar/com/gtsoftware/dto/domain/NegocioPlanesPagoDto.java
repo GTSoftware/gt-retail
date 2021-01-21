@@ -16,10 +16,9 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
-import lombok.*;
-
 import java.util.Date;
 import java.util.List;
+import lombok.*;
 
 @Getter
 @Setter
@@ -29,21 +28,18 @@ import java.util.List;
 @Builder
 public class NegocioPlanesPagoDto {
 
-    @EqualsAndHashCode.Include
-    private Long id;
+  @EqualsAndHashCode.Include private Long id;
 
+  private String nombre;
 
-    private String nombre;
+  private Date fechaActivoDesde;
+  private Date fechaActivoHasta;
+  private Integer version;
 
-    private Date fechaActivoDesde;
-    private Date fechaActivoHasta;
-    private Integer version;
+  private List<NegocioPlanesPagoDetalleDto> negocioPlanesPagoDetalles;
 
-    private List<NegocioPlanesPagoDetalleDto> negocioPlanesPagoDetalles;
-
-
-    @Override
-    public String toString() {
-        return "[" + id + "] " + nombre;
-    }
+  @Override
+  public String toString() {
+    return "[" + id + "] " + nombre;
+  }
 }

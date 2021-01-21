@@ -30,19 +30,19 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class SucursalesServiceImpl
-        extends BaseEntityService<SucursalesDto, SucursalesSearchFilter, Sucursales>
-        implements SucursalesService {
+    extends BaseEntityService<SucursalesDto, SucursalesSearchFilter, Sucursales>
+    implements SucursalesService {
 
-    private final SucursalesFacade facade;
-    private final SucursalesMapper mapper;
+  private final SucursalesFacade facade;
+  private final SucursalesMapper mapper;
 
-    @Override
-    protected SucursalesFacade getFacade() {
-        return facade;
-    }
+  @Override
+  protected SucursalesFacade getFacade() {
+    return facade;
+  }
 
-    @Override
-    protected SucursalesMapper getMapper() {
-        return mapper;
-    }
+  @Override
+  protected SucursalesMapper getMapper() {
+    return mapper;
+  }
 }

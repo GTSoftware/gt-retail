@@ -18,53 +18,55 @@ package ar.com.gtsoftware.dao;
 import ar.com.gtsoftware.domain.AFIPAuthServices;
 import ar.com.gtsoftware.domain.AFIPAuthServices_;
 import ar.com.gtsoftware.search.AFIPAuthServicesSearchFilter;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Repository;
-
+import java.time.LocalDateTime;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Repository;
 
 @Repository
-public class AFIPAuthServicesFacade extends AbstractFacade<AFIPAuthServices, AFIPAuthServicesSearchFilter> {
+public class AFIPAuthServicesFacade
+    extends AbstractFacade<AFIPAuthServices, AFIPAuthServicesSearchFilter> {
 
+  private final EntityManager em;
 
-    private final EntityManager em;
+  public AFIPAuthServicesFacade(EntityManager em) {
+    super(AFIPAuthServices.class);
+    this.em = em;
+  }
 
-    public AFIPAuthServicesFacade(EntityManager em) {
-        super(AFIPAuthServices.class);
-        this.em = em;
+  @Override
+  protected EntityManager getEntityManager() {
+    return em;
+  }
+
+  @Override
+  public Predicate createWhereFromSearchFilter(
+      AFIPAuthServicesSearchFilter asf, CriteriaBuilder cb, Root<AFIPAuthServices> root) {
+
+    Predicate p = null;
+    if (StringUtils.isNotEmpty(asf.getService())) {
+      p = cb.equal(root.get(AFIPAuthServices_.nombreServicio), asf.getService());
     }
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
+    if (asf.getNoExpirado() != null) {
+      Predicate p1 =
+          cb.equal(
+              cb.greaterThan(
+                  root.get(AFIPAuthServices_.fechaExpiracion), cb.literal(LocalDateTime.now())),
+              asf.getNoExpirado());
+      p = appendAndPredicate(cb, p, p1);
     }
+    return p;
+  }
 
-    @Override
-    public Predicate createWhereFromSearchFilter(AFIPAuthServicesSearchFilter asf, CriteriaBuilder cb, Root<AFIPAuthServices> root) {
-
-        Predicate p = null;
-        if (StringUtils.isNotEmpty(asf.getService())) {
-            p = cb.equal(root.get(AFIPAuthServices_.nombreServicio), asf.getService());
-        }
-
-        if (asf.getNoExpirado() != null) {
-            Predicate p1 = cb.equal(cb.greaterThan(root.get(AFIPAuthServices_.fechaExpiracion),
-                    cb.literal(LocalDateTime.now())), asf.getNoExpirado());
-            p = appendAndPredicate(cb, p, p1);
-        }
-        return p;
-
-    }
-
-    @Override
-    public AFIPAuthServices createOrEdit(@NotNull AFIPAuthServices entity) {
-        final AFIPAuthServices authServices = super.createOrEdit(entity);
-        em.flush();
-        return authServices;
-    }
+  @Override
+  public AFIPAuthServices createOrEdit(@NotNull AFIPAuthServices entity) {
+    final AFIPAuthServices authServices = super.createOrEdit(entity);
+    em.flush();
+    return authServices;
+  }
 }

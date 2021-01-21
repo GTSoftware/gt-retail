@@ -18,9 +18,8 @@
 package ar.com.gtsoftware.mappers;
 
 import ar.com.gtsoftware.mappers.helper.CycleAvoidingMappingContext;
-import org.mapstruct.Context;
-
 import java.util.List;
+import org.mapstruct.Context;
 
 /**
  * Raiz de todos los mappers de entidad-Dto
@@ -29,36 +28,37 @@ import java.util.List;
  * @param <D> DTO
  */
 public interface GenericMapper<E, D> {
-    /**
-     * Mapea una entidad E a un DTO D
-     *
-     * @param entidad
-     * @return un dto mapeado desde la entidad
-     */
-    D entityToDto(E entidad, @Context CycleAvoidingMappingContext cycleAvoidingMappingContext);
+  /**
+   * Mapea una entidad E a un DTO D
+   *
+   * @param entidad
+   * @return un dto mapeado desde la entidad
+   */
+  D entityToDto(E entidad, @Context CycleAvoidingMappingContext cycleAvoidingMappingContext);
 
-    /**
-     * Mapea una lista de entidades E a una lista de Dto
-     *
-     * @param entidades
-     * @return una lista de dtos mapeados desde la lista de entidad
-     */
-    List<D> entitiesToDtos(List<E> entidades, @Context CycleAvoidingMappingContext cycleAvoidingMappingContext);
+  /**
+   * Mapea una lista de entidades E a una lista de Dto
+   *
+   * @param entidades
+   * @return una lista de dtos mapeados desde la lista de entidad
+   */
+  List<D> entitiesToDtos(
+      List<E> entidades, @Context CycleAvoidingMappingContext cycleAvoidingMappingContext);
 
-    /**
-     * Mapea un dto D a una entidad E
-     *
-     * @param dto
-     * @return una entidad mapeada desde el dto
-     */
-    E dtoToEntity(D dto, @Context CycleAvoidingMappingContext cycleAvoidingMappingContext);
+  /**
+   * Mapea un dto D a una entidad E
+   *
+   * @param dto
+   * @return una entidad mapeada desde el dto
+   */
+  E dtoToEntity(D dto, @Context CycleAvoidingMappingContext cycleAvoidingMappingContext);
 
-    /**
-     * Mapea una lista de dto D a una lista de entidades E
-     *
-     * @param dtos
-     * @return una lista de entidades mapeadas desde la lista de dtos
-     */
-    List<E> dtosToEntities(List<D> dtos, @Context CycleAvoidingMappingContext cycleAvoidingMappingContext);
-
+  /**
+   * Mapea una lista de dto D a una lista de entidades E
+   *
+   * @param dtos
+   * @return una lista de entidades mapeadas desde la lista de dtos
+   */
+  List<E> dtosToEntities(
+      List<D> dtos, @Context CycleAvoidingMappingContext cycleAvoidingMappingContext);
 }

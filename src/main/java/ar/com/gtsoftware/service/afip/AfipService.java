@@ -28,59 +28,58 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 @Service
 @RequiredArgsConstructor
 public class AfipService {
 
-    public static final String FACTURA_ELECTRONICA_SERVICE = "wsfe";
-    private final AFIPAuthServicesFacade aFIPAuthServicesFacade;
-    private final LoginClient loginClient;
-    private final ElectronicInvoiceClient electronicInvoiceClient;
-    private final BusinessDateUtils dateUtils;
+  public static final String FACTURA_ELECTRONICA_SERVICE = "wsfe";
+  private final AFIPAuthServicesFacade aFIPAuthServicesFacade;
+  private final LoginClient loginClient;
+  private final ElectronicInvoiceClient electronicInvoiceClient;
+  private final BusinessDateUtils dateUtils;
 
-    @Transactional
-    public int obtenerUltimoComprobanteAutorizado(FiscalPuntosVenta puntoVenta,
-                                                  FiscalTiposComprobante tipoComprobante) {
-        final AFIPAuthServices auth = obtenerLoginTicket(FACTURA_ELECTRONICA_SERVICE);
+  @Transactional
+  public int obtenerUltimoComprobanteAutorizado(
+      FiscalPuntosVenta puntoVenta, FiscalTiposComprobante tipoComprobante) {
+    final AFIPAuthServices auth = obtenerLoginTicket(FACTURA_ELECTRONICA_SERVICE);
 
-        return electronicInvoiceClient.getLastAuthorizedInvoiceNumber(auth,
-                puntoVenta.getNroPuntoVenta(),
-                Integer.parseInt(tipoComprobante.getCodigoTipoComprobante()));
+    return electronicInvoiceClient.getLastAuthorizedInvoiceNumber(
+        auth,
+        puntoVenta.getNroPuntoVenta(),
+        Integer.parseInt(tipoComprobante.getCodigoTipoComprobante()));
+  }
+
+  @Transactional
+  public void autorizarComprobante(FiscalLibroIvaVentas registro) {
+    final AFIPAuthServices auth = obtenerLoginTicket(FACTURA_ELECTRONICA_SERVICE);
+
+    CAEResponse caeDto = electronicInvoiceClient.requestElectronicAuthorization(auth, registro);
+    registro.setCae(caeDto.getCae());
+    registro.setFechaVencimientoCae(caeDto.getFechaVencimientoCae());
+  }
+
+  private AFIPAuthServices obtenerLoginTicket(String service) {
+
+    AFIPAuthServices loginTicket = aFIPAuthServicesFacade.find(service);
+    if (loginTicket == null) {
+      loginTicket = new AFIPAuthServices();
+    } else if (loginTicket.getFechaExpiracion().isAfter(dateUtils.getCurrentDateTime())) {
+      return loginTicket;
     }
+    loginTicket.setNombreServicio(service);
 
-    @Transactional
-    public void autorizarComprobante(FiscalLibroIvaVentas registro) {
-        final AFIPAuthServices auth = obtenerLoginTicket(FACTURA_ELECTRONICA_SERVICE);
+    AuthTicket ticketDto = loginClient.login(service);
+    loginTicket.setFechaExpiracion(ticketDto.getExpirationDate());
+    loginTicket.setSign(ticketDto.getSign());
+    loginTicket.setToken(ticketDto.getToken());
+    aFIPAuthServicesFacade.createOrEdit(loginTicket);
 
-        CAEResponse caeDto = electronicInvoiceClient.requestElectronicAuthorization(auth, registro);
-        registro.setCae(caeDto.getCae());
-        registro.setFechaVencimientoCae(caeDto.getFechaVencimientoCae());
-    }
+    return loginTicket;
+  }
 
-    private AFIPAuthServices obtenerLoginTicket(String service) {
-
-        AFIPAuthServices loginTicket = aFIPAuthServicesFacade.find(service);
-        if (loginTicket == null) {
-            loginTicket = new AFIPAuthServices();
-        } else if (loginTicket.getFechaExpiracion().isAfter(dateUtils.getCurrentDateTime())) {
-            return loginTicket;
-        }
-        loginTicket.setNombreServicio(service);
-
-        AuthTicket ticketDto = loginClient.login(service);
-        loginTicket.setFechaExpiracion(ticketDto.getExpirationDate());
-        loginTicket.setSign(ticketDto.getSign());
-        loginTicket.setToken(ticketDto.getToken());
-        aFIPAuthServicesFacade.createOrEdit(loginTicket);
-
-        return loginTicket;
-    }
-
-    public boolean isAuthenticated(String service) {
-        AFIPAuthServicesSearchFilter asf = new AFIPAuthServicesSearchFilter(service, Boolean.TRUE);
-        AFIPAuthServices loginTicket = aFIPAuthServicesFacade.findFirstBySearchFilter(asf);
-        return loginTicket != null;
-    }
-
+  public boolean isAuthenticated(String service) {
+    AFIPAuthServicesSearchFilter asf = new AFIPAuthServicesSearchFilter(service, Boolean.TRUE);
+    AFIPAuthServices loginTicket = aFIPAuthServicesFacade.findFirstBySearchFilter(asf);
+    return loginTicket != null;
+  }
 }

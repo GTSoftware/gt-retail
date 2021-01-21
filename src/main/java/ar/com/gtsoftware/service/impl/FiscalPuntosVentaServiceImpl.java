@@ -30,20 +30,21 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class FiscalPuntosVentaServiceImpl
-        extends BaseEntityService<FiscalPuntosVentaDto, FiscalPuntosVentaSearchFilter, FiscalPuntosVenta>
-        implements FiscalPuntosVentaService {
+    extends BaseEntityService<
+        FiscalPuntosVentaDto, FiscalPuntosVentaSearchFilter, FiscalPuntosVenta>
+    implements FiscalPuntosVentaService {
 
-    private final FiscalPuntosVentaFacade facade;
+  private final FiscalPuntosVentaFacade facade;
 
-    private final FiscalPuntosVentaMapper mapper;
+  private final FiscalPuntosVentaMapper mapper;
 
-    @Override
-    protected FiscalPuntosVentaFacade getFacade() {
-        return facade;
-    }
+  @Override
+  protected FiscalPuntosVentaFacade getFacade() {
+    return facade;
+  }
 
-    @Override
-    protected FiscalPuntosVentaMapper getMapper() {
-        return mapper;
-    }
+  @Override
+  protected FiscalPuntosVentaMapper getMapper() {
+    return mapper;
+  }
 }

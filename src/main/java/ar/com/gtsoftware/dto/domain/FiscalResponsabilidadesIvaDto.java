@@ -26,11 +26,7 @@ import lombok.*;
 @Builder
 public class FiscalResponsabilidadesIvaDto {
 
-
-    @EqualsAndHashCode.Include
-    private Long id;
-    private String nombreResponsabildiad;
-    private Integer fiscalCodigoResponsable;
-
-
+  @EqualsAndHashCode.Include private Long id;
+  private String nombreResponsabildiad;
+  private Integer fiscalCodigoResponsable;
 }

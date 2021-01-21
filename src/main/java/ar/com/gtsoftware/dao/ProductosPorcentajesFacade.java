@@ -20,42 +20,46 @@ import ar.com.gtsoftware.domain.ProductosPorcentajes_;
 import ar.com.gtsoftware.domain.ProductosTiposPorcentajes_;
 import ar.com.gtsoftware.domain.Productos_;
 import ar.com.gtsoftware.search.ProductosPorcentajesSearchFilter;
-import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.springframework.stereotype.Repository;
 
 @Repository
-public class ProductosPorcentajesFacade extends AbstractFacade<ProductosPorcentajes, ProductosPorcentajesSearchFilter> {
+public class ProductosPorcentajesFacade
+    extends AbstractFacade<ProductosPorcentajes, ProductosPorcentajesSearchFilter> {
 
-    private final EntityManager em;
+  private final EntityManager em;
 
-    public ProductosPorcentajesFacade(EntityManager em) {
-        super(ProductosPorcentajes.class);
-        this.em = em;
+  public ProductosPorcentajesFacade(EntityManager em) {
+    super(ProductosPorcentajes.class);
+    this.em = em;
+  }
+
+  @Override
+  protected EntityManager getEntityManager() {
+    return em;
+  }
+
+  @Override
+  public Predicate createWhereFromSearchFilter(
+      ProductosPorcentajesSearchFilter psf, CriteriaBuilder cb, Root<ProductosPorcentajes> root) {
+
+    Predicate p = null;
+    if (psf.getIdProducto() != null) {
+      Predicate p1 =
+          cb.equal(
+              root.get(ProductosPorcentajes_.idProducto).get(Productos_.id), psf.getIdProducto());
+      p = appendAndPredicate(cb, p, p1);
     }
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
+    if (psf.getIdTipoPorcentaje() != null) {
+      Predicate p1 =
+          cb.equal(
+              root.get(ProductosPorcentajes_.idTipoPorcentaje).get(ProductosTiposPorcentajes_.id),
+              psf.getIdTipoPorcentaje());
+      p = appendAndPredicate(cb, p, p1);
     }
-
-    @Override
-    public Predicate createWhereFromSearchFilter(ProductosPorcentajesSearchFilter psf, CriteriaBuilder cb, Root<ProductosPorcentajes> root) {
-
-        Predicate p = null;
-        if (psf.getIdProducto() != null) {
-            Predicate p1 = cb.equal(root.get(ProductosPorcentajes_.idProducto).get(Productos_.id), psf.getIdProducto());
-            p = appendAndPredicate(cb, p, p1);
-        }
-        if (psf.getIdTipoPorcentaje() != null) {
-            Predicate p1 = cb.equal(root.get(ProductosPorcentajes_.idTipoPorcentaje).get(ProductosTiposPorcentajes_.id), psf.getIdTipoPorcentaje());
-            p = appendAndPredicate(cb, p, p1);
-
-        }
-        return p;
-    }
-
+    return p;
+  }
 }

@@ -16,14 +16,11 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
-import lombok.*;
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import lombok.*;
 
-/**
- * @author Rodrigo Tato <rotatomel@gmail.com>
- */
+/** @author Rodrigo Tato <rotatomel@gmail.com> */
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
@@ -31,17 +28,15 @@ import javax.validation.constraints.Size;
 @Builder
 public class ProductosTiposUnidadesDto {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @EqualsAndHashCode.Include
-    private Long id;
+  @EqualsAndHashCode.Include private Long id;
 
-    @NotNull
-    @Size(min = 1, max = 60)
-    private String nombreUnidad;
-    private boolean cantidadEntera;
+  @NotNull
+  @Size(min = 1, max = 60)
+  private String nombreUnidad;
 
-    private Integer version;
+  private boolean cantidadEntera;
 
-
+  private Integer version;
 }

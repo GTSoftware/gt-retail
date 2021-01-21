@@ -29,20 +29,19 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class RecibosServiceImpl
-        extends BaseEntityService<RecibosDto, RecibosSearchFilter, Recibos>
-        implements RecibosService {
+public class RecibosServiceImpl extends BaseEntityService<RecibosDto, RecibosSearchFilter, Recibos>
+    implements RecibosService {
 
-    private final RecibosFacade facade;
-    private final RecibosMapper mapper;
+  private final RecibosFacade facade;
+  private final RecibosMapper mapper;
 
-    @Override
-    protected RecibosFacade getFacade() {
-        return facade;
-    }
+  @Override
+  protected RecibosFacade getFacade() {
+    return facade;
+  }
 
-    @Override
-    protected RecibosMapper getMapper() {
-        return mapper;
-    }
+  @Override
+  protected RecibosMapper getMapper() {
+    return mapper;
+  }
 }

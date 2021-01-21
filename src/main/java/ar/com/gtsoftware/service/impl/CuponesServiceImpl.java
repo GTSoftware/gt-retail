@@ -29,21 +29,19 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class CuponesServiceImpl
-        extends BaseEntityService<CuponesDto, CuponesSearchFilter, Cupones>
-        implements CuponesService {
+public class CuponesServiceImpl extends BaseEntityService<CuponesDto, CuponesSearchFilter, Cupones>
+    implements CuponesService {
 
+  private final CuponesFacade facade;
+  private final CuponesMapper mapper;
 
-    private final CuponesFacade facade;
-    private final CuponesMapper mapper;
+  @Override
+  protected CuponesFacade getFacade() {
+    return facade;
+  }
 
-    @Override
-    protected CuponesFacade getFacade() {
-        return facade;
-    }
-
-    @Override
-    protected CuponesMapper getMapper() {
-        return mapper;
-    }
+  @Override
+  protected CuponesMapper getMapper() {
+    return mapper;
+  }
 }

@@ -19,39 +19,40 @@ package ar.com.gtsoftware.service;
 
 import ar.com.gtsoftware.dto.domain.FiscalPuntosVentaDto;
 import ar.com.gtsoftware.service.exceptions.ServiceException;
-
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-
+import javax.validation.constraints.NotNull;
 
 public interface FacturacionVentasService {
-    /**
-     * Registra la factura fiscalmente en el libro de IVA ventas para la venta en el período fiscal y con la fecha de
-     * factura pasados como parámetro
-     *
-     * @throws ServiceException
-     */
-    void registrarFacturaVenta(@NotNull Long idComprobante,
-                               @NotNull FiscalPuntosVentaDto puntoVentaComprobanteDto,
-                               long numeroComprobante,
-                               LocalDateTime fechaFactura) throws ServiceException;
+  /**
+   * Registra la factura fiscalmente en el libro de IVA ventas para la venta en el período fiscal y
+   * con la fecha de factura pasados como parámetro
+   *
+   * @throws ServiceException
+   */
+  void registrarFacturaVenta(
+      @NotNull Long idComprobante,
+      @NotNull FiscalPuntosVentaDto puntoVentaComprobanteDto,
+      long numeroComprobante,
+      LocalDateTime fechaFactura)
+      throws ServiceException;
 
-    /**
-     * Devuelve el próximo número de factura a utilizar para el punto de venta y letra pasados como parámetro
-     *
-     * @param letra
-     * @param puntoVenta
-     * @return número de factura disponible
-     */
-    long obtenerProximoNumeroFactura(String letra, int puntoVenta);
+  /**
+   * Devuelve el próximo número de factura a utilizar para el punto de venta y letra pasados como
+   * parámetro
+   *
+   * @param letra
+   * @param puntoVenta
+   * @return número de factura disponible
+   */
+  long obtenerProximoNumeroFactura(String letra, int puntoVenta);
 
-    /**
-     * Anula la factura asociada a la venta pasada como parámetro
-     *
-     * @param idComprobante
-     * @throws ServiceException
-     */
-    void anularFactura(@NotNull Long idComprobante) throws ServiceException;
+  /**
+   * Anula la factura asociada a la venta pasada como parámetro
+   *
+   * @param idComprobante
+   * @throws ServiceException
+   */
+  void anularFactura(@NotNull Long idComprobante) throws ServiceException;
 
-    String obtenerCodigoBarrasFE(@NotNull Long idComprobante);
+  String obtenerCodigoBarrasFE(@NotNull Long idComprobante);
 }

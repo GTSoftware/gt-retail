@@ -16,12 +16,11 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
-import lombok.*;
-
-import javax.validation.constraints.Pattern;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import javax.validation.constraints.Pattern;
+import lombok.*;
 
 @Getter
 @Setter
@@ -31,49 +30,50 @@ import java.util.List;
 @Builder
 public class ProductosDto {
 
-    @EqualsAndHashCode.Include
-    private Long id;
-    @Pattern(regexp = "([A-Z]|[0-9]|/|-|_|\\.\\S)+", message = "El código no puede tener caracteres extraños ni espacios")
-    private String codigoPropio;
-    private String descripcion;
-    private String observaciones;
-    private LocalDateTime fechaAlta;
-    private LocalDateTime fechaUltimaModificacion;
-    private boolean activo;
-    private BigDecimal costoAdquisicionNeto;
+  @EqualsAndHashCode.Include private Long id;
 
-    private BigDecimal costoFinal;
+  @Pattern(
+      regexp = "([A-Z]|[0-9]|/|-|_|\\.\\S)+",
+      message = "El código no puede tener caracteres extraños ni espacios")
+  private String codigoPropio;
 
-    private int annosAmortizacion;
-    private BigDecimal unidadesCompraUnidadesVenta;
-    private ProductosTiposUnidadesDto idTipoUnidadVenta;
-    private ProductosTiposUnidadesDto idTipoUnidadCompra;
-    private ProductosTiposProveeduriaDto idTipoProveeduria;
-    private ProductosSubRubrosDto idSubRubro;
-    private ProductosRubrosDto idRubro;
+  private String descripcion;
+  private String observaciones;
+  private LocalDateTime fechaAlta;
+  private LocalDateTime fechaUltimaModificacion;
+  private boolean activo;
+  private BigDecimal costoAdquisicionNeto;
 
-    private PersonasDto idProveedorHabitual;
+  private BigDecimal costoFinal;
 
-    private FiscalAlicuotasIvaDto idAlicuotaIva;
-    private ProductosMarcasDto idMarca;
+  private int annosAmortizacion;
+  private BigDecimal unidadesCompraUnidadesVenta;
+  private ProductosTiposUnidadesDto idTipoUnidadVenta;
+  private ProductosTiposUnidadesDto idTipoUnidadCompra;
+  private ProductosTiposProveeduriaDto idTipoProveeduria;
+  private ProductosSubRubrosDto idSubRubro;
+  private ProductosRubrosDto idRubro;
 
-    private List<ProductosPreciosDto> precios;
+  private PersonasDto idProveedorHabitual;
 
-    private List<ProductosPorcentajesDto> porcentajes;
+  private FiscalAlicuotasIvaDto idAlicuotaIva;
+  private ProductosMarcasDto idMarca;
 
-    private String ubicacion;
+  private List<ProductosPreciosDto> precios;
 
-    private String codigoFabricante;
+  private List<ProductosPorcentajesDto> porcentajes;
 
-    private BigDecimal stockMinimo;
+  private String ubicacion;
 
-    private BigDecimal precioVenta;
+  private String codigoFabricante;
 
-    private BigDecimal stockActual;
+  private BigDecimal stockMinimo;
 
-    private BigDecimal stockActualEnSucursal;
+  private BigDecimal precioVenta;
 
-    private Integer version;
+  private BigDecimal stockActual;
 
+  private BigDecimal stockActualEnSucursal;
 
+  private Integer version;
 }

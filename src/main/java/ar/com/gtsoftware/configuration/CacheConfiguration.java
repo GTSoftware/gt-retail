@@ -12,14 +12,15 @@ import org.springframework.scheduling.annotation.Scheduled;
 @EnableCaching
 public class CacheConfiguration {
 
-    @Bean
-    public CacheManager cacheManager() {
-        return new ConcurrentMapCacheManager("offers");
-    }
+  @Bean
+  public CacheManager cacheManager() {
+    return new ConcurrentMapCacheManager("offers");
+  }
 
-    //TODO this is here until the add/edit offers is done
-    @CacheEvict(allEntries = true, cacheNames = {"offers"})
-    @Scheduled(fixedDelay = 30 * 60000)//30 Minutes
-    public void cacheEvict() {
-    }
+  // TODO this is here until the add/edit offers is done
+  @CacheEvict(
+      allEntries = true,
+      cacheNames = {"offers"})
+  @Scheduled(fixedDelay = 30 * 60000) // 30 Minutes
+  public void cacheEvict() {}
 }

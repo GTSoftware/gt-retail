@@ -18,7 +18,6 @@ package ar.com.gtsoftware.dto.domain;
 
 import lombok.*;
 
-
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -27,17 +26,15 @@ import lombok.*;
 @Builder
 public class NegocioFormasPagoDto {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @EqualsAndHashCode.Include
-    private Long id;
-    private String nombreFormaPago;
-    private String nombreCorto;
-    private boolean venta;
-    private boolean compra;
-    private boolean requierePlan;
-    private boolean requiereValores;
-    private boolean porDefecto;
-    private Integer version;
-
+  @EqualsAndHashCode.Include private Long id;
+  private String nombreFormaPago;
+  private String nombreCorto;
+  private boolean venta;
+  private boolean compra;
+  private boolean requierePlan;
+  private boolean requiereValores;
+  private boolean porDefecto;
+  private Integer version;
 }

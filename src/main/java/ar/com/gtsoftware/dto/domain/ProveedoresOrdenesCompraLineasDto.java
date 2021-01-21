@@ -16,14 +16,11 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
+import java.math.BigDecimal;
+import javax.validation.constraints.NotNull;
 import lombok.*;
 
-import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
-
-/**
- * @author rodrigo
- */
+/** @author rodrigo */
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
@@ -31,31 +28,19 @@ import java.math.BigDecimal;
 @Builder
 public class ProveedoresOrdenesCompraLineasDto {
 
-    private static final long serialVersionUID = 1L;
-    @EqualsAndHashCode.Include
-    private Long id;
+  private static final long serialVersionUID = 1L;
+  @EqualsAndHashCode.Include private Long id;
 
-    @NotNull
-    private BigDecimal precioCompraUnitario;
-    @NotNull
-    private BigDecimal cantidadPedida;
-    @NotNull
-    private BigDecimal subTotal;
-    @NotNull
-    private BigDecimal cantidadRecibida;
-    @NotNull
-    private ProveedoresOrdenesCompraDto idOrdenCompra;
+  @NotNull private BigDecimal precioCompraUnitario;
+  @NotNull private BigDecimal cantidadPedida;
+  @NotNull private BigDecimal subTotal;
+  @NotNull private BigDecimal cantidadRecibida;
+  @NotNull private ProveedoresOrdenesCompraDto idOrdenCompra;
 
-    @NotNull
-    private ProductosDto idProducto;
-    @NotNull
-    private ProductosTiposUnidadesDto idTipoUnidad;
+  @NotNull private ProductosDto idProducto;
+  @NotNull private ProductosTiposUnidadesDto idTipoUnidad;
 
+  @EqualsAndHashCode.Include private int nroLinea;
 
-    @EqualsAndHashCode.Include
-    private int nroLinea;
-
-    private Integer version;
-
-
+  private Integer version;
 }

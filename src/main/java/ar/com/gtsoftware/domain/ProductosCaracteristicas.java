@@ -15,37 +15,39 @@
  */
 package ar.com.gtsoftware.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
-/**
- * @author rodrigo
- */
+/** @author rodrigo */
 @Entity
 @Table(name = "productos_caracteristicas")
 @Getter
 @Setter
 public class ProductosCaracteristicas extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "productos_caracteristicas_id_caracteristica")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "productos_caracteristicas_id_caracteristica",
-            sequenceName = "productos_caracteristicas_id_caracteristica_seq")
-    @Basic(optional = false)
-    @Column(name = "id_caracteristica", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(
+      strategy = GenerationType.SEQUENCE,
+      generator = "productos_caracteristicas_id_caracteristica")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "productos_caracteristicas_id_caracteristica",
+      sequenceName = "productos_caracteristicas_id_caracteristica_seq")
+  @Basic(optional = false)
+  @Column(name = "id_caracteristica", nullable = false, updatable = false)
+  private Long id;
 
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "nombre_caracteristica")
-    private String nombreCaracteristica;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCaracteristica")
-    private List<ProductosXCaracteristicas> productosXCaracteristicasList;
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 100)
+  @Column(name = "nombre_caracteristica")
+  private String nombreCaracteristica;
 
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCaracteristica")
+  private List<ProductosXCaracteristicas> productosXCaracteristicasList;
 }

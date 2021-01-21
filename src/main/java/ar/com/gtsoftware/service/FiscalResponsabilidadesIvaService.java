@@ -20,8 +20,5 @@ package ar.com.gtsoftware.service;
 import ar.com.gtsoftware.dto.domain.FiscalResponsabilidadesIvaDto;
 import ar.com.gtsoftware.search.AbstractSearchFilter;
 
-
 public interface FiscalResponsabilidadesIvaService
-        extends EntityService<FiscalResponsabilidadesIvaDto, AbstractSearchFilter> {
-
-}
+    extends EntityService<FiscalResponsabilidadesIvaDto, AbstractSearchFilter> {}

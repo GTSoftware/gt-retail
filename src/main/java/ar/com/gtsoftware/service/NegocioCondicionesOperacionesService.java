@@ -20,7 +20,5 @@ package ar.com.gtsoftware.service;
 import ar.com.gtsoftware.dto.domain.NegocioCondicionesOperacionesDto;
 import ar.com.gtsoftware.search.AbstractSearchFilter;
 
-
 public interface NegocioCondicionesOperacionesService
-        extends EntityService<NegocioCondicionesOperacionesDto, AbstractSearchFilter> {
-}
+    extends EntityService<NegocioCondicionesOperacionesDto, AbstractSearchFilter> {}

@@ -22,7 +22,4 @@ import ar.com.gtsoftware.dto.domain.UsuariosGruposDto;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
-public interface UsuariosGruposMapper
-        extends GenericMapper<UsuariosGrupos, UsuariosGruposDto> {
-
-}
+public interface UsuariosGruposMapper extends GenericMapper<UsuariosGrupos, UsuariosGruposDto> {}

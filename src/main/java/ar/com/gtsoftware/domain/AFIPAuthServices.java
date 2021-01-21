@@ -15,110 +15,109 @@
  */
 package ar.com.gtsoftware.domain;
 
-
+import java.time.LocalDateTime;
+import java.util.Objects;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.time.LocalDateTime;
-import java.util.Objects;
 
-/**
- * @author Rodrigo M. Tato Rothamel mailto:rotatomel@gmail.com
- */
+/** @author Rodrigo M. Tato Rothamel mailto:rotatomel@gmail.com */
 @Entity
 @Table(name = "afip_auth_services")
 @XmlRootElement
 public class AFIPAuthServices extends GTEntity<String> {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 30)
-    @Column(name = "nombre_servicio")
-    private String nombreServicio;
-    @Size(max = 1024)
-    @Column(name = "token")
-    private String token;
-    @Size(max = 255)
-    @Column(name = "sign")
-    private String sign;
-    @Column(name = "fecha_expiracion")
-    private LocalDateTime fechaExpiracion;
+  private static final long serialVersionUID = 1L;
 
-    public AFIPAuthServices() {
+  @Id
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 30)
+  @Column(name = "nombre_servicio")
+  private String nombreServicio;
+
+  @Size(max = 1024)
+  @Column(name = "token")
+  private String token;
+
+  @Size(max = 255)
+  @Column(name = "sign")
+  private String sign;
+
+  @Column(name = "fecha_expiracion")
+  private LocalDateTime fechaExpiracion;
+
+  public AFIPAuthServices() {}
+
+  public String getNombreServicio() {
+    return nombreServicio;
+  }
+
+  public void setNombreServicio(String nombreServicio) {
+    this.nombreServicio = nombreServicio;
+  }
+
+  public String getToken() {
+    return token;
+  }
+
+  public void setToken(String token) {
+    this.token = token;
+  }
+
+  public String getSign() {
+    return sign;
+  }
+
+  public void setSign(String sign) {
+    this.sign = sign;
+  }
+
+  public LocalDateTime getFechaExpiracion() {
+    return fechaExpiracion;
+  }
+
+  public void setFechaExpiracion(LocalDateTime fechaExpiracion) {
+    this.fechaExpiracion = fechaExpiracion;
+  }
+
+  @Override
+  public boolean isNew() {
+    return nombreServicio == null;
+  }
+
+  @Override
+  public String getId() {
+    return nombreServicio;
+  }
+
+  @Override
+  public String calculateId(String id) {
+    return id;
+  }
+
+  @Override
+  public String getStringId() {
+    return nombreServicio;
+  }
+
+  @Override
+  public int hashCode() {
+    int hash = 7;
+    hash = 19 * hash + Objects.hashCode(this.nombreServicio);
+    return hash;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == null) {
+      return false;
     }
-
-    public String getNombreServicio() {
-        return nombreServicio;
+    if (getClass() != obj.getClass()) {
+      return false;
     }
-
-    public void setNombreServicio(String nombreServicio) {
-        this.nombreServicio = nombreServicio;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public String getSign() {
-        return sign;
-    }
-
-    public void setSign(String sign) {
-        this.sign = sign;
-    }
-
-    public LocalDateTime getFechaExpiracion() {
-        return fechaExpiracion;
-    }
-
-    public void setFechaExpiracion(LocalDateTime fechaExpiracion) {
-        this.fechaExpiracion = fechaExpiracion;
-    }
-
-    @Override
-    public boolean isNew() {
-        return nombreServicio == null;
-    }
-
-    @Override
-    public String getId() {
-        return nombreServicio;
-    }
-
-    @Override
-    public String calculateId(String id) {
-        return id;
-    }
-
-    @Override
-    public String getStringId() {
-        return nombreServicio;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 19 * hash + Objects.hashCode(this.nombreServicio);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final AFIPAuthServices other = (AFIPAuthServices) obj;
-        return Objects.equals(this.nombreServicio, other.nombreServicio);
-    }
-
+    final AFIPAuthServices other = (AFIPAuthServices) obj;
+    return Objects.equals(this.nombreServicio, other.nombreServicio);
+  }
 }

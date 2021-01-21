@@ -20,7 +20,4 @@ package ar.com.gtsoftware.service;
 import ar.com.gtsoftware.dto.domain.SucursalesDto;
 import ar.com.gtsoftware.search.SucursalesSearchFilter;
 
-
-public interface SucursalesService
-        extends EntityService<SucursalesDto, SucursalesSearchFilter> {
-}
+public interface SucursalesService extends EntityService<SucursalesDto, SucursalesSearchFilter> {}

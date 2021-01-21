@@ -15,15 +15,15 @@
  */
 package ar.com.gtsoftware.domain;
 
+import java.math.BigDecimal;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
-
 /**
- * Representa a los coeficientes de descuentos o recargos comerciales que aplican al total de la orden de compra
+ * Representa a los coeficientes de descuentos o recargos comerciales que aplican al total de la
+ * orden de compra
  *
  * @author Rodrigo M. Tato Rothamel
  */
@@ -33,27 +33,37 @@ import java.math.BigDecimal;
 @Setter
 public class ProveedoresOrdenesCompraPorcentajes extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "proveedores_ordenes_compra_porce_id_orden_compra_porcentaje")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "proveedores_ordenes_compra_porce_id_orden_compra_porcentaje",
-            sequenceName = "proveedores_ordenes_compra_porce_id_orden_compra_porcentaje_seq")
-    @Basic(optional = false)
-    @Column(name = "id_orden_compra_porcentaje", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(
+      strategy = GenerationType.SEQUENCE,
+      generator = "proveedores_ordenes_compra_porce_id_orden_compra_porcentaje")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "proveedores_ordenes_compra_porce_id_orden_compra_porcentaje",
+      sequenceName = "proveedores_ordenes_compra_porce_id_orden_compra_porcentaje_seq")
+  @Basic(optional = false)
+  @Column(name = "id_orden_compra_porcentaje", nullable = false, updatable = false)
+  private Long id;
 
-    @NotNull
-    @JoinColumn(name = "id_orden_compra", referencedColumnName = "id_orden_compra", columnDefinition = "int4")
-    @ManyToOne(optional = false)
-    private ProveedoresOrdenesCompra idOrdenCompra;
+  @NotNull
+  @JoinColumn(
+      name = "id_orden_compra",
+      referencedColumnName = "id_orden_compra",
+      columnDefinition = "int4")
+  @ManyToOne(optional = false)
+  private ProveedoresOrdenesCompra idOrdenCompra;
 
-    @NotNull
-    @JoinColumn(name = "id_tipo_porcentaje", referencedColumnName = "id_tipo_porcentaje", columnDefinition = "int4")
-    @ManyToOne(optional = false)
-    private ProductosTiposPorcentajes idTipoPorcentaje;
+  @NotNull
+  @JoinColumn(
+      name = "id_tipo_porcentaje",
+      referencedColumnName = "id_tipo_porcentaje",
+      columnDefinition = "int4")
+  @ManyToOne(optional = false)
+  private ProductosTiposPorcentajes idTipoPorcentaje;
 
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "valor")
-    private BigDecimal valor;
-
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "valor")
+  private BigDecimal valor;
 }

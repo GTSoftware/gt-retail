@@ -17,48 +17,43 @@ package ar.com.gtsoftware.search;
 
 import org.apache.commons.lang3.StringUtils;
 
-/**
- * @author Rodrigo Tato <rotatomel@gmail.com>
- */
+/** @author Rodrigo Tato <rotatomel@gmail.com> */
 public class PaisesSearchFilter extends AbstractSearchFilter {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2L;
-    private Integer idPais;
-    private String nombrePais;
+  /** */
+  private static final long serialVersionUID = 2L;
 
-    public PaisesSearchFilter() {
-    }
+  private Integer idPais;
+  private String nombrePais;
 
-    public PaisesSearchFilter(Integer idPais) {
-        this.idPais = idPais;
-    }
+  public PaisesSearchFilter() {}
 
-    public PaisesSearchFilter(String nombrePais) {
-        this.nombrePais = nombrePais;
-    }
+  public PaisesSearchFilter(Integer idPais) {
+    this.idPais = idPais;
+  }
 
-    @Override
-    public boolean hasFilter() {
-        return (idPais != null) || (StringUtils.isNotEmpty(nombrePais));
-    }
+  public PaisesSearchFilter(String nombrePais) {
+    this.nombrePais = nombrePais;
+  }
 
-    public Integer getIdPais() {
-        return idPais;
-    }
+  @Override
+  public boolean hasFilter() {
+    return (idPais != null) || (StringUtils.isNotEmpty(nombrePais));
+  }
 
-    public void setIdPais(Integer idPais) {
-        this.idPais = idPais;
-    }
+  public Integer getIdPais() {
+    return idPais;
+  }
 
-    public String getNombrePais() {
-        return nombrePais;
-    }
+  public void setIdPais(Integer idPais) {
+    this.idPais = idPais;
+  }
 
-    public void setNombrePais(String nombrePais) {
-        this.nombrePais = nombrePais;
-    }
+  public String getNombrePais() {
+    return nombrePais;
+  }
 
+  public void setNombrePais(String nombrePais) {
+    this.nombrePais = nombrePais;
+  }
 }

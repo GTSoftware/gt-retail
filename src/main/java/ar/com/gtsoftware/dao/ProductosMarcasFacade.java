@@ -18,39 +18,37 @@ package ar.com.gtsoftware.dao;
 import ar.com.gtsoftware.domain.ProductosMarcas;
 import ar.com.gtsoftware.domain.ProductosMarcas_;
 import ar.com.gtsoftware.search.MarcasSearchFilter;
-import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.springframework.stereotype.Repository;
 
 @Repository
 public class ProductosMarcasFacade extends AbstractFacade<ProductosMarcas, MarcasSearchFilter> {
 
+  private final EntityManager em;
 
-    private final EntityManager em;
+  public ProductosMarcasFacade(EntityManager em) {
+    super(ProductosMarcas.class);
+    this.em = em;
+  }
 
-    public ProductosMarcasFacade(EntityManager em) {
-        super(ProductosMarcas.class);
-        this.em = em;
+  @Override
+  protected EntityManager getEntityManager() {
+    return em;
+  }
+
+  @Override
+  public Predicate createWhereFromSearchFilter(
+      MarcasSearchFilter msf, CriteriaBuilder cb, Root<ProductosMarcas> root) {
+
+    Predicate p = null;
+    if (msf.getNombreMarca() != null) {
+      String s = msf.getNombreMarca().toUpperCase();
+      p = cb.like(root.get(ProductosMarcas_.nombreMarca), String.format("%%%s%%", s));
     }
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
-
-    @Override
-    public Predicate createWhereFromSearchFilter(MarcasSearchFilter msf, CriteriaBuilder cb, Root<ProductosMarcas> root) {
-
-        Predicate p = null;
-        if (msf.getNombreMarca() != null) {
-            String s = msf.getNombreMarca().toUpperCase();
-            p = cb.like(root.get(ProductosMarcas_.nombreMarca), String.format("%%%s%%", s));
-        }
-
-        return p;
-    }
-
+    return p;
+  }
 }

@@ -30,22 +30,21 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class NegocioPlanesPagoDetalleServiceImpl
-        extends BaseEntityService<NegocioPlanesPagoDetalleDto, PlanesPagoDetalleSearchFilter, NegocioPlanesPagoDetalle>
-        implements NegocioPlanesPagoDetalleService {
+    extends BaseEntityService<
+        NegocioPlanesPagoDetalleDto, PlanesPagoDetalleSearchFilter, NegocioPlanesPagoDetalle>
+    implements NegocioPlanesPagoDetalleService {
 
-    private final NegocioPlanesPagoDetalleFacade facade;
+  private final NegocioPlanesPagoDetalleFacade facade;
 
-    private final NegocioPlanesPagoDetalleMapper mapper;
+  private final NegocioPlanesPagoDetalleMapper mapper;
 
-    @Override
-    protected NegocioPlanesPagoDetalleFacade getFacade() {
-        return facade;
-    }
+  @Override
+  protected NegocioPlanesPagoDetalleFacade getFacade() {
+    return facade;
+  }
 
-    @Override
-    protected NegocioPlanesPagoDetalleMapper getMapper() {
-        return mapper;
-    }
-
-
+  @Override
+  protected NegocioPlanesPagoDetalleMapper getMapper() {
+    return mapper;
+  }
 }

@@ -15,48 +15,52 @@
  */
 package ar.com.gtsoftware.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Date;
-import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
-/**
- * @author rodrigo
- */
+/** @author rodrigo */
 @Entity
 @Table(name = "contabilidad_periodos_contables")
 @Getter
 @Setter
 public class ContabilidadPeriodosContables extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contabilidad_periodos_contables_id_periodo_contable")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "contabilidad_periodos_contables_id_periodo_contable",
-            sequenceName = "contabilidad_periodos_contables_id_periodo_contable_seq")
-    @Basic(optional = false)
-    @Column(name = "id_periodo_contable", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(
+      strategy = GenerationType.SEQUENCE,
+      generator = "contabilidad_periodos_contables_id_periodo_contable")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "contabilidad_periodos_contables_id_periodo_contable",
+      sequenceName = "contabilidad_periodos_contables_id_periodo_contable_seq")
+  @Basic(optional = false)
+  @Column(name = "id_periodo_contable", nullable = false, updatable = false)
+  private Long id;
 
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "nombre_periodo")
-    private String nombrePeriodo;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "fecha_inicio_periodo")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaInicioPeriodo;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "fecha_fin_periodo")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaFinPeriodo;
-    @OneToMany(mappedBy = "idPeriodoContable")
-    private List<ContabilidadRegistroContable> contabilidadRegistroContableList;
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 100)
+  @Column(name = "nombre_periodo")
+  private String nombrePeriodo;
 
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "fecha_inicio_periodo")
+  @Temporal(TemporalType.TIMESTAMP)
+  private Date fechaInicioPeriodo;
+
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "fecha_fin_periodo")
+  @Temporal(TemporalType.TIMESTAMP)
+  private Date fechaFinPeriodo;
+
+  @OneToMany(mappedBy = "idPeriodoContable")
+  private List<ContabilidadRegistroContable> contabilidadRegistroContableList;
 }

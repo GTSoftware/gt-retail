@@ -18,60 +18,61 @@ package ar.com.gtsoftware.dao;
 import ar.com.gtsoftware.domain.Usuarios;
 import ar.com.gtsoftware.domain.Usuarios_;
 import ar.com.gtsoftware.search.UsuariosSearchFilter;
-import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.springframework.stereotype.Repository;
 
-/**
- * @author Rodrigo M. Tato Rothamel <rotatomel@gmail.com>
- */
+/** @author Rodrigo M. Tato Rothamel <rotatomel@gmail.com> */
 @Repository
 public class UsuariosFacade extends AbstractFacade<Usuarios, UsuariosSearchFilter> {
 
-    private final EntityManager em;
+  private final EntityManager em;
 
-    public UsuariosFacade(EntityManager em) {
-        super(Usuarios.class);
-        this.em = em;
+  public UsuariosFacade(EntityManager em) {
+    super(Usuarios.class);
+    this.em = em;
+  }
+
+  @Override
+  protected EntityManager getEntityManager() {
+    return em;
+  }
+
+  @Override
+  public Predicate createWhereFromSearchFilter(
+      UsuariosSearchFilter usf, CriteriaBuilder cb, Root<Usuarios> root) {
+    Predicate p = null;
+    if (usf.getIdUsuario() != null) {
+      p = cb.equal(root.get(Usuarios_.id), usf.getIdUsuario());
     }
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
+    if (usf.getNombreUsuario() != null) {
+      Predicate p1 =
+          cb.like(
+              root.get(Usuarios_.nombreUsuario),
+              String.format("%%%s%%", usf.getNombreUsuario().toLowerCase()));
+      p = appendOrPredicate(cb, p, p1);
     }
-
-    @Override
-    public Predicate createWhereFromSearchFilter(UsuariosSearchFilter usf, CriteriaBuilder cb, Root<Usuarios> root) {
-        Predicate p = null;
-        if (usf.getIdUsuario() != null) {
-            p = cb.equal(root.get(Usuarios_.id), usf.getIdUsuario());
-        }
-        if (usf.getNombreUsuario() != null) {
-            Predicate p1 = cb.like(root.get(Usuarios_.nombreUsuario), String.format("%%%s%%", usf.getNombreUsuario().toLowerCase()));
-            p = appendOrPredicate(cb, p, p1);
-        }
-        if (usf.getLogin() != null) {
-            Predicate p1 = cb.equal(root.get(Usuarios_.login), usf.getLogin());
-            p = appendAndPredicate(cb, p, p1);
-        }
-        if (usf.getPassword() != null) {
-            Predicate p1 = cb.equal(root.get(Usuarios_.password), usf.getPassword());
-            p = appendOrPredicate(cb, p, p1);
-        }
-        if (usf.hasTextFilter()) {
-            for (String s : usf.getText().toUpperCase().split(" ")) {
-
-                Predicate p1 = cb.like(cb.upper(root.get(Usuarios_.login)), String.format("%%%s%%", s));
-                Predicate p2 = cb.like(cb.upper(root.get(Usuarios_.nombreUsuario)), String.format("%%%s%%", s));
-
-                p = appendOrPredicate(cb, p, p1);
-                p = appendOrPredicate(cb, p, p2);
-            }
-        }
-        return p;
+    if (usf.getLogin() != null) {
+      Predicate p1 = cb.equal(root.get(Usuarios_.login), usf.getLogin());
+      p = appendAndPredicate(cb, p, p1);
     }
+    if (usf.getPassword() != null) {
+      Predicate p1 = cb.equal(root.get(Usuarios_.password), usf.getPassword());
+      p = appendOrPredicate(cb, p, p1);
+    }
+    if (usf.hasTextFilter()) {
+      for (String s : usf.getText().toUpperCase().split(" ")) {
 
+        Predicate p1 = cb.like(cb.upper(root.get(Usuarios_.login)), String.format("%%%s%%", s));
+        Predicate p2 =
+            cb.like(cb.upper(root.get(Usuarios_.nombreUsuario)), String.format("%%%s%%", s));
+
+        p = appendOrPredicate(cb, p, p1);
+        p = appendOrPredicate(cb, p, p2);
+      }
+    }
+    return p;
+  }
 }

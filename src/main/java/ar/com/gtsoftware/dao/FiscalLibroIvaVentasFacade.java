@@ -19,76 +19,82 @@ import ar.com.gtsoftware.domain.FiscalLibroIvaVentas;
 import ar.com.gtsoftware.domain.FiscalLibroIvaVentas_;
 import ar.com.gtsoftware.domain.FiscalPeriodosFiscales_;
 import ar.com.gtsoftware.search.LibroIVASearchFilter;
-import org.springframework.stereotype.Repository;
-
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.List;
+import org.springframework.stereotype.Repository;
 
 @Repository
-public class FiscalLibroIvaVentasFacade extends AbstractFacade<FiscalLibroIvaVentas, LibroIVASearchFilter> {
+public class FiscalLibroIvaVentasFacade
+    extends AbstractFacade<FiscalLibroIvaVentas, LibroIVASearchFilter> {
 
+  private final EntityManager em;
 
-    private final EntityManager em;
+  public FiscalLibroIvaVentasFacade(EntityManager em) {
+    super(FiscalLibroIvaVentas.class);
+    this.em = em;
+  }
 
-    public FiscalLibroIvaVentasFacade(EntityManager em) {
-        super(FiscalLibroIvaVentas.class);
-        this.em = em;
+  @Override
+  protected EntityManager getEntityManager() {
+    return em;
+  }
+
+  /**
+   * Retorna la ultima factura registrada con la letra y el punto de venta pasados por parametro
+   *
+   * @param letra
+   * @param puntoVenta
+   * @return una factura
+   */
+  public FiscalLibroIvaVentas findUltimaFactura(String letra, String puntoVenta) {
+    CriteriaBuilder cb = em.getCriteriaBuilder();
+    CriteriaQuery<FiscalLibroIvaVentas> cq = cb.createQuery(FiscalLibroIvaVentas.class);
+    Root<FiscalLibroIvaVentas> registroIVA = cq.from(FiscalLibroIvaVentas.class);
+    cq.select(registroIVA);
+    Predicate p1 = cb.equal(registroIVA.get(FiscalLibroIvaVentas_.letraFactura), letra);
+    Predicate p2 = cb.equal(registroIVA.get(FiscalLibroIvaVentas_.puntoVentaFactura), puntoVenta);
+    // Predicate p3 = cb.equal(registroIVA.get(FiscalLibroIvaVentas_.codigoTipoComprobante),
+    // tipoComp);
+
+    cq.where(cb.and(p1, p2));
+    cq.orderBy(cb.desc(registroIVA.get(FiscalLibroIvaVentas_.numeroFactura)));
+    TypedQuery<FiscalLibroIvaVentas> q = em.createQuery(cq);
+    q.setMaxResults(1);
+    List<FiscalLibroIvaVentas> registroIVAList = q.getResultList();
+    if (!registroIVAList.isEmpty()) {
+      return registroIVAList.get(0);
     }
+    return null;
+  }
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
+  @Override
+  public Predicate createWhereFromSearchFilter(
+      LibroIVASearchFilter ivavsf, CriteriaBuilder cb, Root<FiscalLibroIvaVentas> root) {
+    Predicate p = null;
+    if (ivavsf.getIdPeriodo() != null) {
+      Predicate p1 =
+          cb.equal(
+              root.get(FiscalLibroIvaVentas_.idPeriodoFiscal).get(FiscalPeriodosFiscales_.id),
+              ivavsf.getIdPeriodo());
+      p = appendAndPredicate(cb, p1, p);
     }
-
-    /**
-     * Retorna la ultima factura registrada con la letra y el punto de venta pasados por parametro
-     *
-     * @param letra
-     * @param puntoVenta
-     * @return una factura
-     */
-    public FiscalLibroIvaVentas findUltimaFactura(String letra, String puntoVenta) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<FiscalLibroIvaVentas> cq = cb.createQuery(FiscalLibroIvaVentas.class);
-        Root<FiscalLibroIvaVentas> registroIVA = cq.from(FiscalLibroIvaVentas.class);
-        cq.select(registroIVA);
-        Predicate p1 = cb.equal(registroIVA.get(FiscalLibroIvaVentas_.letraFactura), letra);
-        Predicate p2 = cb.equal(registroIVA.get(FiscalLibroIvaVentas_.puntoVentaFactura), puntoVenta);
-        //Predicate p3 = cb.equal(registroIVA.get(FiscalLibroIvaVentas_.codigoTipoComprobante), tipoComp);
-
-        cq.where(cb.and(p1, p2));
-        cq.orderBy(cb.desc(registroIVA.get(FiscalLibroIvaVentas_.numeroFactura)));
-        TypedQuery<FiscalLibroIvaVentas> q = em.createQuery(cq);
-        q.setMaxResults(1);
-        List<FiscalLibroIvaVentas> registroIVAList = q.getResultList();
-        if (!registroIVAList.isEmpty()) {
-            return registroIVAList.get(0);
-        }
-        return null;
-
+    if (ivavsf.hasFechasDesdeHasta()) {
+      Predicate p1 =
+          cb.between(
+              root.get(FiscalLibroIvaVentas_.fechaFactura),
+              ivavsf.getFechaDesde(),
+              ivavsf.getFechaHasta());
+      p = appendAndPredicate(cb, p1, p);
     }
-
-    @Override
-    public Predicate createWhereFromSearchFilter(LibroIVASearchFilter ivavsf, CriteriaBuilder cb, Root<FiscalLibroIvaVentas> root) {
-        Predicate p = null;
-        if (ivavsf.getIdPeriodo() != null) {
-            Predicate p1 = cb.equal(root.get(FiscalLibroIvaVentas_.idPeriodoFiscal).get(FiscalPeriodosFiscales_.id), ivavsf.getIdPeriodo());
-            p = appendAndPredicate(cb, p1, p);
-        }
-        if (ivavsf.hasFechasDesdeHasta()) {
-            Predicate p1 = cb.between(root.get(FiscalLibroIvaVentas_.fechaFactura), ivavsf.getFechaDesde(), ivavsf.getFechaHasta());
-            p = appendAndPredicate(cb, p1, p);
-        }
-        if (ivavsf.getAnuladas() != null) {
-            Predicate p1 = cb.equal(root.get(FiscalLibroIvaVentas_.anulada), ivavsf.getAnuladas());
-            p = appendAndPredicate(cb, p1, p);
-        }
-        return p;
+    if (ivavsf.getAnuladas() != null) {
+      Predicate p1 = cb.equal(root.get(FiscalLibroIvaVentas_.anulada), ivavsf.getAnuladas());
+      p = appendAndPredicate(cb, p1, p);
     }
-
+    return p;
+  }
 }

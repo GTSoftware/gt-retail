@@ -4,7 +4,7 @@ import ar.com.gtsoftware.exception.ExceptionErrorCode;
 
 @ExceptionErrorCode(errorCode = "400002")
 public class DeliveryNoteValidationException extends RuntimeException {
-    public DeliveryNoteValidationException(String message) {
-        super(message);
-    }
+  public DeliveryNoteValidationException(String message) {
+    super(message);
+  }
 }

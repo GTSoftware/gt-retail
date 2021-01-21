@@ -16,12 +16,11 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
-import lombok.*;
-import org.apache.commons.lang3.StringUtils;
-
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
+import javax.validation.constraints.NotNull;
+import lombok.*;
+import org.apache.commons.lang3.StringUtils;
 
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -30,73 +29,66 @@ import java.util.List;
 @Builder
 public class RemitoDto {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @EqualsAndHashCode.Include
-    private Long id;
-    private LocalDateTime fechaAlta;
+  @EqualsAndHashCode.Include private Long id;
+  private LocalDateTime fechaAlta;
 
-    @NotNull
-    private UsuariosDto idUsuario;
+  @NotNull private UsuariosDto idUsuario;
 
-    private String observaciones;
+  private String observaciones;
 
-    @NotNull
-    private Boolean isOrigenInterno;
+  @NotNull private Boolean isOrigenInterno;
 
-    private PersonasDto idOrigenExterno;
+  private PersonasDto idOrigenExterno;
 
-    private DepositosDto idOrigenInterno;
+  private DepositosDto idOrigenInterno;
 
-    @NotNull
-    private Boolean isDestinoInterno;
+  @NotNull private Boolean isDestinoInterno;
 
-    private PersonasDto idDestinoPrevistoExterno;
+  private PersonasDto idDestinoPrevistoExterno;
 
-    private DepositosDto idDestinoPrevistoInterno;
+  private DepositosDto idDestinoPrevistoInterno;
 
-    private LocalDateTime fechaCierre;
+  private LocalDateTime fechaCierre;
 
-    @NotNull
-    private RemitoTipoMovimientoDto remitoTipoMovimiento;
+  @NotNull private RemitoTipoMovimientoDto remitoTipoMovimiento;
 
-    private List<RemitoDetalleDto> detalleList;
+  private List<RemitoDetalleDto> detalleList;
 
-    private List<RemitoRecepcionDto> remitoRecepcionesList;
-    private Integer version;
+  private List<RemitoRecepcionDto> remitoRecepcionesList;
+  private Integer version;
 
-
-    /**
-     * Devuelve la representación en Stirng del origen del remitoDtoCabecera.
-     *
-     * @return un String que representa el origen
-     */
-    public String getNombreOrigen() {
-        if (isOrigenInterno) {
-            return String.format("INTERNO: %s", idOrigenInterno.toString());
-        }
-        return String.format("EXTERNO: %s", idOrigenExterno.toString());
+  /**
+   * Devuelve la representación en Stirng del origen del remitoDtoCabecera.
+   *
+   * @return un String que representa el origen
+   */
+  public String getNombreOrigen() {
+    if (isOrigenInterno) {
+      return String.format("INTERNO: %s", idOrigenInterno.toString());
     }
+    return String.format("EXTERNO: %s", idOrigenExterno.toString());
+  }
 
-    /**
-     * Devuelve la representación en Stirng del destino del remitoDtoCabecera.
-     *
-     * @return un String que representa el destino
-     */
-    public String getNombreDestino() {
-        if (isDestinoInterno) {
-            return String.format("INTERNO: %s", idDestinoPrevistoInterno.toString());
-        }
-        return String.format("EXTERNO: %s Dirección: %s %s Piso: %s Depto: %s (%s) %s - %s",
-                idDestinoPrevistoExterno.toString(),
-                StringUtils.defaultString(idDestinoPrevistoExterno.getCalle()),
-                StringUtils.defaultString(idDestinoPrevistoExterno.getAltura()),
-                StringUtils.defaultString(idDestinoPrevistoExterno.getPiso(), "-"),
-                StringUtils.defaultString(idDestinoPrevistoExterno.getDepto(), "-"),
-                idDestinoPrevistoExterno.getIdLocalidad().getCodigoPostal(),
-                idDestinoPrevistoExterno.getIdLocalidad().getNombreLocalidad(),
-                idDestinoPrevistoExterno.getIdProvincia().getNombreProvincia());
+  /**
+   * Devuelve la representación en Stirng del destino del remitoDtoCabecera.
+   *
+   * @return un String que representa el destino
+   */
+  public String getNombreDestino() {
+    if (isDestinoInterno) {
+      return String.format("INTERNO: %s", idDestinoPrevistoInterno.toString());
     }
-
-
+    return String.format(
+        "EXTERNO: %s Dirección: %s %s Piso: %s Depto: %s (%s) %s - %s",
+        idDestinoPrevistoExterno.toString(),
+        StringUtils.defaultString(idDestinoPrevistoExterno.getCalle()),
+        StringUtils.defaultString(idDestinoPrevistoExterno.getAltura()),
+        StringUtils.defaultString(idDestinoPrevistoExterno.getPiso(), "-"),
+        StringUtils.defaultString(idDestinoPrevistoExterno.getDepto(), "-"),
+        idDestinoPrevistoExterno.getIdLocalidad().getCodigoPostal(),
+        idDestinoPrevistoExterno.getIdLocalidad().getNombreLocalidad(),
+        idDestinoPrevistoExterno.getIdProvincia().getNombreProvincia());
+  }
 }

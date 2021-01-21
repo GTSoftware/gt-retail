@@ -15,29 +15,26 @@
  */
 package ar.com.gtsoftware.dto.fiscal;
 
+import java.io.Serializable;
+import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.io.Serializable;
-import java.time.LocalDate;
 
 /**
  * CAE de respuesta para un comprobante
  *
  * @author Rodrigo M. Tato Rothamel mailto:rotatomel@gmail.com
  */
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class CAEResponse implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    private long cae;
-    private LocalDate fechaVencimientoCae;
-
+  private long cae;
+  private LocalDate fechaVencimientoCae;
 }

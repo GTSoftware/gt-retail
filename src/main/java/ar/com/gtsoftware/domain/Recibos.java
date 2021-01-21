@@ -15,62 +15,61 @@
  */
 package ar.com.gtsoftware.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
 
-/**
- * @author Rodrigo M. Tato Rothamel mailto:rotatomel@gmail.com
- */
+/** @author Rodrigo M. Tato Rothamel mailto:rotatomel@gmail.com */
 @Entity
 @Table(name = "recibos")
 @Getter
 @Setter
 public class Recibos extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "recibos_id_recibo")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "recibos_id_recibo",
-            sequenceName = "recibos_id_recibo_seq")
-    @Basic(optional = false)
-    @Column(name = "id_recibo", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "recibos_id_recibo")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "recibos_id_recibo",
+      sequenceName = "recibos_id_recibo_seq")
+  @Basic(optional = false)
+  @Column(name = "id_recibo", nullable = false, updatable = false)
+  private Long id;
 
-    @NotNull
-    @Column(name = "fecha_recibo")
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date fechaRecibo;
+  @NotNull
+  @Column(name = "fecha_recibo")
+  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+  private Date fechaRecibo;
 
-    @NotNull
-    @ManyToOne
-    @JoinColumn(name = "id_persona", referencedColumnName = "id_persona")
-    private Personas idPersona;
+  @NotNull
+  @ManyToOne
+  @JoinColumn(name = "id_persona", referencedColumnName = "id_persona")
+  private Personas idPersona;
 
-    @NotNull
-    @ManyToOne
-    @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
-    private Usuarios idUsuario;
+  @NotNull
+  @ManyToOne
+  @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
+  private Usuarios idUsuario;
 
-    @NotNull
-    @Column(name = "monto_total")
-    private BigDecimal montoTotal;
+  @NotNull
+  @Column(name = "monto_total")
+  private BigDecimal montoTotal;
 
-    @Column(name = "observaciones")
-    @Size(max = 255)
-    private String observaciones;
+  @Column(name = "observaciones")
+  @Size(max = 255)
+  private String observaciones;
 
-    @NotNull
-    @ManyToOne
-    @JoinColumn(name = "id_caja", referencedColumnName = "id_caja")
-    private Cajas idCaja;
+  @NotNull
+  @ManyToOne
+  @JoinColumn(name = "id_caja", referencedColumnName = "id_caja")
+  private Cajas idCaja;
 
-    @OneToMany(mappedBy = "idRecibo", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<RecibosDetalle> recibosDetalles;
-
+  @OneToMany(mappedBy = "idRecibo", orphanRemoval = true, cascade = CascadeType.ALL)
+  private List<RecibosDetalle> recibosDetalles;
 }

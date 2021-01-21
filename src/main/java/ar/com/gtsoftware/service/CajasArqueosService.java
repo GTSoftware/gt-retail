@@ -20,7 +20,5 @@ package ar.com.gtsoftware.service;
 import ar.com.gtsoftware.dto.domain.CajasArqueosDto;
 import ar.com.gtsoftware.search.CajasArqueosSearchFilter;
 
-
 public interface CajasArqueosService
-        extends EntityService<CajasArqueosDto, CajasArqueosSearchFilter> {
-}
+    extends EntityService<CajasArqueosDto, CajasArqueosSearchFilter> {}

@@ -20,7 +20,5 @@ package ar.com.gtsoftware.service;
 import ar.com.gtsoftware.dto.domain.ProductosTiposUnidadesDto;
 import ar.com.gtsoftware.search.UnidadesSearchFilter;
 
-
 public interface ProductosTiposUnidadesService
-        extends EntityService<ProductosTiposUnidadesDto, UnidadesSearchFilter> {
-}
+    extends EntityService<ProductosTiposUnidadesDto, UnidadesSearchFilter> {}

@@ -16,12 +16,11 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
-import lombok.*;
-
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.Date;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import lombok.*;
 
 /**
  * CuponesDto de tarjetas de crédito o débito
@@ -35,35 +34,29 @@ import java.util.Date;
 @Builder
 public class CuponesDto {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @EqualsAndHashCode.Include
-    private Long id;
-    private BigDecimal monto;
-    //private RecibosDetalleDto reciboDetalle;
-    private Integer version;
+  @EqualsAndHashCode.Include private Long id;
+  private BigDecimal monto;
+  // private RecibosDetalleDto reciboDetalle;
+  private Integer version;
 
-    @NotNull
-    private Integer nroCupon;
+  @NotNull private Integer nroCupon;
 
-    private Integer codigoAutorizacion;
+  private Integer codigoAutorizacion;
 
-    private Integer nroLote;
+  private Integer nroLote;
 
-    @NotNull
-    private Date fechaOrigen;
+  @NotNull private Date fechaOrigen;
 
-    private Date fechaPresentacion;
+  private Date fechaPresentacion;
 
-    private Date fechaAcreditacion;
+  private Date fechaAcreditacion;
 
-    @NotNull
-    private Integer cantCuotas;
+  @NotNull private Integer cantCuotas;
 
-    @Size(max = 255)
-    private String notas;
+  @Size(max = 255)
+  private String notas;
 
-    private BigDecimal coeficiente;
-
-
+  private BigDecimal coeficiente;
 }

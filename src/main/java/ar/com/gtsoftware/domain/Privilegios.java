@@ -15,40 +15,41 @@
  */
 package ar.com.gtsoftware.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
-/**
- * @author rodrigo
- */
+/** @author rodrigo */
 @Entity
 @Table(name = "privilegios")
 @Getter
 @Setter
 public class Privilegios extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "privilegios_id_privilegio")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "privilegios_id_privilegio",
-            sequenceName = "privilegios_id_privilegio_seq")
-    @Basic(optional = false)
-    @Column(name = "id_privilegio", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "privilegios_id_privilegio")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "privilegios_id_privilegio",
+      sequenceName = "privilegios_id_privilegio_seq")
+  @Basic(optional = false)
+  @Column(name = "id_privilegio", nullable = false, updatable = false)
+  private Long id;
 
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "nombre_privilegio")
-    private String nombrePrivilegio;
-    @Size(max = 1024)
-    @Column(name = "descripcion_privilegio")
-    private String descripcionPrivilegio;
-    @ManyToMany(mappedBy = "privilegiosList")
-    private List<UsuariosGrupos> usuariosGruposList;
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 100)
+  @Column(name = "nombre_privilegio")
+  private String nombrePrivilegio;
 
+  @Size(max = 1024)
+  @Column(name = "descripcion_privilegio")
+  private String descripcionPrivilegio;
+
+  @ManyToMany(mappedBy = "privilegiosList")
+  private List<UsuariosGrupos> usuariosGruposList;
 }

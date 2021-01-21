@@ -22,7 +22,4 @@ import ar.com.gtsoftware.dto.domain.LegalGenerosDto;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
-public interface LegalGenerosMapper
-        extends GenericMapper<LegalGeneros, LegalGenerosDto> {
-
-}
+public interface LegalGenerosMapper extends GenericMapper<LegalGeneros, LegalGenerosDto> {}

@@ -15,11 +15,10 @@
  */
 package ar.com.gtsoftware.domain;
 
+import java.math.BigDecimal;
+import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.persistence.*;
-import java.math.BigDecimal;
 
 /**
  * Clase que almacena la información de el detalle de la factura para el libro de iva ventas
@@ -32,31 +31,40 @@ import java.math.BigDecimal;
 @Setter
 public class FiscalLibroIvaVentasLineas extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "fiscal_libro_iva_ventas_lineas_id_linea_libro")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "fiscal_libro_iva_ventas_lineas_id_linea_libro",
-            sequenceName = "fiscal_libro_iva_ventas_lineas_id_linea_libro_seq")
-    @Basic(optional = false)
-    @Column(name = "id_linea_libro", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(
+      strategy = GenerationType.SEQUENCE,
+      generator = "fiscal_libro_iva_ventas_lineas_id_linea_libro")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "fiscal_libro_iva_ventas_lineas_id_linea_libro",
+      sequenceName = "fiscal_libro_iva_ventas_lineas_id_linea_libro_seq")
+  @Basic(optional = false)
+  @Column(name = "id_linea_libro", nullable = false, updatable = false)
+  private Long id;
 
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "neto_gravado")
-    private BigDecimal netoGravado;
-    @Column(name = "no_gravado")
-    private BigDecimal noGravado;
-    @Column(name = "importe_iva")
-    private BigDecimal importeIva;
-    @JoinColumn(name = "id_registro", referencedColumnName = "id_registro")
-    @ManyToOne(optional = false)
-    private FiscalLibroIvaVentas idRegistro;
-    @JoinColumn(name = "id_alicuota_iva", referencedColumnName = "id_alicuota_iva")
-    @ManyToOne(optional = false)
-    private FiscalAlicuotasIva idAlicuotaIva;
+  // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these
+  // annotations to enforce field validation
+  @Column(name = "neto_gravado")
+  private BigDecimal netoGravado;
 
-    @Override
-    public String toString() {
-        return "ar.com.gtsoftware.model.FiscalLibroIvaVentasLineasDto[ idLineaLibro=" + id + " ]";
-    }
+  @Column(name = "no_gravado")
+  private BigDecimal noGravado;
 
+  @Column(name = "importe_iva")
+  private BigDecimal importeIva;
+
+  @JoinColumn(name = "id_registro", referencedColumnName = "id_registro")
+  @ManyToOne(optional = false)
+  private FiscalLibroIvaVentas idRegistro;
+
+  @JoinColumn(name = "id_alicuota_iva", referencedColumnName = "id_alicuota_iva")
+  @ManyToOne(optional = false)
+  private FiscalAlicuotasIva idAlicuotaIva;
+
+  @Override
+  public String toString() {
+    return "ar.com.gtsoftware.model.FiscalLibroIvaVentasLineasDto[ idLineaLibro=" + id + " ]";
+  }
 }

@@ -27,59 +27,58 @@ import ar.com.gtsoftware.service.BaseEntityService;
 import ar.com.gtsoftware.service.ComprobantesService;
 import ar.com.gtsoftware.service.PersonasCuentaCorrienteService;
 import ar.com.gtsoftware.service.exceptions.ServiceException;
+import java.math.BigDecimal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.math.BigDecimal;
 
 @Service
 @RequiredArgsConstructor
 public class ComprobantesServiceImpl
-        extends BaseEntityService<ComprobantesDto, ComprobantesSearchFilter, Comprobantes>
-        implements ComprobantesService {
+    extends BaseEntityService<ComprobantesDto, ComprobantesSearchFilter, Comprobantes>
+    implements ComprobantesService {
 
-    private final ComprobantesFacade facade;
-    private final PersonasCuentaCorrienteService cuentaCorrienteBean;
+  private final ComprobantesFacade facade;
+  private final PersonasCuentaCorrienteService cuentaCorrienteBean;
 
-    private final ComprobantesMapper mapper;
+  private final ComprobantesMapper mapper;
 
-    private final PersonasMapper personasMapper;
+  private final PersonasMapper personasMapper;
 
+  @Override
+  protected ComprobantesFacade getFacade() {
+    return facade;
+  }
 
-    @Override
-    protected ComprobantesFacade getFacade() {
-        return facade;
+  @Override
+  protected ComprobantesMapper getMapper() {
+    return mapper;
+  }
+
+  @Override
+  public BigDecimal calcularTotalVentas(ComprobantesSearchFilter sf) {
+    return facade.calcularTotalVentasBySearchFilter(sf);
+  }
+
+  @Override
+  public void anularVenta(Long idComprobante) throws ServiceException {
+    Comprobantes venta = facade.find(idComprobante);
+    if (venta == null) {
+      throw new ServiceException("Comprobante inexistente");
     }
-
-    @Override
-    protected ComprobantesMapper getMapper() {
-        return mapper;
+    if (venta.isAnulada()) {
+      throw new ServiceException("El comprobante ya fue anulado!");
     }
-
-    @Override
-    public BigDecimal calcularTotalVentas(ComprobantesSearchFilter sf) {
-        return facade.calcularTotalVentasBySearchFilter(sf);
+    if (venta.getIdRegistro() != null) {
+      throw new ServiceException("Comprobante impreso fiscalmente!");
     }
-
-    @Override
-    public void anularVenta(Long idComprobante) throws ServiceException {
-        Comprobantes venta = facade.find(idComprobante);
-        if (venta == null) {
-            throw new ServiceException("Comprobante inexistente");
-        }
-        if (venta.isAnulada()) {
-            throw new ServiceException("El comprobante ya fue anulado!");
-        }
-        if (venta.getIdRegistro() != null) {
-            throw new ServiceException("Comprobante impreso fiscalmente!");
-        }
-        if (venta.getTotal().subtract(venta.getSaldo()).signum() > 0) {
-            throw new ServiceException("Comprobante total o parcialmente cobrado!");
-        }
-        venta.setAnulada(true);
-        cuentaCorrienteBean.registrarMovimientoCuenta(venta.getIdPersona(),
-                venta.getTotalConSigno(), String.format("Anulación comprobante Nro: %d", venta.getId()));
-        facade.edit(venta);
+    if (venta.getTotal().subtract(venta.getSaldo()).signum() > 0) {
+      throw new ServiceException("Comprobante total o parcialmente cobrado!");
     }
-
+    venta.setAnulada(true);
+    cuentaCorrienteBean.registrarMovimientoCuenta(
+        venta.getIdPersona(),
+        venta.getTotalConSigno(),
+        String.format("Anulación comprobante Nro: %d", venta.getId()));
+    facade.edit(venta);
+  }
 }

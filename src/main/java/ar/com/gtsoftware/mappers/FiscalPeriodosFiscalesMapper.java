@@ -23,5 +23,4 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface FiscalPeriodosFiscalesMapper
-        extends GenericMapper<FiscalPeriodosFiscales, FiscalPeriodosFiscalesDto> {
-}
+    extends GenericMapper<FiscalPeriodosFiscales, FiscalPeriodosFiscalesDto> {}

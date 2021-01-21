@@ -20,7 +20,4 @@ package ar.com.gtsoftware.service;
 import ar.com.gtsoftware.dto.domain.CuponesDto;
 import ar.com.gtsoftware.search.CuponesSearchFilter;
 
-
-public interface CuponesService
-        extends EntityService<CuponesDto, CuponesSearchFilter> {
-}
+public interface CuponesService extends EntityService<CuponesDto, CuponesSearchFilter> {}

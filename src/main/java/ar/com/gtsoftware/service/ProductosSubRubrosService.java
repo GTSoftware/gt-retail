@@ -20,7 +20,5 @@ package ar.com.gtsoftware.service;
 import ar.com.gtsoftware.dto.domain.ProductosSubRubrosDto;
 import ar.com.gtsoftware.search.SubRubroSearchFilter;
 
-
 public interface ProductosSubRubrosService
-        extends EntityService<ProductosSubRubrosDto, SubRubroSearchFilter> {
-}
+    extends EntityService<ProductosSubRubrosDto, SubRubroSearchFilter> {}

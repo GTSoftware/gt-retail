@@ -16,15 +16,12 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
-import lombok.*;
-
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import javax.validation.constraints.NotNull;
+import lombok.*;
 
-/**
- * @author Rodrigo M. Tato Rothamel mailto:rotatomel@gmail.com
- */
+/** @author Rodrigo M. Tato Rothamel mailto:rotatomel@gmail.com */
 @Getter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @AllArgsConstructor
@@ -32,29 +29,21 @@ import java.math.BigDecimal;
 @Builder
 public class RecibosDetalleDto implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @EqualsAndHashCode.Include
-    private Long id;
-    @NotNull
-    private RecibosDto idRecibo;
+  @EqualsAndHashCode.Include private Long id;
+  @NotNull private RecibosDto idRecibo;
 
-    private ComprobantesPagosDto idPagoComprobante;
+  private ComprobantesPagosDto idPagoComprobante;
 
-    @NotNull
-    private BigDecimal montoPagado;
+  @NotNull private BigDecimal montoPagado;
 
-    @NotNull
-    private BigDecimal montoPagadoConSigno;
+  @NotNull private BigDecimal montoPagadoConSigno;
 
-    @NotNull
-    private BigDecimal redondeo;
+  @NotNull private BigDecimal redondeo;
 
-    @NotNull
-    private NegocioFormasPagoDto idFormaPago;
+  @NotNull private NegocioFormasPagoDto idFormaPago;
 
-    private ValoresDto idValor;
-    private Integer version;
-
-
+  private ValoresDto idValor;
+  private Integer version;
 }

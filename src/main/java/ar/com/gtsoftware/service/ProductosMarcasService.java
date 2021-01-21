@@ -20,7 +20,5 @@ package ar.com.gtsoftware.service;
 import ar.com.gtsoftware.dto.domain.ProductosMarcasDto;
 import ar.com.gtsoftware.search.MarcasSearchFilter;
 
-
 public interface ProductosMarcasService
-        extends EntityService<ProductosMarcasDto, MarcasSearchFilter> {
-}
+    extends EntityService<ProductosMarcasDto, MarcasSearchFilter> {}

@@ -22,6 +22,4 @@ import ar.com.gtsoftware.rules.OfertaDto;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
-public interface OfertasMapper
-        extends GenericMapper<Ofertas, OfertaDto> {
-}
+public interface OfertasMapper extends GenericMapper<Ofertas, OfertaDto> {}

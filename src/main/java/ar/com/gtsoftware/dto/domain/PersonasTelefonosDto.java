@@ -17,11 +17,10 @@
 
 package ar.com.gtsoftware.dto.domain;
 
-import lombok.*;
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import lombok.*;
 
 @Getter
 @Setter
@@ -31,14 +30,17 @@ import javax.validation.constraints.Size;
 @Builder
 public class PersonasTelefonosDto {
 
-    @EqualsAndHashCode.Include
-    private Long id;
-    @Pattern(regexp = "0\\d{2,4}\\s\\d{6,9}",
-            message = "Número de teléfono no válido, debe tener el formato: 0123 123456789")
-    @NotNull
-    @Size(min = 1, max = 50)
-    private String numero;
-    @Size(max = 100)
-    private String referencia;
-    private Integer version;
+  @EqualsAndHashCode.Include private Long id;
+
+  @Pattern(
+      regexp = "0\\d{2,4}\\s\\d{6,9}",
+      message = "Número de teléfono no válido, debe tener el formato: 0123 123456789")
+  @NotNull
+  @Size(min = 1, max = 50)
+  private String numero;
+
+  @Size(max = 100)
+  private String referencia;
+
+  private Integer version;
 }

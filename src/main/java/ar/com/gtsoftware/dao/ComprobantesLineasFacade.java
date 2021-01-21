@@ -19,49 +19,47 @@ import ar.com.gtsoftware.domain.Comprobantes;
 import ar.com.gtsoftware.domain.ComprobantesLineas;
 import ar.com.gtsoftware.domain.ComprobantesLineas_;
 import ar.com.gtsoftware.search.AbstractSearchFilter;
-import org.springframework.stereotype.Repository;
-
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.List;
+import org.springframework.stereotype.Repository;
 
-/**
- * @author rodrigo
- */
+/** @author rodrigo */
 @Repository
-public class ComprobantesLineasFacade extends AbstractFacade<ComprobantesLineas, AbstractSearchFilter> {
+public class ComprobantesLineasFacade
+    extends AbstractFacade<ComprobantesLineas, AbstractSearchFilter> {
 
+  private final EntityManager em;
 
-    private final EntityManager em;
+  public ComprobantesLineasFacade(EntityManager em) {
+    super(ComprobantesLineas.class);
+    this.em = em;
+  }
 
-    public ComprobantesLineasFacade(EntityManager em) {
-        super(ComprobantesLineas.class);
-        this.em = em;
-    }
+  @Override
+  protected EntityManager getEntityManager() {
+    return em;
+  }
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
+  public List<ComprobantesLineas> findVentasLineas(Comprobantes comp) {
+    CriteriaBuilder cb = em.getCriteriaBuilder();
+    CriteriaQuery<ComprobantesLineas> cq = cb.createQuery(ComprobantesLineas.class);
+    Root<ComprobantesLineas> lineaVenta = cq.from(ComprobantesLineas.class);
+    cq.select(lineaVenta);
+    Predicate p = cb.equal(lineaVenta.get(ComprobantesLineas_.idComprobante), comp);
+    cq.where(p);
+    TypedQuery<ComprobantesLineas> q = em.createQuery(cq);
+    return q.getResultList();
+  }
 
-    public List<ComprobantesLineas> findVentasLineas(Comprobantes comp) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<ComprobantesLineas> cq = cb.createQuery(ComprobantesLineas.class);
-        Root<ComprobantesLineas> lineaVenta = cq.from(ComprobantesLineas.class);
-        cq.select(lineaVenta);
-        Predicate p = cb.equal(lineaVenta.get(ComprobantesLineas_.idComprobante), comp);
-        cq.where(p);
-        TypedQuery<ComprobantesLineas> q = em.createQuery(cq);
-        return q.getResultList();
-    }
-
-    @Override
-    public Predicate createWhereFromSearchFilter(AbstractSearchFilter sf, CriteriaBuilder cb, Root<ComprobantesLineas> root) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+  @Override
+  public Predicate createWhereFromSearchFilter(
+      AbstractSearchFilter sf, CriteriaBuilder cb, Root<ComprobantesLineas> root) {
+    throw new UnsupportedOperationException(
+        "Not supported yet."); // To change body of generated methods, choose Tools | Templates.
+  }
 }

@@ -21,14 +21,13 @@ import ar.com.gtsoftware.dto.LibroIVADTO;
 import ar.com.gtsoftware.search.LibroIVASearchFilter;
 import ar.com.gtsoftware.service.exceptions.ServiceException;
 
-
 public interface LibroIVAService {
-    /**
-     * Genera el libro de IVA para el período establecido en el filtro
-     *
-     * @param filter
-     * @return el libro de IVA
-     * @throws ServiceException
-     */
-    LibroIVADTO obtenerLibroIVA(LibroIVASearchFilter filter) throws ServiceException;
+  /**
+   * Genera el libro de IVA para el período establecido en el filtro
+   *
+   * @param filter
+   * @return el libro de IVA
+   * @throws ServiceException
+   */
+  LibroIVADTO obtenerLibroIVA(LibroIVASearchFilter filter) throws ServiceException;
 }

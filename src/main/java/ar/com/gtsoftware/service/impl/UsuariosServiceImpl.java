@@ -30,120 +30,116 @@ import ar.com.gtsoftware.mappers.helper.CycleAvoidingMappingContext;
 import ar.com.gtsoftware.search.UsuariosSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;
 import ar.com.gtsoftware.service.UsuariosService;
+import java.util.ArrayList;
+import java.util.List;
+import javax.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
-public class UsuariosServiceImpl extends BaseEntityService<UsuariosDto,
-        UsuariosSearchFilter, Usuarios>
-        implements UsuariosService {
+public class UsuariosServiceImpl
+    extends BaseEntityService<UsuariosDto, UsuariosSearchFilter, Usuarios>
+    implements UsuariosService {
 
-    private final UsuariosFacade facade;
-    private final UsuariosGruposFacade gruposFacade;
-    private final UsuariosMapper mapper;
-    private final UsuariosGruposMapper gruposMapper;
-    @Value("${gtretail.default.user.password:Cambiame}")
-    private String defaultPassword;
+  private final UsuariosFacade facade;
+  private final UsuariosGruposFacade gruposFacade;
+  private final UsuariosMapper mapper;
+  private final UsuariosGruposMapper gruposMapper;
 
-    @Override
-    protected UsuariosFacade getFacade() {
-        return facade;
+  @Value("${gtretail.default.user.password:Cambiame}")
+  private String defaultPassword;
+
+  @Override
+  protected UsuariosFacade getFacade() {
+    return facade;
+  }
+
+  @Override
+  protected UsuariosMapper getMapper() {
+    return mapper;
+  }
+
+  @Override
+  @Transactional
+  public void changePassword(Long idUsuario, String newPassword) {
+    if (newPassword.length() < 6) {
+      throw new RuntimeException("La clave no puede contener menos de 6 dìgitos");
+    }
+    Usuarios usuario = facade.find(idUsuario);
+    if (usuario == null) {
+      throw new RuntimeException("Usuario inexistente");
+    }
+    String newPassHashed = new HashPasswordEncoder().encode(newPassword);
+    if (usuario.getPassword().equalsIgnoreCase(newPassHashed)) {
+      throw new RuntimeException("La clave anterior y la nueva coinciden");
+    }
+    usuario.setPassword(newPassHashed);
+    facade.edit(usuario);
+  }
+
+  @Override
+  public List<UsuariosGruposDto> obtenerRolesDisponibles() {
+    return gruposMapper.entitiesToDtos(gruposFacade.findAll(), new CycleAvoidingMappingContext());
+  }
+
+  @Override
+  public List<UsuariosGruposDto> obtenerRolesUsuario(@NotNull Long idUsuario) {
+    Usuarios usuario = facade.find(idUsuario, "rolesUsuarios");
+    if (usuario == null) {
+      throw new IllegalArgumentException("No se encontró un usuario con ese Id");
+    }
+    return gruposMapper.entitiesToDtos(
+        usuario.getUsuariosGruposList(), new CycleAvoidingMappingContext());
+  }
+
+  @Override
+  public void agregarRol(@NotNull Long idUsuario, @NotNull Long idGrupo) {
+    Usuarios usuario = facade.find(idUsuario);
+    UsuariosGrupos grupo = gruposFacade.find(idGrupo);
+    if (usuario.getUsuariosGruposList() == null) {
+      usuario.setUsuariosGruposList(new ArrayList<>(1));
+    }
+    usuario.getUsuariosGruposList().add(grupo);
+    facade.edit(usuario);
+  }
+
+  @Override
+  public void quitarRol(@NotNull Long idUsuario, @NotNull Long idGrupo) {
+    Usuarios usuario = facade.find(idUsuario);
+    UsuariosGrupos grupo = gruposFacade.find(idGrupo);
+    if (usuario.getUsuariosGruposList() == null) {
+      return;
+    }
+    usuario.getUsuariosGruposList().remove(grupo);
+    facade.edit(usuario);
+  }
+
+  @Override
+  public UsuariosDto createOrEdit(@NotNull UsuariosDto dto) {
+    Usuarios usuario = mapper.dtoToEntity(dto, new CycleAvoidingMappingContext());
+    if (usuario.isNew()) {
+      usuario.setPassword(new HashPasswordEncoder().encode(defaultPassword));
+    } else {
+      Usuarios oldUsuario = facade.find(dto.getId());
+      usuario.setPassword(oldUsuario.getPassword());
+    }
+    return mapper.entityToDto(facade.createOrEdit(usuario), new CycleAvoidingMappingContext());
+  }
+
+  @Override
+  @Transactional
+  public String resetPassword(@NotNull Long idUsuario) {
+    Usuarios usuario = facade.find(idUsuario);
+
+    if (usuario != null) {
+      usuario.setPassword(new HashPasswordEncoder().encode(defaultPassword));
+      facade.createOrEdit(usuario);
+      return defaultPassword;
     }
 
-    @Override
-    protected UsuariosMapper getMapper() {
-        return mapper;
-    }
-
-
-    @Override
-    @Transactional
-    public void changePassword(Long idUsuario, String newPassword) {
-        if (newPassword.length() < 6) {
-            throw new RuntimeException("La clave no puede contener menos de 6 dìgitos");
-        }
-        Usuarios usuario = facade.find(idUsuario);
-        if (usuario == null) {
-            throw new RuntimeException("Usuario inexistente");
-        }
-        String newPassHashed = new HashPasswordEncoder().encode(newPassword);
-        if (usuario.getPassword().equalsIgnoreCase(newPassHashed)) {
-            throw new RuntimeException("La clave anterior y la nueva coinciden");
-        }
-        usuario.setPassword(newPassHashed);
-        facade.edit(usuario);
-    }
-
-
-    @Override
-    public List<UsuariosGruposDto> obtenerRolesDisponibles() {
-        return gruposMapper.entitiesToDtos(gruposFacade.findAll(), new CycleAvoidingMappingContext());
-    }
-
-    @Override
-    public List<UsuariosGruposDto> obtenerRolesUsuario(@NotNull Long idUsuario) {
-        Usuarios usuario = facade.find(idUsuario, "rolesUsuarios");
-        if (usuario == null) {
-            throw new IllegalArgumentException("No se encontró un usuario con ese Id");
-        }
-        return gruposMapper.entitiesToDtos(usuario.getUsuariosGruposList(), new CycleAvoidingMappingContext());
-    }
-
-    @Override
-    public void agregarRol(@NotNull Long idUsuario, @NotNull Long idGrupo) {
-        Usuarios usuario = facade.find(idUsuario);
-        UsuariosGrupos grupo = gruposFacade.find(idGrupo);
-        if (usuario.getUsuariosGruposList() == null) {
-            usuario.setUsuariosGruposList(new ArrayList<>(1));
-        }
-        usuario.getUsuariosGruposList().add(grupo);
-        facade.edit(usuario);
-    }
-
-    @Override
-    public void quitarRol(@NotNull Long idUsuario, @NotNull Long idGrupo) {
-        Usuarios usuario = facade.find(idUsuario);
-        UsuariosGrupos grupo = gruposFacade.find(idGrupo);
-        if (usuario.getUsuariosGruposList() == null) {
-            return;
-        }
-        usuario.getUsuariosGruposList().remove(grupo);
-        facade.edit(usuario);
-    }
-
-    @Override
-    public UsuariosDto createOrEdit(@NotNull UsuariosDto dto) {
-        Usuarios usuario = mapper.dtoToEntity(dto, new CycleAvoidingMappingContext());
-        if (usuario.isNew()) {
-            usuario.setPassword(new HashPasswordEncoder().encode(defaultPassword));
-        } else {
-            Usuarios oldUsuario = facade.find(dto.getId());
-            usuario.setPassword(oldUsuario.getPassword());
-        }
-        return mapper.entityToDto(facade.createOrEdit(usuario),
-                new CycleAvoidingMappingContext());
-    }
-
-    @Override
-    @Transactional
-    public String resetPassword(@NotNull Long idUsuario) {
-        Usuarios usuario = facade.find(idUsuario);
-
-        if (usuario != null) {
-            usuario.setPassword(new HashPasswordEncoder().encode(defaultPassword));
-            facade.createOrEdit(usuario);
-            return defaultPassword;
-        }
-
-        return null;
-    }
-
-
+    return null;
+  }
 }

@@ -26,8 +26,6 @@ import lombok.*;
 @Builder
 public class LegalTiposPersoneriaDto {
 
-    @EqualsAndHashCode.Include
-    private Long id;
-    private String nombreTipo;
-
+  @EqualsAndHashCode.Include private Long id;
+  private String nombreTipo;
 }

@@ -23,6 +23,4 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface RemitoTipoMovimientoMapper
-        extends GenericMapper<RemitoTipoMovimiento, RemitoTipoMovimientoDto> {
-
-}
+    extends GenericMapper<RemitoTipoMovimiento, RemitoTipoMovimientoDto> {}

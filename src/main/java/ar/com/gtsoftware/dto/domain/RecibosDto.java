@@ -16,17 +16,14 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
-import lombok.*;
-
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import lombok.*;
 
-/**
- * @author Rodrigo M. Tato Rothamel mailto:rotatomel@gmail.com
- */
+/** @author Rodrigo M. Tato Rothamel mailto:rotatomel@gmail.com */
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
@@ -34,30 +31,22 @@ import java.util.List;
 @Builder
 public class RecibosDto {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @EqualsAndHashCode.Include
-    private Long id;
-    @NotNull
-    private Date fechaRecibo;
+  @EqualsAndHashCode.Include private Long id;
+  @NotNull private Date fechaRecibo;
 
-    @NotNull
-    private PersonasDto idPersona;
+  @NotNull private PersonasDto idPersona;
 
-    @NotNull
-    private UsuariosDto idUsuario;
+  @NotNull private UsuariosDto idUsuario;
 
-    @NotNull
-    private BigDecimal montoTotal;
+  @NotNull private BigDecimal montoTotal;
 
-    @Size(max = 255)
-    private String observaciones;
+  @Size(max = 255)
+  private String observaciones;
 
-    @NotNull
-    private CajasDto idCaja;
+  @NotNull private CajasDto idCaja;
 
-    private List<RecibosDetalleDto> recibosDetalles;
-    private Integer version;
-
-
+  private List<RecibosDetalleDto> recibosDetalles;
+  private Integer version;
 }

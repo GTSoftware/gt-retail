@@ -18,37 +18,35 @@
 package ar.com.gtsoftware.enums;
 
 import ar.com.gtsoftware.dto.domain.NegocioTiposComprobanteDto;
-import lombok.Getter;
-
 import java.math.BigDecimal;
+import lombok.Getter;
 
 @Getter
 public enum NegocioTiposComprobanteEnum {
-    FACTURA(1L, "FACTURA", 1),
-    NOTA_DE_CREDITO(2L, "NOTA DE CREDITO", -1),
-    NOTA_DE_DEBITO(3L, "NOTA DE DEBITO", 1),
-    PRESUPUESTO(4L, "PRESUPUESTO", 1);
+  FACTURA(1L, "FACTURA", 1),
+  NOTA_DE_CREDITO(2L, "NOTA DE CREDITO", -1),
+  NOTA_DE_DEBITO(3L, "NOTA DE DEBITO", 1),
+  PRESUPUESTO(4L, "PRESUPUESTO", 1);
 
-    private final Long id;
-    private final String nombre;
-    private final int signo;
+  private final Long id;
+  private final String nombre;
+  private final int signo;
 
-    NegocioTiposComprobanteEnum(Long id, String nombre, int signo) {
-        this.id = id;
-        this.nombre = nombre;
-        this.signo = signo;
-    }
+  NegocioTiposComprobanteEnum(Long id, String nombre, int signo) {
+    this.id = id;
+    this.nombre = nombre;
+    this.signo = signo;
+  }
 
-    public NegocioTiposComprobanteDto convertToDto() {
-        return NegocioTiposComprobanteDto.builder()
-                .id(id)
-                .activo(true)
-                .nombreComprobante(nombre)
-                .signo(BigDecimal.valueOf(signo))
-                .build();
-    }
+  public NegocioTiposComprobanteDto convertToDto() {
+    return NegocioTiposComprobanteDto.builder()
+        .id(id)
+        .activo(true)
+        .nombreComprobante(nombre)
+        .signo(BigDecimal.valueOf(signo))
+        .build();
+  }
 }
-
 
 /*
   id_negocio_tipo_comprobante | nombre_comprobante | signo | activo | version

@@ -24,45 +24,44 @@ import ar.com.gtsoftware.mappers.ProductoXDepositoMapper;
 import ar.com.gtsoftware.search.ProductoXDepositoSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;
 import ar.com.gtsoftware.service.ProductoXDepositoService;
+import java.math.BigDecimal;
+import javax.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
 
 @Service
 @RequiredArgsConstructor
 public class ProductoXDepositoServiceImpl
-        extends BaseEntityService<ProductoXDepositoDto, ProductoXDepositoSearchFilter, ProductoXDeposito>
-        implements ProductoXDepositoService {
+    extends BaseEntityService<
+        ProductoXDepositoDto, ProductoXDepositoSearchFilter, ProductoXDeposito>
+    implements ProductoXDepositoService {
 
+  private final ProductoXDepositoFacade facade;
 
-    private final ProductoXDepositoFacade facade;
+  private final ProductoXDepositoMapper mapper;
 
-    private final ProductoXDepositoMapper mapper;
+  @Override
+  public ProductoXDepositoDto createOrEdit(@NotNull ProductoXDepositoDto dto) {
+    throw new UnsupportedOperationException("No se puede actualizar esta entidad directamente.");
+  }
 
-    @Override
-    public ProductoXDepositoDto createOrEdit(@NotNull ProductoXDepositoDto dto) {
-        throw new UnsupportedOperationException("No se puede actualizar esta entidad directamente.");
-    }
+  @Override
+  public void remove(@NotNull ProductoXDepositoDto dto) {
+    throw new UnsupportedOperationException("No se puede actualizar esta entidad directamente.");
+  }
 
-    @Override
-    public void remove(@NotNull ProductoXDepositoDto dto) {
-        throw new UnsupportedOperationException("No se puede actualizar esta entidad directamente.");
-    }
+  @Override
+  protected ProductoXDepositoFacade getFacade() {
+    return facade;
+  }
 
-    @Override
-    protected ProductoXDepositoFacade getFacade() {
-        return facade;
-    }
+  @Override
+  protected ProductoXDepositoMapper getMapper() {
+    return mapper;
+  }
 
-    @Override
-    protected ProductoXDepositoMapper getMapper() {
-        return mapper;
-    }
-
-    @Override
-    public BigDecimal getStockBySearchFilter(ProductoXDepositoSearchFilter sf) {
-        return facade.getStockBySearchFilter(sf);
-    }
+  @Override
+  public BigDecimal getStockBySearchFilter(ProductoXDepositoSearchFilter sf) {
+    return facade.getStockBySearchFilter(sf);
+  }
 }

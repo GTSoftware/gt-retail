@@ -15,59 +15,58 @@
  */
 package ar.com.gtsoftware.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 
-/**
- * @author Rodrigo M. Tato Rothamel mailto:rotatomel@gmail.com
- */
+/** @author Rodrigo M. Tato Rothamel mailto:rotatomel@gmail.com */
 @Entity
 @Table(name = "cajas")
 @Getter
 @Setter
 public class Cajas extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cajas_id_caja")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "cajas_id_caja",
-            sequenceName = "cajas_id_caja_seq")
-    @Basic(optional = false)
-    @Column(name = "id_caja", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cajas_id_caja")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "cajas_id_caja",
+      sequenceName = "cajas_id_caja_seq")
+  @Basic(optional = false)
+  @Column(name = "id_caja", nullable = false, updatable = false)
+  private Long id;
 
-    @NotNull
-    @ManyToOne
-    @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
-    private Usuarios idUsuario;
+  @NotNull
+  @ManyToOne
+  @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
+  private Usuarios idUsuario;
 
-    @NotNull
-    @ManyToOne
-    @JoinColumn(name = "id_sucursal", referencedColumnName = "id_sucursal")
-    private Sucursales idSucursal;
+  @NotNull
+  @ManyToOne
+  @JoinColumn(name = "id_sucursal", referencedColumnName = "id_sucursal")
+  private Sucursales idSucursal;
 
-    @NotNull
-    @Column(name = "fecha_apertura")
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date fechaApertura;
+  @NotNull
+  @Column(name = "fecha_apertura")
+  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+  private Date fechaApertura;
 
-    @Column(name = "fecha_cierre")
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date fechaCierre;
+  @Column(name = "fecha_cierre")
+  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+  private Date fechaCierre;
 
-    @NotNull
-    @Column(name = "saldo_inicial")
-    private BigDecimal saldoInicial;
+  @NotNull
+  @Column(name = "saldo_inicial")
+  private BigDecimal saldoInicial;
 
-    @OneToMany(mappedBy = "idCaja")
-    private List<CajasMovimientos> cajasMovimientoss;
+  @OneToMany(mappedBy = "idCaja")
+  private List<CajasMovimientos> cajasMovimientoss;
 
-    @OneToMany(mappedBy = "idCaja")
-    private List<Recibos> recibosList;
-
+  @OneToMany(mappedBy = "idCaja")
+  private List<Recibos> recibosList;
 }

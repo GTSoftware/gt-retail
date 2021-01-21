@@ -30,20 +30,21 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class FiscalPeriodosFiscalesServiceImpl
-        extends BaseEntityService<FiscalPeriodosFiscalesDto, FiscalPeriodosFiscalesSearchFilter, FiscalPeriodosFiscales>
-        implements FiscalPeriodosFiscalesService {
+    extends BaseEntityService<
+        FiscalPeriodosFiscalesDto, FiscalPeriodosFiscalesSearchFilter, FiscalPeriodosFiscales>
+    implements FiscalPeriodosFiscalesService {
 
-    private final FiscalPeriodosFiscalesFacade facade;
+  private final FiscalPeriodosFiscalesFacade facade;
 
-    private final FiscalPeriodosFiscalesMapper mapper;
+  private final FiscalPeriodosFiscalesMapper mapper;
 
-    @Override
-    protected FiscalPeriodosFiscalesFacade getFacade() {
-        return facade;
-    }
+  @Override
+  protected FiscalPeriodosFiscalesFacade getFacade() {
+    return facade;
+  }
 
-    @Override
-    protected FiscalPeriodosFiscalesMapper getMapper() {
-        return mapper;
-    }
+  @Override
+  protected FiscalPeriodosFiscalesMapper getMapper() {
+    return mapper;
+  }
 }

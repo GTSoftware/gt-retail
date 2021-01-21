@@ -15,14 +15,13 @@
  */
 package ar.com.gtsoftware.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import java.math.BigDecimal;
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Detalle del plan de pago
@@ -35,28 +34,32 @@ import java.math.BigDecimal;
 @Setter
 public class NegocioPlanesPagoDetalle extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "negocio_planes_pago_detalle_id_detalle_plan")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "negocio_planes_pago_detalle_id_detalle_plan",
-            sequenceName = "negocio_planes_pago_detalle_id_detalle_plan_seq")
-    @Basic(optional = false)
-    @Column(name = "id_detalle_plan", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(
+      strategy = GenerationType.SEQUENCE,
+      generator = "negocio_planes_pago_detalle_id_detalle_plan")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "negocio_planes_pago_detalle_id_detalle_plan",
+      sequenceName = "negocio_planes_pago_detalle_id_detalle_plan_seq")
+  @Basic(optional = false)
+  @Column(name = "id_detalle_plan", nullable = false, updatable = false)
+  private Long id;
 
-    @NotNull
-    @ManyToOne
-    @JoinColumn(name = "id_plan", referencedColumnName = "id_plan")
-    private NegocioPlanesPago idPlan;
+  @NotNull
+  @ManyToOne
+  @JoinColumn(name = "id_plan", referencedColumnName = "id_plan")
+  private NegocioPlanesPago idPlan;
 
-    @Column(name = "activo")
-    private boolean activo;
+  @Column(name = "activo")
+  private boolean activo;
 
-    @Column(name = "cuotas")
-    private int cuotas;
+  @Column(name = "cuotas")
+  private int cuotas;
 
-    @Column(name = "coeficiente_interes")
-    @DecimalMax(value = "999999999999999.9999")
-    @DecimalMin(value = "0")
-    private BigDecimal coeficienteInteres;
-
+  @Column(name = "coeficiente_interes")
+  @DecimalMax(value = "999999999999999.9999")
+  @DecimalMin(value = "0")
+  private BigDecimal coeficienteInteres;
 }

@@ -1,10 +1,11 @@
 //
-// Este archivo ha sido generado por la arquitectura JavaTM para la implantación de la referencia de enlace (JAXB) XML v2.2.8-b130911.1802 
-// Visite <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
-// Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el esquema de origen. 
-// Generado el: 2020.05.28 a las 09:17:55 PM ART 
+// Este archivo ha sido generado por la arquitectura JavaTM para la implantación de la referencia de
+// enlace (JAXB) XML v2.2.8-b130911.1802
+// Visite <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a>
+// Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el
+// esquema de origen.
+// Generado el: 2020.05.28 a las 09:17:55 PM ART
 //
-
 
 package ar.com.gtsoftware.service.afip.client.fe;
 
@@ -14,11 +15,11 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Clase Java para Comprador complex type.
+ * Clase Java para Comprador complex type.
  *
- * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
+ * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta
+ * clase.
  *
  * <pre>
  * &lt;complexType name="Comprador">
@@ -35,70 +36,87 @@ import javax.xml.bind.annotation.XmlType;
  * </pre>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Comprador", propOrder = {
-        "docTipo",
-        "docNro",
-        "porcentaje"
-})
-@Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
+@XmlType(
+    name = "Comprador",
+    propOrder = {"docTipo", "docNro", "porcentaje"})
+@Generated(
+    value = "com.sun.tools.internal.xjc.Driver",
+    date = "2020-05-28T09:17:55-03:00",
+    comments = "JAXB RI v2.2.8-b130911.1802")
 public class Comprador {
 
-    @XmlElement(name = "DocTipo")
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    protected int docTipo;
-    @XmlElement(name = "DocNro")
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    protected long docNro;
-    @XmlElement(name = "Porcentaje")
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    protected double porcentaje;
+  @XmlElement(name = "DocTipo")
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  protected int docTipo;
 
-    /**
-     * Obtiene el valor de la propiedad docTipo.
-     */
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    public int getDocTipo() {
-        return docTipo;
-    }
+  @XmlElement(name = "DocNro")
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  protected long docNro;
 
-    /**
-     * Define el valor de la propiedad docTipo.
-     */
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    public void setDocTipo(int value) {
-        this.docTipo = value;
-    }
+  @XmlElement(name = "Porcentaje")
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  protected double porcentaje;
 
-    /**
-     * Obtiene el valor de la propiedad docNro.
-     */
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    public long getDocNro() {
-        return docNro;
-    }
+  /** Obtiene el valor de la propiedad docTipo. */
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  public int getDocTipo() {
+    return docTipo;
+  }
 
-    /**
-     * Define el valor de la propiedad docNro.
-     */
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    public void setDocNro(long value) {
-        this.docNro = value;
-    }
+  /** Define el valor de la propiedad docTipo. */
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  public void setDocTipo(int value) {
+    this.docTipo = value;
+  }
 
-    /**
-     * Obtiene el valor de la propiedad porcentaje.
-     */
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    public double getPorcentaje() {
-        return porcentaje;
-    }
+  /** Obtiene el valor de la propiedad docNro. */
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  public long getDocNro() {
+    return docNro;
+  }
 
-    /**
-     * Define el valor de la propiedad porcentaje.
-     */
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    public void setPorcentaje(double value) {
-        this.porcentaje = value;
-    }
+  /** Define el valor de la propiedad docNro. */
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  public void setDocNro(long value) {
+    this.docNro = value;
+  }
 
+  /** Obtiene el valor de la propiedad porcentaje. */
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  public double getPorcentaje() {
+    return porcentaje;
+  }
+
+  /** Define el valor de la propiedad porcentaje. */
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  public void setPorcentaje(double value) {
+    this.porcentaje = value;
+  }
 }

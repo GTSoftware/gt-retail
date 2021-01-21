@@ -21,10 +21,7 @@ import ar.com.gtsoftware.domain.RemitoDetalle;
 import ar.com.gtsoftware.dto.domain.RemitoDetalleDto;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring",
-        uses = {RemitoMapper.class,
-                ProductosMapper.class
-        })
-public interface RemitoDetalleMapper
-        extends GenericMapper<RemitoDetalle, RemitoDetalleDto> {
-}
+@Mapper(
+    componentModel = "spring",
+    uses = {RemitoMapper.class, ProductosMapper.class})
+public interface RemitoDetalleMapper extends GenericMapper<RemitoDetalle, RemitoDetalleDto> {}

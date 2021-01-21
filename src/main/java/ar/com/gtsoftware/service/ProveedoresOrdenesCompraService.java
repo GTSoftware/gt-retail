@@ -20,15 +20,12 @@ package ar.com.gtsoftware.service;
 import ar.com.gtsoftware.dto.domain.ProveedoresOrdenesCompraDto;
 import ar.com.gtsoftware.dto.domain.ProveedoresOrdenesCompraEstadosDto;
 import ar.com.gtsoftware.search.OrdenCompraSearchFilter;
-
 import java.util.List;
 
-
 public interface ProveedoresOrdenesCompraService
-        extends EntityService<ProveedoresOrdenesCompraDto, OrdenCompraSearchFilter> {
+    extends EntityService<ProveedoresOrdenesCompraDto, OrdenCompraSearchFilter> {
 
-    List<ProveedoresOrdenesCompraEstadosDto> obtenerEstados();
+  List<ProveedoresOrdenesCompraEstadosDto> obtenerEstados();
 
-    ProveedoresOrdenesCompraEstadosDto obtenerEstado(Long id);
-
+  ProveedoresOrdenesCompraEstadosDto obtenerEstado(Long id);
 }

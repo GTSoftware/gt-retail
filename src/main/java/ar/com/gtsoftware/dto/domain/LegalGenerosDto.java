@@ -18,7 +18,6 @@ package ar.com.gtsoftware.dto.domain;
 
 import lombok.*;
 
-
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -27,9 +26,7 @@ import lombok.*;
 @Builder
 public class LegalGenerosDto {
 
-    @EqualsAndHashCode.Include
-    private Long id;
-    private String nombreGenero;
-    private String simbolo;
-
+  @EqualsAndHashCode.Include private Long id;
+  private String nombreGenero;
+  private String simbolo;
 }

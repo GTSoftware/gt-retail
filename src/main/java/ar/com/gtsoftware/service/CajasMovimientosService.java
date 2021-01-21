@@ -20,7 +20,5 @@ package ar.com.gtsoftware.service;
 import ar.com.gtsoftware.dto.domain.CajasMovimientosDto;
 import ar.com.gtsoftware.search.CajasMovimientosSearchFilter;
 
-
 public interface CajasMovimientosService
-        extends EntityService<CajasMovimientosDto, CajasMovimientosSearchFilter> {
-}
+    extends EntityService<CajasMovimientosDto, CajasMovimientosSearchFilter> {}

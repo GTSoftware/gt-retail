@@ -20,8 +20,5 @@ package ar.com.gtsoftware.service;
 import ar.com.gtsoftware.dto.domain.ComprobantesPagosDto;
 import ar.com.gtsoftware.search.ComprobantesPagosSearchFilter;
 
-
 public interface ComprobantesPagosService
-        extends EntityService<ComprobantesPagosDto, ComprobantesPagosSearchFilter> {
-
-}
+    extends EntityService<ComprobantesPagosDto, ComprobantesPagosSearchFilter> {}

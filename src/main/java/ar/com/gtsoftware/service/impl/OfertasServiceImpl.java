@@ -27,23 +27,21 @@ import ar.com.gtsoftware.service.OfertasService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-
 @Service
 @RequiredArgsConstructor
-public class OfertasServiceImpl
-        extends BaseEntityService<OfertaDto, OfertasSearchFilter, Ofertas>
-        implements OfertasService {
+public class OfertasServiceImpl extends BaseEntityService<OfertaDto, OfertasSearchFilter, Ofertas>
+    implements OfertasService {
 
-    private final OfertasFacade facade;
-    private final OfertasMapper mapper;
+  private final OfertasFacade facade;
+  private final OfertasMapper mapper;
 
-    @Override
-    protected OfertasFacade getFacade() {
-        return facade;
-    }
+  @Override
+  protected OfertasFacade getFacade() {
+    return facade;
+  }
 
-    @Override
-    protected OfertasMapper getMapper() {
-        return mapper;
-    }
+  @Override
+  protected OfertasMapper getMapper() {
+    return mapper;
+  }
 }

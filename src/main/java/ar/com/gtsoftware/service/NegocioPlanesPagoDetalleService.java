@@ -20,7 +20,5 @@ package ar.com.gtsoftware.service;
 import ar.com.gtsoftware.dto.domain.NegocioPlanesPagoDetalleDto;
 import ar.com.gtsoftware.search.PlanesPagoDetalleSearchFilter;
 
-
 public interface NegocioPlanesPagoDetalleService
-        extends EntityService<NegocioPlanesPagoDetalleDto, PlanesPagoDetalleSearchFilter> {
-}
+    extends EntityService<NegocioPlanesPagoDetalleDto, PlanesPagoDetalleSearchFilter> {}

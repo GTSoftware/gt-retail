@@ -20,44 +20,47 @@ import ar.com.gtsoftware.domain.ProductosPrecios;
 import ar.com.gtsoftware.domain.ProductosPrecios_;
 import ar.com.gtsoftware.domain.Productos_;
 import ar.com.gtsoftware.search.ProductosPreciosSearchFilter;
-import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.springframework.stereotype.Repository;
 
 @Repository
-public class ProductosPreciosFacade extends AbstractFacade<ProductosPrecios, ProductosPreciosSearchFilter> {
+public class ProductosPreciosFacade
+    extends AbstractFacade<ProductosPrecios, ProductosPreciosSearchFilter> {
 
-    private final EntityManager em;
+  private final EntityManager em;
 
-    public ProductosPreciosFacade(EntityManager em) {
-        super(ProductosPrecios.class);
-        this.em = em;
+  public ProductosPreciosFacade(EntityManager em) {
+    super(ProductosPrecios.class);
+    this.em = em;
+  }
+
+  @Override
+  protected EntityManager getEntityManager() {
+    return em;
+  }
+
+  @Override
+  public Predicate createWhereFromSearchFilter(
+      ProductosPreciosSearchFilter psf, CriteriaBuilder cb, Root<ProductosPrecios> root) {
+
+    Predicate p = null;
+
+    if (psf.getIdProducto() != null) {
+      Predicate p1 =
+          cb.equal(root.get(ProductosPrecios_.idProducto).get(Productos_.id), psf.getIdProducto());
+      p = appendAndPredicate(cb, p, p1);
     }
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
+    if (psf.getIdListaPrecios() != null) {
+      Predicate p1 =
+          cb.equal(
+              root.get(ProductosPrecios_.idListaPrecios).get(ProductosListasPrecios_.id),
+              psf.getIdListaPrecios());
+      p = appendAndPredicate(cb, p, p1);
     }
-
-    @Override
-    public Predicate createWhereFromSearchFilter(ProductosPreciosSearchFilter psf, CriteriaBuilder cb, Root<ProductosPrecios> root) {
-
-        Predicate p = null;
-
-        if (psf.getIdProducto() != null) {
-            Predicate p1 = cb.equal(root.get(ProductosPrecios_.idProducto).get(Productos_.id), psf.getIdProducto());
-            p = appendAndPredicate(cb, p, p1);
-        }
-
-        if (psf.getIdListaPrecios() != null) {
-            Predicate p1 = cb.equal(root.get(ProductosPrecios_.idListaPrecios).get(ProductosListasPrecios_.id), psf.getIdListaPrecios());
-            p = appendAndPredicate(cb, p, p1);
-        }
-        return p;
-
-    }
-
+    return p;
+  }
 }

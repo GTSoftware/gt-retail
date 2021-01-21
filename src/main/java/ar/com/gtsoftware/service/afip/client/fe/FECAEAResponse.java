@@ -1,10 +1,11 @@
 //
-// Este archivo ha sido generado por la arquitectura JavaTM para la implantación de la referencia de enlace (JAXB) XML v2.2.8-b130911.1802 
-// Visite <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
-// Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el esquema de origen. 
-// Generado el: 2020.05.28 a las 09:17:55 PM ART 
+// Este archivo ha sido generado por la arquitectura JavaTM para la implantación de la referencia de
+// enlace (JAXB) XML v2.2.8-b130911.1802
+// Visite <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a>
+// Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el
+// esquema de origen.
+// Generado el: 2020.05.28 a las 09:17:55 PM ART
 //
-
 
 package ar.com.gtsoftware.service.afip.client.fe;
 
@@ -14,11 +15,11 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Clase Java para FECAEAResponse complex type.
+ * Clase Java para FECAEAResponse complex type.
  *
- * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
+ * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta
+ * clase.
  *
  * <pre>
  * &lt;complexType name="FECAEAResponse">
@@ -36,114 +37,144 @@ import javax.xml.bind.annotation.XmlType;
  * </pre>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "FECAEAResponse", propOrder = {
-        "feCabResp",
-        "feDetResp",
-        "events",
-        "errors"
-})
-@Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
+@XmlType(
+    name = "FECAEAResponse",
+    propOrder = {"feCabResp", "feDetResp", "events", "errors"})
+@Generated(
+    value = "com.sun.tools.internal.xjc.Driver",
+    date = "2020-05-28T09:17:55-03:00",
+    comments = "JAXB RI v2.2.8-b130911.1802")
 public class FECAEAResponse {
 
-    @XmlElement(name = "FeCabResp")
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    protected FECAEACabResponse feCabResp;
-    @XmlElement(name = "FeDetResp")
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    protected ArrayOfFECAEADetResponse feDetResp;
-    @XmlElement(name = "Events")
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    protected ArrayOfEvt events;
-    @XmlElement(name = "Errors")
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    protected ArrayOfErr errors;
+  @XmlElement(name = "FeCabResp")
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  protected FECAEACabResponse feCabResp;
 
-    /**
-     * Obtiene el valor de la propiedad feCabResp.
-     *
-     * @return possible object is
-     * {@link FECAEACabResponse }
-     */
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    public FECAEACabResponse getFeCabResp() {
-        return feCabResp;
-    }
+  @XmlElement(name = "FeDetResp")
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  protected ArrayOfFECAEADetResponse feDetResp;
 
-    /**
-     * Define el valor de la propiedad feCabResp.
-     *
-     * @param value allowed object is
-     *              {@link FECAEACabResponse }
-     */
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    public void setFeCabResp(FECAEACabResponse value) {
-        this.feCabResp = value;
-    }
+  @XmlElement(name = "Events")
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  protected ArrayOfEvt events;
 
-    /**
-     * Obtiene el valor de la propiedad feDetResp.
-     *
-     * @return possible object is
-     * {@link ArrayOfFECAEADetResponse }
-     */
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    public ArrayOfFECAEADetResponse getFeDetResp() {
-        return feDetResp;
-    }
+  @XmlElement(name = "Errors")
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  protected ArrayOfErr errors;
 
-    /**
-     * Define el valor de la propiedad feDetResp.
-     *
-     * @param value allowed object is
-     *              {@link ArrayOfFECAEADetResponse }
-     */
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    public void setFeDetResp(ArrayOfFECAEADetResponse value) {
-        this.feDetResp = value;
-    }
+  /**
+   * Obtiene el valor de la propiedad feCabResp.
+   *
+   * @return possible object is {@link FECAEACabResponse }
+   */
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  public FECAEACabResponse getFeCabResp() {
+    return feCabResp;
+  }
 
-    /**
-     * Obtiene el valor de la propiedad events.
-     *
-     * @return possible object is
-     * {@link ArrayOfEvt }
-     */
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    public ArrayOfEvt getEvents() {
-        return events;
-    }
+  /**
+   * Define el valor de la propiedad feCabResp.
+   *
+   * @param value allowed object is {@link FECAEACabResponse }
+   */
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  public void setFeCabResp(FECAEACabResponse value) {
+    this.feCabResp = value;
+  }
 
-    /**
-     * Define el valor de la propiedad events.
-     *
-     * @param value allowed object is
-     *              {@link ArrayOfEvt }
-     */
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    public void setEvents(ArrayOfEvt value) {
-        this.events = value;
-    }
+  /**
+   * Obtiene el valor de la propiedad feDetResp.
+   *
+   * @return possible object is {@link ArrayOfFECAEADetResponse }
+   */
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  public ArrayOfFECAEADetResponse getFeDetResp() {
+    return feDetResp;
+  }
 
-    /**
-     * Obtiene el valor de la propiedad errors.
-     *
-     * @return possible object is
-     * {@link ArrayOfErr }
-     */
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    public ArrayOfErr getErrors() {
-        return errors;
-    }
+  /**
+   * Define el valor de la propiedad feDetResp.
+   *
+   * @param value allowed object is {@link ArrayOfFECAEADetResponse }
+   */
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  public void setFeDetResp(ArrayOfFECAEADetResponse value) {
+    this.feDetResp = value;
+  }
 
-    /**
-     * Define el valor de la propiedad errors.
-     *
-     * @param value allowed object is
-     *              {@link ArrayOfErr }
-     */
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2020-05-28T09:17:55-03:00", comments = "JAXB RI v2.2.8-b130911.1802")
-    public void setErrors(ArrayOfErr value) {
-        this.errors = value;
-    }
+  /**
+   * Obtiene el valor de la propiedad events.
+   *
+   * @return possible object is {@link ArrayOfEvt }
+   */
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  public ArrayOfEvt getEvents() {
+    return events;
+  }
 
+  /**
+   * Define el valor de la propiedad events.
+   *
+   * @param value allowed object is {@link ArrayOfEvt }
+   */
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  public void setEvents(ArrayOfEvt value) {
+    this.events = value;
+  }
+
+  /**
+   * Obtiene el valor de la propiedad errors.
+   *
+   * @return possible object is {@link ArrayOfErr }
+   */
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  public ArrayOfErr getErrors() {
+    return errors;
+  }
+
+  /**
+   * Define el valor de la propiedad errors.
+   *
+   * @param value allowed object is {@link ArrayOfErr }
+   */
+  @Generated(
+      value = "com.sun.tools.internal.xjc.Driver",
+      date = "2020-05-28T09:17:55-03:00",
+      comments = "JAXB RI v2.2.8-b130911.1802")
+  public void setErrors(ArrayOfErr value) {
+    this.errors = value;
+  }
 }

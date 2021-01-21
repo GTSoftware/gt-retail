@@ -21,9 +21,8 @@ import ar.com.gtsoftware.domain.UbicacionProvincias;
 import ar.com.gtsoftware.dto.domain.UbicacionProvinciasDto;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring",
-        uses = {UbicacionPaisesMapper.class,
-                UbicacionLocalidadesMapper.class})
+@Mapper(
+    componentModel = "spring",
+    uses = {UbicacionPaisesMapper.class, UbicacionLocalidadesMapper.class})
 public interface UbicacionProvinciasMapper
-        extends GenericMapper<UbicacionProvincias, UbicacionProvinciasDto> {
-}
+    extends GenericMapper<UbicacionProvincias, UbicacionProvinciasDto> {}

@@ -17,15 +17,13 @@
 
 package ar.com.gtsoftware.rules;
 
-
 import ar.com.gtsoftware.dto.domain.SucursalesDto;
-import lombok.*;
-
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import lombok.*;
 
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -34,30 +32,23 @@ import java.util.List;
 @Builder
 public class OfertaDto {
 
-    @EqualsAndHashCode.Include
-    private Long id;
+  @EqualsAndHashCode.Include private Long id;
 
-    @Size(max = 90)
-    @NotNull
-    private String textoOferta;
+  @Size(max = 90)
+  @NotNull
+  private String textoOferta;
 
-    private List<Condicion> condiciones;
+  private List<Condicion> condiciones;
 
-    @NotNull
-    private TipoAccion tipoAccion;
+  @NotNull private TipoAccion tipoAccion;
 
-    @NotNull
-    private BigDecimal descuento;
+  @NotNull private BigDecimal descuento;
 
-    private SucursalesDto idSucursal;
+  private SucursalesDto idSucursal;
 
-    @NotNull
-    private Date vigenciaDesde;
+  @NotNull private Date vigenciaDesde;
 
-    @NotNull
-    private Date vigenciaHasta;
+  @NotNull private Date vigenciaHasta;
 
-    private int version;
-
-
+  private int version;
 }

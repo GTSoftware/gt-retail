@@ -17,33 +17,29 @@ package ar.com.gtsoftware.search;
 
 import org.apache.commons.lang3.StringUtils;
 
-/**
- * @author Rodrigo Tato mailto:rotatomel@gmail.com
- */
+/** @author Rodrigo Tato mailto:rotatomel@gmail.com */
 public class BancosSearchFilter extends AbstractSearchFilter {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    private String nombreBanco;
+  private String nombreBanco;
 
-    public BancosSearchFilter() {
-    }
+  public BancosSearchFilter() {}
 
-    public BancosSearchFilter(String nombreBanco) {
-        this.nombreBanco = nombreBanco;
-    }
+  public BancosSearchFilter(String nombreBanco) {
+    this.nombreBanco = nombreBanco;
+  }
 
-    @Override
-    public boolean hasFilter() {
-        return StringUtils.isNotEmpty(nombreBanco);
-    }
+  @Override
+  public boolean hasFilter() {
+    return StringUtils.isNotEmpty(nombreBanco);
+  }
 
-    public String getNombreBanco() {
-        return nombreBanco;
-    }
+  public String getNombreBanco() {
+    return nombreBanco;
+  }
 
-    public void setNombreBanco(String nombreBanco) {
-        this.nombreBanco = nombreBanco;
-    }
-
+  public void setNombreBanco(String nombreBanco) {
+    this.nombreBanco = nombreBanco;
+  }
 }

@@ -16,9 +16,8 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
-import lombok.*;
-
 import java.math.BigDecimal;
+import lombok.*;
 
 @Getter
 @Setter
@@ -28,16 +27,13 @@ import java.math.BigDecimal;
 @Builder
 public class RemitoDetalleDto {
 
-    @EqualsAndHashCode.Include
-    private Long id;
-    private RemitoDto remitoCabecera;
+  @EqualsAndHashCode.Include private Long id;
+  private RemitoDto remitoCabecera;
 
-    private ProductosDto idProducto;
+  private ProductosDto idProducto;
 
-    private BigDecimal cantidad;
+  private BigDecimal cantidad;
 
-    @EqualsAndHashCode.Include
-    private int nroLinea;
-    private Integer version;
-
+  @EqualsAndHashCode.Include private int nroLinea;
+  private Integer version;
 }

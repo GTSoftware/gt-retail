@@ -18,9 +18,7 @@ package ar.com.gtsoftware.search;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 
-/**
- * @author Rodrigo Tato mailto:rotatomel@gmail.com
- */
+/** @author Rodrigo Tato mailto:rotatomel@gmail.com */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -28,14 +26,12 @@ import org.apache.commons.lang3.StringUtils;
 @Builder
 public class MarcasSearchFilter extends AbstractSearchFilter {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    private String nombreMarca;
+  private String nombreMarca;
 
-
-    @Override
-    public boolean hasFilter() {
-        return StringUtils.isNotEmpty(nombreMarca);
-    }
-
+  @Override
+  public boolean hasFilter() {
+    return StringUtils.isNotEmpty(nombreMarca);
+  }
 }

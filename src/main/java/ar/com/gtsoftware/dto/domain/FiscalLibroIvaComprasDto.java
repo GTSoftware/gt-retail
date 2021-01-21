@@ -16,11 +16,10 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
-import lombok.*;
-
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import lombok.*;
 
 /**
  * Clase que almacena la información de las facturas del libro de iva compras
@@ -34,37 +33,34 @@ import java.util.List;
 @Builder
 public class FiscalLibroIvaComprasDto {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @EqualsAndHashCode.Include
-    private Long id;
-    private Date fechaFactura;
-    private String documento;
-    private String letraFactura;
-    private String puntoVentaFactura;
-    private String numeroFactura;
-    private boolean anulada;
-    private BigDecimal totalFactura;
+  @EqualsAndHashCode.Include private Long id;
+  private Date fechaFactura;
+  private String documento;
+  private String letraFactura;
+  private String puntoVentaFactura;
+  private String numeroFactura;
+  private boolean anulada;
+  private BigDecimal totalFactura;
 
-    private FiscalTiposComprobanteDto codigoTipoComprobante;
+  private FiscalTiposComprobanteDto codigoTipoComprobante;
 
-    private List<FiscalLibroIvaComprasLineasDto> fiscalLibroIvaComprasLineasList;
-    private PersonasDto idPersona;
-    private FiscalResponsabilidadesIvaDto idResponsabilidadIva;
-    private FiscalPeriodosFiscalesDto idPeriodoFiscal;
+  private List<FiscalLibroIvaComprasLineasDto> fiscalLibroIvaComprasLineasList;
+  private PersonasDto idPersona;
+  private FiscalResponsabilidadesIvaDto idResponsabilidadIva;
+  private FiscalPeriodosFiscalesDto idPeriodoFiscal;
 
-    private Long cae;
-    private Date fechaVencimientoCae;
+  private Long cae;
+  private Date fechaVencimientoCae;
 
-    private BigDecimal importeNetoNoGravado;
-    private BigDecimal importeExento;
-    private BigDecimal importeNetoGravado;
-    private BigDecimal importeTributos;
-    private BigDecimal importeIva;
-    private BigDecimal importePercepcionIva;
-    private BigDecimal importePercepcionIngresosBrutos;
+  private BigDecimal importeNetoNoGravado;
+  private BigDecimal importeExento;
+  private BigDecimal importeNetoGravado;
+  private BigDecimal importeTributos;
+  private BigDecimal importeIva;
+  private BigDecimal importePercepcionIva;
+  private BigDecimal importePercepcionIngresosBrutos;
 
-    private Integer version;
-
-
+  private Integer version;
 }

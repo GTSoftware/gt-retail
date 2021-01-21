@@ -18,33 +18,32 @@
 package ar.com.gtsoftware.service;
 
 import ar.com.gtsoftware.search.AbstractSearchFilter;
-
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
+import javax.validation.constraints.NotNull;
 
 /**
- * Interfaz que provee las funcionalidades básicas para persistir, filtrar y eliminar objetos de dominio
+ * Interfaz que provee las funcionalidades básicas para persistir, filtrar y eliminar objetos de
+ * dominio
  *
  * @param <T> el Dto que se obtendrá como resultado
  * @param <S> el SearchFilter para realizar las tareas de búsqueda
  */
-public interface EntityService
-        <T, S extends AbstractSearchFilter> {
+public interface EntityService<T, S extends AbstractSearchFilter> {
 
-    T createOrEdit(@NotNull T dto);
+  T createOrEdit(@NotNull T dto);
 
-    void remove(@NotNull T dto);
+  void remove(@NotNull T dto);
 
-    int countBySearchFilter(@NotNull S sf);
+  int countBySearchFilter(@NotNull S sf);
 
-    List<T> findAll();
+  List<T> findAll();
 
-    T find(@NotNull Serializable id);
+  T find(@NotNull Serializable id);
 
-    T findFirstBySearchFilter(@NotNull S sf);
+  T findFirstBySearchFilter(@NotNull S sf);
 
-    List<T> findBySearchFilter(@NotNull S sf, int firstResult, int maxResults);
+  List<T> findBySearchFilter(@NotNull S sf, int firstResult, int maxResults);
 
-    List<T> findAllBySearchFilter(@NotNull S sf);
+  List<T> findAllBySearchFilter(@NotNull S sf);
 }

@@ -30,22 +30,20 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class ProductosMarcasServiceImpl
-        extends BaseEntityService<ProductosMarcasDto, MarcasSearchFilter, ProductosMarcas>
-        implements ProductosMarcasService {
+    extends BaseEntityService<ProductosMarcasDto, MarcasSearchFilter, ProductosMarcas>
+    implements ProductosMarcasService {
 
+  private final ProductosMarcasFacade facade;
 
-    private final ProductosMarcasFacade facade;
+  private final ProductosMarcasMapper mapper;
 
-    private final ProductosMarcasMapper mapper;
+  @Override
+  protected ProductosMarcasFacade getFacade() {
+    return facade;
+  }
 
-
-    @Override
-    protected ProductosMarcasFacade getFacade() {
-        return facade;
-    }
-
-    @Override
-    protected ProductosMarcasMapper getMapper() {
-        return mapper;
-    }
+  @Override
+  protected ProductosMarcasMapper getMapper() {
+    return mapper;
+  }
 }

@@ -27,30 +27,29 @@ import ar.com.gtsoftware.service.NegocioTiposComprobanteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-
 @Service
 @RequiredArgsConstructor
 public class NegocioTiposComprobanteServiceImpl
-        extends BaseEntityService<NegocioTiposComprobanteDto, NegocioTiposComprobanteSearchFilter, NegocioTiposComprobante>
-        implements NegocioTiposComprobanteService {
+    extends BaseEntityService<
+        NegocioTiposComprobanteDto, NegocioTiposComprobanteSearchFilter, NegocioTiposComprobante>
+    implements NegocioTiposComprobanteService {
 
-    private final NegocioTiposComprobanteFacade facade;
+  private final NegocioTiposComprobanteFacade facade;
 
+  private final NegocioTiposComprobanteMapper mapper;
 
-    private final NegocioTiposComprobanteMapper mapper;
+  @Override
+  protected NegocioTiposComprobanteFacade getFacade() {
+    return facade;
+  }
 
-    @Override
-    protected NegocioTiposComprobanteFacade getFacade() {
-        return facade;
-    }
+  @Override
+  protected NegocioTiposComprobanteMapper getMapper() {
+    return mapper;
+  }
 
-    @Override
-    protected NegocioTiposComprobanteMapper getMapper() {
-        return mapper;
-    }
-
-    @Override
-    public NegocioTiposComprobanteDto getTipoFactura() {
-        return find(1L);
-    }
+  @Override
+  public NegocioTiposComprobanteDto getTipoFactura() {
+    return find(1L);
+  }
 }

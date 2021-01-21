@@ -18,7 +18,7 @@
 package ar.com.gtsoftware.rules;
 
 public class CondicionIlegalException extends Exception {
-    public CondicionIlegalException(String s) {
-        super(s);
-    }
+  public CondicionIlegalException(String s) {
+    super(s);
+  }
 }

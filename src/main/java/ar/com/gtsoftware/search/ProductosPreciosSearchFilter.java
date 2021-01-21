@@ -17,9 +17,7 @@ package ar.com.gtsoftware.search;
 
 import lombok.*;
 
-/**
- * @author Rodrigo Tato <rotatomel@gmail.com>
- */
+/** @author Rodrigo Tato <rotatomel@gmail.com> */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -27,15 +25,13 @@ import lombok.*;
 @Builder
 public class ProductosPreciosSearchFilter extends AbstractSearchFilter {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    private Long idProducto;
-    private Long idListaPrecios;
+  private Long idProducto;
+  private Long idListaPrecios;
 
-    @Override
-    public boolean hasFilter() {
-        return idProducto != null || idListaPrecios != null;
-    }
-
-
+  @Override
+  public boolean hasFilter() {
+    return idProducto != null || idListaPrecios != null;
+  }
 }

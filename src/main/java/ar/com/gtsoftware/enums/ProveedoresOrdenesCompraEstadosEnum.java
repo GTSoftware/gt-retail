@@ -22,26 +22,23 @@ import lombok.Getter;
 
 @Getter
 public enum ProveedoresOrdenesCompraEstadosEnum {
-    DISENIO(1L, "DISEÑO"),
-    PENDIENTE_RECEPCION(2L, "PENDIENTE DE RECEPCIÓN"),
-    RECEPCION_PARCIAL(3L, "RECEPCIÓN PARCIAL"),
-    RECEPCION_TOTAL(4L, "RECEPCIÓN TOTAL"),
-    ANULADA(5L, "ANULADA");
+  DISENIO(1L, "DISEÑO"),
+  PENDIENTE_RECEPCION(2L, "PENDIENTE DE RECEPCIÓN"),
+  RECEPCION_PARCIAL(3L, "RECEPCIÓN PARCIAL"),
+  RECEPCION_TOTAL(4L, "RECEPCIÓN TOTAL"),
+  ANULADA(5L, "ANULADA");
 
-    private final Long id;
-    private final String nombre;
+  private final Long id;
+  private final String nombre;
 
-    ProveedoresOrdenesCompraEstadosEnum(Long id, String nombre) {
-        this.id = id;
-        this.nombre = nombre;
-    }
+  ProveedoresOrdenesCompraEstadosEnum(Long id, String nombre) {
+    this.id = id;
+    this.nombre = nombre;
+  }
 
-    public ProveedoresOrdenesCompraEstadosDto convertToDto() {
-        return ProveedoresOrdenesCompraEstadosDto.builder()
-                .id(id)
-                .nombreEstado(nombre)
-                .build();
-    }
+  public ProveedoresOrdenesCompraEstadosDto convertToDto() {
+    return ProveedoresOrdenesCompraEstadosDto.builder().id(id).nombreEstado(nombre).build();
+  }
 }
 
 /*

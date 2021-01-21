@@ -15,14 +15,13 @@
  */
 package ar.com.gtsoftware.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import java.math.BigDecimal;
+import java.util.Date;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.math.BigDecimal;
-import java.util.Date;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Movimientos de cajas
@@ -35,30 +34,34 @@ import java.util.Date;
 @Setter
 public class CajasMovimientos extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cajas_movimientos_id_movimiento_caja")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "cajas_movimientos_id_movimiento_caja",
-            sequenceName = "cajas_movimientos_id_movimiento_caja_seq")
-    @Basic(optional = false)
-    @Column(name = "id_movimiento_caja", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(
+      strategy = GenerationType.SEQUENCE,
+      generator = "cajas_movimientos_id_movimiento_caja")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "cajas_movimientos_id_movimiento_caja",
+      sequenceName = "cajas_movimientos_id_movimiento_caja_seq")
+  @Basic(optional = false)
+  @Column(name = "id_movimiento_caja", nullable = false, updatable = false)
+  private Long id;
 
-    @NotNull
-    @JoinColumn(name = "id_caja", referencedColumnName = "id_caja")
-    @ManyToOne
-    private Cajas idCaja;
+  @NotNull
+  @JoinColumn(name = "id_caja", referencedColumnName = "id_caja")
+  @ManyToOne
+  private Cajas idCaja;
 
-    @NotNull
-    @Column(name = "fecha_movimiento")
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date fechaMovimiento;
+  @NotNull
+  @Column(name = "fecha_movimiento")
+  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+  private Date fechaMovimiento;
 
-    @NotNull
-    @Column(name = "monto_movimiento")
-    private BigDecimal montoMovimiento;
+  @NotNull
+  @Column(name = "monto_movimiento")
+  private BigDecimal montoMovimiento;
 
-    @Column(name = "descripcion")
-    @Size(max = 255)
-    private String descripcion;
-
+  @Column(name = "descripcion")
+  @Size(max = 255)
+  private String descripcion;
 }

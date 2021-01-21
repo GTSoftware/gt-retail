@@ -16,16 +16,13 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
-import lombok.*;
-
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import lombok.*;
 
-/**
- * @author Rodrigo Tato <rotatomel@gmail.com>
- */
+/** @author Rodrigo Tato <rotatomel@gmail.com> */
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
@@ -33,33 +30,31 @@ import java.util.List;
 @Builder
 public class SucursalesDto {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @EqualsAndHashCode.Include
-    private Long id;
+  @EqualsAndHashCode.Include private Long id;
 
-    @NotNull
-    @Size(min = 1, max = 100)
-    private String nombreSucursal;
-    @Size(max = 500)
-    private String direccion;
-    @Size(max = 20)
-    private String telefonoFijo;
-    @NotNull
-    private Date fechaAlta;
-    @NotNull
-    private boolean activo;
+  @NotNull
+  @Size(min = 1, max = 100)
+  private String nombreSucursal;
 
-    private UbicacionProvinciasDto idProvincia;
-    private UbicacionPaisesDto idPais;
-    private UbicacionLocalidadesDto idLocalidad;
-    private List<DepositosDto> depositosDtoList;
-    private Integer version;
+  @Size(max = 500)
+  private String direccion;
 
-    @Override
-    public String toString() {
-        return String.format("[%d] %s", id, nombreSucursal);
-    }
+  @Size(max = 20)
+  private String telefonoFijo;
 
+  @NotNull private Date fechaAlta;
+  @NotNull private boolean activo;
 
+  private UbicacionProvinciasDto idProvincia;
+  private UbicacionPaisesDto idPais;
+  private UbicacionLocalidadesDto idLocalidad;
+  private List<DepositosDto> depositosDtoList;
+  private Integer version;
+
+  @Override
+  public String toString() {
+    return String.format("[%d] %s", id, nombreSucursal);
+  }
 }

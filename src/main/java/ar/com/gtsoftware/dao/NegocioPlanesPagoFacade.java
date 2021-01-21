@@ -19,54 +19,61 @@ import ar.com.gtsoftware.domain.NegocioFormasPago_;
 import ar.com.gtsoftware.domain.NegocioPlanesPago;
 import ar.com.gtsoftware.domain.NegocioPlanesPago_;
 import ar.com.gtsoftware.search.PlanesPagoSearchFilter;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Repository;
 
 @Repository
-public class NegocioPlanesPagoFacade extends AbstractFacade<NegocioPlanesPago, PlanesPagoSearchFilter> {
+public class NegocioPlanesPagoFacade
+    extends AbstractFacade<NegocioPlanesPago, PlanesPagoSearchFilter> {
 
+  private final EntityManager em;
 
-    private final EntityManager em;
+  public NegocioPlanesPagoFacade(EntityManager em) {
+    super(NegocioPlanesPago.class);
+    this.em = em;
+  }
 
-    public NegocioPlanesPagoFacade(EntityManager em) {
-        super(NegocioPlanesPago.class);
-        this.em = em;
+  @Override
+  protected EntityManager getEntityManager() {
+    return em;
+  }
+
+  @Override
+  public Predicate createWhereFromSearchFilter(
+      PlanesPagoSearchFilter sf, CriteriaBuilder cb, Root<NegocioPlanesPago> root) {
+    Predicate p = null;
+
+    if (StringUtils.isNotEmpty(sf.getNombre())) {
+      Predicate p1 =
+          cb.like(
+              cb.upper(root.get(NegocioPlanesPago_.nombre)),
+              String.format("%%%s%%", sf.getNombre().toUpperCase()));
+      p = appendAndPredicate(cb, p, p1);
     }
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
+    if (sf.getIdFormaPago() != null) {
+      Predicate p1 =
+          cb.equal(
+              root.get(NegocioPlanesPago_.idFormaPago).get(NegocioFormasPago_.id),
+              sf.getIdFormaPago());
+      p = appendAndPredicate(cb, p, p1);
     }
 
-    @Override
-    public Predicate createWhereFromSearchFilter(PlanesPagoSearchFilter sf, CriteriaBuilder cb, Root<NegocioPlanesPago> root) {
-        Predicate p = null;
-
-        if (StringUtils.isNotEmpty(sf.getNombre())) {
-            Predicate p1 = cb.like(cb.upper(root.get(NegocioPlanesPago_.nombre)), String.format("%%%s%%", sf.getNombre().toUpperCase()));
-            p = appendAndPredicate(cb, p, p1);
-        }
-
-        if (sf.getIdFormaPago() != null) {
-            Predicate p1 = cb.equal(root.get(NegocioPlanesPago_.idFormaPago).get(NegocioFormasPago_.id), sf.getIdFormaPago());
-            p = appendAndPredicate(cb, p, p1);
-        }
-
-        if (sf.getActivo() != null) {
-            Predicate p1 = cb.between(cb.currentTimestamp(), root.get(NegocioPlanesPago_.fechaActivoDesde),
-                    root.get(NegocioPlanesPago_.fechaActivoHasta));
-            if (!sf.getActivo()) {
-                p1 = cb.not(p1);
-            }
-            p = appendAndPredicate(cb, p, p1);
-        }
-        return p;
-
+    if (sf.getActivo() != null) {
+      Predicate p1 =
+          cb.between(
+              cb.currentTimestamp(),
+              root.get(NegocioPlanesPago_.fechaActivoDesde),
+              root.get(NegocioPlanesPago_.fechaActivoHasta));
+      if (!sf.getActivo()) {
+        p1 = cb.not(p1);
+      }
+      p = appendAndPredicate(cb, p, p1);
     }
-
+    return p;
+  }
 }

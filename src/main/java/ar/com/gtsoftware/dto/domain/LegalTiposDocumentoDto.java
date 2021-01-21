@@ -26,16 +26,14 @@ import lombok.*;
 @Builder
 public class LegalTiposDocumentoDto {
 
-    @EqualsAndHashCode.Include
-    private Long id;
+  @EqualsAndHashCode.Include private Long id;
 
-    private String nombreTipoDocumento;
+  private String nombreTipoDocumento;
 
-    private int cantidadCaracteresMinimo;
+  private int cantidadCaracteresMinimo;
 
-    private int cantidadCaracteresMaximo;
+  private int cantidadCaracteresMaximo;
 
-    private Integer fiscalCodigoTipoDocumento;
-    private LegalTiposPersoneriaDto idTipoPersoneria;
-
+  private Integer fiscalCodigoTipoDocumento;
+  private LegalTiposPersoneriaDto idTipoPersoneria;
 }

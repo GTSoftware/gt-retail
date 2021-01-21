@@ -15,37 +15,33 @@
  */
 package ar.com.gtsoftware.domain;
 
+import java.util.List;
+import javax.persistence.*;
+import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
-import javax.validation.constraints.Size;
-import java.util.List;
-
-/**
- * @author Rodrigo M. Tato Rothamel <rotatomel@gmail.com>
- */
+/** @author Rodrigo M. Tato Rothamel <rotatomel@gmail.com> */
 @Entity
 @Table(name = "productos_listas_precios")
 @Getter
 @Setter
 public class ProductosListasPrecios extends BaseEntity {
 
-    @Id
-    @Basic(optional = false)
-    @Column(name = "id_lista_precio", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @Basic(optional = false)
+  @Column(name = "id_lista_precio", nullable = false, updatable = false)
+  private Long id;
 
-    @Basic(optional = false)
-    @Column(name = "nombre_lista")
-    @Size(max = 50)
-    private String nombreLista;
+  @Basic(optional = false)
+  @Column(name = "nombre_lista")
+  @Size(max = 50)
+  private String nombreLista;
 
-    @Basic(optional = false)
-    @Column(name = "activa")
-    private boolean activa;
+  @Basic(optional = false)
+  @Column(name = "activa")
+  private boolean activa;
 
-    @ManyToMany(mappedBy = "listasPrecioHabilitadas")
-    private List<NegocioPlanesPago> planesPagoAsociados;
-
+  @ManyToMany(mappedBy = "listasPrecioHabilitadas")
+  private List<NegocioPlanesPago> planesPagoAsociados;
 }

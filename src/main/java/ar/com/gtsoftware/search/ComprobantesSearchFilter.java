@@ -15,11 +15,10 @@
  */
 package ar.com.gtsoftware.search;
 
-import lombok.*;
-import org.apache.commons.collections4.CollectionUtils;
-
 import java.time.LocalDateTime;
 import java.util.List;
+import lombok.*;
+import org.apache.commons.collections4.CollectionUtils;
 
 @Getter
 @Setter
@@ -28,40 +27,39 @@ import java.util.List;
 @Builder
 public class ComprobantesSearchFilter extends AbstractSearchFilter {
 
-    private Long idVenta;
-    private LocalDateTime fechaVentaDesde;
-    private LocalDateTime fechaVentaHasta;
-    private Boolean anulada;
-    private Long idUsuario;
-    private Long idPersona;
-    private Long idSucursal;
-    private Boolean facturada;
-    private Long idCondicionVenta;
-    private Boolean conSaldo;
-    private String numeroFactura;
-    private List<Long> idTiposComprobanteList;
+  private Long idVenta;
+  private LocalDateTime fechaVentaDesde;
+  private LocalDateTime fechaVentaHasta;
+  private Boolean anulada;
+  private Long idUsuario;
+  private Long idPersona;
+  private Long idSucursal;
+  private Boolean facturada;
+  private Long idCondicionVenta;
+  private Boolean conSaldo;
+  private String numeroFactura;
+  private List<Long> idTiposComprobanteList;
 
-    @Override
-    public boolean hasFilter() {
-        return idVenta != null
-                || hasFechasFilter()
-                || anulada != null
-                || idUsuario != null
-                || idSucursal != null
-                || idPersona != null
-                || facturada != null
-                || idCondicionVenta != null
-                || conSaldo != null
-                || numeroFactura != null
-                || hasTiposComprobanteFilter();
-    }
+  @Override
+  public boolean hasFilter() {
+    return idVenta != null
+        || hasFechasFilter()
+        || anulada != null
+        || idUsuario != null
+        || idSucursal != null
+        || idPersona != null
+        || facturada != null
+        || idCondicionVenta != null
+        || conSaldo != null
+        || numeroFactura != null
+        || hasTiposComprobanteFilter();
+  }
 
+  public boolean hasTiposComprobanteFilter() {
+    return CollectionUtils.isNotEmpty(idTiposComprobanteList);
+  }
 
-    public boolean hasTiposComprobanteFilter() {
-        return CollectionUtils.isNotEmpty(idTiposComprobanteList);
-    }
-
-    public boolean hasFechasFilter() {
-        return fechaVentaDesde != null && fechaVentaHasta != null;
-    }
+  public boolean hasFechasFilter() {
+    return fechaVentaDesde != null && fechaVentaHasta != null;
+  }
 }

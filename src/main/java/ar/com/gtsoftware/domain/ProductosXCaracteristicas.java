@@ -15,40 +15,46 @@
  */
 package ar.com.gtsoftware.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
 
-/**
- * @author rodrigo
- */
+/** @author rodrigo */
 @Entity
 @Table(name = "productos_x_caracteristicas")
 @Getter
 @Setter
 public class ProductosXCaracteristicas extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "productos_x_caracteristicas_id_caracteristica_x_producto")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "productos_x_caracteristicas_id_caracteristica_x_producto",
-            sequenceName = "productos_x_caracteristicas_id_caracteristica_x_producto_seq")
-    @Basic(optional = false)
-    @Column(name = "id_caracteristica_x_producto", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(
+      strategy = GenerationType.SEQUENCE,
+      generator = "productos_x_caracteristicas_id_caracteristica_x_producto")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "productos_x_caracteristicas_id_caracteristica_x_producto",
+      sequenceName = "productos_x_caracteristicas_id_caracteristica_x_producto_seq")
+  @Basic(optional = false)
+  @Column(name = "id_caracteristica_x_producto", nullable = false, updatable = false)
+  private Long id;
 
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
-    @Column(name = "valor_caracteristica")
-    private String valorCaracteristica;
-    @JoinColumn(name = "id_caracteristica", referencedColumnName = "id_caracteristica", columnDefinition = "int4")
-    @ManyToOne(optional = false)
-    private ProductosCaracteristicas idCaracteristica;
-    @JoinColumn(name = "id_producto", referencedColumnName = "id_producto", columnDefinition = "int4")
-    @ManyToOne(optional = false)
-    private Productos idProducto;
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 255)
+  @Column(name = "valor_caracteristica")
+  private String valorCaracteristica;
 
+  @JoinColumn(
+      name = "id_caracteristica",
+      referencedColumnName = "id_caracteristica",
+      columnDefinition = "int4")
+  @ManyToOne(optional = false)
+  private ProductosCaracteristicas idCaracteristica;
+
+  @JoinColumn(name = "id_producto", referencedColumnName = "id_producto", columnDefinition = "int4")
+  @ManyToOne(optional = false)
+  private Productos idProducto;
 }

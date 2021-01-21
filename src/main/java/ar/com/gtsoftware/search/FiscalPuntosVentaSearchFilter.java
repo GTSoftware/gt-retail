@@ -16,11 +16,9 @@
 package ar.com.gtsoftware.search;
 
 import ar.com.gtsoftware.enums.TiposPuntosVenta;
+import java.util.List;
 import lombok.*;
 import org.apache.commons.collections4.CollectionUtils;
-
-import java.util.List;
-
 
 @Getter
 @Setter
@@ -29,21 +27,20 @@ import java.util.List;
 @Builder
 public class FiscalPuntosVentaSearchFilter extends AbstractSearchFilter {
 
-    private Long idSucursal;
-    private Boolean activo;
-    private Integer nroPuntoVenta;
-    private List<TiposPuntosVenta> tiposPuntoVenta;
+  private Long idSucursal;
+  private Boolean activo;
+  private Integer nroPuntoVenta;
+  private List<TiposPuntosVenta> tiposPuntoVenta;
 
-    @Override
-    public boolean hasFilter() {
-        return idSucursal != null
-                || activo != null
-                || nroPuntoVenta != null
-                || hasTiposPuntoVentaFilter();
-    }
+  @Override
+  public boolean hasFilter() {
+    return idSucursal != null
+        || activo != null
+        || nroPuntoVenta != null
+        || hasTiposPuntoVentaFilter();
+  }
 
-    public boolean hasTiposPuntoVentaFilter() {
-        return CollectionUtils.isNotEmpty(tiposPuntoVenta);
-    }
-
+  public boolean hasTiposPuntoVentaFilter() {
+    return CollectionUtils.isNotEmpty(tiposPuntoVenta);
+  }
 }

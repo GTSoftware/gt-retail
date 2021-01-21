@@ -15,13 +15,10 @@
  */
 package ar.com.gtsoftware.search;
 
+import java.util.Date;
 import lombok.*;
 
-import java.util.Date;
-
-/**
- * @author Rodrigo Tato mailto:rotatomel@gmail.com
- */
+/** @author Rodrigo Tato mailto:rotatomel@gmail.com */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -29,25 +26,24 @@ import java.util.Date;
 @Builder
 public class RecibosSearchFilter extends AbstractSearchFilter {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    private Date fechaDesde;
-    private Date fechaHasta;
-    private Long idPersona;
-    private Long idUsuario;
-    private Long idSucursal;
-    private Long idCaja;
-    private Long idRecibo;
+  private Date fechaDesde;
+  private Date fechaHasta;
+  private Long idPersona;
+  private Long idUsuario;
+  private Long idSucursal;
+  private Long idCaja;
+  private Long idRecibo;
 
-    @Override
-    public boolean hasFilter() {
-        return fechaDesde != null
-                || fechaHasta != null
-                || idCaja != null
-                || idPersona != null
-                || idUsuario != null
-                || idRecibo != null
-                || idSucursal != null;
-    }
-
+  @Override
+  public boolean hasFilter() {
+    return fechaDesde != null
+        || fechaHasta != null
+        || idCaja != null
+        || idPersona != null
+        || idUsuario != null
+        || idRecibo != null
+        || idSucursal != null;
+  }
 }

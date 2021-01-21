@@ -16,17 +16,14 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
-import lombok.*;
-
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import lombok.*;
 
-/**
- * @author rodrigo
- */
+/** @author rodrigo */
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
@@ -34,27 +31,21 @@ import java.util.Date;
 @Builder
 public class StockMovimientosDto implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @EqualsAndHashCode.Include
-    private Long id;
-    @NotNull
-    private Date fechaMovimiento;
-    @NotNull
-    private BigDecimal cantidadAnterior;
-    @NotNull
-    private BigDecimal cantidadMovimiento;
-    @NotNull
-    private BigDecimal cantidadActual;
-    @NotNull
-    private int idTipoMovimiento;
-    @Size(max = 255)
-    private String observacionesMovimiento;
-    @NotNull
-    private BigDecimal costoTotalMovimiento;
-    private UsuariosDto idUsuario;
-    private ProductosDto idProducto;
-    private DepositosDto idDepositoMovimiento;
-    private Integer version;
+  @EqualsAndHashCode.Include private Long id;
+  @NotNull private Date fechaMovimiento;
+  @NotNull private BigDecimal cantidadAnterior;
+  @NotNull private BigDecimal cantidadMovimiento;
+  @NotNull private BigDecimal cantidadActual;
+  @NotNull private int idTipoMovimiento;
 
+  @Size(max = 255)
+  private String observacionesMovimiento;
+
+  @NotNull private BigDecimal costoTotalMovimiento;
+  private UsuariosDto idUsuario;
+  private ProductosDto idProducto;
+  private DepositosDto idDepositoMovimiento;
+  private Integer version;
 }

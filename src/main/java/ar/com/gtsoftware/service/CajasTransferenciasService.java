@@ -20,9 +20,8 @@ package ar.com.gtsoftware.service;
 import ar.com.gtsoftware.dto.domain.CajasTransferenciasDto;
 import ar.com.gtsoftware.search.CajasTransferenciasSearchFilter;
 
-
 public interface CajasTransferenciasService
-        extends EntityService<CajasTransferenciasDto, CajasTransferenciasSearchFilter> {
+    extends EntityService<CajasTransferenciasDto, CajasTransferenciasSearchFilter> {
 
-    CajasTransferenciasDto generarTransferencia(CajasTransferenciasDto transfencia);
+  CajasTransferenciasDto generarTransferencia(CajasTransferenciasDto transfencia);
 }

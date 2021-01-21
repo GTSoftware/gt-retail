@@ -20,9 +20,9 @@ package ar.com.gtsoftware.service;
 import ar.com.gtsoftware.dto.reportes.VentasMensualesReport;
 import ar.com.gtsoftware.search.reportes.ReporteVentasMensualesSearchFilter;
 
+public interface ReportesVentasMensualesService
+    extends ReportsService<VentasMensualesReport, ReporteVentasMensualesSearchFilter> {
 
-public interface ReportesVentasMensualesService extends ReportsService<VentasMensualesReport, ReporteVentasMensualesSearchFilter> {
-
-    @Override
-    VentasMensualesReport obtenerReporte(ReporteVentasMensualesSearchFilter filter);
+  @Override
+  VentasMensualesReport obtenerReporte(ReporteVentasMensualesSearchFilter filter);
 }

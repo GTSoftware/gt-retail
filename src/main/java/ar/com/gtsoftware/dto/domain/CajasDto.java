@@ -16,14 +16,11 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
-import lombok.*;
-
 import java.math.BigDecimal;
 import java.util.Date;
+import lombok.*;
 
-/**
- * @author Rodrigo M. Tato Rothamel mailto:rotatomel@gmail.com
- */
+/** @author Rodrigo M. Tato Rothamel mailto:rotatomel@gmail.com */
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
@@ -31,22 +28,18 @@ import java.util.Date;
 @Builder
 public class CajasDto {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @EqualsAndHashCode.Include
-    private Long id;
-    private UsuariosDto idUsuario;
-    private SucursalesDto idSucursal;
-    private Date fechaApertura;
-    private Date fechaCierre;
-    private BigDecimal saldoInicial;
-    private Integer version;
+  @EqualsAndHashCode.Include private Long id;
+  private UsuariosDto idUsuario;
+  private SucursalesDto idSucursal;
+  private Date fechaApertura;
+  private Date fechaCierre;
+  private BigDecimal saldoInicial;
+  private Integer version;
 
-
-    @Override
-    public String toString() {
-        return "[" + id + "] - "
-                + idUsuario.getNombreUsuario() +
-                " - " + idSucursal.toString();
-    }
+  @Override
+  public String toString() {
+    return "[" + id + "] - " + idUsuario.getNombreUsuario() + " - " + idSucursal.toString();
+  }
 }

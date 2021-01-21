@@ -17,10 +17,9 @@
 
 package ar.com.gtsoftware.dto.domain;
 
-import lombok.*;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
+import lombok.*;
 
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -29,8 +28,7 @@ import java.math.BigDecimal;
 @Builder
 public class ValoresDto implements Serializable {
 
-    @EqualsAndHashCode.Include
-    private Long id;
+  @EqualsAndHashCode.Include private Long id;
 
-    private BigDecimal monto;
+  private BigDecimal monto;
 }

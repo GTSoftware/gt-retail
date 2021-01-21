@@ -18,38 +18,37 @@ package ar.com.gtsoftware.dao;
 import ar.com.gtsoftware.domain.ProductosTiposUnidades;
 import ar.com.gtsoftware.domain.ProductosTiposUnidades_;
 import ar.com.gtsoftware.search.UnidadesSearchFilter;
-import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.springframework.stereotype.Repository;
 
 @Repository
-public class ProductosTiposUnidadesFacade extends AbstractFacade<ProductosTiposUnidades, UnidadesSearchFilter> {
+public class ProductosTiposUnidadesFacade
+    extends AbstractFacade<ProductosTiposUnidades, UnidadesSearchFilter> {
 
+  private final EntityManager em;
 
-    private final EntityManager em;
+  public ProductosTiposUnidadesFacade(EntityManager em) {
+    super(ProductosTiposUnidades.class);
+    this.em = em;
+  }
 
-    public ProductosTiposUnidadesFacade(EntityManager em) {
-        super(ProductosTiposUnidades.class);
-        this.em = em;
+  @Override
+  protected EntityManager getEntityManager() {
+    return em;
+  }
+
+  @Override
+  public Predicate createWhereFromSearchFilter(
+      UnidadesSearchFilter usf, CriteriaBuilder cb, Root<ProductosTiposUnidades> root) {
+    Predicate p = null;
+
+    if (usf.getNombreUnidad() != null) {
+      String s = usf.getNombreUnidad().toUpperCase();
+      p = cb.like(root.get(ProductosTiposUnidades_.nombreUnidad), String.format("%%%s%%", s));
     }
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
-
-    @Override
-    public Predicate createWhereFromSearchFilter(UnidadesSearchFilter usf, CriteriaBuilder cb, Root<ProductosTiposUnidades> root) {
-        Predicate p = null;
-
-        if (usf.getNombreUnidad() != null) {
-            String s = usf.getNombreUnidad().toUpperCase();
-            p = cb.like(root.get(ProductosTiposUnidades_.nombreUnidad), String.format("%%%s%%", s));
-        }
-        return p;
-    }
-
+    return p;
+  }
 }

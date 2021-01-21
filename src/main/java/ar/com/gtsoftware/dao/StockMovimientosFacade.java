@@ -17,32 +17,30 @@ package ar.com.gtsoftware.dao;
 
 import ar.com.gtsoftware.domain.StockMovimientos;
 import ar.com.gtsoftware.search.AbstractSearchFilter;
-import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.springframework.stereotype.Repository;
 
 @Repository
 public class StockMovimientosFacade extends AbstractFacade<StockMovimientos, AbstractSearchFilter> {
 
+  private final EntityManager em;
 
-    private final EntityManager em;
+  public StockMovimientosFacade(EntityManager em) {
+    super(StockMovimientos.class);
+    this.em = em;
+  }
 
-    public StockMovimientosFacade(EntityManager em) {
-        super(StockMovimientos.class);
-        this.em = em;
-    }
+  @Override
+  protected EntityManager getEntityManager() {
+    return em;
+  }
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
-
-    @Override
-    public Predicate createWhereFromSearchFilter(AbstractSearchFilter sf, CriteriaBuilder cb, Root<StockMovimientos> root) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
+  @Override
+  public Predicate createWhereFromSearchFilter(
+      AbstractSearchFilter sf, CriteriaBuilder cb, Root<StockMovimientos> root) {
+    throw new UnsupportedOperationException("Not supported yet.");
+  }
 }

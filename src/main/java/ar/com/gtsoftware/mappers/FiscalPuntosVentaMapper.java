@@ -23,6 +23,4 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface FiscalPuntosVentaMapper
-        extends GenericMapper<FiscalPuntosVenta, FiscalPuntosVentaDto> {
-
-}
+    extends GenericMapper<FiscalPuntosVenta, FiscalPuntosVentaDto> {}

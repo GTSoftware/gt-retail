@@ -17,9 +17,7 @@ package ar.com.gtsoftware.search;
 
 import lombok.*;
 
-/**
- * @author Rodrigo M. Tato Rothamel mailto:rotatomel@gmail.com
- */
+/** @author Rodrigo M. Tato Rothamel mailto:rotatomel@gmail.com */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -27,14 +25,13 @@ import lombok.*;
 @Builder
 public class FiscalLetrasComprobantesSearchFilter extends AbstractSearchFilter {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    private Long idRespIvaReceptor;
-    private Long idRespIvaEmisor;
+  private Long idRespIvaReceptor;
+  private Long idRespIvaEmisor;
 
-    @Override
-    public boolean hasFilter() {
-        return idRespIvaReceptor != null || idRespIvaEmisor != null;
-    }
-
+  @Override
+  public boolean hasFilter() {
+    return idRespIvaReceptor != null || idRespIvaEmisor != null;
+  }
 }

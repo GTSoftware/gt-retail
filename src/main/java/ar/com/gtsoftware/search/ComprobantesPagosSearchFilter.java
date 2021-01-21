@@ -22,38 +22,36 @@ package ar.com.gtsoftware.search;
  */
 public class ComprobantesPagosSearchFilter extends AbstractSearchFilter {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    private Long idComprobante;
-    private Boolean conSaldo;
+  private Long idComprobante;
+  private Boolean conSaldo;
 
-    public ComprobantesPagosSearchFilter() {
-    }
+  public ComprobantesPagosSearchFilter() {}
 
-    public ComprobantesPagosSearchFilter(Long idComprobante, Boolean conSaldo) {
-        this.idComprobante = idComprobante;
-        this.conSaldo = conSaldo;
-    }
+  public ComprobantesPagosSearchFilter(Long idComprobante, Boolean conSaldo) {
+    this.idComprobante = idComprobante;
+    this.conSaldo = conSaldo;
+  }
 
-    @Override
-    public boolean hasFilter() {
-        return idComprobante != null || conSaldo != null;
-    }
+  @Override
+  public boolean hasFilter() {
+    return idComprobante != null || conSaldo != null;
+  }
 
-    public Long getIdComprobante() {
-        return idComprobante;
-    }
+  public Long getIdComprobante() {
+    return idComprobante;
+  }
 
-    public void setIdComprobante(Long idComprobante) {
-        this.idComprobante = idComprobante;
-    }
+  public void setIdComprobante(Long idComprobante) {
+    this.idComprobante = idComprobante;
+  }
 
-    public Boolean getConSaldo() {
-        return conSaldo;
-    }
+  public Boolean getConSaldo() {
+    return conSaldo;
+  }
 
-    public void setConSaldo(Boolean conSaldo) {
-        this.conSaldo = conSaldo;
-    }
-
+  public void setConSaldo(Boolean conSaldo) {
+    this.conSaldo = conSaldo;
+  }
 }

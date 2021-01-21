@@ -17,19 +17,17 @@ package ar.com.gtsoftware.service;
 
 import ar.com.gtsoftware.dto.domain.PersonasDto;
 
-/**
- * @author Rodrigo M. Tato Rothamel <rotatomel@gmail.com>
- */
-
+/** @author Rodrigo M. Tato Rothamel <rotatomel@gmail.com> */
 public interface ClientesService {
 
-    PersonasDto guardarCliente(PersonasDto cliente);
+  PersonasDto guardarCliente(PersonasDto cliente);
 
-    PersonasDto find(Long id);
+  PersonasDto find(Long id);
 
-    /*List<PersonasTelefonos> obtenerTelefonos(PersonasDto persona);
+  /*List<PersonasTelefonos> obtenerTelefonos(PersonasDto persona);
 
-     *//*void guardarTelefono(PersonasTelefonos telefono);
+  */
+  /*void guardarTelefono(PersonasTelefonos telefono);
 
-    void borrarTelefono(PersonasTelefonos telefono);*/
+  void borrarTelefono(PersonasTelefonos telefono);*/
 }

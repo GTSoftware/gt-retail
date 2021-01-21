@@ -18,7 +18,6 @@ package ar.com.gtsoftware.dto.domain;
 
 import lombok.*;
 
-
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -27,16 +26,13 @@ import lombok.*;
 @Builder
 public class ParametrosDto {
 
-    @EqualsAndHashCode.Include
-    private String nombreParametro;
-    private String valorParametro;
-    private String descripcionParametro;
-    private Integer version;
+  @EqualsAndHashCode.Include private String nombreParametro;
+  private String valorParametro;
+  private String descripcionParametro;
+  private Integer version;
 
-
-    @Override
-    public String toString() {
-        return String.format("%s=%s", nombreParametro, valorParametro);
-    }
-
+  @Override
+  public String toString() {
+    return String.format("%s=%s", nombreParametro, valorParametro);
+  }
 }

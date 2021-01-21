@@ -16,13 +16,10 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
+import javax.validation.constraints.Size;
 import lombok.*;
 
-import javax.validation.constraints.Size;
-
-/**
- * @author Rodrigo M. Tato Rothamel <rotatomel@gmail.com>
- */
+/** @author Rodrigo M. Tato Rothamel <rotatomel@gmail.com> */
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
@@ -30,13 +27,12 @@ import javax.validation.constraints.Size;
 @Builder
 public class ProductosMarcasDto {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @EqualsAndHashCode.Include
-    private Long id;
-    @Size(min = 1, max = 100)
-    private String nombreMarca;
-    private Integer version;
+  @EqualsAndHashCode.Include private Long id;
 
+  @Size(min = 1, max = 100)
+  private String nombreMarca;
 
+  private Integer version;
 }

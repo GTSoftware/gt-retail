@@ -18,7 +18,6 @@ package ar.com.gtsoftware.search;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -26,14 +25,11 @@ import org.apache.commons.lang3.StringUtils;
 @Builder
 public class SucursalesSearchFilter extends AbstractSearchFilter {
 
+  private Boolean activa;
+  private String nombre;
 
-    private Boolean activa;
-    private String nombre;
-
-    @Override
-    public boolean hasFilter() {
-        return activa != null
-                || StringUtils.isNotEmpty(nombre);
-    }
-
+  @Override
+  public boolean hasFilter() {
+    return activa != null || StringUtils.isNotEmpty(nombre);
+  }
 }

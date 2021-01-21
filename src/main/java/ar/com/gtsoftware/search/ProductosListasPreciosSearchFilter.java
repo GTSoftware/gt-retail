@@ -15,13 +15,11 @@
  */
 package ar.com.gtsoftware.search;
 
-import lombok.*;
-
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
-/**
- * @author Rodrigo Tato <rotatomel@gmail.com>
- */
+import lombok.*;
+
+/** @author Rodrigo Tato <rotatomel@gmail.com> */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -29,18 +27,14 @@ import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 @Builder
 public class ProductosListasPreciosSearchFilter extends AbstractSearchFilter {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    private String nombre;
+  private String nombre;
 
-    private Boolean activa;
+  private Boolean activa;
 
-
-    @Override
-    public boolean hasFilter() {
-        return isNotEmpty(nombre)
-                || activa != null;
-    }
-
-
+  @Override
+  public boolean hasFilter() {
+    return isNotEmpty(nombre) || activa != null;
+  }
 }

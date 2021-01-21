@@ -19,54 +19,57 @@ import ar.com.gtsoftware.domain.PersonasCuentaCorriente;
 import ar.com.gtsoftware.domain.PersonasCuentaCorriente_;
 import ar.com.gtsoftware.domain.Personas_;
 import ar.com.gtsoftware.search.PersonasCuentaCorrienteSearchFilter;
-import org.springframework.stereotype.Repository;
-
+import java.math.BigDecimal;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.math.BigDecimal;
+import org.springframework.stereotype.Repository;
 
 @Repository
-public class PersonasCuentaCorrienteFacade extends AbstractFacade<PersonasCuentaCorriente, PersonasCuentaCorrienteSearchFilter> {
+public class PersonasCuentaCorrienteFacade
+    extends AbstractFacade<PersonasCuentaCorriente, PersonasCuentaCorrienteSearchFilter> {
 
+  private final EntityManager em;
 
-    private final EntityManager em;
+  public PersonasCuentaCorrienteFacade(EntityManager em) {
+    super(PersonasCuentaCorriente.class);
+    this.em = em;
+  }
 
-    public PersonasCuentaCorrienteFacade(EntityManager em) {
-        super(PersonasCuentaCorriente.class);
-        this.em = em;
+  @Override
+  protected EntityManager getEntityManager() {
+    return em;
+  }
+
+  public BigDecimal getSaldoPersona(Long idPersona) {
+    CriteriaBuilder cb = em.getCriteriaBuilder();
+    CriteriaQuery<BigDecimal> cq = cb.createQuery(BigDecimal.class);
+    Root<PersonasCuentaCorriente> cuenta = cq.from(PersonasCuentaCorriente.class);
+    cq.select(cb.sum(cuenta.get(PersonasCuentaCorriente_.importeMovimiento)).alias("SUM"));
+    Predicate p =
+        cb.equal(cuenta.get(PersonasCuentaCorriente_.idPersona).get(Personas_.id), idPersona);
+    cq.where(p);
+    BigDecimal result = em.createQuery(cq).getSingleResult();
+    if (result == null) {
+      return BigDecimal.ZERO;
     }
+    return result;
+  }
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
+  @Override
+  public Predicate createWhereFromSearchFilter(
+      PersonasCuentaCorrienteSearchFilter sf,
+      CriteriaBuilder cb,
+      Root<PersonasCuentaCorriente> root) {
+    Predicate p = null;
+    if (sf.getIdPersona() != null) {
+      Predicate p1 =
+          cb.equal(
+              root.get(PersonasCuentaCorriente_.idPersona).get(Personas_.id), sf.getIdPersona());
+      p = appendAndPredicate(cb, p, p1);
     }
-
-    public BigDecimal getSaldoPersona(Long idPersona) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<BigDecimal> cq = cb.createQuery(BigDecimal.class);
-        Root<PersonasCuentaCorriente> cuenta = cq.from(PersonasCuentaCorriente.class);
-        cq.select(cb.sum(cuenta.get(PersonasCuentaCorriente_.importeMovimiento)).alias("SUM"));
-        Predicate p = cb.equal(cuenta.get(PersonasCuentaCorriente_.idPersona).get(Personas_.id), idPersona);
-        cq.where(p);
-        BigDecimal result = em.createQuery(cq).getSingleResult();
-        if (result == null) {
-            return BigDecimal.ZERO;
-        }
-        return result;
-    }
-
-    @Override
-    public Predicate createWhereFromSearchFilter(PersonasCuentaCorrienteSearchFilter sf, CriteriaBuilder cb,
-                                                 Root<PersonasCuentaCorriente> root) {
-        Predicate p = null;
-        if (sf.getIdPersona() != null) {
-            Predicate p1 = cb.equal(root.get(PersonasCuentaCorriente_.idPersona).get(Personas_.id), sf.getIdPersona());
-            p = appendAndPredicate(cb, p, p1);
-        }
-        return p;
-    }
-
+    return p;
+  }
 }

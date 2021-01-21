@@ -15,41 +15,41 @@
  */
 package ar.com.gtsoftware.domain;
 
+import java.math.BigDecimal;
+import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
-import java.math.BigDecimal;
-
-/**
- * @author fede
- */
+/** @author fede */
 @Entity
 @Table(name = "remitos_detalle")
 @Getter
 @Setter
 public class RemitoDetalle extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "remitos_detalle_id_remito_detalle")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "remitos_detalle_id_remito_detalle",
-            sequenceName = "remitos_detalle_id_remito_detalle_seq")
-    @Basic(optional = false)
-    @Column(name = "id_remito_detalle", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(
+      strategy = GenerationType.SEQUENCE,
+      generator = "remitos_detalle_id_remito_detalle")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "remitos_detalle_id_remito_detalle",
+      sequenceName = "remitos_detalle_id_remito_detalle_seq")
+  @Basic(optional = false)
+  @Column(name = "id_remito_detalle", nullable = false, updatable = false)
+  private Long id;
 
-    @JoinColumn(name = "id_remito", referencedColumnName = "id_remito")
-    @ManyToOne
-    private Remito remitoCabecera;
+  @JoinColumn(name = "id_remito", referencedColumnName = "id_remito")
+  @ManyToOne
+  private Remito remitoCabecera;
 
-    @JoinColumn(name = "id_producto", referencedColumnName = "id_producto")
-    @ManyToOne
-    private Productos idProducto;
+  @JoinColumn(name = "id_producto", referencedColumnName = "id_producto")
+  @ManyToOne
+  private Productos idProducto;
 
-    @Column(name = "cantidad")
-    private BigDecimal cantidad;
+  @Column(name = "cantidad")
+  private BigDecimal cantidad;
 
-    @Transient
-    private int nroLinea;
-
+  @Transient private int nroLinea;
 }

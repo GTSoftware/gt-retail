@@ -18,54 +18,51 @@ package ar.com.gtsoftware.service;
 import ar.com.gtsoftware.dto.domain.CajasDto;
 import ar.com.gtsoftware.dto.domain.UsuariosDto;
 import ar.com.gtsoftware.search.CajasSearchFilter;
-
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
+import javax.validation.constraints.NotNull;
 
 /**
  * Capa de servicio para la gestión de cajas
  *
  * @author Rodrigo M. Tato Rothamel mailto:rotatomel@gmail.com
  */
+public interface CajasService extends EntityService<CajasDto, CajasSearchFilter> {
 
-public interface CajasService
-        extends EntityService<CajasDto, CajasSearchFilter> {
+  /**
+   * Obtiene la caja abierta actual del usuario para la sucursal en la que se encuentre configurado.
+   * Devuelve null en caso de no tener ninguna caja abierta.
+   *
+   * @param usuario
+   * @return la caja abierta del usuario.
+   */
+  CajasDto obtenerCajaActual(UsuariosDto usuario);
 
-    /**
-     * Obtiene la caja abierta actual del usuario para la sucursal en la que se encuentre configurado. Devuelve null en
-     * caso de no tener ninguna caja abierta.
-     *
-     * @param usuario
-     * @return la caja abierta del usuario.
-     */
-    CajasDto obtenerCajaActual(UsuariosDto usuario);
+  /**
+   * Realiza la apertura de caja en función de los saldos del último arqueo del usuario. Si la caja
+   * ya estaba abierta retorna la caja abierta.
+   *
+   * @param usuario
+   * @return la nueva caja abierta
+   */
+  CajasDto abrirCaja(UsuariosDto usuario);
 
-    /**
-     * Realiza la apertura de caja en función de los saldos del último arqueo del usuario. Si la caja ya estaba abierta
-     * retorna la caja abierta.
-     *
-     * @param usuario
-     * @return la nueva caja abierta
-     */
-    CajasDto abrirCaja(UsuariosDto usuario);
+  /**
+   * Marca la caja pasada como parámetro como cerrada y devuelve true si se pudo realizar el
+   * guardado en la base de datos.
+   *
+   * @param caja
+   * @param fechaCierre
+   * @return
+   */
+  boolean cerrarCaja(@NotNull CajasDto caja, @NotNull Date fechaCierre);
 
-    /**
-     * Marca la caja pasada como parámetro como cerrada y devuelve true si se pudo realizar el guardado en la base de
-     * datos.
-     *
-     * @param caja
-     * @param fechaCierre
-     * @return
-     */
-    boolean cerrarCaja(@NotNull CajasDto caja, @NotNull Date fechaCierre);
-
-    /**
-     * Retorna el total que hay en la caja segùn el filtro. El paràmetro de idCaja en el filtro es requerido.
-     *
-     * @param csf
-     * @return
-     */
-    BigDecimal obtenerTotalEnCaja(@NotNull CajasSearchFilter csf);
-
+  /**
+   * Retorna el total que hay en la caja segùn el filtro. El paràmetro de idCaja en el filtro es
+   * requerido.
+   *
+   * @param csf
+   * @return
+   */
+  BigDecimal obtenerTotalEnCaja(@NotNull CajasSearchFilter csf);
 }

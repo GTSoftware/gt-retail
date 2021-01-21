@@ -22,7 +22,4 @@ import ar.com.gtsoftware.dto.domain.CuponesDto;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
-public interface CuponesMapper
-        extends GenericMapper<Cupones, CuponesDto> {
-
-}
+public interface CuponesMapper extends GenericMapper<Cupones, CuponesDto> {}

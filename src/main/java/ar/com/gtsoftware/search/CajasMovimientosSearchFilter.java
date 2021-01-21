@@ -15,14 +15,11 @@
  */
 package ar.com.gtsoftware.search;
 
+import java.util.Date;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.Date;
-
-/**
- * @author rodrigo
- */
+/** @author rodrigo */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -30,22 +27,18 @@ import java.util.Date;
 @Builder
 public class CajasMovimientosSearchFilter extends AbstractSearchFilter {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    private Date fechaDesde, fechaHasta;
-    private Long idCaja;
-    private String txt;
+  private Date fechaDesde, fechaHasta;
+  private Long idCaja;
+  private String txt;
 
-    @Override
-    public boolean hasFilter() {
-        return StringUtils.isNotEmpty(txt)
-                || hasFechasFilter()
-                || idCaja != null;
-    }
+  @Override
+  public boolean hasFilter() {
+    return StringUtils.isNotEmpty(txt) || hasFechasFilter() || idCaja != null;
+  }
 
-    public boolean hasFechasFilter() {
-        return fechaDesde != null && fechaHasta != null;
-    }
-
-
+  public boolean hasFechasFilter() {
+    return fechaDesde != null && fechaHasta != null;
+  }
 }

@@ -18,81 +18,82 @@ package ar.com.gtsoftware.dao;
 import ar.com.gtsoftware.domain.Parametros;
 import ar.com.gtsoftware.domain.Parametros_;
 import ar.com.gtsoftware.search.AbstractSearchFilter;
-import org.springframework.stereotype.Repository;
-
+import java.util.Collections;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.Collections;
-import java.util.List;
+import org.springframework.stereotype.Repository;
 
 @Repository
 public class ParametrosFacade extends AbstractFacade<Parametros, AbstractSearchFilter> {
 
+  private final EntityManager em;
 
-    private final EntityManager em;
+  public ParametrosFacade(EntityManager em) {
+    super(Parametros.class);
+    this.em = em;
+  }
 
-    public ParametrosFacade(EntityManager em) {
-        super(Parametros.class);
-        this.em = em;
+  @Override
+  protected EntityManager getEntityManager() {
+    return em;
+  }
+
+  /**
+   * Busca el parámetro con exactamente el nombre especificado
+   *
+   * @param nombre
+   * @return
+   */
+  public Parametros findParametroByName(String nombre) {
+    CriteriaBuilder cb = em.getCriteriaBuilder();
+    CriteriaQuery<Parametros> cq = cb.createQuery(Parametros.class);
+    Root<Parametros> parametro = cq.from(Parametros.class);
+    cq.select(parametro);
+    Predicate p = cb.equal(parametro.get(Parametros_.nombreParametro), nombre);
+    cq.where(p);
+    TypedQuery<Parametros> q = em.createQuery(cq);
+
+    List<Parametros> paramList = q.getResultList();
+    if (!paramList.isEmpty()) {
+      return paramList.get(0);
     }
+    return null;
+  }
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
+  /**
+   * Busca los parámetros que coincidan con txt
+   *
+   * @param txt
+   * @return
+   */
+  public List<Parametros> findParametros(String txt) {
+    CriteriaBuilder cb = em.getCriteriaBuilder();
+    CriteriaQuery<Parametros> cq = cb.createQuery(Parametros.class);
+    Root<Parametros> parametro = cq.from(Parametros.class);
+    cq.select(parametro);
+    Predicate p1 =
+        cb.like(parametro.get(Parametros_.nombreParametro), String.format("%%%s%%", txt));
+    Predicate p2 =
+        cb.like(parametro.get(Parametros_.descripcionParametro), String.format("%%%s%%", txt));
+    cq.where(cb.or(p1, p2));
+    TypedQuery<Parametros> q = em.createQuery(cq);
+
+    List<Parametros> paramList = q.getResultList();
+    if (!paramList.isEmpty()) {
+      return paramList;
     }
+    return Collections.emptyList();
+  }
 
-    /**
-     * Busca el parámetro con exactamente el nombre especificado
-     *
-     * @param nombre
-     * @return
-     */
-    public Parametros findParametroByName(String nombre) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Parametros> cq = cb.createQuery(Parametros.class);
-        Root<Parametros> parametro = cq.from(Parametros.class);
-        cq.select(parametro);
-        Predicate p = cb.equal(parametro.get(Parametros_.nombreParametro), nombre);
-        cq.where(p);
-        TypedQuery<Parametros> q = em.createQuery(cq);
-
-        List<Parametros> paramList = q.getResultList();
-        if (!paramList.isEmpty()) {
-            return paramList.get(0);
-        }
-        return null;
-    }
-
-    /**
-     * Busca los parámetros que coincidan con txt
-     *
-     * @param txt
-     * @return
-     */
-    public List<Parametros> findParametros(String txt) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Parametros> cq = cb.createQuery(Parametros.class);
-        Root<Parametros> parametro = cq.from(Parametros.class);
-        cq.select(parametro);
-        Predicate p1 = cb.like(parametro.get(Parametros_.nombreParametro), String.format("%%%s%%", txt));
-        Predicate p2 = cb.like(parametro.get(Parametros_.descripcionParametro), String.format("%%%s%%", txt));
-        cq.where(cb.or(p1, p2));
-        TypedQuery<Parametros> q = em.createQuery(cq);
-
-        List<Parametros> paramList = q.getResultList();
-        if (!paramList.isEmpty()) {
-            return paramList;
-        }
-        return Collections.emptyList();
-    }
-
-    @Override
-    public Predicate createWhereFromSearchFilter(AbstractSearchFilter sf, CriteriaBuilder cb, Root<Parametros> root) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+  @Override
+  public Predicate createWhereFromSearchFilter(
+      AbstractSearchFilter sf, CriteriaBuilder cb, Root<Parametros> root) {
+    throw new UnsupportedOperationException(
+        "Not supported yet."); // To change body of generated methods, choose Tools | Templates.
+  }
 }

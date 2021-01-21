@@ -19,39 +19,41 @@ import ar.com.gtsoftware.domain.LegalTiposDocumento;
 import ar.com.gtsoftware.domain.LegalTiposDocumento_;
 import ar.com.gtsoftware.domain.LegalTiposPersoneria_;
 import ar.com.gtsoftware.search.LegalTiposDocumentoSearchFilter;
-import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.springframework.stereotype.Repository;
 
 @Repository
-public class LegalTiposDocumentoFacade extends AbstractFacade<LegalTiposDocumento, LegalTiposDocumentoSearchFilter> {
+public class LegalTiposDocumentoFacade
+    extends AbstractFacade<LegalTiposDocumento, LegalTiposDocumentoSearchFilter> {
 
+  private final EntityManager em;
 
-    private final EntityManager em;
+  public LegalTiposDocumentoFacade(EntityManager em) {
+    super(LegalTiposDocumento.class);
+    this.em = em;
+  }
 
-    public LegalTiposDocumentoFacade(EntityManager em) {
-        super(LegalTiposDocumento.class);
-        this.em = em;
+  @Override
+  protected EntityManager getEntityManager() {
+    return em;
+  }
+
+  @Override
+  public Predicate createWhereFromSearchFilter(
+      LegalTiposDocumentoSearchFilter sf, CriteriaBuilder cb, Root<LegalTiposDocumento> root) {
+    Predicate p = null;
+
+    if (sf.getIdTipoPersoneria() != null) {
+      Predicate p1 =
+          cb.equal(
+              root.get(LegalTiposDocumento_.idTipoPersoneria).get(LegalTiposPersoneria_.id),
+              sf.getIdTipoPersoneria());
+      p = appendAndPredicate(cb, p, p1);
     }
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
-
-    @Override
-    public Predicate createWhereFromSearchFilter(LegalTiposDocumentoSearchFilter sf, CriteriaBuilder cb, Root<LegalTiposDocumento> root) {
-        Predicate p = null;
-
-        if (sf.getIdTipoPersoneria() != null) {
-            Predicate p1 = cb.equal(root.get(LegalTiposDocumento_.idTipoPersoneria).get(LegalTiposPersoneria_.id), sf.getIdTipoPersoneria());
-            p = appendAndPredicate(cb, p, p1);
-        }
-
-        return p;
-    }
-
+    return p;
+  }
 }

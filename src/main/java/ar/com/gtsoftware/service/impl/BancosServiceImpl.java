@@ -29,20 +29,19 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class BancosServiceImpl
-        extends BaseEntityService<BancosDto, BancosSearchFilter, Bancos>
-        implements BancosService {
+public class BancosServiceImpl extends BaseEntityService<BancosDto, BancosSearchFilter, Bancos>
+    implements BancosService {
 
-    private final BancosFacade facade;
-    private final BancosMapper mapper;
+  private final BancosFacade facade;
+  private final BancosMapper mapper;
 
-    @Override
-    protected BancosFacade getFacade() {
-        return facade;
-    }
+  @Override
+  protected BancosFacade getFacade() {
+    return facade;
+  }
 
-    @Override
-    protected BancosMapper getMapper() {
-        return mapper;
-    }
+  @Override
+  protected BancosMapper getMapper() {
+    return mapper;
+  }
 }

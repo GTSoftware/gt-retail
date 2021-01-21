@@ -15,53 +15,61 @@
  */
 package ar.com.gtsoftware.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import java.math.BigDecimal;
+import java.util.Date;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.math.BigDecimal;
-import java.util.Date;
+import lombok.Getter;
+import lombok.Setter;
 
-/**
- * @author rodrigo
- */
+/** @author rodrigo */
 @Entity
 @Table(name = "bancos_cuenta_corriente")
 @Getter
 @Setter
 public class BancosCuentaCorriente extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bancos_cuenta_corriente_id_movimiento")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "bancos_cuenta_corriente_id_movimiento",
-            sequenceName = "bancos_cuenta_corriente_id_movimiento_seq")
-    @Basic(optional = false)
-    @Column(name = "id_movimiento", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(
+      strategy = GenerationType.SEQUENCE,
+      generator = "bancos_cuenta_corriente_id_movimiento")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "bancos_cuenta_corriente_id_movimiento",
+      sequenceName = "bancos_cuenta_corriente_id_movimiento_seq")
+  @Basic(optional = false)
+  @Column(name = "id_movimiento", nullable = false, updatable = false)
+  private Long id;
 
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "fecha_movimiento")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaMovimiento;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "importe_movimiento")
-    private BigDecimal importeMovimiento;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 200)
-    @Column(name = "descripcion_movimiento")
-    private String descripcionMovimiento;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "id_registro_contable")
-    private int idRegistroContable;
-    @JoinColumn(name = "id_cuenta_banco", referencedColumnName = "id_cuenta_banco", columnDefinition = "int4")
-    @ManyToOne(optional = false)
-    private BancosCuentas idCuentaBanco;
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "fecha_movimiento")
+  @Temporal(TemporalType.TIMESTAMP)
+  private Date fechaMovimiento;
+  // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these
+  // annotations to enforce field validation
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "importe_movimiento")
+  private BigDecimal importeMovimiento;
 
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 200)
+  @Column(name = "descripcion_movimiento")
+  private String descripcionMovimiento;
+
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "id_registro_contable")
+  private int idRegistroContable;
+
+  @JoinColumn(
+      name = "id_cuenta_banco",
+      referencedColumnName = "id_cuenta_banco",
+      columnDefinition = "int4")
+  @ManyToOne(optional = false)
+  private BancosCuentas idCuentaBanco;
 }

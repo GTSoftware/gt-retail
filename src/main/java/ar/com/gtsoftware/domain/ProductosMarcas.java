@@ -15,33 +15,32 @@
  */
 package ar.com.gtsoftware.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
 
-/**
- * @author Rodrigo M. Tato Rothamel <rotatomel@gmail.com>
- */
+/** @author Rodrigo M. Tato Rothamel <rotatomel@gmail.com> */
 @Entity
 @Table(name = "productos_marcas")
 @Getter
 @Setter
 public class ProductosMarcas extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "productos_marcas_id_marca")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "productos_marcas_id_marca",
-            sequenceName = "productos_marcas_id_marca_seq")
-    @Basic(optional = false)
-    @Column(name = "id_marca", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "productos_marcas_id_marca")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "productos_marcas_id_marca",
+      sequenceName = "productos_marcas_id_marca_seq")
+  @Basic(optional = false)
+  @Column(name = "id_marca", nullable = false, updatable = false)
+  private Long id;
 
-    @NotNull
-    @Column(name = "nombre_marca", length = 100)
-    @Size(min = 1, max = 100)
-    private String nombreMarca;
-
+  @NotNull
+  @Column(name = "nombre_marca", length = 100)
+  @Size(min = 1, max = 100)
+  private String nombreMarca;
 }

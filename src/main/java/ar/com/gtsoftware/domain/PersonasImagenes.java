@@ -15,44 +15,49 @@
  */
 package ar.com.gtsoftware.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import java.util.Date;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Date;
+import lombok.Getter;
+import lombok.Setter;
 
-/**
- * @author rodrigo
- */
+/** @author rodrigo */
 @Entity
 @Table(name = "personas_imagenes")
 @Getter
 @Setter
 public class PersonasImagenes extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "personas_imagenes_id_imagen")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "personas_imagenes_id_imagen",
-            sequenceName = "personas_imagenes_id_imagen_seq")
-    @Basic(optional = false)
-    @Column(name = "id_imagen", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "personas_imagenes_id_imagen")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "personas_imagenes_id_imagen",
+      sequenceName = "personas_imagenes_id_imagen_seq")
+  @Basic(optional = false)
+  @Column(name = "id_imagen", nullable = false, updatable = false)
+  private Long id;
 
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "fecha_alta")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaAlta;
-    @Size(max = 1024)
-    @Column(name = "observaciones")
-    private String observaciones;
-    @JoinColumn(name = "id_tipo_imagen", referencedColumnName = "id_tipo_imagen", columnDefinition = "int4")
-    @ManyToOne(optional = false)
-    private PersonasTiposImagenes idTipoImagen;
-    @JoinColumn(name = "id_persona", referencedColumnName = "id_persona", columnDefinition = "int4")
-    @ManyToOne(optional = false)
-    private Personas idPersona;
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "fecha_alta")
+  @Temporal(TemporalType.TIMESTAMP)
+  private Date fechaAlta;
 
+  @Size(max = 1024)
+  @Column(name = "observaciones")
+  private String observaciones;
+
+  @JoinColumn(
+      name = "id_tipo_imagen",
+      referencedColumnName = "id_tipo_imagen",
+      columnDefinition = "int4")
+  @ManyToOne(optional = false)
+  private PersonasTiposImagenes idTipoImagen;
+
+  @JoinColumn(name = "id_persona", referencedColumnName = "id_persona", columnDefinition = "int4")
+  @ManyToOne(optional = false)
+  private Personas idPersona;
 }

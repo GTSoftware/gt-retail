@@ -15,58 +15,71 @@
  */
 package ar.com.gtsoftware.domain;
 
+import java.math.BigDecimal;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
-
-/**
- * @author rodrigo
- */
+/** @author rodrigo */
 @Entity
 @Table(name = "proveedores_ordenes_compra_lineas")
 @Getter
 @Setter
 public class ProveedoresOrdenesCompraLineas extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "proveedores_ordenes_compra_lineas_id_orden_compra_linea")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "proveedores_ordenes_compra_lineas_id_orden_compra_linea",
-            sequenceName = "proveedores_ordenes_compra_lineas_id_orden_compra_linea_seq")
-    @Basic(optional = false)
-    @Column(name = "id_orden_compra_linea", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(
+      strategy = GenerationType.SEQUENCE,
+      generator = "proveedores_ordenes_compra_lineas_id_orden_compra_linea")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "proveedores_ordenes_compra_lineas_id_orden_compra_linea",
+      sequenceName = "proveedores_ordenes_compra_lineas_id_orden_compra_linea_seq")
+  @Basic(optional = false)
+  @Column(name = "id_orden_compra_linea", nullable = false, updatable = false)
+  private Long id;
 
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "precio_compra_unitario")
-    private BigDecimal precioCompraUnitario;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "cantidad_pedida")
-    private BigDecimal cantidadPedida;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "sub_total")
-    private BigDecimal subTotal;
-    @NotNull
-    @Column(name = "cantidad_recibida")
-    private BigDecimal cantidadRecibida;
-    @NotNull
-    @JoinColumn(name = "id_orden_compra", referencedColumnName = "id_orden_compra", columnDefinition = "int4")
-    @ManyToOne(optional = false)
-    private ProveedoresOrdenesCompra idOrdenCompra;
+  // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these
+  // annotations to enforce field validation
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "precio_compra_unitario")
+  private BigDecimal precioCompraUnitario;
 
-    @NotNull
-    @JoinColumn(name = "id_producto", referencedColumnName = "id_producto", columnDefinition = "int4")
-    @ManyToOne(optional = false)
-    private Productos idProducto;
-    @NotNull
-    @JoinColumn(name = "id_tipo_unidad", referencedColumnName = "id_tipo_unidad", columnDefinition = "int4")
-    @ManyToOne(optional = false)
-    private ProductosTiposUnidades idTipoUnidad;
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "cantidad_pedida")
+  private BigDecimal cantidadPedida;
 
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "sub_total")
+  private BigDecimal subTotal;
+
+  @NotNull
+  @Column(name = "cantidad_recibida")
+  private BigDecimal cantidadRecibida;
+
+  @NotNull
+  @JoinColumn(
+      name = "id_orden_compra",
+      referencedColumnName = "id_orden_compra",
+      columnDefinition = "int4")
+  @ManyToOne(optional = false)
+  private ProveedoresOrdenesCompra idOrdenCompra;
+
+  @NotNull
+  @JoinColumn(name = "id_producto", referencedColumnName = "id_producto", columnDefinition = "int4")
+  @ManyToOne(optional = false)
+  private Productos idProducto;
+
+  @NotNull
+  @JoinColumn(
+      name = "id_tipo_unidad",
+      referencedColumnName = "id_tipo_unidad",
+      columnDefinition = "int4")
+  @ManyToOne(optional = false)
+  private ProductosTiposUnidades idTipoUnidad;
 }

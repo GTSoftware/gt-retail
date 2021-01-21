@@ -15,14 +15,12 @@
  */
 package ar.com.gtsoftware.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
-
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "remitos")
@@ -30,61 +28,63 @@ import java.util.List;
 @Setter
 public class Remito extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "remitos_id_remito")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "remitos_id_remito",
-            sequenceName = "remitos_id_remito_seq")
-    @Basic(optional = false)
-    @Column(name = "id_remito", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "remitos_id_remito")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "remitos_id_remito",
+      sequenceName = "remitos_id_remito_seq")
+  @Basic(optional = false)
+  @Column(name = "id_remito", nullable = false, updatable = false)
+  private Long id;
 
-    @Column(name = "fecha_alta")
-    private LocalDateTime fechaAlta;
+  @Column(name = "fecha_alta")
+  private LocalDateTime fechaAlta;
 
-    @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
-    @ManyToOne
-    @NotNull
-    private Usuarios idUsuario;
+  @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
+  @ManyToOne
+  @NotNull
+  private Usuarios idUsuario;
 
-    @Column(name = "observaciones")
-    private String observaciones;
+  @Column(name = "observaciones")
+  private String observaciones;
 
-    @Column(name = "origen_is_interno")
-    @NotNull
-    private Boolean isOrigenInterno;
+  @Column(name = "origen_is_interno")
+  @NotNull
+  private Boolean isOrigenInterno;
 
-    @JoinColumn(name = "id_origen_externo", referencedColumnName = "id_persona")
-    @ManyToOne
-    private Personas idOrigenExterno;
+  @JoinColumn(name = "id_origen_externo", referencedColumnName = "id_persona")
+  @ManyToOne
+  private Personas idOrigenExterno;
 
-    @JoinColumn(name = "id_origen_interno", referencedColumnName = "id_deposito")
-    @ManyToOne
-    private Depositos idOrigenInterno;
+  @JoinColumn(name = "id_origen_interno", referencedColumnName = "id_deposito")
+  @ManyToOne
+  private Depositos idOrigenInterno;
 
-    @Column(name = "destino_is_interno")
-    @NotNull
-    private Boolean isDestinoInterno;
+  @Column(name = "destino_is_interno")
+  @NotNull
+  private Boolean isDestinoInterno;
 
-    @JoinColumn(name = "destino_previsto_externo", referencedColumnName = "id_persona")
-    @ManyToOne
-    private Personas idDestinoPrevistoExterno;
+  @JoinColumn(name = "destino_previsto_externo", referencedColumnName = "id_persona")
+  @ManyToOne
+  private Personas idDestinoPrevistoExterno;
 
-    @JoinColumn(name = "destino_previsto_interno", referencedColumnName = "id_deposito")
-    @ManyToOne
-    private Depositos idDestinoPrevistoInterno;
+  @JoinColumn(name = "destino_previsto_interno", referencedColumnName = "id_deposito")
+  @ManyToOne
+  private Depositos idDestinoPrevistoInterno;
 
-    @Column(name = "fecha_cierre")
-    private LocalDateTime fechaCierre;
+  @Column(name = "fecha_cierre")
+  private LocalDateTime fechaCierre;
 
-    @NotNull
-    @JoinColumn(name = "id_tipo_movimiento", referencedColumnName = "id_tipo_movimiento")
-    @ManyToOne
-    private RemitoTipoMovimiento remitoTipoMovimiento;
+  @NotNull
+  @JoinColumn(name = "id_tipo_movimiento", referencedColumnName = "id_tipo_movimiento")
+  @ManyToOne
+  private RemitoTipoMovimiento remitoTipoMovimiento;
 
-    @OneToMany(mappedBy = "remitoCabecera", cascade = CascadeType.ALL)
-    private List<RemitoDetalle> detalleList;
+  @OneToMany(mappedBy = "remitoCabecera", cascade = CascadeType.ALL)
+  private List<RemitoDetalle> detalleList;
 
-    @OneToMany(mappedBy = "remito", cascade = CascadeType.ALL)
-    private List<RemitoRecepcion> remitoRecepcionesList;
-
+  @OneToMany(mappedBy = "remito", cascade = CascadeType.ALL)
+  private List<RemitoRecepcion> remitoRecepcionesList;
 }

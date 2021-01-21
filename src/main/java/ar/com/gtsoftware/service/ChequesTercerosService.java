@@ -20,7 +20,5 @@ package ar.com.gtsoftware.service;
 import ar.com.gtsoftware.dto.domain.ChequesTercerosDto;
 import ar.com.gtsoftware.search.ChequesTercerosSearchFilter;
 
-
 public interface ChequesTercerosService
-        extends EntityService<ChequesTercerosDto, ChequesTercerosSearchFilter> {
-}
+    extends EntityService<ChequesTercerosDto, ChequesTercerosSearchFilter> {}

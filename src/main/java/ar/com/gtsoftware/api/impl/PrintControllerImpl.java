@@ -1,5 +1,7 @@
 package ar.com.gtsoftware.api.impl;
 
+import static ar.com.gtsoftware.enums.Parametros.*;
+
 import ar.com.gtsoftware.api.PrintController;
 import ar.com.gtsoftware.api.exception.FileGenerationException;
 import ar.com.gtsoftware.api.exception.FileNotFoundException;
@@ -8,6 +10,13 @@ import ar.com.gtsoftware.dto.domain.RemitoDto;
 import ar.com.gtsoftware.service.ParametrosService;
 import ar.com.gtsoftware.service.RemitoService;
 import ar.com.gtsoftware.service.VentasService;
+import java.io.IOException;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -22,143 +31,152 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static ar.com.gtsoftware.enums.Parametros.*;
-
 @RestController
 @RequiredArgsConstructor
 public class PrintControllerImpl implements PrintController {
 
-    private final VentasService ventasService;
-    private final ParametrosService parametrosService;
-    private final RemitoService remitoService;
-    private final HttpServletResponse response;
-    private final ResourceLoader resourceLoader;
-    private final Logger logger = LogManager.getLogger(PrintControllerImpl.class);
+  private final VentasService ventasService;
+  private final ParametrosService parametrosService;
+  private final RemitoService remitoService;
+  private final HttpServletResponse response;
+  private final ResourceLoader resourceLoader;
+  private final Logger logger = LogManager.getLogger(PrintControllerImpl.class);
 
-
-    @Override
-    public void getSaleBudget(Long saleId) {
-        ComprobantesDto comprobante = ventasService.obtenerComprobante(saleId);
-        if (comprobante == null) {
-            handleEntityNotFound("saleId", saleId);
-        }
-        List<ComprobantesDto> ventas = Collections.singletonList(comprobante);
-        boolean mostrarDetallePrecios = parametrosService.getBooleanParam(PRESUPUESTO_MOSTRAR_DETALLE_PRECIOS);
-
-        JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(ventas);
-        Resource resource = resourceLoader.getResource("classpath:reports/presupuesto.jasper");
-
-        Map<String, Object> parameters = loadCompanyParameters();
-        parameters.put(PRESUPUESTO_MOSTRAR_DETALLE_PRECIOS.getNombreParametro(), mostrarDetallePrecios);
-
-        String fileName = String.format("venta-%d", saleId);
-
-        handlePDFExport(fileName, beanCollectionDataSource, resource, parameters);
-
+  @Override
+  public void getSaleBudget(Long saleId) {
+    ComprobantesDto comprobante = ventasService.obtenerComprobante(saleId);
+    if (comprobante == null) {
+      handleEntityNotFound("saleId", saleId);
     }
+    List<ComprobantesDto> ventas = Collections.singletonList(comprobante);
+    boolean mostrarDetallePrecios =
+        parametrosService.getBooleanParam(PRESUPUESTO_MOSTRAR_DETALLE_PRECIOS);
 
-    @Override
-    public void getInvoice(Long saleId) {
-        ComprobantesDto comprobante = ventasService.obtenerComprobante(saleId);
-        if (comprobante == null) {
-            handleEntityNotFound("saleId", saleId);
-            return;
-        }
-        List<ComprobantesDto> ventas = Collections.singletonList(comprobante);
+    JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(ventas);
+    Resource resource = resourceLoader.getResource("classpath:reports/presupuesto.jasper");
 
+    Map<String, Object> parameters = loadCompanyParameters();
+    parameters.put(PRESUPUESTO_MOSTRAR_DETALLE_PRECIOS.getNombreParametro(), mostrarDetallePrecios);
 
-        JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(ventas);
-        JRBeanCollectionDataSource beanCollectionDataSource1 = new JRBeanCollectionDataSource(ventas);
-        JRBeanCollectionDataSource beanCollectionDataSource2 = new JRBeanCollectionDataSource(ventas);
-        Resource reportResource = resourceLoader.getResource("classpath:reports/facturaConDuplicado.jasper");
-        Resource logoAfip = resourceLoader.getResource("classpath:images/afip.png");
+    String fileName = String.format("venta-%d", saleId);
 
-        Map<String, Object> parameters = loadCompanyParameters();
+    handlePDFExport(fileName, beanCollectionDataSource, resource, parameters);
+  }
 
-        try {
-            parameters.put("logoAfip", logoAfip.getURI().getPath());
-        } catch (IOException e) {
-            logger.warn("Could not get AFIP logo", e);
-        }
-        parameters.put("codigobarras", comprobante.getCodigoBarrasFactura());
-
-        if (comprobante.getIdRegistro().getLetraFactura().equals("A")) {
-            parameters.put("subreport", "reports/vistaVentas_lineasNeto.jasper");
-        } else {
-            parameters.put("subreport", "reports/vistaVentas_lineas.jasper");
-        }
-        parameters.put("subDataSource", beanCollectionDataSource1);
-        parameters.put("subDataSource2", beanCollectionDataSource2);
-
-        String fileName = String.format("factura-%d", saleId);
-
-        handlePDFExport(fileName, beanCollectionDataSource, reportResource, parameters);
+  @Override
+  public void getInvoice(Long saleId) {
+    ComprobantesDto comprobante = ventasService.obtenerComprobante(saleId);
+    if (comprobante == null) {
+      handleEntityNotFound("saleId", saleId);
+      return;
     }
+    List<ComprobantesDto> ventas = Collections.singletonList(comprobante);
 
-    @Override
-    public void getDeliveryNote(Long deliveryNoteId) {
-        RemitoDto remito = remitoService.find(deliveryNoteId);
-        if (remito == null) {
-            handleEntityNotFound("deliveryNoteId", deliveryNoteId);
-        }
-        List<RemitoDto> remitos = Collections.singletonList(remito);
+    JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(ventas);
+    JRBeanCollectionDataSource beanCollectionDataSource1 = new JRBeanCollectionDataSource(ventas);
+    JRBeanCollectionDataSource beanCollectionDataSource2 = new JRBeanCollectionDataSource(ventas);
+    Resource reportResource =
+        resourceLoader.getResource("classpath:reports/facturaConDuplicado.jasper");
+    Resource logoAfip = resourceLoader.getResource("classpath:images/afip.png");
 
-        JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(remitos);
-        Resource resource = resourceLoader.getResource("classpath:reports/remito.jasper");
+    Map<String, Object> parameters = loadCompanyParameters();
 
-        Map<String, Object> parameters = loadCompanyParameters();
-
-        String fileName = String.format("remito-%d", deliveryNoteId);
-
-        handlePDFExport(fileName, beanCollectionDataSource, resource, parameters);
+    try {
+      parameters.put("logoAfip", logoAfip.getURI().getPath());
+    } catch (IOException e) {
+      logger.warn("Could not get AFIP logo", e);
     }
+    parameters.put("codigobarras", comprobante.getCodigoBarrasFactura());
 
-    private void handlePDFExport(String fileName,
-                                 JRBeanCollectionDataSource beanCollectionDataSource,
-                                 Resource resource,
-                                 Map<String, Object> parameters) {
-
-        try {
-            JasperPrint jasperPrint = JasperFillManager.fillReport(resource.getInputStream(), parameters, beanCollectionDataSource);
-
-            response.addHeader(HttpHeaders.CONTENT_DISPOSITION, String.format("attachment; filename=%s.pdf", fileName));
-            response.setContentType(MediaType.APPLICATION_PDF_VALUE);
-
-            ServletOutputStream servletStream = response.getOutputStream();
-            JasperExportManager.exportReportToPdfStream(jasperPrint, servletStream);
-        } catch (JRException | IOException e) {
-            logger.error("Error al generar reporte", e);
-            throw new FileGenerationException();
-        }
+    if (comprobante.getIdRegistro().getLetraFactura().equals("A")) {
+      parameters.put("subreport", "reports/vistaVentas_lineasNeto.jasper");
+    } else {
+      parameters.put("subreport", "reports/vistaVentas_lineas.jasper");
     }
+    parameters.put("subDataSource", beanCollectionDataSource1);
+    parameters.put("subDataSource2", beanCollectionDataSource2);
 
-    private void handleEntityNotFound(String fieldId, Long id) {
-        logger.error("Entity not found with {}={}", fieldId, id);
-        throw new FileNotFoundException();
+    String fileName = String.format("factura-%d", saleId);
+
+    handlePDFExport(fileName, beanCollectionDataSource, reportResource, parameters);
+  }
+
+  @Override
+  public void getDeliveryNote(Long deliveryNoteId) {
+    RemitoDto remito = remitoService.find(deliveryNoteId);
+    if (remito == null) {
+      handleEntityNotFound("deliveryNoteId", deliveryNoteId);
     }
+    List<RemitoDto> remitos = Collections.singletonList(remito);
 
-    private Map<String, Object> loadCompanyParameters() {
-        final Map<String, Object> parametros = new HashMap<>();
+    JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(remitos);
+    Resource resource = resourceLoader.getResource("classpath:reports/remito.jasper");
 
-        parametros.put(EMPRESA_CUIT.getNombreParametro(), parametrosService.getStringParam(EMPRESA_CUIT));
-        parametros.put(EMPRESA_DIRECCION.getNombreParametro(), parametrosService.getStringParam(EMPRESA_DIRECCION));
-        parametros.put(EMPRESA_EMAIL.getNombreParametro(), parametrosService.getStringParam(EMPRESA_EMAIL));
-        parametros.put(EMPRESA_FECHA_INICIO.getNombreParametro(), parametrosService.getStringParam(EMPRESA_FECHA_INICIO));
-        parametros.put(EMPRESA_LOCALIDAD.getNombreParametro(), parametrosService.getStringParam(EMPRESA_LOCALIDAD));
-        parametros.put(EMPRESA_NOMBRE.getNombreParametro(), parametrosService.getStringParam(EMPRESA_NOMBRE));
-        parametros.put(EMPRESA_NOMBRE_FANTASIA.getNombreParametro(), parametrosService.getStringParam(EMPRESA_NOMBRE_FANTASIA));
-        parametros.put(EMPRESA_PROVINCIA.getNombreParametro(), parametrosService.getStringParam(EMPRESA_PROVINCIA));
-        parametros.put(EMPRESA_RAZON_SOCIAL.getNombreParametro(), parametrosService.getStringParam(EMPRESA_RAZON_SOCIAL));
-        parametros.put(EMPRESA_TELEFONO.getNombreParametro(), parametrosService.getStringParam(EMPRESA_TELEFONO));
+    Map<String, Object> parameters = loadCompanyParameters();
 
-        return parametros;
+    String fileName = String.format("remito-%d", deliveryNoteId);
+
+    handlePDFExport(fileName, beanCollectionDataSource, resource, parameters);
+  }
+
+  private void handlePDFExport(
+      String fileName,
+      JRBeanCollectionDataSource beanCollectionDataSource,
+      Resource resource,
+      Map<String, Object> parameters) {
+
+    try {
+      JasperPrint jasperPrint =
+          JasperFillManager.fillReport(
+              resource.getInputStream(), parameters, beanCollectionDataSource);
+
+      response.addHeader(
+          HttpHeaders.CONTENT_DISPOSITION, String.format("attachment; filename=%s.pdf", fileName));
+      response.setContentType(MediaType.APPLICATION_PDF_VALUE);
+
+      ServletOutputStream servletStream = response.getOutputStream();
+      JasperExportManager.exportReportToPdfStream(jasperPrint, servletStream);
+    } catch (JRException | IOException e) {
+      logger.error("Error al generar reporte", e);
+      throw new FileGenerationException();
     }
+  }
+
+  private void handleEntityNotFound(String fieldId, Long id) {
+    logger.error("Entity not found with {}={}", fieldId, id);
+    throw new FileNotFoundException();
+  }
+
+  private Map<String, Object> loadCompanyParameters() {
+    final Map<String, Object> parametros = new HashMap<>();
+
+    parametros.put(
+        EMPRESA_CUIT.getNombreParametro(), parametrosService.getStringParam(EMPRESA_CUIT));
+    parametros.put(
+        EMPRESA_DIRECCION.getNombreParametro(),
+        parametrosService.getStringParam(EMPRESA_DIRECCION));
+    parametros.put(
+        EMPRESA_EMAIL.getNombreParametro(), parametrosService.getStringParam(EMPRESA_EMAIL));
+    parametros.put(
+        EMPRESA_FECHA_INICIO.getNombreParametro(),
+        parametrosService.getStringParam(EMPRESA_FECHA_INICIO));
+    parametros.put(
+        EMPRESA_LOCALIDAD.getNombreParametro(),
+        parametrosService.getStringParam(EMPRESA_LOCALIDAD));
+    parametros.put(
+        EMPRESA_NOMBRE.getNombreParametro(), parametrosService.getStringParam(EMPRESA_NOMBRE));
+    parametros.put(
+        EMPRESA_NOMBRE_FANTASIA.getNombreParametro(),
+        parametrosService.getStringParam(EMPRESA_NOMBRE_FANTASIA));
+    parametros.put(
+        EMPRESA_PROVINCIA.getNombreParametro(),
+        parametrosService.getStringParam(EMPRESA_PROVINCIA));
+    parametros.put(
+        EMPRESA_RAZON_SOCIAL.getNombreParametro(),
+        parametrosService.getStringParam(EMPRESA_RAZON_SOCIAL));
+    parametros.put(
+        EMPRESA_TELEFONO.getNombreParametro(), parametrosService.getStringParam(EMPRESA_TELEFONO));
+
+    return parametros;
+  }
 }

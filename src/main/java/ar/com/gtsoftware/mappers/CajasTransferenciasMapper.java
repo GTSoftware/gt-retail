@@ -21,9 +21,8 @@ import ar.com.gtsoftware.domain.CajasTransferencias;
 import ar.com.gtsoftware.dto.domain.CajasTransferenciasDto;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring",
-        uses = {CajasMapper.class,
-                NegocioFormasPagoMapper.class})
-public interface CajasTransferenciasMapper extends
-        GenericMapper<CajasTransferencias, CajasTransferenciasDto> {
-}
+@Mapper(
+    componentModel = "spring",
+    uses = {CajasMapper.class, NegocioFormasPagoMapper.class})
+public interface CajasTransferenciasMapper
+    extends GenericMapper<CajasTransferencias, CajasTransferenciasDto> {}

@@ -16,13 +16,10 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
+import javax.validation.constraints.Size;
 import lombok.*;
 
-import javax.validation.constraints.Size;
-
-/**
- * @author rodrigo
- */
+/** @author rodrigo */
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
@@ -30,16 +27,15 @@ import javax.validation.constraints.Size;
 @Builder
 public class ProductosTiposProveeduriaDto {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @EqualsAndHashCode.Include
-    private Long id;
-    @Size(max = 60)
-    private String nombreTipoProveeduria;
-    private boolean puedeComprarse;
-    private boolean puedeVenderse;
-    private boolean controlStock;
-    private boolean cambiarPrecioVenta;
+  @EqualsAndHashCode.Include private Long id;
 
+  @Size(max = 60)
+  private String nombreTipoProveeduria;
 
+  private boolean puedeComprarse;
+  private boolean puedeVenderse;
+  private boolean controlStock;
+  private boolean cambiarPrecioVenta;
 }

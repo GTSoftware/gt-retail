@@ -19,27 +19,24 @@ import ar.com.gtsoftware.dto.PagoValorDTO;
 import ar.com.gtsoftware.dto.PreparedPaymentDto;
 import ar.com.gtsoftware.dto.domain.CajasDto;
 import ar.com.gtsoftware.dto.domain.RecibosDto;
-
-import javax.validation.constraints.NotNull;
 import java.util.List;
+import javax.validation.constraints.NotNull;
 
 /**
  * Capa de servicio para cobros de comprobantes
  *
  * @author Rodrigo M. Tato Rothamel mailto:rotatomel@gmail.com
  */
-
 public interface PaymentsService {
 
-    /**
-     * Cobra totalmente uno o más comprobantes
-     *
-     * @param caja
-     * @param pagos
-     * @return
-     */
-    RecibosDto cobrarComprobantes(@NotNull CajasDto caja, List<PagoValorDTO> pagos);
+  /**
+   * Cobra totalmente uno o más comprobantes
+   *
+   * @param caja
+   * @param pagos
+   * @return
+   */
+  RecibosDto cobrarComprobantes(@NotNull CajasDto caja, List<PagoValorDTO> pagos);
 
-    PreparedPaymentDto prepareToPay(List<Long> saleIds);
-
+  PreparedPaymentDto prepareToPay(List<Long> saleIds);
 }

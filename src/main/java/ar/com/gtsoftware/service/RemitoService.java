@@ -21,14 +21,11 @@ import ar.com.gtsoftware.dto.ProductoMovimiento;
 import ar.com.gtsoftware.dto.domain.RemitoDto;
 import ar.com.gtsoftware.search.RemitoDetalleSearchFilter;
 import ar.com.gtsoftware.search.RemitoSearchFilter;
-
 import java.util.List;
 
+public interface RemitoService extends EntityService<RemitoDto, RemitoSearchFilter> {
 
-public interface RemitoService
-        extends EntityService<RemitoDto, RemitoSearchFilter> {
+  Long guardarRemito(RemitoDto remitoDto);
 
-    Long guardarRemito(RemitoDto remitoDto);
-
-    List<ProductoMovimiento> getMovimientosProducto(RemitoDetalleSearchFilter sf);
+  List<ProductoMovimiento> getMovimientosProducto(RemitoDetalleSearchFilter sf);
 }

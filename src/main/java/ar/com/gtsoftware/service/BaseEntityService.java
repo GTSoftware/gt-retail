@@ -22,59 +22,61 @@ import ar.com.gtsoftware.domain.GTEntity;
 import ar.com.gtsoftware.mappers.GenericMapper;
 import ar.com.gtsoftware.mappers.helper.CycleAvoidingMappingContext;
 import ar.com.gtsoftware.search.AbstractSearchFilter;
-
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
+import javax.validation.constraints.NotNull;
 
-public abstract class BaseEntityService
-        <D, S extends AbstractSearchFilter, E extends GTEntity<?>>
-        implements EntityService<D, S> {
+public abstract class BaseEntityService<D, S extends AbstractSearchFilter, E extends GTEntity<?>>
+    implements EntityService<D, S> {
 
+  protected abstract AbstractFacade<E, S> getFacade();
 
-    protected abstract AbstractFacade<E, S> getFacade();
+  protected abstract GenericMapper<E, D> getMapper();
 
-    protected abstract GenericMapper<E, D> getMapper();
+  @Override
+  public D createOrEdit(@NotNull D dto) {
+    E entity =
+        getFacade().createOrEdit(getMapper().dtoToEntity(dto, new CycleAvoidingMappingContext()));
+    return getMapper().entityToDto(entity, new CycleAvoidingMappingContext());
+  }
 
-    @Override
-    public D createOrEdit(@NotNull D dto) {
-        E entity = getFacade().createOrEdit(getMapper().dtoToEntity(dto, new CycleAvoidingMappingContext()));
-        return getMapper().entityToDto(entity, new CycleAvoidingMappingContext());
-    }
+  @Override
+  public void remove(@NotNull D dto) {
+    getFacade().remove(getMapper().dtoToEntity(dto, new CycleAvoidingMappingContext()));
+  }
 
-    @Override
-    public void remove(@NotNull D dto) {
-        getFacade().remove(getMapper().dtoToEntity(dto, new CycleAvoidingMappingContext()));
-    }
+  @Override
+  public int countBySearchFilter(@NotNull S sf) {
+    return getFacade().countBySearchFilter(sf);
+  }
 
-    @Override
-    public int countBySearchFilter(@NotNull S sf) {
-        return getFacade().countBySearchFilter(sf);
-    }
+  @Override
+  public List<D> findAll() {
+    return getMapper().entitiesToDtos(getFacade().findAll(), new CycleAvoidingMappingContext());
+  }
 
-    @Override
-    public List<D> findAll() {
-        return getMapper().entitiesToDtos(getFacade().findAll(), new CycleAvoidingMappingContext());
-    }
+  @Override
+  public D find(@NotNull Serializable id) {
+    return getMapper().entityToDto(getFacade().find(id), new CycleAvoidingMappingContext());
+  }
 
-    @Override
-    public D find(@NotNull Serializable id) {
-        return getMapper().entityToDto(getFacade().find(id), new CycleAvoidingMappingContext());
-    }
+  @Override
+  public D findFirstBySearchFilter(@NotNull S sf) {
+    return getMapper()
+        .entityToDto(getFacade().findFirstBySearchFilter(sf), new CycleAvoidingMappingContext());
+  }
 
-    @Override
-    public D findFirstBySearchFilter(@NotNull S sf) {
-        return getMapper().entityToDto(getFacade().findFirstBySearchFilter(sf), new CycleAvoidingMappingContext());
-    }
+  @Override
+  public List<D> findBySearchFilter(@NotNull S sf, int firstResult, int maxResults) {
+    return getMapper()
+        .entitiesToDtos(
+            getFacade().findBySearchFilter(sf, firstResult, maxResults),
+            new CycleAvoidingMappingContext());
+  }
 
-    @Override
-    public List<D> findBySearchFilter(@NotNull S sf, int firstResult, int maxResults) {
-        return getMapper().entitiesToDtos(getFacade().findBySearchFilter(sf, firstResult, maxResults),
-                new CycleAvoidingMappingContext());
-    }
-
-    @Override
-    public List<D> findAllBySearchFilter(@NotNull S sf) {
-        return getMapper().entitiesToDtos(getFacade().findAllBySearchFilter(sf), new CycleAvoidingMappingContext());
-    }
+  @Override
+  public List<D> findAllBySearchFilter(@NotNull S sf) {
+    return getMapper()
+        .entitiesToDtos(getFacade().findAllBySearchFilter(sf), new CycleAvoidingMappingContext());
+  }
 }

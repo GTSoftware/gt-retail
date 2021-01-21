@@ -21,9 +21,8 @@ import ar.com.gtsoftware.domain.ComprobantesLineas;
 import ar.com.gtsoftware.dto.domain.ComprobantesLineasDto;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring",
-        uses = {ComprobantesMapper.class})
+@Mapper(
+    componentModel = "spring",
+    uses = {ComprobantesMapper.class})
 public interface ComprobantesLineasMapper
-        extends GenericMapper<ComprobantesLineas, ComprobantesLineasDto> {
-
-}
+    extends GenericMapper<ComprobantesLineas, ComprobantesLineasDto> {}

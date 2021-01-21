@@ -18,9 +18,7 @@ package ar.com.gtsoftware.search;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 
-/**
- * @author Rodrigo M. Tato Rothamel <rotatomel@gmail.com>
- */
+/** @author Rodrigo M. Tato Rothamel <rotatomel@gmail.com> */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -28,27 +26,24 @@ import org.apache.commons.lang3.StringUtils;
 @Builder
 public class UsuariosSearchFilter extends AbstractSearchFilter {
 
-    private Long idUsuario;
-    private String nombreUsuario;
-    private String login;
-    private String password;
-    private Long idSucursal;
-    private String text;
+  private Long idUsuario;
+  private String nombreUsuario;
+  private String login;
+  private String password;
+  private Long idSucursal;
+  private String text;
 
+  @Override
+  public boolean hasFilter() {
+    return idUsuario != null
+        || nombreUsuario != null
+        || login != null
+        || idSucursal != null
+        || password != null
+        || hasTextFilter();
+  }
 
-    @Override
-    public boolean hasFilter() {
-        return idUsuario != null
-                || nombreUsuario != null
-                || login != null
-                || idSucursal != null
-                || password != null
-                || hasTextFilter();
-    }
-
-
-    public boolean hasTextFilter() {
-        return StringUtils.isNotEmpty(text);
-    }
-
+  public boolean hasTextFilter() {
+    return StringUtils.isNotEmpty(text);
+  }
 }

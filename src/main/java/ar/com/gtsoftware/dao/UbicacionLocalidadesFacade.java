@@ -19,44 +19,49 @@ import ar.com.gtsoftware.domain.UbicacionLocalidades;
 import ar.com.gtsoftware.domain.UbicacionLocalidades_;
 import ar.com.gtsoftware.domain.UbicacionProvincias_;
 import ar.com.gtsoftware.search.LocalidadesSearchFilter;
-import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.springframework.stereotype.Repository;
 
 @Repository
-public class UbicacionLocalidadesFacade extends AbstractFacade<UbicacionLocalidades, LocalidadesSearchFilter> {
+public class UbicacionLocalidadesFacade
+    extends AbstractFacade<UbicacionLocalidades, LocalidadesSearchFilter> {
 
+  private final EntityManager em;
 
-    private final EntityManager em;
+  public UbicacionLocalidadesFacade(EntityManager em) {
+    super(UbicacionLocalidades.class);
+    this.em = em;
+  }
 
-    public UbicacionLocalidadesFacade(EntityManager em) {
-        super(UbicacionLocalidades.class);
-        this.em = em;
+  @Override
+  protected EntityManager getEntityManager() {
+    return em;
+  }
+
+  @Override
+  public Predicate createWhereFromSearchFilter(
+      LocalidadesSearchFilter lsf, CriteriaBuilder cb, Root<UbicacionLocalidades> root) {
+    Predicate p = null;
+    if (lsf.getIdLocalidad() != null) {
+      p = cb.equal(root.get(UbicacionLocalidades_.id), lsf.getIdLocalidad());
     }
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
+    if (lsf.getNombreLocalidad() != null) {
+      Predicate p1 =
+          cb.like(
+              root.get(UbicacionLocalidades_.nombreLocalidad),
+              String.format("%%%s%%", lsf.getNombreLocalidad().toUpperCase()));
+      p = appendOrPredicate(cb, p, p1);
     }
-
-    @Override
-    public Predicate createWhereFromSearchFilter(LocalidadesSearchFilter lsf, CriteriaBuilder cb, Root<UbicacionLocalidades> root) {
-        Predicate p = null;
-        if (lsf.getIdLocalidad() != null) {
-            p = cb.equal(root.get(UbicacionLocalidades_.id), lsf.getIdLocalidad());
-        }
-        if (lsf.getNombreLocalidad() != null) {
-            Predicate p1 = cb.like(root.get(UbicacionLocalidades_.nombreLocalidad), String.format("%%%s%%", lsf.getNombreLocalidad().toUpperCase()));
-            p = appendOrPredicate(cb, p, p1);
-        }
-        if (lsf.getIdProvincia() != null) {
-            Predicate p1 = cb.equal(root.get(UbicacionLocalidades_.idProvincia).get(UbicacionProvincias_.id), lsf.getIdProvincia());
-            p = appendAndPredicate(cb, p, p1);
-        }
-        return p;
+    if (lsf.getIdProvincia() != null) {
+      Predicate p1 =
+          cb.equal(
+              root.get(UbicacionLocalidades_.idProvincia).get(UbicacionProvincias_.id),
+              lsf.getIdProvincia());
+      p = appendAndPredicate(cb, p, p1);
     }
-
+    return p;
+  }
 }

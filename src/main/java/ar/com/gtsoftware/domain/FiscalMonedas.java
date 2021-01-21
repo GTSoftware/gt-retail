@@ -15,13 +15,12 @@
  */
 package ar.com.gtsoftware.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import java.util.Objects;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Objects;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Clase que mapea a la tabla fiscal_monedas para regímenes informativos
@@ -34,59 +33,63 @@ import java.util.Objects;
 @Setter
 public class FiscalMonedas extends GTEntity<String> {
 
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 3, max = 3)
-    @Column(name = "codigo_moneda", columnDefinition = "bpchar")
-    private String codigoMoneda;
-    @Size(max = 50)
-    @Column(name = "nombre_moneda")
-    private String nombreMoneda;
+  @Id
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 3, max = 3)
+  @Column(name = "codigo_moneda", columnDefinition = "bpchar")
+  private String codigoMoneda;
 
+  @Size(max = 50)
+  @Column(name = "nombre_moneda")
+  private String nombreMoneda;
 
-    @Override
-    public boolean isNew() {
-        return codigoMoneda == null;
+  @Override
+  public boolean isNew() {
+    return codigoMoneda == null;
+  }
+
+  @Override
+  public int hashCode() {
+    int hash = 3;
+    hash = 67 * hash + Objects.hashCode(this.codigoMoneda);
+    return hash;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == null) {
+      return false;
     }
-
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 67 * hash + Objects.hashCode(this.codigoMoneda);
-        return hash;
+    if (getClass() != obj.getClass()) {
+      return false;
     }
+    final FiscalMonedas other = (FiscalMonedas) obj;
+    return Objects.equals(this.codigoMoneda, other.codigoMoneda);
+  }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final FiscalMonedas other = (FiscalMonedas) obj;
-        return Objects.equals(this.codigoMoneda, other.codigoMoneda);
-    }
+  @Override
+  public String toString() {
+    return "FiscalMonedas{"
+        + "codigoMoneda="
+        + codigoMoneda
+        + ", nombreMoneda="
+        + nombreMoneda
+        + '}';
+  }
 
-    @Override
-    public String toString() {
-        return "FiscalMonedas{" + "codigoMoneda=" + codigoMoneda + ", nombreMoneda=" + nombreMoneda + '}';
-    }
+  @Override
+  public String getId() {
+    return codigoMoneda;
+  }
 
-    @Override
-    public String getId() {
-        return codigoMoneda;
-    }
+  @Override
+  public String calculateId(String id) {
+    return id;
+  }
 
-    @Override
-    public String calculateId(String id) {
-        return id;
-    }
-
-    @Override
-    public String getStringId() {
-        return codigoMoneda;
-    }
-
+  @Override
+  public String getStringId() {
+    return codigoMoneda;
+  }
 }

@@ -30,21 +30,21 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class ProductosTiposProveeduriaServiceImpl
-        extends BaseEntityService<ProductosTiposProveeduriaDto, AbstractSearchFilter, ProductosTiposProveeduria>
-        implements ProductosTiposProveeduriaService {
+    extends BaseEntityService<
+        ProductosTiposProveeduriaDto, AbstractSearchFilter, ProductosTiposProveeduria>
+    implements ProductosTiposProveeduriaService {
 
-    private final ProductosTiposProveeduriaFacade facade;
+  private final ProductosTiposProveeduriaFacade facade;
 
-    private final ProductosTiposProveeduriaMapper mapper;
+  private final ProductosTiposProveeduriaMapper mapper;
 
+  @Override
+  protected ProductosTiposProveeduriaFacade getFacade() {
+    return facade;
+  }
 
-    @Override
-    protected ProductosTiposProveeduriaFacade getFacade() {
-        return facade;
-    }
-
-    @Override
-    protected ProductosTiposProveeduriaMapper getMapper() {
-        return mapper;
-    }
+  @Override
+  protected ProductosTiposProveeduriaMapper getMapper() {
+    return mapper;
+  }
 }

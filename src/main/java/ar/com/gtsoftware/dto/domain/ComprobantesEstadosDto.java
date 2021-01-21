@@ -16,13 +16,10 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
+import java.io.Serializable;
 import lombok.*;
 
-import java.io.Serializable;
-
-/**
- * @author Rodrigo Tato <rotatomel@gmail.com>
- */
+/** @author Rodrigo Tato <rotatomel@gmail.com> */
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
@@ -30,10 +27,8 @@ import java.io.Serializable;
 @Builder
 public class ComprobantesEstadosDto implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @EqualsAndHashCode.Include
-    private Long id;
-    private String nombreEstado;
-
+  @EqualsAndHashCode.Include private Long id;
+  private String nombreEstado;
 }

@@ -16,17 +16,14 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
-import lombok.*;
-
+import java.time.LocalDateTime;
+import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
-import java.util.List;
+import lombok.*;
 
-/**
- * @author Rodrigo Tato <rotatomel@gmail.com>
- */
+/** @author Rodrigo Tato <rotatomel@gmail.com> */
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
@@ -34,60 +31,69 @@ import java.util.List;
 @Builder
 public class PersonasDto {
 
-    private static final long serialVersionUID = 1L;
-    private static final String BUSINESS_STRING = "[%d] %s - %s: %s";
-    @EqualsAndHashCode.Include
-    private Long id;
-    @Pattern(regexp = "^$|^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\."
-            + "[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@"
-            + "(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",
-            message = "Debe ser un mail válido Ej: alguien@host.com.")
-    private String email;
-    @NotNull
-    @Size(min = 1, max = 200)
-    private String razonSocial;
-    @Size(max = 60)
-    private String apellidos;
-    @Size(max = 60)
-    private String nombres;
-    @Size(max = 200)
-    private String nombreFantasia;
-    @Size(max = 100)
-    private String calle;
-    @Size(max = 50)
-    private String altura;
-    @Size(max = 3)
-    private String piso;
-    @Size(max = 5)
-    private String depto;
-    @NotNull
-    @Size(min = 1, max = 13)
-    private String documento;
-    @NotNull
-    private LocalDateTime fechaAlta;
+  private static final long serialVersionUID = 1L;
+  private static final String BUSINESS_STRING = "[%d] %s - %s: %s";
+  @EqualsAndHashCode.Include private Long id;
 
-    private boolean activo;
+  @Pattern(
+      regexp =
+          "^$|^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\."
+              + "[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@"
+              + "(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",
+      message = "Debe ser un mail válido Ej: alguien@host.com.")
+  private String email;
 
-    private boolean cliente;
+  @NotNull
+  @Size(min = 1, max = 200)
+  private String razonSocial;
 
-    private boolean proveedor;
-    private UbicacionProvinciasDto idProvincia;
-    private UbicacionPaisesDto idPais;
-    private UbicacionLocalidadesDto idLocalidad;
-    private LegalTiposPersoneriaDto idTipoPersoneria;
-    private LegalTiposDocumentoDto idTipoDocumento;
-    private LegalGenerosDto idGenero;
-    private FiscalResponsabilidadesIvaDto idResponsabilidadIva;
-    private List<PersonasTelefonosDto> personasTelefonosList;
+  @Size(max = 60)
+  private String apellidos;
 
-    private SucursalesDto idSucursal;
-    private Integer version;
+  @Size(max = 60)
+  private String nombres;
 
-    @Override
-    public String toString() {
-        return String.format(BUSINESS_STRING, id, razonSocial,
-                idTipoDocumento.getNombreTipoDocumento(), documento);
-    }
+  @Size(max = 200)
+  private String nombreFantasia;
 
+  @Size(max = 100)
+  private String calle;
 
+  @Size(max = 50)
+  private String altura;
+
+  @Size(max = 3)
+  private String piso;
+
+  @Size(max = 5)
+  private String depto;
+
+  @NotNull
+  @Size(min = 1, max = 13)
+  private String documento;
+
+  @NotNull private LocalDateTime fechaAlta;
+
+  private boolean activo;
+
+  private boolean cliente;
+
+  private boolean proveedor;
+  private UbicacionProvinciasDto idProvincia;
+  private UbicacionPaisesDto idPais;
+  private UbicacionLocalidadesDto idLocalidad;
+  private LegalTiposPersoneriaDto idTipoPersoneria;
+  private LegalTiposDocumentoDto idTipoDocumento;
+  private LegalGenerosDto idGenero;
+  private FiscalResponsabilidadesIvaDto idResponsabilidadIva;
+  private List<PersonasTelefonosDto> personasTelefonosList;
+
+  private SucursalesDto idSucursal;
+  private Integer version;
+
+  @Override
+  public String toString() {
+    return String.format(
+        BUSINESS_STRING, id, razonSocial, idTipoDocumento.getNombreTipoDocumento(), documento);
+  }
 }

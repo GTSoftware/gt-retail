@@ -8,6 +8,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Bank {
-    private Long bankId;
-    private String bankName;
+  private Long bankId;
+  private String bankName;
 }

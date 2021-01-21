@@ -8,6 +8,6 @@ import lombok.Setter;
 @Setter
 @Builder
 public class CreatedSaleResponse {
-    private Long saleId;
-    private Long deliveryNoteId;
+  private Long saleId;
+  private Long deliveryNoteId;
 }

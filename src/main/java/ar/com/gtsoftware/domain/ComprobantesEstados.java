@@ -15,29 +15,25 @@
  */
 package ar.com.gtsoftware.domain;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-
-/**
- * @author Rodrigo Tato <rotatomel@gmail.com>
- */
+/** @author Rodrigo Tato <rotatomel@gmail.com> */
 @Entity
 @Table(name = "comprobantes_estados")
 @Getter
 @Setter
 public class ComprobantesEstados extends BaseEntity {
 
-    @Id
-    @Basic(optional = false)
-    @Column(name = "id_estado", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @Basic(optional = false)
+  @Column(name = "id_estado", nullable = false, updatable = false)
+  private Long id;
 
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "nombre_estado")
-    private String nombreEstado;
-
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "nombre_estado")
+  private String nombreEstado;
 }

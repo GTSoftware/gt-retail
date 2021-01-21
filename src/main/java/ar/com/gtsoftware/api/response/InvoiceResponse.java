@@ -8,5 +8,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class InvoiceResponse {
-    private String invoiceNumber;
+  private String invoiceNumber;
 }

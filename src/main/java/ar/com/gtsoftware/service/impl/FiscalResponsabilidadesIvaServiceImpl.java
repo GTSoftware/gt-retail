@@ -30,21 +30,21 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class FiscalResponsabilidadesIvaServiceImpl
-        extends BaseEntityService<FiscalResponsabilidadesIvaDto, AbstractSearchFilter,
-        FiscalResponsabilidadesIva>
-        implements FiscalResponsabilidadesIvaService {
+    extends BaseEntityService<
+        FiscalResponsabilidadesIvaDto, AbstractSearchFilter, FiscalResponsabilidadesIva>
+    implements FiscalResponsabilidadesIvaService {
 
-    private final FiscalResponsabilidadesIvaFacade facade;
+  private final FiscalResponsabilidadesIvaFacade facade;
 
-    private final FiscalResponsabilidadesIvaMapper mapper;
+  private final FiscalResponsabilidadesIvaMapper mapper;
 
-    @Override
-    protected FiscalResponsabilidadesIvaFacade getFacade() {
-        return facade;
-    }
+  @Override
+  protected FiscalResponsabilidadesIvaFacade getFacade() {
+    return facade;
+  }
 
-    @Override
-    protected FiscalResponsabilidadesIvaMapper getMapper() {
-        return mapper;
-    }
+  @Override
+  protected FiscalResponsabilidadesIvaMapper getMapper() {
+    return mapper;
+  }
 }

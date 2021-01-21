@@ -15,9 +15,8 @@
  */
 package ar.com.gtsoftware.search;
 
-import lombok.*;
-
 import java.time.LocalDateTime;
+import lombok.*;
 
 @Getter
 @Setter
@@ -26,20 +25,17 @@ import java.time.LocalDateTime;
 @Builder
 public class RemitoDetalleSearchFilter extends AbstractSearchFilter {
 
-    private LocalDateTime fechaRemitoDesde;
-    private LocalDateTime fechaRemitoHasta;
-    private Long idProducto;
-    private Long idDepositoMovimiento;
+  private LocalDateTime fechaRemitoDesde;
+  private LocalDateTime fechaRemitoHasta;
+  private Long idProducto;
+  private Long idDepositoMovimiento;
 
-    @Override
-    public boolean hasFilter() {
-        return hasEntreFechasAltaFilter()
-                || idDepositoMovimiento != null
-                || idProducto != null;
-    }
+  @Override
+  public boolean hasFilter() {
+    return hasEntreFechasAltaFilter() || idDepositoMovimiento != null || idProducto != null;
+  }
 
-    public boolean hasEntreFechasAltaFilter() {
-        return fechaRemitoDesde != null && fechaRemitoHasta != null;
-    }
-
+  public boolean hasEntreFechasAltaFilter() {
+    return fechaRemitoDesde != null && fechaRemitoHasta != null;
+  }
 }

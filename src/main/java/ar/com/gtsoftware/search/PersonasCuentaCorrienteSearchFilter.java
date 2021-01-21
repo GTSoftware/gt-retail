@@ -17,9 +17,7 @@ package ar.com.gtsoftware.search;
 
 import lombok.*;
 
-/**
- * @author rodrigo
- */
+/** @author rodrigo */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -27,14 +25,12 @@ import lombok.*;
 @Builder
 public class PersonasCuentaCorrienteSearchFilter extends AbstractSearchFilter {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    private Long idPersona;
+  private Long idPersona;
 
-
-    @Override
-    public boolean hasFilter() {
-        return idPersona != null;
-    }
-
+  @Override
+  public boolean hasFilter() {
+    return idPersona != null;
+  }
 }

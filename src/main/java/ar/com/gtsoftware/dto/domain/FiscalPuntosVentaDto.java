@@ -31,22 +31,22 @@ import lombok.*;
 @Builder
 public class FiscalPuntosVentaDto {
 
-    @EqualsAndHashCode.Include
-    private Integer nroPuntoVenta;
+  @EqualsAndHashCode.Include private Integer nroPuntoVenta;
 
-    private boolean activo;
+  private boolean activo;
 
-    private String descripcion;
+  private String descripcion;
 
-    private TiposPuntosVenta tipo;
+  private TiposPuntosVenta tipo;
 
-    private SucursalesDto sucursal;
-    private Integer version;
+  private SucursalesDto sucursal;
+  private Integer version;
 
-//
-//    @XmlTransient
-//    public String getBusinessString() {
-//        return String.format("%s - %s", StringUtils.leftPad(String.valueOf(nroPuntoVenta), 4, '0'), tipo);
-//    }
+  //
+  //    @XmlTransient
+  //    public String getBusinessString() {
+  //        return String.format("%s - %s", StringUtils.leftPad(String.valueOf(nroPuntoVenta), 4,
+  // '0'), tipo);
+  //    }
 
 }

@@ -23,5 +23,4 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface ProveedoresOrdenesCompraEstadosMapper
-        extends GenericMapper<ProveedoresOrdenesCompraEstados, ProveedoresOrdenesCompraEstadosDto> {
-}
+    extends GenericMapper<ProveedoresOrdenesCompraEstados, ProveedoresOrdenesCompraEstadosDto> {}

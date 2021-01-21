@@ -15,9 +15,8 @@
  */
 package ar.com.gtsoftware.search;
 
-import lombok.*;
-
 import java.util.Date;
+import lombok.*;
 
 /**
  * SearchFilter para Arqueos de caja
@@ -31,21 +30,19 @@ import java.util.Date;
 @Builder
 public class CajasArqueosSearchFilter extends AbstractSearchFilter {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    private Long idUsuario;
-    private Long idSucursal;
-    private Boolean controlado;
-    private Date fechaArqueoDesde, fechaArqueoHasta;
+  private Long idUsuario;
+  private Long idSucursal;
+  private Boolean controlado;
+  private Date fechaArqueoDesde, fechaArqueoHasta;
 
+  @Override
+  public boolean hasFilter() {
+    return idUsuario != null || idSucursal != null || controlado != null || hasValidFechasArqueo();
+  }
 
-    @Override
-    public boolean hasFilter() {
-        return idUsuario != null || idSucursal != null || controlado != null
-                || hasValidFechasArqueo();
-    }
-
-    public boolean hasValidFechasArqueo() {
-        return fechaArqueoDesde != null && fechaArqueoHasta != null;
-    }
+  public boolean hasValidFechasArqueo() {
+    return fechaArqueoDesde != null && fechaArqueoHasta != null;
+  }
 }

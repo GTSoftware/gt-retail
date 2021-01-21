@@ -9,9 +9,9 @@ import lombok.Setter;
 @Builder
 public class Warehouse {
 
-    private Long warehouseId;
-    private String warehouseName;
-    private Long branchId;
-    private String branchName;
-    private String displayName;
+  private Long warehouseId;
+  private String warehouseName;
+  private Long branchId;
+  private String branchName;
+  private String displayName;
 }

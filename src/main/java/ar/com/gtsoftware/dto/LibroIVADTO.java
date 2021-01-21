@@ -15,12 +15,11 @@
  */
 package ar.com.gtsoftware.dto;
 
-import lombok.*;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+import lombok.*;
 
 /**
  * Clase que almacena la información necesaria para un libro de IVA Ventas
@@ -36,169 +35,167 @@ import java.util.Objects;
 @Builder
 public class LibroIVADTO {
 
-    private final LocalDateTime fechaGeneracion = LocalDateTime.now();
-    private LocalDateTime fechaDesde;
-    private LocalDateTime fechaHasta;
-    private List<RegistroIVADTO> facturasList;
-    private BigDecimal importeTotal;
-    private BigDecimal importeTotalIVA;
-    private List<ImportesResponsabilidad> totalesIVAResponsabilidad;
-    private List<ImportesAlicuotasIVA> totalesAlicuota;
+  private final LocalDateTime fechaGeneracion = LocalDateTime.now();
+  private LocalDateTime fechaDesde;
+  private LocalDateTime fechaHasta;
+  private List<RegistroIVADTO> facturasList;
+  private BigDecimal importeTotal;
+  private BigDecimal importeTotalIVA;
+  private List<ImportesResponsabilidad> totalesIVAResponsabilidad;
+  private List<ImportesAlicuotasIVA> totalesAlicuota;
 
+  /**
+   * Devuelve la fecha desde
+   *
+   * @return fechaDesde
+   */
+  public LocalDateTime getFechaDesde() {
+    return fechaDesde;
+  }
 
-    /**
-     * Devuelve la fecha desde
-     *
-     * @return fechaDesde
-     */
-    public LocalDateTime getFechaDesde() {
-        return fechaDesde;
+  /**
+   * Establece la fecha desde
+   *
+   * @param fechaDesde
+   */
+  public void setFechaDesde(LocalDateTime fechaDesde) {
+    this.fechaDesde = fechaDesde;
+  }
+
+  /**
+   * Devuelve la fecha hasta
+   *
+   * @return fechaHasta
+   */
+  public LocalDateTime getFechaHasta() {
+    return fechaHasta;
+  }
+
+  /**
+   * Estable la fecha hasta
+   *
+   * @param fechaHasta
+   */
+  public void setFechaHasta(LocalDateTime fechaHasta) {
+    this.fechaHasta = fechaHasta;
+  }
+
+  /**
+   * Devuelve la fecha de generación del libro
+   *
+   * @return
+   */
+  public LocalDateTime getFechaGeneracion() {
+    return fechaGeneracion;
+  }
+
+  /**
+   * Devuelve la lista de facturas
+   *
+   * @return facturasList
+   */
+  public List<RegistroIVADTO> getFacturasList() {
+    return facturasList;
+  }
+
+  /**
+   * Establece la lista de facturas
+   *
+   * @param facturasList
+   */
+  public void setFacturasList(List<RegistroIVADTO> facturasList) {
+    this.facturasList = facturasList;
+  }
+
+  /**
+   * Devuelve el importe total de todas las facturas del libro
+   *
+   * @return
+   */
+  public BigDecimal getImporteTotal() {
+    return importeTotal;
+  }
+
+  /**
+   * Establece el importe total de todas las facturas del libro
+   *
+   * @param importeTotal
+   */
+  public void setImporteTotal(BigDecimal importeTotal) {
+    this.importeTotal = importeTotal;
+  }
+
+  /**
+   * Devuelve el importe total de IVA del libro
+   *
+   * @return importeTotalIVA
+   */
+  public BigDecimal getImporteTotalIVA() {
+    return importeTotalIVA;
+  }
+
+  /**
+   * Establece el importe total de IVA del libro
+   *
+   * @param importeTotalIVA
+   */
+  public void setImporteTotalIVA(BigDecimal importeTotalIVA) {
+    this.importeTotalIVA = importeTotalIVA;
+  }
+
+  /**
+   * Devuelve los totales por responsabilidad de IVA
+   *
+   * @return
+   */
+  public List<ImportesResponsabilidad> getTotalesIVAResponsabilidad() {
+    return totalesIVAResponsabilidad;
+  }
+
+  /**
+   * Establece los totales por responsabilidad de IVA
+   *
+   * @param totalesIVAResponsabilidad
+   */
+  public void setTotalesIVAResponsabilidad(
+      List<ImportesResponsabilidad> totalesIVAResponsabilidad) {
+    this.totalesIVAResponsabilidad = totalesIVAResponsabilidad;
+  }
+
+  /**
+   * Devuelve el total de iva por alícuota
+   *
+   * @return
+   */
+  public List<ImportesAlicuotasIVA> getTotalesAlicuota() {
+    return totalesAlicuota;
+  }
+
+  /**
+   * Establece el total de iva por alícuota
+   *
+   * @param totalesAlicuota
+   */
+  public void setTotalesAlicuota(List<ImportesAlicuotasIVA> totalesAlicuota) {
+    this.totalesAlicuota = totalesAlicuota;
+  }
+
+  @Override
+  public int hashCode() {
+    int hash = 7;
+    hash = 23 * hash + Objects.hashCode(this.fechaGeneracion);
+    return hash;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == null) {
+      return false;
     }
-
-    /**
-     * Establece la fecha desde
-     *
-     * @param fechaDesde
-     */
-    public void setFechaDesde(LocalDateTime fechaDesde) {
-        this.fechaDesde = fechaDesde;
+    if (getClass() != obj.getClass()) {
+      return false;
     }
-
-    /**
-     * Devuelve la fecha hasta
-     *
-     * @return fechaHasta
-     */
-    public LocalDateTime getFechaHasta() {
-        return fechaHasta;
-    }
-
-    /**
-     * Estable la fecha hasta
-     *
-     * @param fechaHasta
-     */
-    public void setFechaHasta(LocalDateTime fechaHasta) {
-        this.fechaHasta = fechaHasta;
-    }
-
-    /**
-     * Devuelve la fecha de generación del libro
-     *
-     * @return
-     */
-    public LocalDateTime getFechaGeneracion() {
-        return fechaGeneracion;
-    }
-
-
-    /**
-     * Devuelve la lista de facturas
-     *
-     * @return facturasList
-     */
-    public List<RegistroIVADTO> getFacturasList() {
-        return facturasList;
-    }
-
-    /**
-     * Establece la lista de facturas
-     *
-     * @param facturasList
-     */
-    public void setFacturasList(List<RegistroIVADTO> facturasList) {
-        this.facturasList = facturasList;
-    }
-
-    /**
-     * Devuelve el importe total de todas las facturas del libro
-     *
-     * @return
-     */
-    public BigDecimal getImporteTotal() {
-        return importeTotal;
-    }
-
-    /**
-     * Establece el importe total de todas las facturas del libro
-     *
-     * @param importeTotal
-     */
-    public void setImporteTotal(BigDecimal importeTotal) {
-        this.importeTotal = importeTotal;
-    }
-
-    /**
-     * Devuelve el importe total de IVA del libro
-     *
-     * @return importeTotalIVA
-     */
-    public BigDecimal getImporteTotalIVA() {
-        return importeTotalIVA;
-    }
-
-    /**
-     * Establece el importe total de IVA del libro
-     *
-     * @param importeTotalIVA
-     */
-    public void setImporteTotalIVA(BigDecimal importeTotalIVA) {
-        this.importeTotalIVA = importeTotalIVA;
-    }
-
-    /**
-     * Devuelve los totales por responsabilidad de IVA
-     *
-     * @return
-     */
-    public List<ImportesResponsabilidad> getTotalesIVAResponsabilidad() {
-        return totalesIVAResponsabilidad;
-    }
-
-    /**
-     * Establece los totales por responsabilidad de IVA
-     *
-     * @param totalesIVAResponsabilidad
-     */
-    public void setTotalesIVAResponsabilidad(List<ImportesResponsabilidad> totalesIVAResponsabilidad) {
-        this.totalesIVAResponsabilidad = totalesIVAResponsabilidad;
-    }
-
-    /**
-     * Devuelve el total de iva por alícuota
-     *
-     * @return
-     */
-    public List<ImportesAlicuotasIVA> getTotalesAlicuota() {
-        return totalesAlicuota;
-    }
-
-    /**
-     * Establece el total de iva por alícuota
-     *
-     * @param totalesAlicuota
-     */
-    public void setTotalesAlicuota(List<ImportesAlicuotasIVA> totalesAlicuota) {
-        this.totalesAlicuota = totalesAlicuota;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 23 * hash + Objects.hashCode(this.fechaGeneracion);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final LibroIVADTO other = (LibroIVADTO) obj;
-        return Objects.equals(this.fechaGeneracion, other.fechaGeneracion);
-    }
-
+    final LibroIVADTO other = (LibroIVADTO) obj;
+    return Objects.equals(this.fechaGeneracion, other.fechaGeneracion);
+  }
 }

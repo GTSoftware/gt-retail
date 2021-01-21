@@ -15,10 +15,9 @@
  */
 package ar.com.gtsoftware.search;
 
+import java.util.Date;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
-
-import java.util.Date;
 
 /**
  * SearchFilter para Órdenes de Compra
@@ -32,39 +31,38 @@ import java.util.Date;
 @Builder
 public class OrdenCompraSearchFilter extends AbstractSearchFilter {
 
-    private Date fechaAltaDesde;
-    private Date fechaAltaHasta;
-    private Long idProveedor;
-    private Long idProducto;
-    private String txt;
-    private Long idEstadoOrdenCompra;
+  private Date fechaAltaDesde;
+  private Date fechaAltaHasta;
+  private Long idProveedor;
+  private Long idProducto;
+  private String txt;
+  private Long idEstadoOrdenCompra;
 
-    @Override
-    public boolean hasFilter() {
-        return hasEntreFechasAltaFilter()
-                || idProveedor != null
-                || idProducto != null
-                || idEstadoOrdenCompra != null
-                || hasTxtFilter();
-    }
+  @Override
+  public boolean hasFilter() {
+    return hasEntreFechasAltaFilter()
+        || idProveedor != null
+        || idProducto != null
+        || idEstadoOrdenCompra != null
+        || hasTxtFilter();
+  }
 
-    /**
-     * Retorna true si ambos filtros de búsqueda por fecha de alta de orden de compra están establecidos.
-     *
-     * @return
-     */
-    public boolean hasEntreFechasAltaFilter() {
-        return fechaAltaDesde != null && fechaAltaHasta != null;
-    }
+  /**
+   * Retorna true si ambos filtros de búsqueda por fecha de alta de orden de compra están
+   * establecidos.
+   *
+   * @return
+   */
+  public boolean hasEntreFechasAltaFilter() {
+    return fechaAltaDesde != null && fechaAltaHasta != null;
+  }
 
-
-    /**
-     * Retorna true si hay algún texto de búsqueda.
-     *
-     * @return
-     */
-    public boolean hasTxtFilter() {
-        return StringUtils.isNotEmpty(txt);
-    }
-
+  /**
+   * Retorna true si hay algún texto de búsqueda.
+   *
+   * @return
+   */
+  public boolean hasTxtFilter() {
+    return StringUtils.isNotEmpty(txt);
+  }
 }

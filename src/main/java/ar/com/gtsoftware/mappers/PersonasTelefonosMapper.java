@@ -23,5 +23,4 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring", uses = PersonasMapper.class)
 public interface PersonasTelefonosMapper
-        extends GenericMapper<PersonasTelefonos, PersonasTelefonosDto> {
-}
+    extends GenericMapper<PersonasTelefonos, PersonasTelefonosDto> {}

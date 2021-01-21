@@ -16,12 +16,11 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
-import lombok.*;
-
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.Date;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import lombok.*;
 
 /**
  * Transferencia de valores entre cajas
@@ -35,23 +34,17 @@ import java.util.Date;
 @Builder
 public class CajasTransferenciasDto {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @EqualsAndHashCode.Include
-    private Long id;
-    @NotNull
-    private CajasDto idCajaOrigen;
-    @NotNull
-    private CajasDto idCajaDestino;
-    @NotNull
-    private Date fechaTransferencia;
-    @NotNull
-    private BigDecimal monto;
-    @Size(max = 90)
-    private String observaciones;
-    @NotNull
-    private NegocioFormasPagoDto idFormaPago;
-    private Integer version;
+  @EqualsAndHashCode.Include private Long id;
+  @NotNull private CajasDto idCajaOrigen;
+  @NotNull private CajasDto idCajaDestino;
+  @NotNull private Date fechaTransferencia;
+  @NotNull private BigDecimal monto;
 
+  @Size(max = 90)
+  private String observaciones;
 
+  @NotNull private NegocioFormasPagoDto idFormaPago;
+  private Integer version;
 }

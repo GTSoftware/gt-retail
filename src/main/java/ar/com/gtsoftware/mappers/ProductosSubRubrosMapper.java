@@ -21,8 +21,8 @@ import ar.com.gtsoftware.domain.ProductosSubRubros;
 import ar.com.gtsoftware.dto.domain.ProductosSubRubrosDto;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring",
-        uses = {ProductosRubrosMapper.class})
+@Mapper(
+    componentModel = "spring",
+    uses = {ProductosRubrosMapper.class})
 public interface ProductosSubRubrosMapper
-        extends GenericMapper<ProductosSubRubros, ProductosSubRubrosDto> {
-}
+    extends GenericMapper<ProductosSubRubros, ProductosSubRubrosDto> {}

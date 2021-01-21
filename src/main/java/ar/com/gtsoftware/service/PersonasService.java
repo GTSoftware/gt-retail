@@ -20,7 +20,4 @@ package ar.com.gtsoftware.service;
 import ar.com.gtsoftware.dto.domain.PersonasDto;
 import ar.com.gtsoftware.search.PersonasSearchFilter;
 
-
-public interface PersonasService
-        extends EntityService<PersonasDto, PersonasSearchFilter> {
-}
+public interface PersonasService extends EntityService<PersonasDto, PersonasSearchFilter> {}

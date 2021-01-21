@@ -19,45 +19,46 @@ import ar.com.gtsoftware.domain.NegocioPlanesPagoDetalle;
 import ar.com.gtsoftware.domain.NegocioPlanesPagoDetalle_;
 import ar.com.gtsoftware.domain.NegocioPlanesPago_;
 import ar.com.gtsoftware.search.PlanesPagoDetalleSearchFilter;
-import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.springframework.stereotype.Repository;
 
 @Repository
-public class NegocioPlanesPagoDetalleFacade extends AbstractFacade<NegocioPlanesPagoDetalle, PlanesPagoDetalleSearchFilter> {
+public class NegocioPlanesPagoDetalleFacade
+    extends AbstractFacade<NegocioPlanesPagoDetalle, PlanesPagoDetalleSearchFilter> {
 
+  private final EntityManager em;
 
-    private final EntityManager em;
+  public NegocioPlanesPagoDetalleFacade(EntityManager em) {
+    super(NegocioPlanesPagoDetalle.class);
+    this.em = em;
+  }
 
-    public NegocioPlanesPagoDetalleFacade(EntityManager em) {
-        super(NegocioPlanesPagoDetalle.class);
-        this.em = em;
+  @Override
+  protected EntityManager getEntityManager() {
+    return em;
+  }
+
+  @Override
+  public Predicate createWhereFromSearchFilter(
+      PlanesPagoDetalleSearchFilter sf, CriteriaBuilder cb, Root<NegocioPlanesPagoDetalle> root) {
+    Predicate p = null;
+
+    if (sf.getIdPlan() != null) {
+      Predicate p1 =
+          cb.equal(
+              root.get(NegocioPlanesPagoDetalle_.idPlan).get(NegocioPlanesPago_.id),
+              sf.getIdPlan());
+      p = appendAndPredicate(cb, p, p1);
     }
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
+    if (sf.getActivo() != null) {
+      Predicate p1 = cb.equal(root.get(NegocioPlanesPagoDetalle_.activo), sf.getActivo());
+      p = appendAndPredicate(cb, p, p1);
     }
 
-    @Override
-    public Predicate createWhereFromSearchFilter(PlanesPagoDetalleSearchFilter sf, CriteriaBuilder cb, Root<NegocioPlanesPagoDetalle> root) {
-        Predicate p = null;
-
-        if (sf.getIdPlan() != null) {
-            Predicate p1 = cb.equal(root.get(NegocioPlanesPagoDetalle_.idPlan).get(NegocioPlanesPago_.id), sf.getIdPlan());
-            p = appendAndPredicate(cb, p, p1);
-        }
-
-        if (sf.getActivo() != null) {
-            Predicate p1 = cb.equal(root.get(NegocioPlanesPagoDetalle_.activo), sf.getActivo());
-            p = appendAndPredicate(cb, p, p1);
-        }
-
-        return p;
-
-    }
-
+    return p;
+  }
 }

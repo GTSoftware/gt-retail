@@ -16,10 +16,9 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
-import lombok.*;
-
 import java.math.BigDecimal;
 import java.util.Date;
+import lombok.*;
 
 /**
  * Cheques de terceros recibidos
@@ -33,22 +32,19 @@ import java.util.Date;
 @Builder
 public class ChequesTercerosDto {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @EqualsAndHashCode.Include
-    private Long id;
-    private BigDecimal monto;
-    //private RecibosDetalleDto reciboDetalle;
-    private Integer version;
+  @EqualsAndHashCode.Include private Long id;
+  private BigDecimal monto;
+  // private RecibosDetalleDto reciboDetalle;
+  private Integer version;
 
-    private String nroCheque;
-    private String cuitOriginante;
-    private String razonSocialOriginante;
-    private Date fechaOrigen;
-    private Date fechaVencimiento;
-    private Date fechaCobro;
-    private BancosDto idBanco;
-    private String notas;
-
-
+  private String nroCheque;
+  private String cuitOriginante;
+  private String razonSocialOriginante;
+  private Date fechaOrigen;
+  private Date fechaVencimiento;
+  private Date fechaCobro;
+  private BancosDto idBanco;
+  private String notas;
 }

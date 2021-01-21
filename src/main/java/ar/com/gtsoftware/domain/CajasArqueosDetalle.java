@@ -15,13 +15,12 @@
  */
 package ar.com.gtsoftware.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import java.math.BigDecimal;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.math.BigDecimal;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Detalle del arqueo.
@@ -34,36 +33,41 @@ import java.math.BigDecimal;
 @Setter
 public class CajasArqueosDetalle extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "caja_arqueos_detalle_id_arqueo_detalle")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "caja_arqueos_detalle_id_arqueo_detalle",
-            sequenceName = "caja_arqueos_detalle_id_arqueo_detalle_seq")
-    @Basic(optional = false)
-    @Column(name = "id_arqueo_detalle", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(
+      strategy = GenerationType.SEQUENCE,
+      generator = "caja_arqueos_detalle_id_arqueo_detalle")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "caja_arqueos_detalle_id_arqueo_detalle",
+      sequenceName = "caja_arqueos_detalle_id_arqueo_detalle_seq")
+  @Basic(optional = false)
+  @Column(name = "id_arqueo_detalle", nullable = false, updatable = false)
+  private Long id;
 
-    @NotNull
-    @ManyToOne
-    @JoinColumn(name = "id_arqueo", referencedColumnName = "id_arqueo")
-    private CajasArqueos idArqueo;
+  @NotNull
+  @ManyToOne
+  @JoinColumn(name = "id_arqueo", referencedColumnName = "id_arqueo")
+  private CajasArqueos idArqueo;
 
-    @ManyToOne
-    @JoinColumn(name = "id_forma_pago", referencedColumnName = "id_forma_pago")
-    private NegocioFormasPago idFormaPago;
+  @ManyToOne
+  @JoinColumn(name = "id_forma_pago", referencedColumnName = "id_forma_pago")
+  private NegocioFormasPago idFormaPago;
 
-    @NotNull
-    @Column(name = "monto_sistema")
-    private BigDecimal montoSistema;
-    @NotNull
-    @Column(name = "monto_declarado")
-    private BigDecimal montoDeclarado;
+  @NotNull
+  @Column(name = "monto_sistema")
+  private BigDecimal montoSistema;
 
-    @NotNull
-    @Column(name = "diferencia")
-    private BigDecimal diferencia;
+  @NotNull
+  @Column(name = "monto_declarado")
+  private BigDecimal montoDeclarado;
 
-    @Column(name = "descargo")
-    @Size(max = 200)
-    private String descargo;
+  @NotNull
+  @Column(name = "diferencia")
+  private BigDecimal diferencia;
 
+  @Column(name = "descargo")
+  @Size(max = 200)
+  private String descargo;
 }

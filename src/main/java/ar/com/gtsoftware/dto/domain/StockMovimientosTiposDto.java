@@ -16,15 +16,12 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
-import lombok.*;
-
+import java.io.Serializable;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
+import lombok.*;
 
-/**
- * @author rodrigo
- */
+/** @author rodrigo */
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
@@ -32,12 +29,10 @@ import java.io.Serializable;
 @Builder
 public class StockMovimientosTiposDto implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @EqualsAndHashCode.Include
-    private Long id;
+  private static final long serialVersionUID = 1L;
+  @EqualsAndHashCode.Include private Long id;
 
-    @NotNull
-    @Size(min = 1, max = 60)
-    private String nombreTipo;
-
+  @NotNull
+  @Size(min = 1, max = 60)
+  private String nombreTipo;
 }

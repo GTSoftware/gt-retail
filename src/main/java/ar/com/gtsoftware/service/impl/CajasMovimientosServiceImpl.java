@@ -30,20 +30,20 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class CajasMovimientosServiceImpl
-        extends BaseEntityService<CajasMovimientosDto, CajasMovimientosSearchFilter, CajasMovimientos>
-        implements CajasMovimientosService {
+    extends BaseEntityService<CajasMovimientosDto, CajasMovimientosSearchFilter, CajasMovimientos>
+    implements CajasMovimientosService {
 
-    private final CajasMovimientosFacade facade;
+  private final CajasMovimientosFacade facade;
 
-    private final CajasMovimientosMapper mapper;
+  private final CajasMovimientosMapper mapper;
 
-    @Override
-    protected CajasMovimientosFacade getFacade() {
-        return facade;
-    }
+  @Override
+  protected CajasMovimientosFacade getFacade() {
+    return facade;
+  }
 
-    @Override
-    protected CajasMovimientosMapper getMapper() {
-        return mapper;
-    }
+  @Override
+  protected CajasMovimientosMapper getMapper() {
+    return mapper;
+  }
 }

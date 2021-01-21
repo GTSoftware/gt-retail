@@ -15,39 +15,40 @@
  */
 package ar.com.gtsoftware.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
-/**
- * @author rodrigo
- */
+/** @author rodrigo */
 @Entity
 @Table(name = "productos_rubros")
 @Getter
 @Setter
 public class ProductosRubros extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "productos_rubros_id_rubro")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "productos_rubros_id_rubro",
-            sequenceName = "productos_rubros_id_rubro_seq")
-    @Basic(optional = false)
-    @Column(name = "id_rubro", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "productos_rubros_id_rubro")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "productos_rubros_id_rubro",
+      sequenceName = "productos_rubros_id_rubro_seq")
+  @Basic(optional = false)
+  @Column(name = "id_rubro", nullable = false, updatable = false)
+  private Long id;
 
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "nombre_rubro")
-    private String nombreRubro;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idRubro")
-    private List<ProductosSubRubros> productosSubRubrosList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idRubro")
-    private List<Productos> productosList;
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 100)
+  @Column(name = "nombre_rubro")
+  private String nombreRubro;
 
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "idRubro")
+  private List<ProductosSubRubros> productosSubRubrosList;
+
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "idRubro")
+  private List<Productos> productosList;
 }

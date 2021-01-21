@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ProductBrand {
-    private Long brandId;
-    private String brandName;
-    private String displayName;
+  private Long brandId;
+  private String brandName;
+  private String displayName;
 }

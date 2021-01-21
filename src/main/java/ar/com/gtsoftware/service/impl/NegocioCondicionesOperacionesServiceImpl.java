@@ -27,26 +27,24 @@ import ar.com.gtsoftware.service.NegocioCondicionesOperacionesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-
 @Service
 @RequiredArgsConstructor
 public class NegocioCondicionesOperacionesServiceImpl
-        extends BaseEntityService<NegocioCondicionesOperacionesDto, AbstractSearchFilter, NegocioCondicionesOperaciones>
-        implements NegocioCondicionesOperacionesService {
+    extends BaseEntityService<
+        NegocioCondicionesOperacionesDto, AbstractSearchFilter, NegocioCondicionesOperaciones>
+    implements NegocioCondicionesOperacionesService {
 
+  private final NegocioCondicionesOperacionesFacade facade;
 
-    private final NegocioCondicionesOperacionesFacade facade;
+  private final NegocioCondicionesOperacionesMapper mapper;
 
-    private final NegocioCondicionesOperacionesMapper mapper;
+  @Override
+  protected NegocioCondicionesOperacionesFacade getFacade() {
+    return facade;
+  }
 
-    @Override
-    protected NegocioCondicionesOperacionesFacade getFacade() {
-        return facade;
-    }
-
-    @Override
-    protected NegocioCondicionesOperacionesMapper getMapper() {
-        return mapper;
-    }
-
+  @Override
+  protected NegocioCondicionesOperacionesMapper getMapper() {
+    return mapper;
+  }
 }

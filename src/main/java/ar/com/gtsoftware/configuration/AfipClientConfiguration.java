@@ -15,48 +15,49 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 @RequiredArgsConstructor
 public class AfipClientConfiguration {
 
-    private final LoginTicketRequestBuilder loginTicketRequestBuilder;
-    private final LoginRequestSigner loginRequestSigner;
-    private final ParametrosService parametrosService;
+  private final LoginTicketRequestBuilder loginTicketRequestBuilder;
+  private final LoginRequestSigner loginRequestSigner;
+  private final ParametrosService parametrosService;
 
-    @Value("${gtretail.afip.login.url:https://wsaahomo.afip.gov.ar/ws/services/LoginCms}")
-    private String loginUrl;
-    @Value("${gtretail.afip.wsfe.url:https://wswhomo.afip.gov.ar/wsfev1/service.asmx}")
-    private String wsfeUrl;
+  @Value("${gtretail.afip.login.url:https://wsaahomo.afip.gov.ar/ws/services/LoginCms}")
+  private String loginUrl;
 
-    @Bean
-    public Jaxb2Marshaller loginMarshaller() {
-        Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
-        marshaller.setContextPath("ar.com.gtsoftware.service.afip.client.login");
+  @Value("${gtretail.afip.wsfe.url:https://wswhomo.afip.gov.ar/wsfev1/service.asmx}")
+  private String wsfeUrl;
 
-        return marshaller;
-    }
+  @Bean
+  public Jaxb2Marshaller loginMarshaller() {
+    Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
+    marshaller.setContextPath("ar.com.gtsoftware.service.afip.client.login");
 
-    @Bean
-    public Jaxb2Marshaller feMarshaller() {
-        Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
-        marshaller.setContextPath("ar.com.gtsoftware.service.afip.client.fe");
+    return marshaller;
+  }
 
-        return marshaller;
-    }
+  @Bean
+  public Jaxb2Marshaller feMarshaller() {
+    Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
+    marshaller.setContextPath("ar.com.gtsoftware.service.afip.client.fe");
 
-    @Bean
-    public LoginClient loginClient(Jaxb2Marshaller loginMarshaller) {
-        LoginClient loginClient = new LoginClient(loginTicketRequestBuilder, loginRequestSigner);
-        loginClient.setDefaultUri(loginUrl);
-        loginClient.setMarshaller(loginMarshaller);
-        loginClient.setUnmarshaller(loginMarshaller);
+    return marshaller;
+  }
 
-        return loginClient;
-    }
+  @Bean
+  public LoginClient loginClient(Jaxb2Marshaller loginMarshaller) {
+    LoginClient loginClient = new LoginClient(loginTicketRequestBuilder, loginRequestSigner);
+    loginClient.setDefaultUri(loginUrl);
+    loginClient.setMarshaller(loginMarshaller);
+    loginClient.setUnmarshaller(loginMarshaller);
 
-    @Bean
-    public ElectronicInvoiceClient electronicInvoiceClient(Jaxb2Marshaller feMarshaller) {
-        ElectronicInvoiceClient invoiceClient = new ElectronicInvoiceClient(parametrosService);
-        invoiceClient.setDefaultUri(wsfeUrl);
-        invoiceClient.setMarshaller(feMarshaller);
-        invoiceClient.setUnmarshaller(feMarshaller);
+    return loginClient;
+  }
 
-        return invoiceClient;
-    }
+  @Bean
+  public ElectronicInvoiceClient electronicInvoiceClient(Jaxb2Marshaller feMarshaller) {
+    ElectronicInvoiceClient invoiceClient = new ElectronicInvoiceClient(parametrosService);
+    invoiceClient.setDefaultUri(wsfeUrl);
+    invoiceClient.setMarshaller(feMarshaller);
+    invoiceClient.setUnmarshaller(feMarshaller);
+
+    return invoiceClient;
+  }
 }

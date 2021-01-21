@@ -16,10 +16,9 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
-import lombok.*;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import lombok.*;
 
 @Getter
 @Setter
@@ -29,16 +28,12 @@ import java.time.LocalDateTime;
 @Builder
 public class ProductosPorcentajesDto {
 
+  @EqualsAndHashCode.Include private Long id;
+  private LocalDateTime fechaModificacion;
+  private BigDecimal valor;
 
-    @EqualsAndHashCode.Include
-    private Long id;
-    private LocalDateTime fechaModificacion;
-    private BigDecimal valor;
+  private ProductosTiposPorcentajesDto idTipoPorcentaje;
+  private Integer version;
 
-    private ProductosTiposPorcentajesDto idTipoPorcentaje;
-    private Integer version;
-
-    @EqualsAndHashCode.Include
-    private transient Integer nroItem;
-
+  @EqualsAndHashCode.Include private transient Integer nroItem;
 }

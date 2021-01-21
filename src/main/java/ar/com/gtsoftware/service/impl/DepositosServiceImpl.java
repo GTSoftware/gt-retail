@@ -30,20 +30,20 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class DepositosServiceImpl
-        extends BaseEntityService<DepositosDto, DepositosSearchFilter, Depositos>
-        implements DepositosService {
+    extends BaseEntityService<DepositosDto, DepositosSearchFilter, Depositos>
+    implements DepositosService {
 
-    private final DepositosFacade facade;
+  private final DepositosFacade facade;
 
-    private final DepositosMapper mapper;
+  private final DepositosMapper mapper;
 
-    @Override
-    protected DepositosFacade getFacade() {
-        return facade;
-    }
+  @Override
+  protected DepositosFacade getFacade() {
+    return facade;
+  }
 
-    @Override
-    protected DepositosMapper getMapper() {
-        return mapper;
-    }
+  @Override
+  protected DepositosMapper getMapper() {
+    return mapper;
+  }
 }

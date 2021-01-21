@@ -20,63 +20,64 @@ import ar.com.gtsoftware.domain.CajasArqueos_;
 import ar.com.gtsoftware.domain.Sucursales_;
 import ar.com.gtsoftware.domain.Usuarios_;
 import ar.com.gtsoftware.search.CajasArqueosSearchFilter;
-import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.springframework.stereotype.Repository;
 
-/**
- * @author Rodrigo Tato <rotatomel@gmail.com>
- */
+/** @author Rodrigo Tato <rotatomel@gmail.com> */
 @Repository
 public class CajasArqueosFacade extends AbstractFacade<CajasArqueos, CajasArqueosSearchFilter> {
 
+  private final EntityManager em;
 
-    private final EntityManager em;
+  public CajasArqueosFacade(EntityManager em) {
+    super(CajasArqueos.class);
+    this.em = em;
+  }
 
-    public CajasArqueosFacade(EntityManager em) {
-        super(CajasArqueos.class);
-        this.em = em;
+  @Override
+  protected EntityManager getEntityManager() {
+    return em;
+  }
+
+  @Override
+  public Predicate createWhereFromSearchFilter(
+      CajasArqueosSearchFilter psf, CriteriaBuilder cb, Root<CajasArqueos> root) {
+    Predicate p = null;
+    if (psf.hasValidFechasArqueo()) {
+      Predicate p1 =
+          cb.between(
+              root.get(CajasArqueos_.fechaArqueo),
+              psf.getFechaArqueoDesde(),
+              psf.getFechaArqueoHasta());
+      p = appendAndPredicate(cb, p1, p);
     }
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
+    if (psf.getControlado() != null) {
+      Predicate p1;
+      if (psf.getControlado()) {
+        p1 = cb.isNotNull(root.get(CajasArqueos_.idUsuarioControl));
+      } else {
+        p1 = cb.isNull(root.get(CajasArqueos_.idUsuarioControl));
+      }
+
+      p = appendAndPredicate(cb, p1, p);
     }
 
-    @Override
-    public Predicate createWhereFromSearchFilter(CajasArqueosSearchFilter psf, CriteriaBuilder cb, Root<CajasArqueos> root) {
-        Predicate p = null;
-        if (psf.hasValidFechasArqueo()) {
-            Predicate p1 = cb.between(root.get(CajasArqueos_.fechaArqueo), psf.getFechaArqueoDesde(), psf.getFechaArqueoHasta());
-            p = appendAndPredicate(cb, p1, p);
-        }
-
-        if (psf.getControlado() != null) {
-            Predicate p1;
-            if (psf.getControlado()) {
-                p1 = cb.isNotNull(root.get(CajasArqueos_.idUsuarioControl));
-            } else {
-                p1 = cb.isNull(root.get(CajasArqueos_.idUsuarioControl));
-            }
-
-            p = appendAndPredicate(cb, p1, p);
-        }
-
-        if (psf.getIdSucursal() != null) {
-            Predicate p1 = cb.equal(root.get(CajasArqueos_.idSucursal).get(Sucursales_.id), psf.getIdSucursal());
-            p = appendAndPredicate(cb, p1, p);
-        }
-
-        if (psf.getIdUsuario() != null) {
-            Predicate p1 = cb.equal(root.get(CajasArqueos_.idUsuario).get(Usuarios_.id), psf.getIdUsuario());
-            p = appendAndPredicate(cb, p1, p);
-        }
-
-        return p;
-
+    if (psf.getIdSucursal() != null) {
+      Predicate p1 =
+          cb.equal(root.get(CajasArqueos_.idSucursal).get(Sucursales_.id), psf.getIdSucursal());
+      p = appendAndPredicate(cb, p1, p);
     }
 
+    if (psf.getIdUsuario() != null) {
+      Predicate p1 =
+          cb.equal(root.get(CajasArqueos_.idUsuario).get(Usuarios_.id), psf.getIdUsuario());
+      p = appendAndPredicate(cb, p1, p);
+    }
+
+    return p;
+  }
 }

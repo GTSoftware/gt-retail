@@ -20,7 +20,5 @@ package ar.com.gtsoftware.service;
 import ar.com.gtsoftware.dto.domain.FiscalPuntosVentaDto;
 import ar.com.gtsoftware.search.FiscalPuntosVentaSearchFilter;
 
-
 public interface FiscalPuntosVentaService
-        extends EntityService<FiscalPuntosVentaDto, FiscalPuntosVentaSearchFilter> {
-}
+    extends EntityService<FiscalPuntosVentaDto, FiscalPuntosVentaSearchFilter> {}

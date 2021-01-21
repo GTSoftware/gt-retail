@@ -31,17 +31,14 @@ import org.apache.commons.lang3.StringUtils;
 @Builder
 public class OfertasSearchFilter extends AbstractSearchFilter {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    private Boolean activas;
-    private Long idSucursal;
-    private String textoOferta;
+  private Boolean activas;
+  private Long idSucursal;
+  private String textoOferta;
 
-    @Override
-    public boolean hasFilter() {
-        return activas != null
-                || idSucursal != null
-                || StringUtils.isNotEmpty(textoOferta);
-    }
-
+  @Override
+  public boolean hasFilter() {
+    return activas != null || idSucursal != null || StringUtils.isNotEmpty(textoOferta);
+  }
 }

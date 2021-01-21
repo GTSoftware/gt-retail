@@ -17,10 +17,8 @@
 
 package ar.com.gtsoftware.rules;
 
-
-import lombok.*;
-
 import javax.validation.constraints.NotNull;
+import lombok.*;
 
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -29,25 +27,17 @@ import javax.validation.constraints.NotNull;
 @Builder
 public class Condicion {
 
-    @EqualsAndHashCode.Include
-    private Long id;
+  @EqualsAndHashCode.Include private Long id;
 
-    @NotNull
-    private Operacion operacion;
+  @NotNull private Operacion operacion;
 
-    @NotNull
-    private Campo campo;
+  @NotNull private Campo campo;
 
-    @NotNull
-    private String valor;
+  @NotNull private String valor;
 
-    @NotNull
-    private OfertaDto idOferta;
+  @NotNull private OfertaDto idOferta;
 
-    @EqualsAndHashCode.Include
-    private transient int nroItem;
+  @EqualsAndHashCode.Include private transient int nroItem;
 
-    private int version;
-
-
+  private int version;
 }

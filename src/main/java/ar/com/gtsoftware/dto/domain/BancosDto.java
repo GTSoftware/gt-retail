@@ -32,13 +32,10 @@ import lombok.*;
 @Builder
 public class BancosDto {
 
-    private static final long serialVersionUID = 2L;
+  private static final long serialVersionUID = 2L;
 
-    @EqualsAndHashCode.Include
-    private Long id;
-    private String razonSocial;
-    private String observaciones;
-    private PersonasDto idPersona;
-
-
+  @EqualsAndHashCode.Include private Long id;
+  private String razonSocial;
+  private String observaciones;
+  private PersonasDto idPersona;
 }

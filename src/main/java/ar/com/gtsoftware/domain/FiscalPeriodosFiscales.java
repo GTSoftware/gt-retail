@@ -15,46 +15,50 @@
  */
 package ar.com.gtsoftware.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import java.time.LocalDateTime;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
+import lombok.Getter;
+import lombok.Setter;
 
-/**
- * @author rodrigo
- */
+/** @author rodrigo */
 @Entity
 @Table(name = "fiscal_periodos_fiscales")
 @Getter
 @Setter
 public class FiscalPeriodosFiscales extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "fiscal_periodos_fiscales_id_periodo_fiscal")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "fiscal_periodos_fiscales_id_periodo_fiscal",
-            sequenceName = "fiscal_periodos_fiscales_id_periodo_fiscal_seq")
-    @Basic(optional = false)
-    @Column(name = "id_periodo_fiscal", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(
+      strategy = GenerationType.SEQUENCE,
+      generator = "fiscal_periodos_fiscales_id_periodo_fiscal")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "fiscal_periodos_fiscales_id_periodo_fiscal",
+      sequenceName = "fiscal_periodos_fiscales_id_periodo_fiscal_seq")
+  @Basic(optional = false)
+  @Column(name = "id_periodo_fiscal", nullable = false, updatable = false)
+  private Long id;
 
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "nombre_periodo")
-    private String nombrePeriodo;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "fecha_inicio_periodo")
-    private LocalDateTime fechaInicioPeriodo;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "fecha_fin_periodo")
-    private LocalDateTime fechaFinPeriodo;
-    @Basic(optional = false)
-    @Column(name = "periodo_cerrado")
-    private boolean periodoCerrado;
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 100)
+  @Column(name = "nombre_periodo")
+  private String nombrePeriodo;
 
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "fecha_inicio_periodo")
+  private LocalDateTime fechaInicioPeriodo;
+
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "fecha_fin_periodo")
+  private LocalDateTime fechaFinPeriodo;
+
+  @Basic(optional = false)
+  @Column(name = "periodo_cerrado")
+  private boolean periodoCerrado;
 }

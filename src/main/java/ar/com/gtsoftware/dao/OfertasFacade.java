@@ -20,58 +20,64 @@ import ar.com.gtsoftware.domain.Ofertas;
 import ar.com.gtsoftware.domain.Ofertas_;
 import ar.com.gtsoftware.domain.Sucursales_;
 import ar.com.gtsoftware.search.OfertasSearchFilter;
-import org.apache.commons.lang3.BooleanUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Repository;
 
 @Repository
 public class OfertasFacade extends AbstractFacade<Ofertas, OfertasSearchFilter> {
 
-    private static final String LIKE_FORMAT = "%%%s%%";
+  private static final String LIKE_FORMAT = "%%%s%%";
 
-    private final EntityManager em;
+  private final EntityManager em;
 
-    public OfertasFacade(EntityManager em) {
-        super(Ofertas.class);
-        this.em = em;
+  public OfertasFacade(EntityManager em) {
+    super(Ofertas.class);
+    this.em = em;
+  }
+
+  @Override
+  protected EntityManager getEntityManager() {
+    return em;
+  }
+
+  @Override
+  public Predicate createWhereFromSearchFilter(
+      OfertasSearchFilter sf, CriteriaBuilder cb, Root<Ofertas> root) {
+    Predicate p = null;
+
+    if (BooleanUtils.isTrue(sf.getActivas())) {
+
+      Predicate p1 =
+          cb.between(
+              cb.currentTimestamp(),
+              root.get(Ofertas_.vigenciaDesde),
+              root.get(Ofertas_.vigenciaHasta));
+      p = appendAndPredicate(cb, p1, p);
     }
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
+    if (sf.getIdSucursal() != null) {
+      // IdSucursal en nulo aplica a todas las scucursales
+      Predicate p1 =
+          cb.equal(root.get(Ofertas_.idSucursal).get(Sucursales_.id), sf.getIdSucursal());
+      Predicate p2 = cb.isNull(root.get(Ofertas_.idSucursal));
+      Predicate pOr = cb.or(p1, p2);
+      p = appendAndPredicate(cb, pOr, p);
     }
 
-    @Override
-    public Predicate createWhereFromSearchFilter(OfertasSearchFilter sf, CriteriaBuilder cb, Root<Ofertas> root) {
-        Predicate p = null;
+    if (StringUtils.isNotEmpty(sf.getTextoOferta())) {
 
-        if (BooleanUtils.isTrue(sf.getActivas())) {
-
-            Predicate p1 = cb.between(cb.currentTimestamp(), root.get(Ofertas_.vigenciaDesde), root.get(Ofertas_.vigenciaHasta));
-            p = appendAndPredicate(cb, p1, p);
-
-        }
-
-        if (sf.getIdSucursal() != null) {
-            //IdSucursal en nulo aplica a todas las scucursales
-            Predicate p1 = cb.equal(root.get(Ofertas_.idSucursal).get(Sucursales_.id), sf.getIdSucursal());
-            Predicate p2 = cb.isNull(root.get(Ofertas_.idSucursal));
-            Predicate pOr = cb.or(p1, p2);
-            p = appendAndPredicate(cb, pOr, p);
-        }
-
-        if (StringUtils.isNotEmpty(sf.getTextoOferta())) {
-
-            Predicate p1 = cb.like(root.get(Ofertas_.textoOferta), String.format(LIKE_FORMAT, sf.getTextoOferta().toUpperCase()));
-            p = appendAndPredicate(cb, p1, p);
-        }
-
-        return p;
+      Predicate p1 =
+          cb.like(
+              root.get(Ofertas_.textoOferta),
+              String.format(LIKE_FORMAT, sf.getTextoOferta().toUpperCase()));
+      p = appendAndPredicate(cb, p1, p);
     }
 
+    return p;
+  }
 }

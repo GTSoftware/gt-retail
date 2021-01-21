@@ -15,12 +15,11 @@
  */
 package ar.com.gtsoftware.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Representa a los posibles estados por los que puede pasar una Orden de Compra
@@ -33,15 +32,14 @@ import javax.validation.constraints.Size;
 @Setter
 public class ProveedoresOrdenesCompraEstados extends BaseEntity {
 
-    @Id
-    @Basic(optional = false)
-    @Column(name = "id_estado_orden_compra", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @Basic(optional = false)
+  @Column(name = "id_estado_orden_compra", nullable = false, updatable = false)
+  private Long id;
 
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "nombre_estado_orden_compra")
-    private String nombreEstado;
-
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 50)
+  @Column(name = "nombre_estado_orden_compra")
+  private String nombreEstado;
 }

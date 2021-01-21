@@ -15,13 +15,12 @@
  */
 package ar.com.gtsoftware.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import java.util.Objects;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Objects;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Clase que mapea a la tabla fiscal_tipos_comprobante para regímenes informativos
@@ -34,66 +33,73 @@ import java.util.Objects;
 @Setter
 public class FiscalTiposComprobante extends GTEntity<String> {
 
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 3, max = 3)
-    @Column(name = "codigo_tipo_comprobante")
-    private String codigoTipoComprobante;
-    @Size(max = 100)
-    @Column(name = "denominacion_comprobante")
-    private String denominacionComprobante;
+  @Id
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 3, max = 3)
+  @Column(name = "codigo_tipo_comprobante")
+  private String codigoTipoComprobante;
 
-    @Size(max = 1)
-    @Column(name = "letra")
-    private String letra;
+  @Size(max = 100)
+  @Column(name = "denominacion_comprobante")
+  private String denominacionComprobante;
 
-    @JoinColumn(name = "id_negocio_tipo_comprobante", referencedColumnName = "id_negocio_tipo_comprobante")
-    @ManyToOne
-    private NegocioTiposComprobante tipoComprobante;
+  @Size(max = 1)
+  @Column(name = "letra")
+  private String letra;
 
-    @Override
-    public boolean isNew() {
-        return codigoTipoComprobante == null;
+  @JoinColumn(
+      name = "id_negocio_tipo_comprobante",
+      referencedColumnName = "id_negocio_tipo_comprobante")
+  @ManyToOne
+  private NegocioTiposComprobante tipoComprobante;
+
+  @Override
+  public boolean isNew() {
+    return codigoTipoComprobante == null;
+  }
+
+  @Override
+  public int hashCode() {
+    int hash = 3;
+    hash = 67 * hash + Objects.hashCode(this.codigoTipoComprobante);
+    return hash;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == null) {
+      return false;
     }
-
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 67 * hash + Objects.hashCode(this.codigoTipoComprobante);
-        return hash;
+    if (getClass() != obj.getClass()) {
+      return false;
     }
+    final FiscalTiposComprobante other = (FiscalTiposComprobante) obj;
+    return Objects.equals(this.codigoTipoComprobante, other.codigoTipoComprobante);
+  }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final FiscalTiposComprobante other = (FiscalTiposComprobante) obj;
-        return Objects.equals(this.codigoTipoComprobante, other.codigoTipoComprobante);
-    }
+  @Override
+  public String toString() {
+    return "FiscalTiposComprobanteDto{"
+        + "codigoTipoComprobante="
+        + codigoTipoComprobante
+        + ", denominacionComprobante="
+        + denominacionComprobante
+        + '}';
+  }
 
-    @Override
-    public String toString() {
-        return "FiscalTiposComprobanteDto{" + "codigoTipoComprobante=" + codigoTipoComprobante + ", denominacionComprobante=" + denominacionComprobante + '}';
-    }
+  @Override
+  public String getId() {
+    return codigoTipoComprobante;
+  }
 
-    @Override
-    public String getId() {
-        return codigoTipoComprobante;
-    }
+  @Override
+  public String calculateId(String id) {
+    return id;
+  }
 
-    @Override
-    public String calculateId(String id) {
-        return id;
-    }
-
-    @Override
-    public String getStringId() {
-        return codigoTipoComprobante;
-    }
-
+  @Override
+  public String getStringId() {
+    return codigoTipoComprobante;
+  }
 }

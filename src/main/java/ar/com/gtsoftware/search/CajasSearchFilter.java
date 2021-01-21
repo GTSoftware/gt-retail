@@ -29,19 +29,18 @@ import lombok.*;
 @Builder
 public class CajasSearchFilter extends AbstractSearchFilter {
 
-    private Long idCaja;
-    private Long idUsuario;
-    private Long idSucursal;
-    private Boolean abierta;
-    private Long idFormaPago;
+  private Long idCaja;
+  private Long idUsuario;
+  private Long idSucursal;
+  private Boolean abierta;
+  private Long idFormaPago;
 
-    @Override
-    public boolean hasFilter() {
-        return idUsuario != null
-                || idSucursal != null
-                || abierta != null
-                || idCaja != null
-                || idFormaPago != null;
-    }
-
+  @Override
+  public boolean hasFilter() {
+    return idUsuario != null
+        || idSucursal != null
+        || abierta != null
+        || idCaja != null
+        || idFormaPago != null;
+  }
 }

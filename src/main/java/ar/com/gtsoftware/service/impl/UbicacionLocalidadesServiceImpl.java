@@ -30,20 +30,21 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class UbicacionLocalidadesServiceImpl
-        extends BaseEntityService<UbicacionLocalidadesDto, LocalidadesSearchFilter, UbicacionLocalidades>
-        implements UbicacionLocalidadesService {
+    extends BaseEntityService<
+        UbicacionLocalidadesDto, LocalidadesSearchFilter, UbicacionLocalidades>
+    implements UbicacionLocalidadesService {
 
-    private final UbicacionLocalidadesFacade facade;
+  private final UbicacionLocalidadesFacade facade;
 
-    private final UbicacionLocalidadesMapper mapper;
+  private final UbicacionLocalidadesMapper mapper;
 
-    @Override
-    protected UbicacionLocalidadesFacade getFacade() {
-        return facade;
-    }
+  @Override
+  protected UbicacionLocalidadesFacade getFacade() {
+    return facade;
+  }
 
-    @Override
-    protected UbicacionLocalidadesMapper getMapper() {
-        return mapper;
-    }
+  @Override
+  protected UbicacionLocalidadesMapper getMapper() {
+    return mapper;
+  }
 }

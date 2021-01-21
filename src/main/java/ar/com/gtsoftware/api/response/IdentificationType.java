@@ -9,7 +9,6 @@ import lombok.Setter;
 @Builder
 public class IdentificationType {
 
-    private Long id;
-    private String identificationTypeName;
-
+  private Long id;
+  private String identificationTypeName;
 }

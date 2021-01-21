@@ -27,24 +27,23 @@ import ar.com.gtsoftware.service.NegocioFormasPagoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-
 @Service
 @RequiredArgsConstructor
-public class NegocioFormasPagoServiceImpl extends BaseEntityService<NegocioFormasPagoDto,
-        FormasPagoSearchFilter, NegocioFormasPago>
-        implements NegocioFormasPagoService {
+public class NegocioFormasPagoServiceImpl
+    extends BaseEntityService<NegocioFormasPagoDto, FormasPagoSearchFilter, NegocioFormasPago>
+    implements NegocioFormasPagoService {
 
-    private final NegocioFormasPagoFacade facade;
+  private final NegocioFormasPagoFacade facade;
 
-    private final NegocioFormasPagoMapper mapper;
+  private final NegocioFormasPagoMapper mapper;
 
-    @Override
-    protected NegocioFormasPagoFacade getFacade() {
-        return facade;
-    }
+  @Override
+  protected NegocioFormasPagoFacade getFacade() {
+    return facade;
+  }
 
-    @Override
-    protected NegocioFormasPagoMapper getMapper() {
-        return mapper;
-    }
+  @Override
+  protected NegocioFormasPagoMapper getMapper() {
+    return mapper;
+  }
 }

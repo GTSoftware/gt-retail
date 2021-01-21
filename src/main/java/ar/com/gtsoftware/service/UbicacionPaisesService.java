@@ -20,8 +20,5 @@ package ar.com.gtsoftware.service;
 import ar.com.gtsoftware.dto.domain.UbicacionPaisesDto;
 import ar.com.gtsoftware.search.PaisesSearchFilter;
 
-
 public interface UbicacionPaisesService
-        extends EntityService<UbicacionPaisesDto, PaisesSearchFilter> {
-
-}
+    extends EntityService<UbicacionPaisesDto, PaisesSearchFilter> {}

@@ -16,14 +16,13 @@
 package ar.com.gtsoftware.domain;
 
 import ar.com.gtsoftware.enums.TiposPuntosVenta;
-import lombok.Getter;
-import lombok.Setter;
-import org.apache.commons.lang3.StringUtils;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlTransient;
+import lombok.Getter;
+import lombok.Setter;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Representa a los puntos de venta fiscales asignados a cada sucursal
@@ -36,56 +35,56 @@ import javax.xml.bind.annotation.XmlTransient;
 @Setter
 public class FiscalPuntosVenta extends GTEntity<Integer> {
 
-    @Id
-    @Basic(optional = false)
-    @Column(name = "nro_punto_venta")
-    private Integer nroPuntoVenta;
+  @Id
+  @Basic(optional = false)
+  @Column(name = "nro_punto_venta")
+  private Integer nroPuntoVenta;
 
-    @Column(name = "activo")
-    @Basic(optional = false)
-    private boolean activo;
+  @Column(name = "activo")
+  @Basic(optional = false)
+  private boolean activo;
 
-    @Column(name = "descripcion")
-    @Size(min = 1, max = 100)
-    @NotNull
-    private String descripcion;
+  @Column(name = "descripcion")
+  @Size(min = 1, max = 100)
+  @NotNull
+  private String descripcion;
 
-    @NotNull
-    @Column(name = "tipo")
-    @Enumerated(EnumType.STRING)
-    private TiposPuntosVenta tipo;
+  @NotNull
+  @Column(name = "tipo")
+  @Enumerated(EnumType.STRING)
+  private TiposPuntosVenta tipo;
 
-    @ManyToOne
-    @JoinColumn(name = "id_sucursal", referencedColumnName = "id_sucursal")
-    private Sucursales sucursal;
+  @ManyToOne
+  @JoinColumn(name = "id_sucursal", referencedColumnName = "id_sucursal")
+  private Sucursales sucursal;
 
-    @Override
-    public Integer getId() {
-        return nroPuntoVenta;
+  @Override
+  public Integer getId() {
+    return nroPuntoVenta;
+  }
+
+  @Override
+  public Integer calculateId(String id) {
+    if (StringUtils.isNotEmpty(id)) {
+      return Integer.parseInt(id);
     }
+    return null;
+  }
 
-    @Override
-    public Integer calculateId(String id) {
-        if (StringUtils.isNotEmpty(id)) {
-            return Integer.parseInt(id);
-        }
-        return null;
-    }
+  @Override
+  @XmlTransient
+  public String getStringId() {
+    return String.valueOf(nroPuntoVenta);
+  }
 
-    @Override
-    @XmlTransient
-    public String getStringId() {
-        return String.valueOf(nroPuntoVenta);
-    }
+  @Override
+  @XmlTransient
+  public boolean isNew() {
+    return nroPuntoVenta == null;
+  }
 
-    @Override
-    @XmlTransient
-    public boolean isNew() {
-        return nroPuntoVenta == null;
-    }
-
-    @XmlTransient
-    public String getBusinessString() {
-        return String.format("%s - %s", StringUtils.leftPad(getStringId(), 4, '0'), tipo);
-    }
+  @XmlTransient
+  public String getBusinessString() {
+    return String.format("%s - %s", StringUtils.leftPad(getStringId(), 4, '0'), tipo);
+  }
 }

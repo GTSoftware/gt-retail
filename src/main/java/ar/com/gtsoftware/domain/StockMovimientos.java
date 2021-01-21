@@ -15,70 +15,82 @@
  */
 package ar.com.gtsoftware.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import java.math.BigDecimal;
+import java.util.Date;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.math.BigDecimal;
-import java.util.Date;
+import lombok.Getter;
+import lombok.Setter;
 
-/**
- * @author rodrigo
- */
+/** @author rodrigo */
 @Entity
 @Table(name = "stock_movimientos")
 @Getter
 @Setter
 public class StockMovimientos extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "stock_movimientos_id_movimiento_stock")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "stock_movimientos_id_movimiento_stock",
-            sequenceName = "stock_movimientos_id_movimiento_stock_seq")
-    @Basic(optional = false)
-    @Column(name = "id_movimiento_stock", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(
+      strategy = GenerationType.SEQUENCE,
+      generator = "stock_movimientos_id_movimiento_stock")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "stock_movimientos_id_movimiento_stock",
+      sequenceName = "stock_movimientos_id_movimiento_stock_seq")
+  @Basic(optional = false)
+  @Column(name = "id_movimiento_stock", nullable = false, updatable = false)
+  private Long id;
 
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "fecha_movimiento")
+  @Temporal(TemporalType.TIMESTAMP)
+  private Date fechaMovimiento;
+  // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these
+  // annotations to enforce field validation
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "cantidad_anterior")
+  private BigDecimal cantidadAnterior;
 
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "fecha_movimiento")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaMovimiento;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "cantidad_anterior")
-    private BigDecimal cantidadAnterior;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "cantidad_movimiento")
-    private BigDecimal cantidadMovimiento;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "cantidad_actual")
-    private BigDecimal cantidadActual;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "id_tipo_movimiento")
-    private int idTipoMovimiento;
-    @Size(max = 255)
-    @Column(name = "observaciones_movimiento")
-    private String observacionesMovimiento;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "costo_total_movimiento")
-    private BigDecimal costoTotalMovimiento;
-    @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario", columnDefinition = "int4")
-    @ManyToOne(optional = false)
-    private Usuarios idUsuario;
-    @JoinColumn(name = "id_producto", referencedColumnName = "id_producto", columnDefinition = "int4")
-    @ManyToOne(optional = false)
-    private Productos idProducto;
-    @JoinColumn(name = "id_deposito_movimiento", referencedColumnName = "id_deposito", columnDefinition = "int4")
-    @ManyToOne(optional = false)
-    private Depositos idDepositoMovimiento;
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "cantidad_movimiento")
+  private BigDecimal cantidadMovimiento;
 
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "cantidad_actual")
+  private BigDecimal cantidadActual;
+
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "id_tipo_movimiento")
+  private int idTipoMovimiento;
+
+  @Size(max = 255)
+  @Column(name = "observaciones_movimiento")
+  private String observacionesMovimiento;
+
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "costo_total_movimiento")
+  private BigDecimal costoTotalMovimiento;
+
+  @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario", columnDefinition = "int4")
+  @ManyToOne(optional = false)
+  private Usuarios idUsuario;
+
+  @JoinColumn(name = "id_producto", referencedColumnName = "id_producto", columnDefinition = "int4")
+  @ManyToOne(optional = false)
+  private Productos idProducto;
+
+  @JoinColumn(
+      name = "id_deposito_movimiento",
+      referencedColumnName = "id_deposito",
+      columnDefinition = "int4")
+  @ManyToOne(optional = false)
+  private Depositos idDepositoMovimiento;
 }

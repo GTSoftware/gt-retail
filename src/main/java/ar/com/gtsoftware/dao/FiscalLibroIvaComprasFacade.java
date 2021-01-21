@@ -20,45 +20,51 @@ import ar.com.gtsoftware.domain.FiscalLibroIvaCompras;
 import ar.com.gtsoftware.domain.FiscalLibroIvaCompras_;
 import ar.com.gtsoftware.domain.FiscalPeriodosFiscales_;
 import ar.com.gtsoftware.search.LibroIVASearchFilter;
-import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.springframework.stereotype.Repository;
 
 @Repository
-public class FiscalLibroIvaComprasFacade extends AbstractFacade<FiscalLibroIvaCompras, LibroIVASearchFilter> {
+public class FiscalLibroIvaComprasFacade
+    extends AbstractFacade<FiscalLibroIvaCompras, LibroIVASearchFilter> {
 
+  private final EntityManager em;
 
-    private final EntityManager em;
+  public FiscalLibroIvaComprasFacade(EntityManager em) {
+    super(FiscalLibroIvaCompras.class);
+    this.em = em;
+  }
 
-    public FiscalLibroIvaComprasFacade(EntityManager em) {
-        super(FiscalLibroIvaCompras.class);
-        this.em = em;
+  @Override
+  protected EntityManager getEntityManager() {
+    return em;
+  }
+
+  @Override
+  public Predicate createWhereFromSearchFilter(
+      LibroIVASearchFilter ivavsf, CriteriaBuilder cb, Root<FiscalLibroIvaCompras> root) {
+    Predicate p = null;
+    if (ivavsf.getIdPeriodo() != null) {
+      Predicate p1 =
+          cb.equal(
+              root.get(FiscalLibroIvaCompras_.idPeriodoFiscal).get(FiscalPeriodosFiscales_.id),
+              ivavsf.getIdPeriodo());
+      p = appendAndPredicate(cb, p1, p);
     }
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
+    if (ivavsf.hasFechasDesdeHasta()) {
+      Predicate p1 =
+          cb.between(
+              root.get(FiscalLibroIvaCompras_.fechaFactura),
+              ivavsf.getFechaDesde(),
+              ivavsf.getFechaHasta());
+      p = appendAndPredicate(cb, p1, p);
     }
-
-    @Override
-    public Predicate createWhereFromSearchFilter(LibroIVASearchFilter ivavsf, CriteriaBuilder cb, Root<FiscalLibroIvaCompras> root) {
-        Predicate p = null;
-        if (ivavsf.getIdPeriodo() != null) {
-            Predicate p1 = cb.equal(root.get(FiscalLibroIvaCompras_.idPeriodoFiscal).get(FiscalPeriodosFiscales_.id), ivavsf.getIdPeriodo());
-            p = appendAndPredicate(cb, p1, p);
-        }
-        if (ivavsf.hasFechasDesdeHasta()) {
-            Predicate p1 = cb.between(root.get(FiscalLibroIvaCompras_.fechaFactura), ivavsf.getFechaDesde(), ivavsf.getFechaHasta());
-            p = appendAndPredicate(cb, p1, p);
-        }
-        if (ivavsf.getAnuladas() != null) {
-            Predicate p1 = cb.equal(root.get(FiscalLibroIvaCompras_.anulada), ivavsf.getAnuladas());
-            p = appendAndPredicate(cb, p1, p);
-        }
-        return p;
+    if (ivavsf.getAnuladas() != null) {
+      Predicate p1 = cb.equal(root.get(FiscalLibroIvaCompras_.anulada), ivavsf.getAnuladas());
+      p = appendAndPredicate(cb, p1, p);
     }
-
+    return p;
+  }
 }

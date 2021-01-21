@@ -16,13 +16,10 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
+import java.util.Date;
 import lombok.*;
 
-import java.util.Date;
-
-/**
- * @author rodrigo
- */
+/** @author rodrigo */
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
@@ -30,15 +27,12 @@ import java.util.Date;
 @Builder
 public class FiscalPeriodosFiscalesDto {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @EqualsAndHashCode.Include
-    private Long id;
-    private String nombrePeriodo;
-    private Date fechaInicioPeriodo;
-    private Date fechaFinPeriodo;
-    private boolean periodoCerrado;
-    private Integer version;
-
-
+  @EqualsAndHashCode.Include private Long id;
+  private String nombrePeriodo;
+  private Date fechaInicioPeriodo;
+  private Date fechaFinPeriodo;
+  private boolean periodoCerrado;
+  private Integer version;
 }

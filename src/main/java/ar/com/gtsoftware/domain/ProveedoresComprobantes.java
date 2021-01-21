@@ -15,14 +15,13 @@
  */
 package ar.com.gtsoftware.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Clase que representa las compras que se realizan
@@ -35,66 +34,75 @@ import java.time.LocalDateTime;
 @Setter
 public class ProveedoresComprobantes extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "proveedores_comprobantes_id_comprobante")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "proveedores_comprobantes_id_comprobante",
-            sequenceName = "proveedores_comprobantes_id_comprobante_seq")
-    @Basic(optional = false)
-    @Column(name = "id_comprobante", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(
+      strategy = GenerationType.SEQUENCE,
+      generator = "proveedores_comprobantes_id_comprobante")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "proveedores_comprobantes_id_comprobante",
+      sequenceName = "proveedores_comprobantes_id_comprobante_seq")
+  @Basic(optional = false)
+  @Column(name = "id_comprobante", nullable = false, updatable = false)
+  private Long id;
 
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "fecha_comprobante")
-    private LocalDateTime fechaComprobante;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "total")
-    private BigDecimal total;
-    @Basic(optional = false)
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "fecha_comprobante")
+  private LocalDateTime fechaComprobante;
+  // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these
+  // annotations to enforce field validation
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "total")
+  private BigDecimal total;
 
-    @Size(max = 1024)
-    @Column(name = "observaciones")
-    private String observaciones;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "anulada")
-    private boolean anulada;
+  @Basic(optional = false)
+  @Size(max = 1024)
+  @Column(name = "observaciones")
+  private String observaciones;
 
-    @Size(max = 1)
-    @Column(name = "letra")
-    private String letra;
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "anulada")
+  private boolean anulada;
 
-    @NotNull
-    @ManyToOne
-    @JoinColumn(name = "id_negocio_tipo_comprobante", referencedColumnName = "id_negocio_tipo_comprobante")
-    private NegocioTiposComprobante tipoComprobante;
+  @Size(max = 1)
+  @Column(name = "letra")
+  private String letra;
 
-    @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
-    @ManyToOne(optional = false)
-    private Usuarios idUsuario;
-    @JoinColumn(name = "id_sucursal", referencedColumnName = "id_sucursal")
-    @ManyToOne(optional = false)
-    private Sucursales idSucursal;
-    @JoinColumn(name = "id_proveedor", referencedColumnName = "id_persona")
-    @ManyToOne(optional = false)
-    private Personas idProveedor;
+  @NotNull
+  @ManyToOne
+  @JoinColumn(
+      name = "id_negocio_tipo_comprobante",
+      referencedColumnName = "id_negocio_tipo_comprobante")
+  private NegocioTiposComprobante tipoComprobante;
 
-    @JoinColumn(name = "id_registro_iva", referencedColumnName = "id_registro")
-    @ManyToOne
-    private FiscalLibroIvaCompras idRegistro;
+  @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
+  @ManyToOne(optional = false)
+  private Usuarios idUsuario;
 
-    @Transient
-    private BigDecimal totalConSigno;
+  @JoinColumn(name = "id_sucursal", referencedColumnName = "id_sucursal")
+  @ManyToOne(optional = false)
+  private Sucursales idSucursal;
 
-    public BigDecimal getTotalConSigno() {
-        if (total != null && tipoComprobante != null) {
-            if (totalConSigno == null) {
-                totalConSigno = total.multiply(tipoComprobante.getSigno());
-            }
-        }
-        return totalConSigno;
+  @JoinColumn(name = "id_proveedor", referencedColumnName = "id_persona")
+  @ManyToOne(optional = false)
+  private Personas idProveedor;
+
+  @JoinColumn(name = "id_registro_iva", referencedColumnName = "id_registro")
+  @ManyToOne
+  private FiscalLibroIvaCompras idRegistro;
+
+  @Transient private BigDecimal totalConSigno;
+
+  public BigDecimal getTotalConSigno() {
+    if (total != null && tipoComprobante != null) {
+      if (totalConSigno == null) {
+        totalConSigno = total.multiply(tipoComprobante.getSigno());
+      }
     }
-
+    return totalConSigno;
+  }
 }

@@ -34,147 +34,151 @@ import ar.com.gtsoftware.search.ProductosSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;
 import ar.com.gtsoftware.service.ProductosService;
 import ar.com.gtsoftware.utils.BusinessDateUtils;
-import lombok.RequiredArgsConstructor;
-import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import javax.validation.constraints.NotNull;
+import lombok.RequiredArgsConstructor;
+import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 public class ProductosServiceImpl
-        extends BaseEntityService<ProductosDto, ProductosSearchFilter, Productos>
-        implements ProductosService {
+    extends BaseEntityService<ProductosDto, ProductosSearchFilter, Productos>
+    implements ProductosService {
 
+  private static final BigDecimal CIEN = new BigDecimal(100);
+  private final ProductosFacade facade;
+  private final ProductosPreciosFacade preciosFacade;
+  private final ProductosTiposPorcentajesFacade tiposPorcentajesFacade;
+  private final ProductoXDepositoFacade stockFacade;
+  private final ProductosMapper mapper;
+  private final BusinessDateUtils dateUtils;
 
-    private static final BigDecimal CIEN = new BigDecimal(100);
-    private final ProductosFacade facade;
-    private final ProductosPreciosFacade preciosFacade;
-    private final ProductosTiposPorcentajesFacade tiposPorcentajesFacade;
-    private final ProductoXDepositoFacade stockFacade;
-    private final ProductosMapper mapper;
-    private final BusinessDateUtils dateUtils;
+  @Override
+  protected ProductosFacade getFacade() {
+    return facade;
+  }
 
+  @Override
+  protected ProductosMapper getMapper() {
+    return mapper;
+  }
 
-    @Override
-    protected ProductosFacade getFacade() {
-        return facade;
-    }
+  @Override
+  public List<ProductosDto> findBySearchFilter(
+      @NotNull ProductosSearchFilter sf, int firstResult, int maxResults) {
+    List<ProductosDto> productosDtos = super.findBySearchFilter(sf, firstResult, maxResults);
+    establecerPrecioYStock(productosDtos, sf);
+    return productosDtos;
+  }
 
-    @Override
-    protected ProductosMapper getMapper() {
-        return mapper;
-    }
+  private void establecerPrecioYStock(
+      List<ProductosDto> productosDtos, @NotNull ProductosSearchFilter sf) {
+    if (sf.getIdListaPrecio() != null) {
+      ProductosPreciosSearchFilter preciosSF =
+          ProductosPreciosSearchFilter.builder().idListaPrecios(sf.getIdListaPrecio()).build();
+      ProductoXDepositoSearchFilter stockSf = new ProductoXDepositoSearchFilter();
+      for (ProductosDto prod : productosDtos) {
+        stockSf.setIdProducto(prod.getId());
+        preciosSF.setIdProducto(prod.getId());
 
-    @Override
-    public List<ProductosDto> findBySearchFilter(@NotNull ProductosSearchFilter sf, int firstResult, int maxResults) {
-        List<ProductosDto> productosDtos = super.findBySearchFilter(sf, firstResult, maxResults);
-        establecerPrecioYStock(productosDtos, sf);
-        return productosDtos;
-    }
+        ProductosPrecios productosPrecios = preciosFacade.findFirstBySearchFilter(preciosSF);
+        BigDecimal precioVenta = productosPrecios == null ? null : productosPrecios.getPrecio();
+        prod.setPrecioVenta(precioVenta);
 
-    private void establecerPrecioYStock(List<ProductosDto> productosDtos, @NotNull ProductosSearchFilter sf) {
-        if (sf.getIdListaPrecio() != null) {
-            ProductosPreciosSearchFilter preciosSF = ProductosPreciosSearchFilter.builder().idListaPrecios(sf.getIdListaPrecio())
-                    .build();
-            ProductoXDepositoSearchFilter stockSf = new ProductoXDepositoSearchFilter();
-            for (ProductosDto prod : productosDtos) {
-                stockSf.setIdProducto(prod.getId());
-                preciosSF.setIdProducto(prod.getId());
+        if (prod.getIdTipoProveeduria().isControlStock()) {
+          BigDecimal stockTotal = stockFacade.getStockBySearchFilter(stockSf);
+          prod.setStockActual(stockTotal);
 
-                ProductosPrecios productosPrecios = preciosFacade.findFirstBySearchFilter(preciosSF);
-                BigDecimal precioVenta = productosPrecios == null ? null : productosPrecios.getPrecio();
-                prod.setPrecioVenta(precioVenta);
-
-                if (prod.getIdTipoProveeduria().isControlStock()) {
-                    BigDecimal stockTotal = stockFacade.getStockBySearchFilter(stockSf);
-                    prod.setStockActual(stockTotal);
-
-                    if (sf.getIdSucursal() != null) {
-                        stockSf.setIdSucursal(sf.getIdSucursal());
-                        BigDecimal stockSucursal = stockFacade.getStockBySearchFilter(stockSf);
-                        prod.setStockActualEnSucursal(stockSucursal);
-                    }
-                }
-            }
+          if (sf.getIdSucursal() != null) {
+            stockSf.setIdSucursal(sf.getIdSucursal());
+            BigDecimal stockSucursal = stockFacade.getStockBySearchFilter(stockSf);
+            prod.setStockActualEnSucursal(stockSucursal);
+          }
         }
+      }
     }
+  }
 
-    @Override
-    public ProductosDto findFirstBySearchFilter(@NotNull ProductosSearchFilter sf) {
-        ProductosDto productosDto = super.findFirstBySearchFilter(sf);
-        if (productosDto != null) {
-            establecerPrecioYStock(Collections.singletonList(productosDto), sf);
-        }
-        return productosDto;
+  @Override
+  public ProductosDto findFirstBySearchFilter(@NotNull ProductosSearchFilter sf) {
+    ProductosDto productosDto = super.findFirstBySearchFilter(sf);
+    if (productosDto != null) {
+      establecerPrecioYStock(Collections.singletonList(productosDto), sf);
     }
+    return productosDto;
+  }
 
-    @Override
-    @Transactional
-    public void updatePrices(BatchPricingUpdateRequest batchUpdateRequest) {
-        final List<Productos> productos = facade.findAllBySearchFilter(batchUpdateRequest.getSearchFilter());
+  @Override
+  @Transactional
+  public void updatePrices(BatchPricingUpdateRequest batchUpdateRequest) {
+    final List<Productos> productos =
+        facade.findAllBySearchFilter(batchUpdateRequest.getSearchFilter());
 
-        final LocalDateTime today = dateUtils.getCurrentDateTime();
+    final LocalDateTime today = dateUtils.getCurrentDateTime();
 
-        for (Productos producto : productos) {
-            if (batchUpdateRequest.getCostUpdatePercent() != null) {
-                BigDecimal costoAdquisicionNeto = producto.getCostoAdquisicionNeto();
-                costoAdquisicionNeto = costoAdquisicionNeto.add(
-                        costoAdquisicionNeto.multiply(batchUpdateRequest.getCostUpdatePercent().divide(CIEN))
-                );
-                producto.setCostoAdquisicionNeto(costoAdquisicionNeto);
-            }
-            final List<ProductosPorcentajes> porcentajes = producto.getPorcentajes();
-            if (CollectionUtils.isNotEmpty(batchUpdateRequest.getPercentsToDelete())) {
-                for (ProductPercent toRemove : batchUpdateRequest.getPercentsToDelete()) {
-                    porcentajes.removeIf(p -> p.getIdTipoPorcentaje().getId().equals(toRemove.getPercentTypeId())
-                            && p.getValor().compareTo(toRemove.getPercentValue()) == 0);
-                }
-            }
-            if (CollectionUtils.isNotEmpty(batchUpdateRequest.getPercentsToAdd())) {
-                for (ProductPercent toAdd : batchUpdateRequest.getPercentsToAdd()) {
-                    ProductosPorcentajes pp = new ProductosPorcentajes();
-                    pp.setIdProducto(producto);
-                    pp.setIdTipoPorcentaje(tiposPorcentajesFacade.find(toAdd.getPercentTypeId()));
-                    pp.setValor(toAdd.getPercentValue());
-                    pp.setFechaModificacion(today);
-                    porcentajes.add(pp);
-                }
-            }
-
-            updateSalePrices(producto, today);
-            producto.setFechaUltimaModificacion(today);
-
-            facade.edit(producto);
-        }
-    }
-
-    private void updateSalePrices(Productos producto, LocalDateTime today) {
+    for (Productos producto : productos) {
+      if (batchUpdateRequest.getCostUpdatePercent() != null) {
         BigDecimal costoAdquisicionNeto = producto.getCostoAdquisicionNeto();
-        List<ProductosPorcentajes> porcentajes = producto.getPorcentajes();
-        BigDecimal costoFinal = costoAdquisicionNeto;
-        for (ProductosPorcentajes pp : porcentajes) {
-            if (pp.getIdTipoPorcentaje().isPorcentaje()) {
-                costoFinal = costoFinal.add(costoFinal.multiply(pp.getValor().divide(CIEN)));
-            } else {
-                costoFinal = costoFinal.add(pp.getValor());
-            }
+        costoAdquisicionNeto =
+            costoAdquisicionNeto.add(
+                costoAdquisicionNeto.multiply(
+                    batchUpdateRequest.getCostUpdatePercent().divide(CIEN)));
+        producto.setCostoAdquisicionNeto(costoAdquisicionNeto);
+      }
+      final List<ProductosPorcentajes> porcentajes = producto.getPorcentajes();
+      if (CollectionUtils.isNotEmpty(batchUpdateRequest.getPercentsToDelete())) {
+        for (ProductPercent toRemove : batchUpdateRequest.getPercentsToDelete()) {
+          porcentajes.removeIf(
+              p ->
+                  p.getIdTipoPorcentaje().getId().equals(toRemove.getPercentTypeId())
+                      && p.getValor().compareTo(toRemove.getPercentValue()) == 0);
         }
-        producto.setCostoFinal(costoFinal);
-        if (producto.getPrecios() != null) {
-            BigDecimal coeficienteIVA = producto.getIdAlicuotaIva().getValorAlicuota().divide(CIEN).add(BigDecimal.ONE);
-            for (ProductosPrecios pp : producto.getPrecios()) {
-                BigDecimal utilidad = pp.getUtilidad().divide(CIEN);
-                pp.setNeto(costoFinal.add(costoFinal.multiply(utilidad)));
-                pp.setFechaModificacion(today);
-                pp.setPrecio(pp.getNeto().multiply(coeficienteIVA).setScale(2, RoundingMode.HALF_UP));
-            }
+      }
+      if (CollectionUtils.isNotEmpty(batchUpdateRequest.getPercentsToAdd())) {
+        for (ProductPercent toAdd : batchUpdateRequest.getPercentsToAdd()) {
+          ProductosPorcentajes pp = new ProductosPorcentajes();
+          pp.setIdProducto(producto);
+          pp.setIdTipoPorcentaje(tiposPorcentajesFacade.find(toAdd.getPercentTypeId()));
+          pp.setValor(toAdd.getPercentValue());
+          pp.setFechaModificacion(today);
+          porcentajes.add(pp);
         }
+      }
+
+      updateSalePrices(producto, today);
+      producto.setFechaUltimaModificacion(today);
+
+      facade.edit(producto);
     }
+  }
+
+  private void updateSalePrices(Productos producto, LocalDateTime today) {
+    BigDecimal costoAdquisicionNeto = producto.getCostoAdquisicionNeto();
+    List<ProductosPorcentajes> porcentajes = producto.getPorcentajes();
+    BigDecimal costoFinal = costoAdquisicionNeto;
+    for (ProductosPorcentajes pp : porcentajes) {
+      if (pp.getIdTipoPorcentaje().isPorcentaje()) {
+        costoFinal = costoFinal.add(costoFinal.multiply(pp.getValor().divide(CIEN)));
+      } else {
+        costoFinal = costoFinal.add(pp.getValor());
+      }
+    }
+    producto.setCostoFinal(costoFinal);
+    if (producto.getPrecios() != null) {
+      BigDecimal coeficienteIVA =
+          producto.getIdAlicuotaIva().getValorAlicuota().divide(CIEN).add(BigDecimal.ONE);
+      for (ProductosPrecios pp : producto.getPrecios()) {
+        BigDecimal utilidad = pp.getUtilidad().divide(CIEN);
+        pp.setNeto(costoFinal.add(costoFinal.multiply(utilidad)));
+        pp.setFechaModificacion(today);
+        pp.setPrecio(pp.getNeto().multiply(coeficienteIVA).setScale(2, RoundingMode.HALF_UP));
+      }
+    }
+  }
 }

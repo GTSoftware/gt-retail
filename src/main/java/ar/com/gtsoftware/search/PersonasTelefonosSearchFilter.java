@@ -17,9 +17,7 @@ package ar.com.gtsoftware.search;
 
 import lombok.*;
 
-/**
- * @author Rodrigo M. Tato Rothamel <rotatomel@gmail.com>
- */
+/** @author Rodrigo M. Tato Rothamel <rotatomel@gmail.com> */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -27,12 +25,10 @@ import lombok.*;
 @Builder
 public class PersonasTelefonosSearchFilter extends AbstractSearchFilter {
 
-    private Long idPersona;
+  private Long idPersona;
 
-
-    @Override
-    public boolean hasFilter() {
-        return idPersona != null;
-    }
-
+  @Override
+  public boolean hasFilter() {
+    return idPersona != null;
+  }
 }

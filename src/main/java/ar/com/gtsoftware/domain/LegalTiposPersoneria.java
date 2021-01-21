@@ -15,41 +15,45 @@
  */
 package ar.com.gtsoftware.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
-/**
- * @author rodrigo
- */
+/** @author rodrigo */
 @Entity
 @Table(name = "legal_tipos_personeria")
 @Getter
 @Setter
 public class LegalTiposPersoneria extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "legal_tipos_personeria_id_tipo_personeria")
-    @SequenceGenerator(allocationSize = 1, initialValue = 1, name = "legal_tipos_personeria_id_tipo_personeria",
-            sequenceName = "legal_tipos_personeria_id_tipo_personeria_seq")
-    @Basic(optional = false)
-    @Column(name = "id_tipo_personeria", nullable = false, updatable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(
+      strategy = GenerationType.SEQUENCE,
+      generator = "legal_tipos_personeria_id_tipo_personeria")
+  @SequenceGenerator(
+      allocationSize = 1,
+      initialValue = 1,
+      name = "legal_tipos_personeria_id_tipo_personeria",
+      sequenceName = "legal_tipos_personeria_id_tipo_personeria_seq")
+  @Basic(optional = false)
+  @Column(name = "id_tipo_personeria", nullable = false, updatable = false)
+  private Long id;
 
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "nombre_tipo")
-    private String nombreTipo;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoPersoneria")
-    private List<LegalTiposDocumento> legalTiposDocumentoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoPersoneria")
-    private List<LegalGeneros> legalGenerosList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoPersoneria")
-    private List<Personas> personasList;
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 100)
+  @Column(name = "nombre_tipo")
+  private String nombreTipo;
 
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoPersoneria")
+  private List<LegalTiposDocumento> legalTiposDocumentoList;
+
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoPersoneria")
+  private List<LegalGeneros> legalGenerosList;
+
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoPersoneria")
+  private List<Personas> personasList;
 }

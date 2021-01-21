@@ -19,39 +19,37 @@ package ar.com.gtsoftware.search.reportes;
 
 import java.io.Serializable;
 
-/**
- * Search filter del que deben heredar los search filter para reportes
- */
+/** Search filter del que deben heredar los search filter para reportes */
 public class AbstractReportSearchFilter implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    private int pageSize = 30;
-    private int firstRow = 0;
+  private int pageSize = 30;
+  private int firstRow = 0;
 
-    public boolean hasFilter() {
-        return false;
+  public boolean hasFilter() {
+    return false;
+  }
+
+  public final int getPageSize() {
+    return pageSize;
+  }
+
+  public final void setPageSize(int pageSize) {
+    if (pageSize <= 0) {
+      throw new IllegalArgumentException("Page size must be greater than or equal to zero.");
     }
+    this.pageSize = pageSize;
+  }
 
-    public final int getPageSize() {
-        return pageSize;
-    }
+  public final int getFirstRow() {
+    return firstRow;
+  }
 
-    public final void setPageSize(int pageSize) {
-        if (pageSize <= 0) {
-            throw new IllegalArgumentException("Page size must be greater than or equal to zero.");
-        }
-        this.pageSize = pageSize;
+  public final void setFirstRow(int firstRow) {
+    if (firstRow < 0) {
+      throw new IllegalArgumentException("First row must be greater than zero.");
     }
-
-    public final int getFirstRow() {
-        return firstRow;
-    }
-
-    public final void setFirstRow(int firstRow) {
-        if (firstRow < 0) {
-            throw new IllegalArgumentException("First row must be greater than zero.");
-        }
-        this.firstRow = firstRow;
-    }
+    this.firstRow = firstRow;
+  }
 }

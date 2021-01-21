@@ -20,7 +20,4 @@ package ar.com.gtsoftware.service;
 import ar.com.gtsoftware.dto.domain.RecibosDto;
 import ar.com.gtsoftware.search.RecibosSearchFilter;
 
-
-public interface RecibosService
-        extends EntityService<RecibosDto, RecibosSearchFilter> {
-}
+public interface RecibosService extends EntityService<RecibosDto, RecibosSearchFilter> {}

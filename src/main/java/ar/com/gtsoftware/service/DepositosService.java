@@ -20,8 +20,4 @@ package ar.com.gtsoftware.service;
 import ar.com.gtsoftware.dto.domain.DepositosDto;
 import ar.com.gtsoftware.search.DepositosSearchFilter;
 
-
-public interface DepositosService
-        extends EntityService<DepositosDto, DepositosSearchFilter> {
-
-}
+public interface DepositosService extends EntityService<DepositosDto, DepositosSearchFilter> {}

@@ -20,8 +20,5 @@ package ar.com.gtsoftware.service;
 import ar.com.gtsoftware.dto.domain.ProductosListasPreciosDto;
 import ar.com.gtsoftware.search.ProductosListasPreciosSearchFilter;
 
-
 public interface ProductosListasPreciosService
-        extends EntityService<ProductosListasPreciosDto, ProductosListasPreciosSearchFilter> {
-
-}
+    extends EntityService<ProductosListasPreciosDto, ProductosListasPreciosSearchFilter> {}

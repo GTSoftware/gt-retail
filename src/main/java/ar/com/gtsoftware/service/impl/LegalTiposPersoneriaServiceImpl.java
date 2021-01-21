@@ -30,20 +30,20 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class LegalTiposPersoneriaServiceImpl
-        extends BaseEntityService<LegalTiposPersoneriaDto, AbstractSearchFilter, LegalTiposPersoneria>
-        implements LegalTiposPersoneriaService {
+    extends BaseEntityService<LegalTiposPersoneriaDto, AbstractSearchFilter, LegalTiposPersoneria>
+    implements LegalTiposPersoneriaService {
 
-    private final LegalTiposPersoneriaMapper mapper;
+  private final LegalTiposPersoneriaMapper mapper;
 
-    private final LegalTiposPersoneriaFacade facade;
+  private final LegalTiposPersoneriaFacade facade;
 
-    @Override
-    protected LegalTiposPersoneriaFacade getFacade() {
-        return facade;
-    }
+  @Override
+  protected LegalTiposPersoneriaFacade getFacade() {
+    return facade;
+  }
 
-    @Override
-    protected LegalTiposPersoneriaMapper getMapper() {
-        return mapper;
-    }
+  @Override
+  protected LegalTiposPersoneriaMapper getMapper() {
+    return mapper;
+  }
 }
