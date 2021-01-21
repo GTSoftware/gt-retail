@@ -10,14 +10,14 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-class ReginfoCvVentasCbteTest {
+class RegInfoCvVentasCbteTest {
 
     private static final String EXPECTED = "202001050010000100000000000000000001000000000000000000019600000000000099999999TEST, TESTER SUPER TESTER EXTR000000000012345000000000012345000000000012345000000000012345000000000012345000000000012345000000000012345000000000012345PES00010000001300000000001234520200105";
-    private ReginfoCvVentasCbte ventasCbte;
+    private RegInfoCvVentasCbte ventasCbte;
 
     @BeforeEach
     void setUp() {
-        ventasCbte = ReginfoCvVentasCbte.builder()
+        ventasCbte = RegInfoCvVentasCbte.builder()
                 .fechaComprobante(LocalDate.of(2020, 1, 5))
                 .tipoComprobante("001")
                 .puntoVenta("0001")

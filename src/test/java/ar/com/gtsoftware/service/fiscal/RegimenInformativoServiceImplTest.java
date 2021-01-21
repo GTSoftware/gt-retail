@@ -2,13 +2,15 @@ package ar.com.gtsoftware.service.fiscal;
 
 import ar.com.gtsoftware.dto.ImportesAlicuotasIVA;
 import ar.com.gtsoftware.dto.LibroIVADTO;
-import ar.com.gtsoftware.dto.RegimenInformativoVentas;
 import ar.com.gtsoftware.dto.RegistroIVADTO;
 import ar.com.gtsoftware.dto.domain.FiscalAlicuotasIvaDto;
-import ar.com.gtsoftware.dto.fiscal.reginfo.ReginfoCvCabecera;
+import ar.com.gtsoftware.dto.fiscal.reginfo.RegInfoCvCabecera;
+import ar.com.gtsoftware.dto.fiscal.reginfo.RegimenInformativoCompras;
+import ar.com.gtsoftware.dto.fiscal.reginfo.RegimenInformativoVentas;
 import ar.com.gtsoftware.enums.Parametros;
 import ar.com.gtsoftware.search.LibroIVASearchFilter;
 import ar.com.gtsoftware.service.ParametrosService;
+import ar.com.gtsoftware.service.impl.LibroIVAComprasServiceImpl;
 import ar.com.gtsoftware.service.impl.LibroIVAVentasServiceImpl;
 import org.apache.commons.collections4.CollectionUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,17 +34,20 @@ class RegimenInformativoServiceImplTest {
     @Mock
     private LibroIVAVentasServiceImpl libroIVAVentasServiceMock;
     @Mock
+    private LibroIVAComprasServiceImpl libroIVAComprasServiceMock;
+    @Mock
     private ParametrosService parametrosServiceMock;
 
     @BeforeEach
     void setUp() {
         initMocks(this);
         service = new RegimenInformativoServiceImpl(libroIVAVentasServiceMock,
+                libroIVAComprasServiceMock,
                 parametrosServiceMock);
     }
 
     @Test
-    void shouldGetRegimenInformativo() {
+    void shouldGetRegimenInformativoVentas() {
         final LibroIVASearchFilter sf = LibroIVASearchFilter.builder()
                 .idPeriodo(1L).build();
         when(libroIVAVentasServiceMock.obtenerLibroIVA(sf)).thenReturn(buildLibroIva());
@@ -51,7 +56,7 @@ class RegimenInformativoServiceImplTest {
         final RegimenInformativoVentas regimenInformativoVentas = service.getRegimenInformativoVentas(sf);
 
         assertNotNull(regimenInformativoVentas);
-        final ReginfoCvCabecera cabecera = regimenInformativoVentas.getCabecera();
+        final RegInfoCvCabecera cabecera = regimenInformativoVentas.getCabecera();
         assertNotNull(cabecera);
         assertThat(cabecera.getAnioPeriodo(), is(2020));
         assertThat(cabecera.getMesPeriodo(), is(1));
@@ -67,6 +72,24 @@ class RegimenInformativoServiceImplTest {
         assertThat(regimenInformativoVentas.getComprobantes().size(), is(1));
         assertThat(regimenInformativoVentas.getAlicuotas().size(), is(1));
 
+    }
+
+    @Test
+    void shouldGetRegimenInformativoCompras() {
+        final LibroIVASearchFilter sf = LibroIVASearchFilter.builder()
+                .idPeriodo(1L).build();
+        when(libroIVAComprasServiceMock.obtenerLibroIVA(sf)).thenReturn(buildLibroIva());
+        when(parametrosServiceMock.getStringParam(Parametros.CUIT_EMPRESA)).thenReturn("209999999991");
+
+        final RegimenInformativoCompras regimenInformativoCompras = service.getRegimenInformativoCompras(sf);
+
+        assertNotNull(regimenInformativoCompras);
+
+        assertThat(CollectionUtils.isNotEmpty(regimenInformativoCompras.getComprobantes()), is(true));
+        assertThat(CollectionUtils.isNotEmpty(regimenInformativoCompras.getAlicuotas()), is(true));
+
+        assertThat(regimenInformativoCompras.getComprobantes().size(), is(1));
+        assertThat(regimenInformativoCompras.getAlicuotas().size(), is(1));
     }
 
     private LibroIVADTO buildLibroIva() {

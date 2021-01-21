@@ -15,7 +15,7 @@ import static ar.com.gtsoftware.dto.fiscal.reginfo.RegInfoUtils.*;
 @Builder
 @Data
 @NoArgsConstructor
-public class ReginfoCvVentasCbte {
+public class RegInfoCvVentasCbte {
 
     private LocalDate fechaComprobante;
 

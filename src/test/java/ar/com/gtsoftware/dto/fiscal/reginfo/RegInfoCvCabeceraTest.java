@@ -10,14 +10,14 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
-class ReginfoCvCabeceraTest {
+class RegInfoCvCabeceraTest {
 
     private static final String EXPECTED = "9999999999920200200NN2000000000012345000000000012345000000000012345000000000012345000000000012345000000000012345";
-    private ReginfoCvCabecera cabecera;
+    private RegInfoCvCabecera cabecera;
 
     @BeforeEach
     void setUp() {
-        cabecera = ReginfoCvCabecera.builder()
+        cabecera = RegInfoCvCabecera.builder()
                 .sinMovimiento("N")
                 .cuitInformante("99999999999")
                 .mesPeriodo(2)

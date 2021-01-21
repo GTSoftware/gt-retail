@@ -7,8 +7,15 @@ import java.time.LocalDateTime;
 
 @Getter
 @AllArgsConstructor
-public class FiscalBookRequest {
+public class DigitalFiscalBookRequest {
     private final Long fiscalPeriodId;
     private final LocalDateTime fromDate;
     private final LocalDateTime toDate;
+    private final Kind kind;
+
+    public enum Kind {
+        SALES,
+        PURCHASES,
+        BOTH
+    }
 }
