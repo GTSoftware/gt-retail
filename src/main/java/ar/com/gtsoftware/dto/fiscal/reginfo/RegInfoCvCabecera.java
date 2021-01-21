@@ -15,11 +15,6 @@ import static ar.com.gtsoftware.dto.fiscal.reginfo.RegInfoUtils.numberPad;
 @Getter
 @Setter
 public class RegInfoCvCabecera {
-//    public static final String FILE_NAME = "REGINFO_CV_CABECERA";
-//    public static final String SI = "S";
-//    public static final String NO = "N";
-//    public static final String GLOBAL = "1";
-//    public static final String POR_COMPROBANTE = "2";
 
     private String cuitInformante;
 

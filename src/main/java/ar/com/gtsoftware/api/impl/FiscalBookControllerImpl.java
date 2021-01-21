@@ -7,6 +7,7 @@ import ar.com.gtsoftware.dto.fiscal.reginfo.RegimenInformativoVentas;
 import ar.com.gtsoftware.search.LibroIVASearchFilter;
 import ar.com.gtsoftware.service.fiscal.RegimenInformativoService;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.output.CountingOutputStream;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.RestController;
@@ -70,17 +71,19 @@ public class FiscalBookControllerImpl implements FiscalBookController {
         response.setContentType("application/zip");
 
         try (ServletOutputStream servletOutputStream = response.getOutputStream();
-             ZipOutputStream zout = new ZipOutputStream(servletOutputStream)) {
+             CountingOutputStream countOs = new CountingOutputStream(servletOutputStream);
+             ZipOutputStream zout = new ZipOutputStream(countOs)) {
             zout.setComment("Generated on: " + LocalDateTime.now());
 
             for (Map.Entry<String, String> fileEntry : textFiles.entrySet()) {
-                ZipEntry entry = new ZipEntry(fileEntry.getKey());
+                ZipEntry entry = new ZipEntry(fileEntry.getKey() + ".txt");
                 zout.putNextEntry(entry);
                 zout.write(fileEntry.getValue().getBytes(StandardCharsets.US_ASCII));
                 zout.closeEntry();
             }
             zout.finish();
 
+            response.setContentLengthLong(countOs.getByteCount());
         } catch (IOException ioe) {
             throw new RuntimeException("There was an error trying to generate ZIP file");
         }
