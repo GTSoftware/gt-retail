@@ -23,7 +23,7 @@ public class RegimenInformativoServiceImpl implements RegimenInformativoService 
   private static final String SI = "S";
   private static final String NO = "N";
   private static final String PESOS = "PES";
-  private static final String CODIGO_OPERACION = "1"; // Productos
+  private static final String CODIGO_OPERACION = "0";
 
   private final LibroIVAVentasServiceImpl libroIVAVentasServiceImpl;
   private final LibroIVAComprasServiceImpl libroIVAComprasServiceImpl;

@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 class RegInfoCvComprasCbteTest {
   private static final String EXPECTED =
-      "202001050010000100000000000000000001                8000000000099999999999TEST, TESTER SUPER TESTER EXTR000000000012345000000000012345000000000012345000000000012345000000000012345000000000012345000000000012345000000000012345PES00010000001100000000001234500000000001234500000000000                              000000000012345";
+      "202001050010000100000000000000000001                8000000000099999999999TEST, TESTER SUPER TESTER EXTR000000000012345000000000012345000000000012345000000000012345000000000012345000000000012345000000000012345000000000012345PES00010000001000000000001234500000000001234500000000000                              000000000012345";
   private RegInfoCvComprasCbte comprasCbte;
 
   @BeforeEach
@@ -39,7 +39,7 @@ class RegInfoCvComprasCbteTest {
             .codigoMoneda("PES")
             .tipoCambio(BigDecimal.ONE)
             .cantidadAlicuotasIVA(1)
-            .codigoOperacion("1")
+            .codigoOperacion("0")
             .creditoFiscalComputable(BigDecimal.valueOf(123.45))
             .otrosTributos(BigDecimal.valueOf(123.45))
             .cuitEmisorCorredor(null)
