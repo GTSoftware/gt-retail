@@ -23,6 +23,7 @@ public class RegimenInformativoServiceImpl implements RegimenInformativoService 
   private static final String SI = "S";
   private static final String NO = "N";
   private static final String PESOS = "PES";
+  private static final String CODIGO_OPERACION = "1";  // Productos
 
   private final LibroIVAVentasServiceImpl libroIVAVentasServiceImpl;
   private final LibroIVAComprasServiceImpl libroIVAComprasServiceImpl;
@@ -118,7 +119,7 @@ public class RegimenInformativoServiceImpl implements RegimenInformativoService 
         .codigoMoneda(PESOS)
         .tipoCambio(BigDecimal.ONE)
         .cantidadAlicuotasIVA(factura.getTotalAlicuota().size())
-        .codigoOperacion("3") // Productos y servicios
+        .codigoOperacion(CODIGO_OPERACION)
         .creditoFiscalComputable(factura.getTotalIva())
         .otrosTributos(BigDecimal.ZERO)
         .cuitEmisorCorredor(null)
@@ -147,7 +148,7 @@ public class RegimenInformativoServiceImpl implements RegimenInformativoService 
         .codigoMoneda(PESOS)
         .tipoCambio(BigDecimal.ONE)
         .cantidadAlicuotasIVA(factura.getTotalAlicuota().size())
-        .codigoOperacion("3") // Productos y servicios
+        .codigoOperacion(CODIGO_OPERACION)
         .otrosTributos(BigDecimal.ZERO)
         .fechaVencimientoPago(factura.getFechaFactura().toLocalDate())
         .build();
