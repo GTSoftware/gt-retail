@@ -16,7 +16,7 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import lombok.*;
 
 /** @author rodrigo */
@@ -27,12 +27,10 @@ import lombok.*;
 @Builder
 public class FiscalPeriodosFiscalesDto {
 
-  private static final long serialVersionUID = 1L;
-
   @EqualsAndHashCode.Include private Long id;
   private String nombrePeriodo;
-  private Date fechaInicioPeriodo;
-  private Date fechaFinPeriodo;
+  private LocalDateTime fechaInicioPeriodo;
+  private LocalDateTime fechaFinPeriodo;
   private boolean periodoCerrado;
   private Integer version;
 }

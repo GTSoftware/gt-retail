@@ -15,6 +15,8 @@
  */
 package ar.com.gtsoftware.search;
 
+import static java.util.Objects.nonNull;
+
 import java.time.LocalDateTime;
 import lombok.*;
 
@@ -34,6 +36,6 @@ public class FiscalPeriodosFiscalesSearchFilter extends AbstractSearchFilter {
 
   @Override
   public boolean hasFilter() {
-    return vigente != null || cerrado != null || fechaActual != null;
+    return nonNull(vigente) || nonNull(cerrado) || nonNull(fechaActual);
   }
 }

@@ -19,6 +19,7 @@ import ar.com.gtsoftware.domain.FiscalPeriodosFiscales;
 import ar.com.gtsoftware.domain.FiscalPeriodosFiscales_;
 import ar.com.gtsoftware.search.FiscalPeriodosFiscalesSearchFilter;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
@@ -48,7 +49,7 @@ public class FiscalPeriodosFiscalesFacade
       Root<FiscalPeriodosFiscales> root) {
 
     Predicate p = null;
-    if (psf.getVigente() != null) {
+    if (Objects.nonNull(psf.getVigente())) {
       Predicate p3 =
           cb.between(
               cb.literal(LocalDateTime.now()),
@@ -61,12 +62,12 @@ public class FiscalPeriodosFiscalesFacade
       }
     }
 
-    if (psf.getCerrado() != null) {
+    if (Objects.nonNull(psf.getCerrado())) {
       Predicate p1 = cb.equal(root.get(FiscalPeriodosFiscales_.periodoCerrado), psf.getCerrado());
       p = appendAndPredicate(cb, p, p1);
     }
 
-    if (psf.getFechaActual() != null) {
+    if (Objects.nonNull(psf.getFechaActual())) {
       Predicate pDesde =
           cb.lessThanOrEqualTo(
               root.get(FiscalPeriodosFiscales_.fechaInicioPeriodo), psf.getFechaActual());
