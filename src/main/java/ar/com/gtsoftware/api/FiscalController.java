@@ -1,6 +1,7 @@
 package ar.com.gtsoftware.api;
 
 import ar.com.gtsoftware.api.request.PaginatedSearchRequest;
+import ar.com.gtsoftware.api.response.PaginatedResponse;
 import ar.com.gtsoftware.dto.domain.FiscalPeriodosFiscalesDto;
 import ar.com.gtsoftware.dto.domain.FiscalResponsabilidadesIvaDto;
 import ar.com.gtsoftware.search.FiscalPeriodosFiscalesSearchFilter;
@@ -16,6 +17,6 @@ public interface FiscalController {
   List<FiscalResponsabilidadesIvaDto> getResponsabilidadesIva();
 
   @PostMapping(path = "/fiscal/fiscal-periods")
-  List<FiscalPeriodosFiscalesDto> findFiscalPeriods(
+  PaginatedResponse<FiscalPeriodosFiscalesDto> findFiscalPeriods(
       @Valid @RequestBody PaginatedSearchRequest<FiscalPeriodosFiscalesSearchFilter> searchRequest);
 }

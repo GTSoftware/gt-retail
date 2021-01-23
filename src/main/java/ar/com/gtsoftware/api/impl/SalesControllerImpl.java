@@ -5,6 +5,7 @@ import ar.com.gtsoftware.api.exception.SaleNotFoundException;
 import ar.com.gtsoftware.api.request.PaginatedSearchRequest;
 import ar.com.gtsoftware.api.request.SaleSearchResult;
 import ar.com.gtsoftware.api.response.PaginatedResponse;
+import ar.com.gtsoftware.api.response.PaginatedResponseBuilder;
 import ar.com.gtsoftware.api.response.SaleResponse;
 import ar.com.gtsoftware.api.response.SaleTotalsResponse;
 import ar.com.gtsoftware.api.transformer.fromDomain.SaleResponseTransformer;
@@ -14,7 +15,6 @@ import ar.com.gtsoftware.dto.domain.ComprobantesDto;
 import ar.com.gtsoftware.search.ComprobantesSearchFilter;
 import ar.com.gtsoftware.service.ComprobantesService;
 import ar.com.gtsoftware.utils.SecurityUtils;
-import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,6 +27,7 @@ public class SalesControllerImpl implements SalesController {
   private final SaleSearchResultTransformer saleSearchResultTransformer;
   private final SecurityUtils securityUtils;
   private final SaleResponseTransformer saleResponseTransformer;
+  private final PaginatedResponseBuilder responseBuilder;
 
   @Override
   public PaginatedResponse<SaleSearchResult> findBySearchFilter(
@@ -38,18 +39,7 @@ public class SalesControllerImpl implements SalesController {
       searchFilter.setIdUsuario(securityUtils.getUserDetails().getId());
     }
 
-    final int count = comprobantesService.countBySearchFilter(searchFilter);
-    final PaginatedResponse<SaleSearchResult> response =
-        PaginatedResponse.<SaleSearchResult>builder().totalResults(count).build();
-
-    if (count > 0) {
-      final List<ComprobantesDto> comprobantes =
-          comprobantesService.findBySearchFilter(
-              searchFilter, searchRequest.getFirstResult(), searchRequest.getMaxResults());
-      response.setData(saleSearchResultTransformer.transformSales(comprobantes));
-    }
-
-    return response;
+    return responseBuilder.build(comprobantesService, searchRequest, saleSearchResultTransformer);
   }
 
   @Override

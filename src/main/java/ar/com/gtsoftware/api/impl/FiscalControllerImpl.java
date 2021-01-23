@@ -2,6 +2,8 @@ package ar.com.gtsoftware.api.impl;
 
 import ar.com.gtsoftware.api.FiscalController;
 import ar.com.gtsoftware.api.request.PaginatedSearchRequest;
+import ar.com.gtsoftware.api.response.PaginatedResponse;
+import ar.com.gtsoftware.api.response.PaginatedResponseBuilder;
 import ar.com.gtsoftware.dto.domain.FiscalPeriodosFiscalesDto;
 import ar.com.gtsoftware.dto.domain.FiscalResponsabilidadesIvaDto;
 import ar.com.gtsoftware.search.FiscalPeriodosFiscalesSearchFilter;
@@ -18,6 +20,7 @@ public class FiscalControllerImpl implements FiscalController {
 
   private final FiscalResponsabilidadesIvaService responsabilidadesIvaService;
   private final FiscalPeriodosFiscalesService periodosFiscalesService;
+  private final PaginatedResponseBuilder responseBuilder;
 
   @Override
   public List<FiscalResponsabilidadesIvaDto> getResponsabilidadesIva() {
@@ -25,11 +28,13 @@ public class FiscalControllerImpl implements FiscalController {
   }
 
   @Override
-  public List<FiscalPeriodosFiscalesDto> findFiscalPeriods(
+  public PaginatedResponse<FiscalPeriodosFiscalesDto> findFiscalPeriods(
       @Valid PaginatedSearchRequest<FiscalPeriodosFiscalesSearchFilter> searchRequest) {
-    return periodosFiscalesService.findBySearchFilter(
-        searchRequest.getSearchFilter(),
-        searchRequest.getFirstResult(),
-        searchRequest.getMaxResults());
+    final FiscalPeriodosFiscalesSearchFilter searchFilter = searchRequest.getSearchFilter();
+    if (!searchFilter.hasOrderFields()) {
+      searchFilter.addSortField("id", false);
+    }
+
+    return responseBuilder.build(periodosFiscalesService, searchRequest);
   }
 }

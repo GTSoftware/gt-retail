@@ -1,0 +1,10 @@
+package ar.com.gtsoftware.api.transformer;
+
+import java.util.List;
+
+public interface Transformer<T, R> {
+
+  R transform(T from);
+
+  List<R> transform(List<T> from);
+}
