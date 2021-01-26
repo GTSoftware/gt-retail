@@ -16,6 +16,7 @@
 package ar.com.gtsoftware.search;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import lombok.*;
 
 @Getter
@@ -32,10 +33,11 @@ public class LibroIVASearchFilter extends AbstractSearchFilter {
 
   @Override
   public boolean hasFilter() {
-    return idPeriodo != null || hasFechasDesdeHasta() || anuladas != null;
+    return Objects.nonNull(idPeriodo) || hasFechasDesdeHasta() || Objects.nonNull(anuladas);
   }
 
   public boolean hasFechasDesdeHasta() {
-    return (fechaDesde != null && fechaHasta != null) && (fechaDesde.compareTo(fechaHasta) <= 0);
+    return (Objects.nonNull(fechaDesde) && Objects.nonNull(fechaHasta))
+        && (fechaDesde.compareTo(fechaHasta) <= 0);
   }
 }

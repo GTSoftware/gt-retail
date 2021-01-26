@@ -15,6 +15,7 @@ import ar.com.gtsoftware.dto.fiscal.reginfo.RegInfoCvVentasCbte;
 import ar.com.gtsoftware.dto.fiscal.reginfo.RegimenInformativoVentas;
 import ar.com.gtsoftware.search.LibroIVASearchFilter;
 import ar.com.gtsoftware.service.fiscal.RegimenInformativoService;
+import ar.com.gtsoftware.service.fiscal.WorkBookFiscalBookService;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collections;
@@ -32,6 +33,7 @@ class FiscalBookControllerImplTest {
   private FiscalBookControllerImpl controller;
 
   @Mock private RegimenInformativoService regimenInformativoServiceMock;
+  @Mock private WorkBookFiscalBookService workBookFiscalBookServiceMock;
 
   @Captor private ArgumentCaptor<LibroIVASearchFilter> filterArgumentCaptor;
 
@@ -41,7 +43,9 @@ class FiscalBookControllerImplTest {
   void setUp() {
     initMocks(this);
     responseMock = new MockHttpServletResponse();
-    controller = new FiscalBookControllerImpl(regimenInformativoServiceMock, responseMock);
+    controller =
+        new FiscalBookControllerImpl(
+            regimenInformativoServiceMock, workBookFiscalBookServiceMock, responseMock);
   }
 
   @Test

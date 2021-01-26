@@ -16,6 +16,7 @@
  */
 package ar.com.gtsoftware.service.impl;
 
+import ar.com.gtsoftware.api.exception.InvalidInputDataException;
 import ar.com.gtsoftware.dao.FiscalLibroIvaVentasFacade;
 import ar.com.gtsoftware.dao.FiscalLibroIvaVentasLineasFacade;
 import ar.com.gtsoftware.dao.FiscalPeriodosFiscalesFacade;
@@ -33,10 +34,7 @@ import ar.com.gtsoftware.mappers.helper.CycleAvoidingMappingContext;
 import ar.com.gtsoftware.search.LibroIVASearchFilter;
 import ar.com.gtsoftware.service.fiscal.LibroIVAService;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -67,10 +65,6 @@ public class LibroIVAVentasServiceImpl implements LibroIVAService {
   @Override
   public LibroIVADTO obtenerLibroIVA(LibroIVASearchFilter filter) {
     LibroIVADTO libro;
-    if (!filter.hasFilter()) {
-
-      throw new RuntimeException("Filtro vacío!");
-    }
 
     if (filter.hasFechasDesdeHasta()) {
       libro =
@@ -80,7 +74,10 @@ public class LibroIVAVentasServiceImpl implements LibroIVAService {
               .build();
     } else {
       FiscalPeriodosFiscales periodo = periodosFiscalesFacade.find(filter.getIdPeriodo());
-
+      if (Objects.isNull(periodo)) {
+        throw new InvalidInputDataException(
+            String.format("El perído fiscal %d no existe", filter.getIdPeriodo()));
+      }
       libro =
           LibroIVADTO.builder()
               .fechaDesde(periodo.getFechaInicioPeriodo())
@@ -89,7 +86,7 @@ public class LibroIVAVentasServiceImpl implements LibroIVAService {
     }
     List<FiscalLibroIvaVentas> facturas = ivaVentasFacade.findAllBySearchFilter(filter);
 
-    List<RegistroIVADTO> facturasDTOList = new ArrayList<>();
+    List<RegistroIVADTO> facturasDTOList = new LinkedList<>();
     BigDecimal importeGeneralTotal = BigDecimal.ZERO;
     BigDecimal totalGeneralIVA = BigDecimal.ZERO;
     List<ImportesResponsabilidad> totalesResponsabildiad = new ArrayList<>();
@@ -116,7 +113,7 @@ public class LibroIVAVentasServiceImpl implements LibroIVAService {
                 .build();
         if (!importesIVA.add(importeIva)) {
           for (ImportesAlicuotasIVA imp : importesIVA) {
-            if (imp.getAlicuota().equals(linea.getIdAlicuotaIva())) {
+            if (imp.getAlicuota().getId().equals(linea.getIdAlicuotaIva().getId())) {
               imp.setImporteIva(imp.getImporteIva().add(linea.getImporteIva()));
               imp.setNetoGravado(imp.getNetoGravado().add(linea.getNetoGravado()));
             }

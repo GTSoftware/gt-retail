@@ -8,5 +8,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface ExceptionErrorCode {
-  String errorCode() default "500999";
+  String DEFAULT_ERROR_CODE = "500999";
+
+  String errorCode() default DEFAULT_ERROR_CODE;
 }

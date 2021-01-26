@@ -1,7 +1,7 @@
 package ar.com.gtsoftware.exception;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;
@@ -10,14 +10,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
-@RestController
 public class ExceptionHandler extends ResponseEntityExceptionHandler {
 
+  private static final String DEFAULT_BAD_REQUEST_ERROR_CODE = "400999";
+
+  // TODO fix this since it's not handling all the exceptions...
   @org.springframework.web.bind.annotation.ExceptionHandler(Exception.class)
   public ResponseEntity<ExceptionResponse> handleAllExceptions(Exception ex, WebRequest request) {
 
@@ -31,11 +32,11 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
             .build();
 
     final int statusCode = Integer.parseInt(StringUtils.left(errorCode, 3));
-    return new ResponseEntity(exceptionResponse, HttpStatus.valueOf(statusCode));
+    return ResponseEntity.status(statusCode).body(exceptionResponse);
   }
 
   private String getErrorCode(Exception ex) {
-    String errorCode = "500999";
+    String errorCode = ExceptionErrorCode.DEFAULT_ERROR_CODE;
     Class<?> clazz = ex.getClass();
     if (clazz.isAnnotationPresent(ExceptionErrorCode.class)) {
       errorCode = clazz.getAnnotation(ExceptionErrorCode.class).errorCode();
@@ -56,14 +57,14 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
     validationExceptionResponse.setMessage("Validation error");
     validationExceptionResponse.setFieldErrors(getFieldErrors(ex));
     validationExceptionResponse.setTimestamp(LocalDateTime.now());
-    validationExceptionResponse.setErrorCode("400999");
+    validationExceptionResponse.setErrorCode(DEFAULT_BAD_REQUEST_ERROR_CODE);
 
-    return new ResponseEntity(validationExceptionResponse, status);
+    return new ResponseEntity<>(validationExceptionResponse, status);
   }
 
   private List<String> getFieldErrors(MethodArgumentNotValidException ex) {
     final List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
-    final List<String> fieldsWithErrors = new ArrayList<>(fieldErrors.size());
+    final List<String> fieldsWithErrors = new LinkedList<>();
 
     for (FieldError error : fieldErrors) {
       fieldsWithErrors.add(error.getField() + ": " + error.getDefaultMessage());

@@ -69,6 +69,7 @@ dependencies {
     implementation 'org.apache.xmlgraphics:batik-bridge:1.13'
     implementation 'org.jeasy:easy-rules-core:4.0.0'
     implementation 'org.jeasy:easy-rules-mvel:4.0.0'
+    implementation 'org.apache.poi:poi-ooxml:5.0.0'
 
     jasperreports 'com.lowagie:itext:2.1.7'
     jasperreports 'net.sf.barcode4j:barcode4j:2.1'

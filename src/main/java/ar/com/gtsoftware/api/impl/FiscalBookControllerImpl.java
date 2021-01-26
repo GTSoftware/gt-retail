@@ -1,11 +1,13 @@
 package ar.com.gtsoftware.api.impl;
 
 import ar.com.gtsoftware.api.FiscalBookController;
+import ar.com.gtsoftware.api.exception.FileGenerationException;
 import ar.com.gtsoftware.api.request.DigitalFiscalBookRequest;
 import ar.com.gtsoftware.dto.fiscal.reginfo.RegimenInformativoCompras;
 import ar.com.gtsoftware.dto.fiscal.reginfo.RegimenInformativoVentas;
 import ar.com.gtsoftware.search.LibroIVASearchFilter;
 import ar.com.gtsoftware.service.fiscal.RegimenInformativoService;
+import ar.com.gtsoftware.service.fiscal.WorkBookFiscalBookService;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
@@ -19,16 +21,23 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.output.CountingOutputStream;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class FiscalBookControllerImpl implements FiscalBookController {
   private static final String CRLF = StringUtils.CR + StringUtils.LF;
+  private static final String APPLICATION_ZIP_CONTENT_TYPE = "application/zip";
+  private static final String APPLICATION_MS_EXCEL_2007_CONTENT_TYPE =
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
   private final RegimenInformativoService regimenInformativoService;
+  private final WorkBookFiscalBookService workBookFiscalBookService;
   private final HttpServletResponse response;
 
   private static LibroIVASearchFilter mapToLibroIvaFilter(DigitalFiscalBookRequest filter) {
@@ -47,15 +56,15 @@ public class FiscalBookControllerImpl implements FiscalBookController {
     RegimenInformativoCompras regimenInformativoCompras = null;
 
     switch (filter.getKind()) {
-      case BOTH:
+      case SALES:
         regimenInformativoVentas = regimenInformativoService.getRegimenInformativoVentas(sf);
-        regimenInformativoCompras = regimenInformativoService.getRegimenInformativoCompras(sf);
         break;
       case PURCHASES:
         regimenInformativoCompras = regimenInformativoService.getRegimenInformativoCompras(sf);
         break;
       default:
         regimenInformativoVentas = regimenInformativoService.getRegimenInformativoVentas(sf);
+        regimenInformativoCompras = regimenInformativoService.getRegimenInformativoCompras(sf);
         break;
     }
 
@@ -65,11 +74,45 @@ public class FiscalBookControllerImpl implements FiscalBookController {
     handleZipExport(textFiles);
   }
 
+  @Override
+  public void getFiscalBook(@Valid DigitalFiscalBookRequest filter) {
+    LibroIVASearchFilter sf = mapToLibroIvaFilter(filter);
+
+    try (XSSFWorkbook wb = new XSSFWorkbook();
+        ServletOutputStream servletOutputStream = response.getOutputStream();
+        CountingOutputStream countOs = new CountingOutputStream(servletOutputStream)) {
+      switch (filter.getKind()) {
+        case SALES:
+          workBookFiscalBookService.addSalesFiscalBookSheet(wb, sf);
+          break;
+        case PURCHASES:
+          workBookFiscalBookService.addPurchasesFiscalBookSheet(wb, sf);
+          break;
+        default:
+          workBookFiscalBookService.addPurchasesFiscalBookSheet(wb, sf);
+          workBookFiscalBookService.addSalesFiscalBookSheet(wb, sf);
+          break;
+      }
+      handleWorkBookExport(wb, countOs);
+    } catch (IOException ioe) {
+      final String message = "There was an error trying to generate XLSX file";
+      log.error(message, ioe);
+
+      throw new FileGenerationException(message);
+    }
+  }
+
+  private void handleWorkBookExport(XSSFWorkbook wb, CountingOutputStream os) throws IOException {
+    response.addHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=LibroIVA.xlsx");
+    response.setContentType(APPLICATION_MS_EXCEL_2007_CONTENT_TYPE);
+    wb.write(os);
+    response.setContentLengthLong(os.getByteCount());
+  }
+
   private void handleZipExport(Map<String, String> textFiles) {
     response.addHeader(
-        HttpHeaders.CONTENT_DISPOSITION,
-        String.format("attachment; filename=%s.zip", "RegimenInformativo"));
-    response.setContentType("application/zip");
+        HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=RegimenInformativo.zip");
+    response.setContentType(APPLICATION_ZIP_CONTENT_TYPE);
 
     try (ServletOutputStream servletOutputStream = response.getOutputStream();
         CountingOutputStream countOs = new CountingOutputStream(servletOutputStream);
@@ -86,7 +129,10 @@ public class FiscalBookControllerImpl implements FiscalBookController {
 
       response.setContentLengthLong(countOs.getByteCount());
     } catch (IOException ioe) {
-      throw new RuntimeException("There was an error trying to generate ZIP file");
+      final String message = "There was an error trying to generate ZIP file";
+      log.error(message, ioe);
+
+      throw new FileGenerationException(message);
     }
   }
 

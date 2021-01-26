@@ -1,6 +1,7 @@
 package ar.com.gtsoftware.api.request;
 
 import java.time.LocalDateTime;
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,7 +13,7 @@ public class DigitalFiscalBookRequest {
   private final Long fiscalPeriodId;
   private final LocalDateTime fromDate;
   private final LocalDateTime toDate;
-  private final Kind kind;
+  @NotNull private final Kind kind;
 
   public enum Kind {
     SALES,

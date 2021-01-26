@@ -29,6 +29,7 @@ import {ViewSale} from "./components/sale/ViewSale";
 import {SalesByProductReport} from "./components/report/SalesByProductReport";
 import {SearchPendingSales} from "./components/payment/SearchPendingSales";
 import Helmet from "react-helmet";
+import {FiscalBooks} from "./components/fiscal/FiscalBooks";
 
 const ProtectedRoute = ({component: Component, ...rest}) => (
     <Route {...rest} render={(props) => (
@@ -164,6 +165,21 @@ class App extends Component {
                 }
             ]
         };
+    }
+
+    getFiscalMenuItem = () => {
+        return {
+            label: 'Fiscal', icon: 'fa fa-fw fa-book',
+            items: [
+                {
+                    label: 'Libros de IVA',
+                    icon: 'fa fa-fw fa-book-open',
+                    command: () => {
+                        window.location = '#/fiscal-books'
+                    }
+                }
+            ]
+        }
     }
 
     getSalesMenuItem = () => {
@@ -302,6 +318,8 @@ class App extends Component {
                                         component={SalesByProductReport}/>
                         <ProtectedRoute path="/payment-pending-sales"
                                         component={SearchPendingSales}/>
+                        <ProtectedRoute path="/fiscal-books"
+                                        component={FiscalBooks}/>
                         <Route component={PageNotFound}/>
                     </Switch>
                 </div>
@@ -340,7 +358,8 @@ class App extends Component {
 
         if (adminUser) {
             roleDependantMenu = roleDependantMenu.concat(this.getProductsMenuItem())
-                .concat(this.getReportsMenuItem());
+                .concat(this.getReportsMenuItem())
+                .concat(this.getFiscalMenuItem());
         }
 
         if (adminUser || cashierUser) {
