@@ -63,6 +63,7 @@ public class ComprobantesDto {
   private BigDecimal saldoConSigno;
   private Integer version;
   private String codigoBarrasFactura;
+  private String codigoQr;
 
   public BigDecimal getTotalConSigno() {
     if (total != null && tipoComprobante != null) {

@@ -53,6 +53,4 @@ public interface FacturacionVentasService {
    * @throws ServiceException
    */
   void anularFactura(@NotNull Long idComprobante) throws ServiceException;
-
-  String obtenerCodigoBarrasFE(@NotNull Long idComprobante);
 }

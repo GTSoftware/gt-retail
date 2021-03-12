@@ -73,12 +73,14 @@ dependencies {
 
     jasperreports 'com.lowagie:itext:2.1.7'
     jasperreports 'net.sf.barcode4j:barcode4j:2.1'
+    implementation 'com.google.zxing:core:3.3.2'
     jasperreports 'net.sf.jasperreports:jasperreports:6.9.0'
 
 }
 
 test {
     useJUnitPlatform()
+    maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
 }
 
 

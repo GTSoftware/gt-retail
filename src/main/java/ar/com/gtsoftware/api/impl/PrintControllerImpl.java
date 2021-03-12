@@ -15,16 +15,16 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpHeaders;
@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class PrintControllerImpl implements PrintController {
 
   private final VentasService ventasService;
@@ -40,12 +41,11 @@ public class PrintControllerImpl implements PrintController {
   private final RemitoService remitoService;
   private final HttpServletResponse response;
   private final ResourceLoader resourceLoader;
-  private final Logger logger = LogManager.getLogger(PrintControllerImpl.class);
 
   @Override
   public void getSaleBudget(Long saleId) {
     ComprobantesDto comprobante = ventasService.obtenerComprobante(saleId);
-    if (comprobante == null) {
+    if (Objects.isNull(comprobante)) {
       handleEntityNotFound("saleId", saleId);
     }
     List<ComprobantesDto> ventas = Collections.singletonList(comprobante);
@@ -84,7 +84,7 @@ public class PrintControllerImpl implements PrintController {
     try {
       parameters.put("logoAfip", logoAfip.getURI().getPath());
     } catch (IOException e) {
-      logger.warn("Could not get AFIP logo", e);
+      log.warn("Could not get AFIP logo", e);
     }
     parameters.put("codigobarras", comprobante.getCodigoBarrasFactura());
 
@@ -137,13 +137,13 @@ public class PrintControllerImpl implements PrintController {
       ServletOutputStream servletStream = response.getOutputStream();
       JasperExportManager.exportReportToPdfStream(jasperPrint, servletStream);
     } catch (JRException | IOException e) {
-      logger.error("Error al generar reporte", e);
+      log.error("Error al generar reporte", e);
       throw new FileGenerationException();
     }
   }
 
   private void handleEntityNotFound(String fieldId, Long id) {
-    logger.error("Entity not found with {}={}", fieldId, id);
+    log.error("Entity not found with {}={}", fieldId, id);
     throw new FileNotFoundException();
   }
 

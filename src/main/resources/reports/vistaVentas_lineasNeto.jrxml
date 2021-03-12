@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
-			  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-			  xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
-			  name="facturaB_lineas" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0"
-			  topMargin="0" bottomMargin="0" uuid="8ee54347-3d25-4c73-9f92-449488104ca3">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="facturaB_lineas" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="8ee54347-3d25-4c73-9f92-449488104ca3">
 	<property name="ireport.zoom" value="1.9487171000000019"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -47,11 +43,10 @@ new java.math.BigDecimal(100))),2,java.math.RoundingMode.HALF_UP)]]></variableEx
 	<columnHeader>
 		<band height="21">
 			<rectangle radius="5">
-				<reportElement mode="Transparent" x="0" y="0" width="553" height="20"
-							   uuid="e75f267e-5da2-4678-9e27-a05153ef9c0e"/>
+				<reportElement mode="Transparent" x="0" y="0" width="553" height="20" uuid="e75f267e-5da2-4678-9e27-a05153ef9c0e"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="0" y="0" width="49" height="20" uuid="d357dad4-06db-4837-a679-87cf09a304df"/>
+				<reportElement x="0" y="0" width="69" height="20" uuid="d357dad4-06db-4837-a679-87cf09a304df"/>
 				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="0">
 					<rightPen lineWidth="1.0"/>
 				</box>
@@ -61,7 +56,7 @@ new java.math.BigDecimal(100))),2,java.math.RoundingMode.HALF_UP)]]></variableEx
 				<text><![CDATA[Cant.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="49" y="0" width="62" height="20" uuid="026f7664-9ea6-4814-82b5-2674fc4d807f"/>
+				<reportElement x="70" y="0" width="50" height="20" uuid="026f7664-9ea6-4814-82b5-2674fc4d807f"/>
 				<box leftPadding="5">
 					<rightPen lineWidth="1.0"/>
 				</box>
@@ -71,7 +66,7 @@ new java.math.BigDecimal(100))),2,java.math.RoundingMode.HALF_UP)]]></variableEx
 				<text><![CDATA[Unidad]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="112" y="0" width="254" height="20" uuid="22e93171-ef26-49af-a377-b57a8ff5a448"/>
+				<reportElement x="120" y="0" width="246" height="20" uuid="22e93171-ef26-49af-a377-b57a8ff5a448"/>
 				<box leftPadding="5">
 					<rightPen lineWidth="1.0"/>
 				</box>
@@ -112,22 +107,24 @@ new java.math.BigDecimal(100))),2,java.math.RoundingMode.HALF_UP)]]></variableEx
 	<detail>
 		<band height="24" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
-				<reportElement x="0" y="0" width="45" height="24" uuid="685291bc-c0d0-42ca-acf1-fa4c720826cc"/>
+				<reportElement x="0" y="0" width="69" height="24" uuid="685291bc-c0d0-42ca-acf1-fa4c720826cc"/>
 				<box leftPadding="2"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement x="112" y="0" width="255" height="24" uuid="28435475-9b51-4ff1-b6f1-957423fb2291"/>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression>
-					<![CDATA["["+$F{idProducto}.getCodigoPropio()+"] "+$F{descripcion}]]></textFieldExpression>
+				<reportElement x="120" y="0" width="247" height="24" uuid="28435475-9b51-4ff1-b6f1-957423fb2291"/>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA["["+$F{idProducto}.getCodigoPropio()+"] "+$F{descripcion}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement x="50" y="0" width="50" height="24" uuid="9198d21b-a936-4cf8-a475-355332c68bce"/>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression>
-					<![CDATA[$F{idProducto}.getIdTipoUnidadVenta().getNombreUnidad()]]></textFieldExpression>
+				<reportElement x="70" y="0" width="50" height="24" uuid="9198d21b-a936-4cf8-a475-355332c68bce"/>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{idProducto}.getIdTipoUnidadVenta().getNombreUnidad()]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="¤ #,##0.00">
 				<reportElement x="416" y="0" width="69" height="24" uuid="e8f13670-d049-4398-943b-644ed58e24a5"/>
@@ -139,8 +136,7 @@ new java.math.BigDecimal(100))),2,java.math.RoundingMode.HALF_UP)]]></variableEx
 				<reportElement x="367" y="0" width="49" height="24" uuid="f7d41e1f-9fa7-41bd-9a97-762275e9fac1"/>
 				<box leftPadding="2"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression>
-					<![CDATA[$F{idProducto}.getIdAlicuotaIva().getValorAlicuota()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{idProducto}.getIdAlicuotaIva().getValorAlicuota()]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="7" y="23" width="549" height="1" uuid="1fca64aa-fb6d-4d56-9add-9b5fd3a3e5a9"/>

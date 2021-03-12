@@ -3,6 +3,7 @@ package ar.com.gtsoftware.exception;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
+@Slf4j
 public class ExceptionHandler extends ResponseEntityExceptionHandler {
 
   private static final String DEFAULT_BAD_REQUEST_ERROR_CODE = "400999";
@@ -22,6 +24,7 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
   @org.springframework.web.bind.annotation.ExceptionHandler(Exception.class)
   public ResponseEntity<ExceptionResponse> handleAllExceptions(Exception ex, WebRequest request) {
 
+    log.info("Handling exception. Message: {}", ex.getMessage(), ex);
     final String errorCode = getErrorCode(ex);
     final ExceptionResponse exceptionResponse =
         ExceptionResponse.builder()

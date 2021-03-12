@@ -36,7 +36,6 @@ import ar.com.gtsoftware.service.FacturacionVentasService;
 import ar.com.gtsoftware.service.afip.AfipService;
 import ar.com.gtsoftware.service.exceptions.ServiceException;
 import ar.com.gtsoftware.utils.BusinessDateUtils;
-import ar.com.gtsoftware.utils.GeneradorCodigoBarraFE;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
@@ -224,9 +223,6 @@ public class FacturacionVentasServiceImpl implements FacturacionVentasService {
     registro.setNumeroFactura(formatNumeroFactura(ultimoNro + 1));
 
     afipService.autorizarComprobante(registro);
-    //        CAEResponse caeDto = WSFEClient.solicitarCAE(loginTicket, cuit, registro, endpoint);
-    //        registro.setCae(caeDto.getCae());
-    //        registro.setFechaVencimientoCae(caeDto.getFechaVencimientoCae());
   }
 
   /**
@@ -302,21 +298,5 @@ public class FacturacionVentasServiceImpl implements FacturacionVentasService {
     }
     ivaVentasFacade.edit(factura);
     comprobantesService.anularVenta(venta.getId());
-  }
-
-  @Override
-  public String obtenerCodigoBarrasFE(@NotNull Long idComprobante) {
-    Comprobantes comprobante = ventasFacade.find(idComprobante);
-    if (comprobante == null) {
-      throw new IllegalArgumentException("Comprobante inexistente");
-    }
-    if (comprobante.getIdRegistro() == null) {
-      return StringUtils.EMPTY;
-    }
-    if (comprobante.getIdRegistro().getCae() != null) {
-      String cuit = parametrosFacade.findParametroByName("empresa.cuit").getValorParametro();
-      return GeneradorCodigoBarraFE.calcularCodigoBarras(comprobante.getIdRegistro(), cuit);
-    }
-    return comprobante.getIdRegistro().getNumeroFactura();
   }
 }

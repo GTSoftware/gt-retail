@@ -30,8 +30,8 @@ import ar.com.gtsoftware.search.FiscalLetrasComprobantesSearchFilter;
 import ar.com.gtsoftware.service.ParametrosService;
 import ar.com.gtsoftware.service.PersonasCuentaCorrienteService;
 import ar.com.gtsoftware.service.VentasService;
+import ar.com.gtsoftware.service.afip.QRCodeGenerator;
 import ar.com.gtsoftware.utils.BusinessDateUtils;
-import ar.com.gtsoftware.utils.GeneradorCodigoBarraFE;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
@@ -71,6 +71,7 @@ public class VentasServiceImpl implements VentasService {
   private final NegocioPlanesPagoDetalleFacade planesPagoDetalleFacade;
   private final BusinessDateUtils dateUtils;
   private final ParametrosService parametrosService;
+  private final QRCodeGenerator qrCodeGenerator;
 
   private final PersonasCuentaCorrienteService cuentaCorrienteBean;
 
@@ -183,10 +184,10 @@ public class VentasServiceImpl implements VentasService {
         mapper.entityToDto(comprobante, new CycleAvoidingMappingContext());
     if (comprobante != null && comprobante.getIdRegistro() != null) {
 
-      final String cuitEmpresa = parametrosService.getStringParam(Parametros.EMPRESA_CUIT);
-      final String codigoBarras =
-          GeneradorCodigoBarraFE.calcularCodigoBarras(comprobante.getIdRegistro(), cuitEmpresa);
-      comprobantesDto.setCodigoBarrasFactura(codigoBarras);
+      final Long cuitEmpresa = parametrosService.getLongParam(Parametros.EMPRESA_CUIT);
+
+      comprobantesDto.setCodigoBarrasFactura(
+          qrCodeGenerator.generarCodigo(comprobante.getIdRegistro(), cuitEmpresa));
     }
 
     return comprobantesDto;
