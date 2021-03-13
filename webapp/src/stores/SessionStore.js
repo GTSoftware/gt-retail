@@ -1,28 +1,27 @@
 export class SessionStore {
+  getStoreName
 
-    getStoreName;
+  getInitialState
 
-    getInitialState;
-
-    constructor() {
-        if (!this.getData()) {
-            this.clearStore();
-        }
+  constructor() {
+    if (!this.getData()) {
+      this.clearStore()
     }
+  }
 
-    getData() {
-        let stringStoreData = sessionStorage.getItem(this.getStoreName());
+  getData() {
+    let stringStoreData = sessionStorage.getItem(this.getStoreName())
 
-        return JSON.parse(stringStoreData);
-    }
+    return JSON.parse(stringStoreData)
+  }
 
-    setData(data) {
-        let stringData = JSON.stringify(data);
+  setData(data) {
+    let stringData = JSON.stringify(data)
 
-        sessionStorage.setItem(this.getStoreName(), stringData);
-    }
+    sessionStorage.setItem(this.getStoreName(), stringData)
+  }
 
-    clearStore() {
-        this.setData(this.getInitialState());
-    }
+  clearStore() {
+    this.setData(this.getInitialState())
+  }
 }

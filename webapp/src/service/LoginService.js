@@ -1,74 +1,71 @@
-import axios from 'axios';
-import jwt from 'jwt-decode'
+import axios from "axios"
+import jwt from "jwt-decode"
 
-export const USER_TOKEN_STORE = 'userToken';
+export const USER_TOKEN_STORE = "userToken"
 
 class LoginService {
+  constructor() {
+    if (!this.axiosInterceptorId && this.isUserLoggedIn()) {
+      let userToken = sessionStorage.getItem(USER_TOKEN_STORE)
 
-    constructor() {
-        if (!this.axiosInterceptorId && this.isUserLoggedIn()) {
-            let userToken = sessionStorage.getItem(USER_TOKEN_STORE);
+      this.userDetails = jwt(userToken).userDetails
 
-            this.userDetails = jwt(userToken).userDetails;
+      this.setUpInterceptors(this.createTokenHeaderValue(userToken))
+    }
+  }
 
-            this.setUpInterceptors(this.createTokenHeaderValue(userToken));
-        }
+  performLogin(userCredentials) {
+    return axios.post("authenticate", userCredentials)
+  }
+
+  initUserSession(token) {
+    this.userDetails = jwt(token).userDetails
+
+    sessionStorage.setItem(USER_TOKEN_STORE, token)
+
+    this.setUpInterceptors(this.createTokenHeaderValue(token))
+  }
+
+  setUpInterceptors(tokenHeaderValue) {
+    if (this.axiosInterceptorId) {
+      axios.interceptors.request.eject(this.axiosInterceptorId)
     }
 
-    performLogin(userCredentials) {
-        return axios.post('authenticate', userCredentials);
-    }
+    this.axiosInterceptorId = axios.interceptors.request.use((config) => {
+      if (this.isUserLoggedIn()) {
+        config.headers.authorization = tokenHeaderValue
+      }
 
-    initUserSession(token) {
-        this.userDetails = jwt(token).userDetails;
+      return config
+    })
+  }
 
-        sessionStorage.setItem(USER_TOKEN_STORE, token);
+  createTokenHeaderValue(token) {
+    return "Bearer " + token
+  }
 
-        this.setUpInterceptors(this.createTokenHeaderValue(token));
-    }
+  isUserLoggedIn() {
+    let userToken = sessionStorage.getItem(USER_TOKEN_STORE)
 
-    setUpInterceptors(tokenHeaderValue) {
-        if (this.axiosInterceptorId) {
-            axios.interceptors.request.eject(this.axiosInterceptorId);
-        }
+    return userToken || false
+  }
 
-        this.axiosInterceptorId = axios.interceptors.request.use(
-            (config) => {
-                if (this.isUserLoggedIn()) {
-                    config.headers.authorization = tokenHeaderValue
-                }
+  getUserDetails() {
+    return this.userDetails
+  }
 
-                return config;
-            }
-        )
-    }
+  hasUserRole(role) {
+    let userDetails = this.userDetails
+    let hasRole = userDetails.userRoles.filter((r) => r === role)
 
-    createTokenHeaderValue(token) {
-        return 'Bearer ' + token;
-    }
+    return hasRole.length !== 0
+  }
 
-    isUserLoggedIn() {
-        let userToken = sessionStorage.getItem(USER_TOKEN_STORE);
-
-        return userToken || false;
-    }
-
-    getUserDetails() {
-        return this.userDetails;
-    }
-
-    hasUserRole(role) {
-        let userDetails = this.userDetails;
-        let hasRole = userDetails.userRoles.filter((r) => r === role);
-
-        return hasRole.length !== 0;
-    }
-
-    performLogout() {
-        axios.interceptors.request.eject(this.axiosInterceptorId);
-        sessionStorage.removeItem(USER_TOKEN_STORE);
-        delete this.userDetails;
-    }
+  performLogout() {
+    axios.interceptors.request.eject(this.axiosInterceptorId)
+    sessionStorage.removeItem(USER_TOKEN_STORE)
+    delete this.userDetails
+  }
 }
 
-export default new LoginService();
+export default new LoginService()
