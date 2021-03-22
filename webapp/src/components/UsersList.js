@@ -6,7 +6,7 @@ import { Column } from "primereact/column"
 import { Button } from "primereact/button"
 import { Dialog } from "primereact/dialog"
 import { InputText } from "primereact/inputtext"
-import { Growl } from "primereact/growl"
+import { Toast } from "primereact/toast"
 import { Dropdown } from "primereact/dropdown"
 import { DEFAULT_DATA_TABLE_PROPS } from "./DefaultProps"
 
@@ -66,7 +66,7 @@ export class UsersList extends Component {
   renderMainContent() {
     return (
       <div className="card card-w-title">
-        <Growl ref={(el) => (this.growl = el)} />
+        <Toast ref={(el) => (this.toast = el)} />
         <DataTable {...this.getUsersTableProps()}>{this.renderColumns()}</DataTable>
         {this.renderDialog()}
       </div>
@@ -262,14 +262,14 @@ export class UsersList extends Component {
   handleResetPassword(rowData) {
     UsersService.resetUserPassword(rowData)
       .then((response) =>
-        this.growl.show({
+        this.toast.show({
           severity: "info",
           summary: "Clave reestablecida a:",
           detail: response.data.newPassword,
         })
       )
       .catch((error) =>
-        this.growl.show({
+        this.toast.show({
           severity: "error",
           summary: "Error al intentar reestablecer la clave",
           detail: error.response.data.message,

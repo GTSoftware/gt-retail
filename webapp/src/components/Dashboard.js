@@ -372,7 +372,6 @@ export class Dashboard extends Component {
             <DataTable
               value={this.state.cars}
               style={{ marginBottom: "20px" }}
-              responsive={true}
               selectionMode="single"
               selection={this.state.selectedCar}
               onSelectionChange={(e) => this.setState({ selectedCar: e.value })}

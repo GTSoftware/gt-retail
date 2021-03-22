@@ -61,7 +61,6 @@ export class SearchProductsTable extends Component {
         loading={this.state.loading}
         emptyMessage={props.emptyMessage}
         resizableColumns={true}
-        responsive={true}
         loadingIcon="fa fa-fw fa-spin fa-spinner"
       >
         {this.renderColumns()}

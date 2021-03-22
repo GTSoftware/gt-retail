@@ -1,11 +1,10 @@
 import _ from "lodash"
 import React, { Component } from "react"
 import { ProductsService } from "../../service/ProductsService"
-import { Growl } from "primereact/growl"
+import { Toast } from "primereact/toast"
 import { Dropdown } from "primereact/dropdown"
 import { Button } from "primereact/button"
 import { SearchProductsTable } from "../core/SearchProductsTable"
-import { AutoComplete } from "primereact/autocomplete"
 import { InputNumber } from "primereact/inputnumber"
 import { Checkbox } from "primereact/checkbox"
 import { LoadingButton } from "../core/LoadingButton"
@@ -13,15 +12,16 @@ import { AddPercentDialog } from "./AddPercentDialog"
 import { DataTable } from "primereact/datatable"
 import { Column } from "primereact/column"
 import { InputText } from "primereact/inputtext"
+import { BrandsSelector } from "../core/BrandsSelector"
+import { AutocompleteSupplierFilter } from "../core/AutocompleteSupplierFilter"
+import { CategoriesSelector } from "../core/CategoriesSelector"
+import { SubCategoriesSelector } from "../core/SubCategoriesSelector"
 
 export class BatchPricing extends Component {
   constructor(props, context) {
     super(props, context)
 
     this.state = {
-      categories: [],
-      subCategories: [],
-      brands: [],
       supplyTypes: [],
       percentTypes: [],
       productsSearchOptions: {
@@ -51,17 +51,7 @@ export class BatchPricing extends Component {
   }
 
   componentDidMount() {
-    const { categories, brands, supplyTypes, percentTypes } = this.state
-
-    if (categories.length === 0) {
-      this.productsService.getCategories((categories) =>
-        this.setState({ categories: categories })
-      )
-    }
-
-    if (brands.length === 0) {
-      this.productsService.getBrands((brands) => this.setState({ brands: brands }))
-    }
+    const { supplyTypes, percentTypes } = this.state
 
     if (supplyTypes.length === 0) {
       this.productsService.getSupplyTypes((supplyTypes) =>
@@ -79,8 +69,8 @@ export class BatchPricing extends Component {
   render() {
     return (
       <div className="card card-w-title">
-        <Growl ref={(el) => (this.growl = el)} />
         <h1>Actualización masiva de precios</h1>
+        <Toast ref={(el) => (this.toast = el)} />
         {this.renderFilterSection()}
         {this.renderProductsPreview()}
         <h3>Productos a modificar: {this.state.totalResults}</h3>
@@ -92,13 +82,8 @@ export class BatchPricing extends Component {
   }
 
   renderFilterSection = () => {
-    const {
-      supplyTypes,
-      productsSearchOptions,
-      brands,
-      categories,
-      subCategories,
-    } = this.state
+    const { supplyTypes, productsSearchOptions } = this.state
+
     return (
       <div className="p-grid p-fluid">
         <div className="p-col-12">
@@ -118,65 +103,37 @@ export class BatchPricing extends Component {
 
         <div className="p-col-12">
           <label htmlFor="supplier">Proveedor:</label>
-          <AutoComplete
-            minLength={2}
-            placeholder="Comience a escribir para buscar un proveedor"
-            delay={500}
-            id="supplier"
-            completeMethod={(event) => this.filterSuppliers(event.query)}
-            suggestions={this.state.filteredSuppliers}
-            field="displayName"
-            onChange={(e) =>
-              this.handleProductsSearchOptionsChange("supplier", e.value)
+          <AutocompleteSupplierFilter
+            onSupplierSelect={(supplier) =>
+              this.handleProductsSearchOptionsChange("supplier", supplier)
             }
-            value={productsSearchOptions.supplier || ""}
           />
         </div>
 
         <div className="p-col-12">
           <label htmlFor="brand">Marca:</label>
-          <Dropdown
-            id="brand"
-            filter={true}
-            dataKey="brandId"
-            options={brands}
-            showClear={true}
-            value={productsSearchOptions.brand}
-            optionLabel="displayName"
-            onChange={(e) =>
-              this.handleProductsSearchOptionsChange("brand", e.value)
+          <BrandsSelector
+            onBrandSelect={(brand) =>
+              this.handleProductsSearchOptionsChange("brand", brand)
             }
           />
         </div>
 
         <div className="p-col-6">
           <label htmlFor="category">Rubro:</label>
-          <Dropdown
-            id="category"
-            dataKey="categoryId"
-            filter={true}
-            options={categories}
-            showClear={true}
-            value={productsSearchOptions.category}
-            optionLabel="displayName"
-            onChange={(e) =>
-              this.handleProductsSearchOptionsChange("category", e.value)
-            }
+          <CategoriesSelector
+            onCategorySelect={(category) => {
+              this.handleProductsSearchOptionsChange("category", category)
+            }}
           />
         </div>
         <div className="p-col-6">
           <label htmlFor="subCategory">Sub-Rubro:</label>
-          <Dropdown
-            id="subCategory"
-            dataKey="subCategoryId"
-            filter={true}
-            options={subCategories}
-            showClear={true}
-            value={productsSearchOptions.subCategory}
-            optionLabel="displayName"
-            onChange={(e) =>
-              this.handleProductsSearchOptionsChange("subCategory", e.value)
+          <SubCategoriesSelector
+            onSubCategorySelect={(subCat) =>
+              this.handleProductsSearchOptionsChange("subCategory", subCat)
             }
+            categoryId={_.get(productsSearchOptions, "category.categoryId")}
           />
         </div>
         <div className="p-col-12">
@@ -328,17 +285,11 @@ export class BatchPricing extends Component {
 
     productsSearchOptions[property] = value
 
-    this.setState({ productsSearchOptions: productsSearchOptions })
-
     if (property === "category") {
-      if (value) {
-        this.productsService.getSubCategories(value.categoryId, (subCat) =>
-          this.setState({ subCategories: subCat })
-        )
-      } else {
-        this.setState({ subCategories: [] })
-      }
+      productsSearchOptions.subCategory = null
     }
+
+    this.setState({ productsSearchOptions: productsSearchOptions })
   }
 
   handleUpdateOptionsChange = (property, value) => {
@@ -409,12 +360,6 @@ export class BatchPricing extends Component {
     }
   }
 
-  filterSuppliers = (query) => {
-    this.productsService.searchSuppliers(query, (suppliers) =>
-      this.setState({ filteredSuppliers: suppliers })
-    )
-  }
-
   handleApplyChanges = () => {
     let { updateOptions } = this.state
     this.setState({ updatingPrices: true })
@@ -431,7 +376,7 @@ export class BatchPricing extends Component {
   handleSuccess = () => {
     this.setState({ updatingPrices: false })
 
-    this.growl.show({
+    this.toast.show({
       severity: "info",
       summary: "Precios actualizados exitosamente",
       detail: "",
@@ -441,7 +386,7 @@ export class BatchPricing extends Component {
   handleError = (error) => {
     this.setState({ updatingPrices: false })
 
-    this.growl.show({
+    this.toast.show({
       severity: "error",
       summary: "No se pudieron actualizar los precios",
       detail: _.get(error, "response.data.message", ""),

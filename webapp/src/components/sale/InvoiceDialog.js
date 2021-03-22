@@ -5,7 +5,7 @@ import { SalesService } from "../../service/SalesService"
 import { Dropdown } from "primereact/dropdown"
 import { LoadingButton } from "../core/LoadingButton"
 import _ from "lodash"
-import { Growl } from "primereact/growl"
+import { Toast } from "primereact/toast"
 
 export class InvoiceDialog extends Component {
   static propTypes = {
@@ -37,7 +37,7 @@ export class InvoiceDialog extends Component {
   render() {
     return (
       <Dialog {...this.getDialogProps()}>
-        <Growl ref={(el) => (this.growl = el)} />
+        <Toast ref={(el) => (this.toast = el)} />
         {this.renderContent()}
       </Dialog>
     )
@@ -122,7 +122,7 @@ export class InvoiceDialog extends Component {
   handleError = (error) => {
     this.setState({ loading: false })
 
-    this.growl.show({
+    this.toast.show({
       severity: "error",
       summary: "No se pudo facturar el comprobante",
       detail: _.get(error, "message", ""),

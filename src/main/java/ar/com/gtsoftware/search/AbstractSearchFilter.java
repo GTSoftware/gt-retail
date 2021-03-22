@@ -17,7 +17,7 @@ package ar.com.gtsoftware.search;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -85,7 +85,7 @@ public abstract class AbstractSearchFilter implements Serializable {
    */
   public void addSortField(SortField sortField) {
     if (sortFields == null) {
-      sortFields = new ArrayList<>();
+      sortFields = new LinkedList<>();
     }
     sortFields.add(sortField);
   }

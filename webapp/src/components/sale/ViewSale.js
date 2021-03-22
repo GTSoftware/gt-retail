@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Growl } from "primereact/growl"
+import { Toast } from "primereact/toast"
 import { SalesService } from "../../service/SalesService"
 import PropTypes from "prop-types"
 import _ from "lodash"
@@ -48,7 +48,7 @@ export class ViewSale extends Component {
 
     return (
       <div className="card card-w-title">
-        <Growl ref={(el) => (this.growl = el)} />
+        <Toast ref={(el) => (this.toast = el)} />
         <h1>Vista de comprobante: {saleId}</h1>
         <div className="p-grid p-fluid">
           {loading && this.getPlaceholder()}
@@ -132,7 +132,7 @@ export class ViewSale extends Component {
     const { sale } = this.state
 
     return (
-      <DataTable value={sale.details} rows={8} paginator={true} responsive={true}>
+      <DataTable value={sale.details} rows={8} paginator={true}>
         <Column field="productCode" header="Código" />
         <Column field="description" header="Descricpción" />
         <Column field="saleUnit" header="Un. Venta" />
@@ -190,7 +190,7 @@ export class ViewSale extends Component {
   }
 
   handleGetSaleError = (error) => {
-    this.growl.show({
+    this.toast.show({
       severity: "error",
       summary: "No se pudo encontrar el comprobante",
       detail: _.get(error, "response.data.message", ""),
@@ -200,7 +200,7 @@ export class ViewSale extends Component {
   handleInvoice = (createdInvoice) => {
     const { saleId } = this.state
 
-    this.growl.show({
+    this.toast.show({
       severity: "info",
       summary: `Factura ${createdInvoice.invoiceNumber} generada exitosamente`,
     })

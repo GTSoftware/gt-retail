@@ -3,7 +3,7 @@ import { Dialog } from "primereact/dialog"
 import PropTypes from "prop-types"
 import { LoadingButton } from "../core/LoadingButton"
 import _ from "lodash"
-import { Growl } from "primereact/growl"
+import { Toast } from "primereact/toast"
 import { PaymentPendingSalesService } from "../../service/PaymentPendingSalesService"
 import { CashSaleToPay } from "./CashSaleToPay"
 
@@ -35,7 +35,7 @@ export class PayDialog extends Component {
   render() {
     return (
       <Dialog {...this.getDialogProps()}>
-        <Growl ref={(el) => (this.growl = el)} />
+        <Toast ref={(el) => (this.toast = el)} />
         {this.renderContent()}
       </Dialog>
     )
@@ -86,7 +86,7 @@ export class PayDialog extends Component {
   handleError = (error) => {
     this.setState({ loading: false })
 
-    this.growl.show({
+    this.toast.show({
       severity: "error",
       summary: "No se pudieron cobrar los comprobantes",
       detail: _.get(error, "message", ""),

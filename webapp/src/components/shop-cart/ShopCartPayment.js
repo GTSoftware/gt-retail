@@ -9,7 +9,7 @@ import _ from "lodash"
 import { Panel } from "primereact/panel"
 import { InputTextarea } from "primereact/inputtextarea"
 import { InputText } from "primereact/inputtext"
-import { Growl } from "primereact/growl"
+import { Toast } from "primereact/toast"
 import { LoadingButton } from "../core/LoadingButton"
 import { Dialog } from "primereact/dialog"
 
@@ -91,7 +91,7 @@ export class ShopCartPayment extends Component {
 
     return (
       <div className="card card-w-title">
-        <Growl ref={(el) => (this.growl = el)} />
+        <Toast ref={(el) => (this.toast = el)} />
         {this.renderAddPaymentDialog()}
         <div className="p-card-body p-fluid ">
           <div className="p-grid">
@@ -355,7 +355,6 @@ export class ShopCartPayment extends Component {
       header: header,
       footer: footer,
       resizableColumns: true,
-      responsive: true,
     }
 
     return tableProps
@@ -674,7 +673,7 @@ export class ShopCartPayment extends Component {
 
   handleSaveSaleError(error) {
     this.setState({ savingSale: false })
-    this.growl.show({
+    this.toast.show({
       severity: "error",
       summary: "No se pudo guardar la venta",
       detail: error.response.data.message,

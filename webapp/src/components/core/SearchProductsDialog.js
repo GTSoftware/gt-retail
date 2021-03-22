@@ -148,7 +148,6 @@ export class SearchProductsDialog extends Component {
         onPage={this.onPageEvent}
         loading={this.state.loading}
         selectionMode="single"
-        responsive={true}
         selection={this.state.selectedProduct}
         onSelectionChange={(e) => this.setState({ selectedProduct: e.value })}
         loadingIcon="fa fa-fw fa-spin fa-spinner"

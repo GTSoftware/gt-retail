@@ -1,4 +1,5 @@
 import axios from "axios"
+import { toUpperCaseTrim, toLowerCaseTrim } from "../utils/StringUtils"
 
 export class CustomersService {
   addNewCustomer(formData, successCallback, errorCallback) {
@@ -94,17 +95,17 @@ function transformFormData(formData) {
   const legalPerson = formData.tipoPersoneria.id === 2
 
   return {
-    email: toLowerCase(formData.email),
+    email: toLowerCaseTrim(formData.email),
     razonSocial: legalPerson
-      ? toUpperCase(formData.razonSocial)
-      : toUpperCase(`${formData.apellidos}, ${formData.nombres}`),
-    apellidos: legalPerson ? null : toUpperCase(formData.apellidos),
-    nombres: legalPerson ? null : toUpperCase(formData.nombres),
-    nombreFantasia: toUpperCase(formData.nombreFantasia),
-    calle: toUpperCase(formData.calle),
-    altura: toUpperCase(formData.altura),
-    piso: toUpperCase(formData.piso),
-    depto: toUpperCase(formData.depto),
+      ? toUpperCaseTrim(formData.razonSocial)
+      : toUpperCaseTrim(`${formData.apellidos}, ${formData.nombres}`),
+    apellidos: legalPerson ? null : toUpperCaseTrim(formData.apellidos),
+    nombres: legalPerson ? null : toUpperCaseTrim(formData.nombres),
+    nombreFantasia: toUpperCaseTrim(formData.nombreFantasia),
+    calle: toUpperCaseTrim(formData.calle),
+    altura: toUpperCaseTrim(formData.altura),
+    piso: toUpperCaseTrim(formData.piso),
+    depto: toUpperCaseTrim(formData.depto),
     documento: formData.documento,
     provinciaId: formData.provincia.id,
     paisId: formData.pais.id,
@@ -122,22 +123,8 @@ function transformPhoneNumbers(telefonos) {
     return telefonos.map((telefono) => {
       return {
         numero: `${telefono.areaCode} ${telefono.number}`,
-        referencia: toUpperCase(telefono.reference),
+        referencia: toUpperCaseTrim(telefono.reference),
       }
     })
   }
-}
-
-function toUpperCase(value) {
-  if (value) {
-    return `${value}`.toUpperCase().trim()
-  }
-  return null
-}
-
-function toLowerCase(value) {
-  if (value) {
-    return `${value}`.toLowerCase().trim()
-  }
-  return null
 }

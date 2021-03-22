@@ -44,7 +44,6 @@ export class SalesByProductReport extends Component {
           <DataTable
             value={soldProducts}
             style={{ marginBottom: "20px" }}
-            responsive={true}
             loadingIcon="fa fa-spin fa-spinner"
             loading={loading}
             rows={10}

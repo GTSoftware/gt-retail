@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Growl } from "primereact/growl"
+import { Toast } from "primereact/toast"
 import { Dropdown } from "primereact/dropdown"
 import { LoadingButton } from "../core/LoadingButton"
 import { FiscalBookService } from "../../service/FiscalBookService"
@@ -53,7 +53,7 @@ export class FiscalBooks extends Component {
 
     return (
       <div className="card card-w-title">
-        <Growl ref={(el) => (this.growl = el)} />
+        <Toast ref={(el) => (this.toast = el)} />
 
         <h1>Libros de IVA</h1>
 
@@ -137,7 +137,7 @@ export class FiscalBooks extends Component {
   handleError = (error) => {
     this.setState({ loading: false })
 
-    this.growl.show({
+    this.toast.show({
       severity: "error",
       summary: "No se pudo descargar el archivo",
       detail: error.response.data.message,

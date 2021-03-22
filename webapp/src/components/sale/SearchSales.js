@@ -1,6 +1,6 @@
 import _ from "lodash"
 import React, { Component } from "react"
-import { Growl } from "primereact/growl"
+import { Toast } from "primereact/toast"
 import { Column } from "primereact/column"
 import { DataTable } from "primereact/datatable"
 import { DEFAULT_DATA_TABLE_PROPS } from "../DefaultProps"
@@ -63,7 +63,7 @@ export class SearchSales extends Component {
   render() {
     return (
       <div className="card card-w-title">
-        <Growl ref={(el) => (this.growl = el)} />
+        <Toast ref={(el) => (this.toast = el)} />
         <h1>Búsqueda de comprobantes</h1>
         <div className="p-grid p-fluid">
           <div className="p-col-12">

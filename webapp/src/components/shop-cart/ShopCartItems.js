@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Growl } from "primereact/growl"
+import { Toast } from "primereact/toast"
 import { DataTable } from "primereact/datatable"
 import { DEFAULT_DATA_TABLE_PROPS } from "../DefaultProps"
 import { Column } from "primereact/column"
@@ -65,7 +65,7 @@ export class ShopCartItems extends Component {
   render() {
     return (
       <div className="card card-w-title">
-        <Growl ref={(el) => (this.growl = el)} />
+        <Toast ref={(el) => (this.toast = el)} />
         {this.renderAddProductSection()}
         {this.renderEditProductDialog()}
         {this.renderSearchProductsDialog()}
@@ -311,7 +311,6 @@ export class ShopCartItems extends Component {
       header: header,
       footer: footer,
       resizableColumns: true,
-      responsive: true,
     })
 
     return tableProps
@@ -505,7 +504,7 @@ export class ShopCartItems extends Component {
   handleProductNotFoundError(error) {
     this.setState({ loadingAddProduct: false })
 
-    this.growl.show({
+    this.toast.show({
       severity: "error",
       summary: "No se pudo encontrar el producto",
       detail: error.response.data.message,

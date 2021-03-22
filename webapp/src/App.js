@@ -5,7 +5,7 @@ import { AppFooter } from "./AppFooter"
 import { AppMenu } from "./AppMenu"
 import { AppProfile } from "./AppProfile"
 import { Redirect, Route, Switch } from "react-router-dom"
-import "primereact/resources/themes/nova-light/theme.css"
+import "primereact/resources/themes/nova/theme.css"
 import "primereact/resources/primereact.min.css"
 import "primeicons/primeicons.css"
 import "primeflex/primeflex.css"
@@ -30,6 +30,7 @@ import { SalesByProductReport } from "./components/report/SalesByProductReport"
 import { SearchPendingSales } from "./components/payment/SearchPendingSales"
 import Helmet from "react-helmet"
 import { FiscalBooks } from "./components/fiscal/FiscalBooks"
+import { ProductsInventory } from "./components/products/ProductsInventory"
 
 const ProtectedRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -163,6 +164,13 @@ class App extends Component {
       label: "Productos",
       icon: "fa fa-fw fa-boxes",
       items: [
+        {
+          label: "Mayor de produtos",
+          icon: "fa fa-fw fa-boxes",
+          command: () => {
+            window.location = "#/products"
+          },
+        },
         {
           label: "Actualización masiva de precios",
           icon: "fa fa-fw fa-calculator",
@@ -344,6 +352,7 @@ class App extends Component {
               component={SearchPendingSales}
             />
             <ProtectedRoute path="/fiscal-books" component={FiscalBooks} />
+            <ProtectedRoute path="/products" component={ProductsInventory} />
             <Route component={PageNotFound} />
           </Switch>
         </div>

@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import { DeliveryNotesService } from "../../service/DeliveryNotesService"
-import { Growl } from "primereact/growl"
+import { Toast } from "primereact/toast"
 import { StockService } from "../../service/StockService"
 import { Dropdown } from "primereact/dropdown"
 import { Button } from "primereact/button"
@@ -49,7 +49,7 @@ export class ProductHistory extends Component {
 
     return (
       <div className="card card-w-title">
-        <Growl ref={(el) => (this.growl = el)} />
+        <Toast ref={(el) => (this.toast = el)} />
 
         <h1>Historia de un producto</h1>
 
@@ -182,7 +182,7 @@ export class ProductHistory extends Component {
   handleError = (error) => {
     this.setState({ loadingAddProduct: false })
 
-    this.growl.show({
+    this.toast.show({
       severity: "error",
       summary: "No se pudo encontrar el producto",
       detail: error.response.data.message,

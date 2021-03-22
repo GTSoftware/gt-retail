@@ -12,30 +12,6 @@ export class ProductsService {
     }
   }
 
-  getCategories(successCallback) {
-    let promise = axios.get(`/products/categories`)
-
-    if (successCallback) {
-      promise.then((response) => successCallback(response.data))
-    }
-  }
-
-  getSubCategories(categoryId, successCallback) {
-    let promise = axios.get(`/products/sub-categories?categoryId=${categoryId}`)
-
-    if (successCallback) {
-      promise.then((response) => successCallback(response.data))
-    }
-  }
-
-  getBrands(successCallback) {
-    let promise = axios.get(`/products/brands`)
-
-    if (successCallback) {
-      promise.then((response) => successCallback(response.data))
-    }
-  }
-
   getSupplyTypes(successCallback) {
     let promise = axios.get(`/products/supply-types`)
 
@@ -52,15 +28,6 @@ export class ProductsService {
     }
   }
 
-  searchSuppliers(query, successCallback) {
-    let searchData = transformSuppliersSearchData(query)
-    let promise = axios.post(`/persons/search`, searchData)
-
-    if (successCallback) {
-      promise.then((response) => successCallback(response.data.data))
-    }
-  }
-
   updateProductsPricing(updateOptions, successCallback, errorCallback) {
     let updateRequest = transformUpdatePrices(updateOptions)
     let promise = axios.put(`/products/pricing`, updateRequest)
@@ -71,18 +38,6 @@ export class ProductsService {
     if (errorCallback) {
       promise.catch((error) => errorCallback(error.response.data))
     }
-  }
-}
-
-function transformSuppliersSearchData(query) {
-  return {
-    firstResult: 0,
-    maxResults: 15,
-    searchFilter: {
-      txt: query,
-      activo: true,
-      proveedor: true,
-    },
   }
 }
 

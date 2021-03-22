@@ -16,7 +16,11 @@
 package ar.com.gtsoftware.search;
 
 import javax.validation.constraints.Size;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 
 @Getter
@@ -51,17 +55,16 @@ public class ProductosSearchFilter extends AbstractSearchFilter {
 
   @Override
   public boolean hasFilter() {
-    return (StringUtils.isNotEmpty(txt)
-            || idProducto != null
-            || StringUtils.isNotEmpty(codigoPropio)
-            || activo != null
-            || puedeComprarse != null
-            || puedeVenderse != null
-            || idRubro != null
-            || idSubRubro != null
-            || idProveedorHabitual != null
-            || idConStockEnDeposito != null
-            || idListaPrecio != null)
+    return StringUtils.isNotEmpty(txt)
+        || idProducto != null
+        || StringUtils.isNotEmpty(codigoPropio)
+        || activo != null
+        || puedeComprarse != null
+        || puedeVenderse != null
+        || idRubro != null
+        || idSubRubro != null
+        || idProveedorHabitual != null
+        || idConStockEnDeposito != null
         || idTipoProveeduria != null
         || idMarca != null
         || conStock != null

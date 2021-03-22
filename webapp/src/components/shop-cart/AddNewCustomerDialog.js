@@ -15,7 +15,7 @@ import { LoadingButton } from "../core/LoadingButton"
 import { Dropdown } from "primereact/dropdown"
 import { AutoComplete } from "primereact/autocomplete"
 import { InputNumber } from "primereact/inputnumber"
-import { Growl } from "primereact/growl"
+import { Toast } from "primereact/toast"
 import { DataTable } from "primereact/datatable"
 import { Column } from "primereact/column"
 import { Button } from "primereact/button"
@@ -165,7 +165,7 @@ export class AddNewCustomerDialog extends Component {
     }
     return (
       <Dialog {...this.getDialogProps()}>
-        <Growl ref={(el) => (this.growl = el)} />
+        <Toast ref={(el) => (this.toast = el)} />
         <Form
           data={this.state.formData}
           onChange={this.handleChange}
@@ -593,7 +593,7 @@ export class AddNewCustomerDialog extends Component {
       detail = error.response.data.message
     }
 
-    this.growl.show({
+    this.toast.show({
       severity: "error",
       summary: "No se pudo guardar el cliente",
       detail: detail,
@@ -770,7 +770,7 @@ export class AddNewCustomerDialog extends Component {
   }
 
   handleExistingCustomer = (customer) => {
-    this.growl.show({
+    this.toast.show({
       severity: "error",
       summary: "Ya existe un cliente con estos datos",
       detail: `${customer.businessName} ${customer.identification}`,

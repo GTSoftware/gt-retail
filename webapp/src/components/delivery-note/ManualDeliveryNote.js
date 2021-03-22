@@ -9,7 +9,7 @@ import { InputText } from "primereact/inputtext"
 import { LoadingButton } from "../core/LoadingButton"
 import { ProductsService } from "../../service/ProductsService"
 import { Checkbox } from "primereact/checkbox"
-import { Growl } from "primereact/growl"
+import { Toast } from "primereact/toast"
 import { DataTable } from "primereact/datatable"
 import { DEFAULT_DATA_TABLE_PROPS } from "../DefaultProps"
 import { Column } from "primereact/column"
@@ -78,7 +78,7 @@ export class ManualDeliveryNote extends Component {
 
     return (
       <div className="card card-w-title">
-        <Growl ref={(el) => (this.growl = el)} />
+        <Toast ref={(el) => (this.toast = el)} />
         {this.renderSearchProductsDialog()}
         <h1>Nuevo remito manual</h1>
         <Panel
@@ -492,7 +492,6 @@ export class ManualDeliveryNote extends Component {
         header: header,
         footer: footer,
         resizableColumns: true,
-        responsive: true,
         emptyMessage: "Todavía no se han agregado productos al remito",
       },
     }
@@ -593,7 +592,7 @@ export class ManualDeliveryNote extends Component {
   handleError = (error) => {
     this.setState({ loadingAddProduct: false })
 
-    this.growl.show({
+    this.toast.show({
       severity: "error",
       summary: "No se pudo encontrar el producto",
       detail: error.response.data.message,
@@ -603,7 +602,7 @@ export class ManualDeliveryNote extends Component {
   handleSaveError = (error) => {
     this.setState({ savingDeliveryNote: false })
 
-    this.growl.show({
+    this.toast.show({
       severity: "error",
       summary: "No se pudo guardar el remito",
       detail: _.get(error, "response.data.message", ""),
@@ -672,7 +671,7 @@ export class ManualDeliveryNote extends Component {
       savedDeliveryNoteId: savedDeliveryNoteId,
     })
 
-    this.growl.show({
+    this.toast.show({
       severity: "info",
       summary: "Remito generado exitosamente",
       detail: `Número: ${savedDeliveryNoteId}`,

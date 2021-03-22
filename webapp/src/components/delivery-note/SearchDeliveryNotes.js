@@ -2,7 +2,7 @@ import _ from "lodash"
 import React, { Component } from "react"
 import { DeliveryNotesService } from "../../service/DeliveryNotesService"
 import { ProductsService } from "../../service/ProductsService"
-import { Growl } from "primereact/growl"
+import { Toast } from "primereact/toast"
 import { AutocompleteProductFilter } from "../core/AutocompleteProductFilter"
 import { Column } from "primereact/column"
 import { DataTable } from "primereact/datatable"
@@ -55,7 +55,7 @@ export class SearchDeliveryNotes extends Component {
 
     return (
       <div className="card card-w-title">
-        <Growl ref={(el) => (this.growl = el)} />
+        <Toast ref={(el) => (this.toast = el)} />
         <h1>Búsqueda de remitos</h1>
         <div className="p-grid p-fluid">
           <div className="p-col-8">

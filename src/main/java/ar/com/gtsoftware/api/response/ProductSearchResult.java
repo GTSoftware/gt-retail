@@ -22,6 +22,8 @@ public class ProductSearchResult {
   private ProductCategory category;
   private ProductBrand brand;
   private BigDecimal precioVenta;
+  private BigDecimal costoFinal;
+  private BigDecimal costoAdquisicion;
   private String codigoFabricante;
   private BigDecimal stockActual;
   private BigDecimal stockActualEnSucursal;

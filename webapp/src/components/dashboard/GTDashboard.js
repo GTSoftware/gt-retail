@@ -123,7 +123,6 @@ export class GTDashboard extends Component {
             <DataTable
               value={productsWithBreaks}
               style={{ marginBottom: "20px" }}
-              responsive={true}
               loadingIcon="fa fa-spin fa-spinner"
               loading={loadingStockBreakReport}
               rows={5}

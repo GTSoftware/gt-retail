@@ -14,8 +14,9 @@ import ar.com.gtsoftware.search.RubrosSearchFilter;
 import ar.com.gtsoftware.search.SubRubroSearchFilter;
 import ar.com.gtsoftware.service.*;
 import ar.com.gtsoftware.utils.SecurityUtils;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,7 +39,7 @@ public class ProductsControllerImpl implements ProductsController {
   public PaginatedResponse<ProductSearchResult> findBySearchFilter(
       @Valid PaginatedSearchRequest<ProductosSearchFilter> searchRequest) {
     final ProductosSearchFilter searchFilter = searchRequest.getSearchFilter();
-    if (searchFilter.getIdListaPrecio() == null) {
+    if (Objects.isNull(searchFilter.getIdListaPrecio())) {
       searchFilter.setIdListaPrecio(parametrosService.getLongParam(Parametros.ID_LISTA_VENTA));
     }
 
@@ -57,7 +58,7 @@ public class ProductsControllerImpl implements ProductsController {
   }
 
   private List<ProductSearchResult> transformProducts(List<ProductosDto> productos) {
-    List<ProductSearchResult> productSearchResults = new ArrayList<>(productos.size());
+    List<ProductSearchResult> productSearchResults = new LinkedList<>();
 
     for (ProductosDto dto : productos) {
       final ProductSearchResult productSearchResult =
@@ -78,6 +79,10 @@ public class ProductsControllerImpl implements ProductsController {
               .stockActual(dto.getStockActual())
               .stockActualEnSucursal(dto.getStockActualEnSucursal())
               .build();
+      if (securityUtils.userHasRole(Roles.ADMINISTRADORES)) {
+        productSearchResult.setCostoFinal(dto.getCostoFinal());
+        productSearchResult.setCostoAdquisicion(dto.getCostoAdquisicionNeto());
+      }
 
       productSearchResults.add(productSearchResult);
     }
@@ -94,7 +99,7 @@ public class ProductsControllerImpl implements ProductsController {
   }
 
   private List<ProductCategory> transformCategories(List<ProductosRubrosDto> rubrosDtos) {
-    List<ProductCategory> categories = new ArrayList<>(rubrosDtos.size());
+    List<ProductCategory> categories = new LinkedList<>();
     for (ProductosRubrosDto rubroDto : rubrosDtos) {
       categories.add(transformCategory(rubroDto));
     }
@@ -121,7 +126,7 @@ public class ProductsControllerImpl implements ProductsController {
 
   private List<ProductSubCategory> transformSubCategories(
       List<ProductosSubRubrosDto> subRubrosDtos) {
-    List<ProductSubCategory> subCategories = new ArrayList<>(subRubrosDtos.size());
+    List<ProductSubCategory> subCategories = new LinkedList<>();
     for (ProductosSubRubrosDto subRubroDto : subRubrosDtos) {
       subCategories.add(transformSubCategory(subRubroDto));
     }
@@ -146,7 +151,7 @@ public class ProductsControllerImpl implements ProductsController {
 
   private List<ProductSupplyType> transformSupplyTypes(
       List<ProductosTiposProveeduriaDto> tiposProveeduriaDtos) {
-    List<ProductSupplyType> supplyTypes = new ArrayList<>(tiposProveeduriaDtos.size());
+    List<ProductSupplyType> supplyTypes = new LinkedList<>();
     for (ProductosTiposProveeduriaDto tipoProveeduria : tiposProveeduriaDtos) {
       supplyTypes.add(transformSupplyType(tipoProveeduria));
     }
@@ -175,7 +180,7 @@ public class ProductsControllerImpl implements ProductsController {
   }
 
   private List<ProductBrand> transformBrands(List<ProductosMarcasDto> marcasDtos) {
-    List<ProductBrand> brands = new ArrayList<>(marcasDtos.size());
+    List<ProductBrand> brands = new LinkedList<>();
     for (ProductosMarcasDto marca : marcasDtos) {
       brands.add(transformBrand(marca));
     }

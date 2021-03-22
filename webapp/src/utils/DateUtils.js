@@ -1,25 +1,38 @@
 import moment from "moment"
 
-export const formatDate = function (stringDate) {
+const MONTH = "month"
+const DAY = "day"
+const SERIALIZED_DATE_FORMAT = "YYYY-MM-DDTHH:mm:ss"
+
+const formatDate = (stringDate) => {
   return new Date(stringDate).toLocaleString()
 }
 
-export const getBeginOfMonth = function () {
-  return moment().startOf("month").toDate()
+const getBeginOfMonth = () => {
+  return moment().startOf(MONTH).toDate()
 }
 
-export const getEndOfMonth = function () {
-  return moment().endOf("month").toDate()
+const getEndOfMonth = () => {
+  return moment().endOf(MONTH).toDate()
 }
 
-export const getBeginOfToday = function () {
-  return moment().startOf("day").toDate()
+const getBeginOfToday = () => {
+  return moment().startOf(DAY).toDate()
 }
 
-export const getEndOfToday = function () {
-  return moment().endOf("day").toDate()
+const getEndOfToday = () => {
+  return moment().endOf(DAY).toDate()
 }
 
-export const serializeDate = function (date) {
-  return moment(date).format("YYYY-MM-DDTHH:mm:ss")
+const serializeDate = (date) => {
+  return moment(date).format(SERIALIZED_DATE_FORMAT)
+}
+
+export {
+  formatDate,
+  getBeginOfMonth,
+  serializeDate,
+  getBeginOfToday,
+  getEndOfMonth,
+  getEndOfToday,
 }

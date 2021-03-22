@@ -154,7 +154,7 @@ public abstract class AbstractFacade<T extends GTEntity<?>, S extends AbstractSe
   }
 
   private List<Order> createOrderFromSearchFilter(S sf, Root<T> root, CriteriaBuilder cb) {
-    List<Order> orders = new ArrayList<>();
+    List<Order> orders = new LinkedList<>();
     for (SortField sof : sf.getSortFields()) {
       Order ord;
       Path<Object> path;
