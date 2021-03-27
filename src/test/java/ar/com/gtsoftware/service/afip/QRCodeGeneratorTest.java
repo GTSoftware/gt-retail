@@ -1,9 +1,9 @@
 package ar.com.gtsoftware.service.afip;
 
-import ar.com.gtsoftware.domain.FiscalLibroIvaVentas;
-import ar.com.gtsoftware.domain.FiscalTiposComprobante;
-import ar.com.gtsoftware.domain.LegalTiposDocumento;
-import ar.com.gtsoftware.domain.Personas;
+import ar.com.gtsoftware.entity.FiscalLibroIvaVentas;
+import ar.com.gtsoftware.entity.FiscalTiposComprobante;
+import ar.com.gtsoftware.entity.LegalTiposDocumento;
+import ar.com.gtsoftware.entity.Personas;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import org.apache.commons.lang3.StringUtils;

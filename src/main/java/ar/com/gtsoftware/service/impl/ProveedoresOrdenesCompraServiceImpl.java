@@ -19,10 +19,10 @@ package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.dao.ProveedoresOrdenesCompraEstadosFacade;
 import ar.com.gtsoftware.dao.ProveedoresOrdenesCompraFacade;
-import ar.com.gtsoftware.domain.ProveedoresOrdenesCompra;
-import ar.com.gtsoftware.domain.ProveedoresOrdenesCompraEstados;
 import ar.com.gtsoftware.dto.domain.ProveedoresOrdenesCompraDto;
 import ar.com.gtsoftware.dto.domain.ProveedoresOrdenesCompraEstadosDto;
+import ar.com.gtsoftware.entity.ProveedoresOrdenesCompra;
+import ar.com.gtsoftware.entity.ProveedoresOrdenesCompraEstados;
 import ar.com.gtsoftware.mappers.ProveedoresOrdenesCompraEstadosMapper;
 import ar.com.gtsoftware.mappers.ProveedoresOrdenesCompraMapper;
 import ar.com.gtsoftware.mappers.helper.CycleAvoidingMappingContext;

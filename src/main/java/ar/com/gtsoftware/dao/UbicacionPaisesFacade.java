@@ -15,8 +15,8 @@
  */
 package ar.com.gtsoftware.dao;
 
-import ar.com.gtsoftware.domain.UbicacionPaises;
-import ar.com.gtsoftware.domain.UbicacionPaises_;
+import ar.com.gtsoftware.entity.UbicacionPaises;
+import ar.com.gtsoftware.entity.UbicacionPaises_;
 import ar.com.gtsoftware.search.PaisesSearchFilter;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;

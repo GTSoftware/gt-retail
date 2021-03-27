@@ -16,11 +16,11 @@
 package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.dao.*;
-import ar.com.gtsoftware.domain.Cajas;
-import ar.com.gtsoftware.domain.CajasArqueos;
-import ar.com.gtsoftware.domain.Usuarios;
 import ar.com.gtsoftware.dto.domain.CajasDto;
 import ar.com.gtsoftware.dto.domain.UsuariosDto;
+import ar.com.gtsoftware.entity.Cajas;
+import ar.com.gtsoftware.entity.CajasArqueos;
+import ar.com.gtsoftware.entity.Usuarios;
 import ar.com.gtsoftware.mappers.CajasMapper;
 import ar.com.gtsoftware.mappers.helper.CycleAvoidingMappingContext;
 import ar.com.gtsoftware.search.CajasArqueosSearchFilter;

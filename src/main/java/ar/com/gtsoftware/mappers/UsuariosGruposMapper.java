@@ -17,8 +17,8 @@
 
 package ar.com.gtsoftware.mappers;
 
-import ar.com.gtsoftware.domain.UsuariosGrupos;
 import ar.com.gtsoftware.dto.domain.UsuariosGruposDto;
+import ar.com.gtsoftware.entity.UsuariosGrupos;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

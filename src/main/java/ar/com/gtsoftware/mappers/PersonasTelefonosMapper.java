@@ -17,8 +17,8 @@
 
 package ar.com.gtsoftware.mappers;
 
-import ar.com.gtsoftware.domain.PersonasTelefonos;
 import ar.com.gtsoftware.dto.domain.PersonasTelefonosDto;
+import ar.com.gtsoftware.entity.PersonasTelefonos;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring", uses = PersonasMapper.class)

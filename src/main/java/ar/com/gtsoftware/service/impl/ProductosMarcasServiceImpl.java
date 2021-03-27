@@ -18,8 +18,8 @@
 package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.dao.ProductosMarcasFacade;
-import ar.com.gtsoftware.domain.ProductosMarcas;
 import ar.com.gtsoftware.dto.domain.ProductosMarcasDto;
+import ar.com.gtsoftware.entity.ProductosMarcas;
 import ar.com.gtsoftware.mappers.ProductosMarcasMapper;
 import ar.com.gtsoftware.search.MarcasSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;

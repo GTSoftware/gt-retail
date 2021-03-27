@@ -17,8 +17,8 @@
 
 package ar.com.gtsoftware.mappers;
 
-import ar.com.gtsoftware.domain.FiscalResponsabilidadesIva;
 import ar.com.gtsoftware.dto.domain.FiscalResponsabilidadesIvaDto;
+import ar.com.gtsoftware.entity.FiscalResponsabilidadesIva;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

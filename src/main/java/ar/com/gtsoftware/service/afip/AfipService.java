@@ -16,12 +16,12 @@
 package ar.com.gtsoftware.service.afip;
 
 import ar.com.gtsoftware.dao.AFIPAuthServicesFacade;
-import ar.com.gtsoftware.domain.AFIPAuthServices;
-import ar.com.gtsoftware.domain.FiscalLibroIvaVentas;
-import ar.com.gtsoftware.domain.FiscalPuntosVenta;
-import ar.com.gtsoftware.domain.FiscalTiposComprobante;
 import ar.com.gtsoftware.dto.fiscal.AuthTicket;
 import ar.com.gtsoftware.dto.fiscal.CAEResponse;
+import ar.com.gtsoftware.entity.AFIPAuthServices;
+import ar.com.gtsoftware.entity.FiscalLibroIvaVentas;
+import ar.com.gtsoftware.entity.FiscalPuntosVenta;
+import ar.com.gtsoftware.entity.FiscalTiposComprobante;
 import ar.com.gtsoftware.search.AFIPAuthServicesSearchFilter;
 import ar.com.gtsoftware.utils.BusinessDateUtils;
 import lombok.RequiredArgsConstructor;

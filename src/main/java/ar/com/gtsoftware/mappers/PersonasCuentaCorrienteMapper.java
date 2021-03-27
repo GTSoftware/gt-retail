@@ -17,8 +17,8 @@
 
 package ar.com.gtsoftware.mappers;
 
-import ar.com.gtsoftware.domain.PersonasCuentaCorriente;
 import ar.com.gtsoftware.dto.domain.PersonasCuentaCorrienteDto;
+import ar.com.gtsoftware.entity.PersonasCuentaCorriente;
 import org.mapstruct.Mapper;
 
 @Mapper(

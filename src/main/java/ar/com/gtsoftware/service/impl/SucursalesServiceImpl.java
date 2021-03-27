@@ -18,8 +18,8 @@
 package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.dao.SucursalesFacade;
-import ar.com.gtsoftware.domain.Sucursales;
 import ar.com.gtsoftware.dto.domain.SucursalesDto;
+import ar.com.gtsoftware.entity.Sucursales;
 import ar.com.gtsoftware.mappers.SucursalesMapper;
 import ar.com.gtsoftware.search.SucursalesSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;

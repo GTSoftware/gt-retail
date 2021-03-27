@@ -15,7 +15,7 @@
  */
 package ar.com.gtsoftware.dao;
 
-import ar.com.gtsoftware.domain.ProductosImagenes;
+import ar.com.gtsoftware.entity.ProductosImagenes;
 import ar.com.gtsoftware.search.AbstractSearchFilter;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;

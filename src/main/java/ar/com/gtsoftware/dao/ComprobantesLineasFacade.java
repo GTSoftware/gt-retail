@@ -15,9 +15,9 @@
  */
 package ar.com.gtsoftware.dao;
 
-import ar.com.gtsoftware.domain.Comprobantes;
-import ar.com.gtsoftware.domain.ComprobantesLineas;
-import ar.com.gtsoftware.domain.ComprobantesLineas_;
+import ar.com.gtsoftware.entity.Comprobantes;
+import ar.com.gtsoftware.entity.ComprobantesLineas;
+import ar.com.gtsoftware.entity.ComprobantesLineas_;
 import ar.com.gtsoftware.search.AbstractSearchFilter;
 import java.util.List;
 import javax.persistence.EntityManager;

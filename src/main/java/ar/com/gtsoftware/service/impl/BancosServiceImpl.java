@@ -18,8 +18,8 @@
 package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.dao.BancosFacade;
-import ar.com.gtsoftware.domain.Bancos;
 import ar.com.gtsoftware.dto.domain.BancosDto;
+import ar.com.gtsoftware.entity.Bancos;
 import ar.com.gtsoftware.mappers.BancosMapper;
 import ar.com.gtsoftware.search.BancosSearchFilter;
 import ar.com.gtsoftware.service.BancosService;

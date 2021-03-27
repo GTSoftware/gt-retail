@@ -17,8 +17,8 @@
 
 package ar.com.gtsoftware.mappers;
 
-import ar.com.gtsoftware.domain.FiscalTiposComprobante;
 import ar.com.gtsoftware.dto.domain.FiscalTiposComprobanteDto;
+import ar.com.gtsoftware.entity.FiscalTiposComprobante;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

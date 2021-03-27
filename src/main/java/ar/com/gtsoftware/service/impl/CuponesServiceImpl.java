@@ -18,8 +18,8 @@
 package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.dao.CuponesFacade;
-import ar.com.gtsoftware.domain.Cupones;
 import ar.com.gtsoftware.dto.domain.CuponesDto;
+import ar.com.gtsoftware.entity.Cupones;
 import ar.com.gtsoftware.mappers.CuponesMapper;
 import ar.com.gtsoftware.search.CuponesSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;

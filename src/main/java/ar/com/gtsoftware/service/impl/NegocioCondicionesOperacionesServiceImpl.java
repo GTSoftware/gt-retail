@@ -18,8 +18,8 @@
 package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.dao.NegocioCondicionesOperacionesFacade;
-import ar.com.gtsoftware.domain.NegocioCondicionesOperaciones;
 import ar.com.gtsoftware.dto.domain.NegocioCondicionesOperacionesDto;
+import ar.com.gtsoftware.entity.NegocioCondicionesOperaciones;
 import ar.com.gtsoftware.mappers.NegocioCondicionesOperacionesMapper;
 import ar.com.gtsoftware.search.AbstractSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;

@@ -15,9 +15,9 @@
  */
 package ar.com.gtsoftware.dao;
 
-import ar.com.gtsoftware.domain.PersonasTelefonos;
-import ar.com.gtsoftware.domain.PersonasTelefonos_;
-import ar.com.gtsoftware.domain.Personas_;
+import ar.com.gtsoftware.entity.PersonasTelefonos;
+import ar.com.gtsoftware.entity.PersonasTelefonos_;
+import ar.com.gtsoftware.entity.Personas_;
 import ar.com.gtsoftware.search.PersonasTelefonosSearchFilter;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;

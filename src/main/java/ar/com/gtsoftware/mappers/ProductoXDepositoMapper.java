@@ -17,8 +17,8 @@
 
 package ar.com.gtsoftware.mappers;
 
-import ar.com.gtsoftware.domain.ProductoXDeposito;
 import ar.com.gtsoftware.dto.domain.ProductoXDepositoDto;
+import ar.com.gtsoftware.entity.ProductoXDeposito;
 import org.mapstruct.Mapper;
 
 @Mapper(

@@ -18,8 +18,8 @@
 package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.dao.UbicacionPaisesFacade;
-import ar.com.gtsoftware.domain.UbicacionPaises;
 import ar.com.gtsoftware.dto.domain.UbicacionPaisesDto;
+import ar.com.gtsoftware.entity.UbicacionPaises;
 import ar.com.gtsoftware.mappers.UbicacionPaisesMapper;
 import ar.com.gtsoftware.search.PaisesSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;

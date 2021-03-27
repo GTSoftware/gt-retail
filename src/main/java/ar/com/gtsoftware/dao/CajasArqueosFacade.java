@@ -15,10 +15,10 @@
  */
 package ar.com.gtsoftware.dao;
 
-import ar.com.gtsoftware.domain.CajasArqueos;
-import ar.com.gtsoftware.domain.CajasArqueos_;
-import ar.com.gtsoftware.domain.Sucursales_;
-import ar.com.gtsoftware.domain.Usuarios_;
+import ar.com.gtsoftware.entity.CajasArqueos;
+import ar.com.gtsoftware.entity.CajasArqueos_;
+import ar.com.gtsoftware.entity.Sucursales_;
+import ar.com.gtsoftware.entity.Usuarios_;
 import ar.com.gtsoftware.search.CajasArqueosSearchFilter;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;

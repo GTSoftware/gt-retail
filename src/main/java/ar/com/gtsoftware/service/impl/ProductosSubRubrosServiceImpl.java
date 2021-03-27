@@ -18,8 +18,8 @@
 package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.dao.ProductosSubRubrosFacade;
-import ar.com.gtsoftware.domain.ProductosSubRubros;
 import ar.com.gtsoftware.dto.domain.ProductosSubRubrosDto;
+import ar.com.gtsoftware.entity.ProductosSubRubros;
 import ar.com.gtsoftware.mappers.ProductosSubRubrosMapper;
 import ar.com.gtsoftware.search.SubRubroSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;

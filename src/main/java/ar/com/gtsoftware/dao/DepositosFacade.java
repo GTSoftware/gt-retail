@@ -17,9 +17,9 @@ package ar.com.gtsoftware.dao;
 
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
-import ar.com.gtsoftware.domain.Depositos;
-import ar.com.gtsoftware.domain.Depositos_;
-import ar.com.gtsoftware.domain.Sucursales_;
+import ar.com.gtsoftware.entity.Depositos;
+import ar.com.gtsoftware.entity.Depositos_;
+import ar.com.gtsoftware.entity.Sucursales_;
 import ar.com.gtsoftware.search.DepositosSearchFilter;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;

@@ -17,8 +17,8 @@
 
 package ar.com.gtsoftware.mappers;
 
-import ar.com.gtsoftware.domain.Comprobantes;
 import ar.com.gtsoftware.dto.domain.ComprobantesDto;
+import ar.com.gtsoftware.entity.Comprobantes;
 import org.mapstruct.Mapper;
 
 @Mapper(

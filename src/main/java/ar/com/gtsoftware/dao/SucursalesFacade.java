@@ -15,8 +15,8 @@
  */
 package ar.com.gtsoftware.dao;
 
-import ar.com.gtsoftware.domain.Sucursales;
-import ar.com.gtsoftware.domain.Sucursales_;
+import ar.com.gtsoftware.entity.Sucursales;
+import ar.com.gtsoftware.entity.Sucursales_;
 import ar.com.gtsoftware.search.SucursalesSearchFilter;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;

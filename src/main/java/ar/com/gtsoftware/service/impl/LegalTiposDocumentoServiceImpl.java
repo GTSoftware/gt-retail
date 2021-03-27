@@ -18,8 +18,8 @@
 package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.dao.LegalTiposDocumentoFacade;
-import ar.com.gtsoftware.domain.LegalTiposDocumento;
 import ar.com.gtsoftware.dto.domain.LegalTiposDocumentoDto;
+import ar.com.gtsoftware.entity.LegalTiposDocumento;
 import ar.com.gtsoftware.mappers.LegalTiposDocumentoMapper;
 import ar.com.gtsoftware.search.LegalTiposDocumentoSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;

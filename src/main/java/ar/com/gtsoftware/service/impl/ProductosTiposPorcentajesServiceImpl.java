@@ -18,8 +18,8 @@
 package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.dao.ProductosTiposPorcentajesFacade;
-import ar.com.gtsoftware.domain.ProductosTiposPorcentajes;
 import ar.com.gtsoftware.dto.domain.ProductosTiposPorcentajesDto;
+import ar.com.gtsoftware.entity.ProductosTiposPorcentajes;
 import ar.com.gtsoftware.mappers.ProductosTiposPorcentajesMapper;
 import ar.com.gtsoftware.search.AbstractSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;

@@ -17,8 +17,8 @@
 
 package ar.com.gtsoftware.mappers;
 
-import ar.com.gtsoftware.domain.Personas;
 import ar.com.gtsoftware.dto.domain.PersonasDto;
+import ar.com.gtsoftware.entity.Personas;
 import org.mapstruct.Mapper;
 
 @Mapper(

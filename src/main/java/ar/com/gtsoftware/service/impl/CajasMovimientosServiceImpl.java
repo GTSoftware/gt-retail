@@ -18,8 +18,8 @@
 package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.dao.CajasMovimientosFacade;
-import ar.com.gtsoftware.domain.CajasMovimientos;
 import ar.com.gtsoftware.dto.domain.CajasMovimientosDto;
+import ar.com.gtsoftware.entity.CajasMovimientos;
 import ar.com.gtsoftware.mappers.CajasMovimientosMapper;
 import ar.com.gtsoftware.search.CajasMovimientosSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;

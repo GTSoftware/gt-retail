@@ -18,8 +18,8 @@
 package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.dao.RemitoTipoMovimientoFacade;
-import ar.com.gtsoftware.domain.RemitoTipoMovimiento;
 import ar.com.gtsoftware.dto.domain.RemitoTipoMovimientoDto;
+import ar.com.gtsoftware.entity.RemitoTipoMovimiento;
 import ar.com.gtsoftware.mappers.RemitoTipoMovimientoMapper;
 import ar.com.gtsoftware.search.AbstractSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;

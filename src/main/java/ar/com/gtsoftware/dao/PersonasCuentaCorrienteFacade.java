@@ -15,9 +15,9 @@
  */
 package ar.com.gtsoftware.dao;
 
-import ar.com.gtsoftware.domain.PersonasCuentaCorriente;
-import ar.com.gtsoftware.domain.PersonasCuentaCorriente_;
-import ar.com.gtsoftware.domain.Personas_;
+import ar.com.gtsoftware.entity.PersonasCuentaCorriente;
+import ar.com.gtsoftware.entity.PersonasCuentaCorriente_;
+import ar.com.gtsoftware.entity.Personas_;
 import ar.com.gtsoftware.search.PersonasCuentaCorrienteSearchFilter;
 import java.math.BigDecimal;
 import javax.persistence.EntityManager;

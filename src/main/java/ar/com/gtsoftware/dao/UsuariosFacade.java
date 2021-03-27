@@ -15,8 +15,8 @@
  */
 package ar.com.gtsoftware.dao;
 
-import ar.com.gtsoftware.domain.Usuarios;
-import ar.com.gtsoftware.domain.Usuarios_;
+import ar.com.gtsoftware.entity.Usuarios;
+import ar.com.gtsoftware.entity.Usuarios_;
 import ar.com.gtsoftware.search.UsuariosSearchFilter;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;

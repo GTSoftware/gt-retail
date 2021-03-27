@@ -16,9 +16,9 @@
 package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.dao.PersonasCuentaCorrienteFacade;
-import ar.com.gtsoftware.domain.Personas;
-import ar.com.gtsoftware.domain.PersonasCuentaCorriente;
 import ar.com.gtsoftware.dto.domain.PersonasCuentaCorrienteDto;
+import ar.com.gtsoftware.entity.Personas;
+import ar.com.gtsoftware.entity.PersonasCuentaCorriente;
 import ar.com.gtsoftware.mappers.GenericMapper;
 import ar.com.gtsoftware.mappers.PersonasCuentaCorrienteMapper;
 import ar.com.gtsoftware.search.PersonasCuentaCorrienteSearchFilter;

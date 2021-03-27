@@ -16,12 +16,12 @@
 package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.dao.*;
-import ar.com.gtsoftware.domain.*;
 import ar.com.gtsoftware.dto.PagoValorDTO;
 import ar.com.gtsoftware.dto.PreparedPaymentDto;
 import ar.com.gtsoftware.dto.SaleToPayDto;
 import ar.com.gtsoftware.dto.domain.CajasDto;
 import ar.com.gtsoftware.dto.domain.RecibosDto;
+import ar.com.gtsoftware.entity.*;
 import ar.com.gtsoftware.mappers.*;
 import ar.com.gtsoftware.mappers.helper.CycleAvoidingMappingContext;
 import ar.com.gtsoftware.service.PaymentsService;

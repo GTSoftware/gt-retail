@@ -15,8 +15,8 @@
  */
 package ar.com.gtsoftware.dao;
 
-import ar.com.gtsoftware.domain.NegocioFormasPago;
-import ar.com.gtsoftware.domain.NegocioFormasPago_;
+import ar.com.gtsoftware.entity.NegocioFormasPago;
+import ar.com.gtsoftware.entity.NegocioFormasPago_;
 import ar.com.gtsoftware.search.FormasPagoSearchFilter;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;

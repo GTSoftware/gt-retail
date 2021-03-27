@@ -18,8 +18,8 @@
 package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.dao.RecibosFacade;
-import ar.com.gtsoftware.domain.Recibos;
 import ar.com.gtsoftware.dto.domain.RecibosDto;
+import ar.com.gtsoftware.entity.Recibos;
 import ar.com.gtsoftware.mappers.RecibosMapper;
 import ar.com.gtsoftware.search.RecibosSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;

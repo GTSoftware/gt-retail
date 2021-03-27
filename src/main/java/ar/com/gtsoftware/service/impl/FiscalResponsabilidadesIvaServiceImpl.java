@@ -18,8 +18,8 @@
 package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.dao.FiscalResponsabilidadesIvaFacade;
-import ar.com.gtsoftware.domain.FiscalResponsabilidadesIva;
 import ar.com.gtsoftware.dto.domain.FiscalResponsabilidadesIvaDto;
+import ar.com.gtsoftware.entity.FiscalResponsabilidadesIva;
 import ar.com.gtsoftware.mappers.FiscalResponsabilidadesIvaMapper;
 import ar.com.gtsoftware.search.AbstractSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;

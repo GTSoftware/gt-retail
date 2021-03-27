@@ -15,9 +15,9 @@
  */
 package ar.com.gtsoftware.dao;
 
-import ar.com.gtsoftware.domain.LegalGeneros;
-import ar.com.gtsoftware.domain.LegalGeneros_;
-import ar.com.gtsoftware.domain.LegalTiposPersoneria_;
+import ar.com.gtsoftware.entity.LegalGeneros;
+import ar.com.gtsoftware.entity.LegalGeneros_;
+import ar.com.gtsoftware.entity.LegalTiposPersoneria_;
 import ar.com.gtsoftware.search.GenerosSearchFilter;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;

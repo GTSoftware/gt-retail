@@ -17,7 +17,7 @@
 
 package ar.com.gtsoftware.mappers;
 
-import ar.com.gtsoftware.domain.Ofertas;
+import ar.com.gtsoftware.entity.Ofertas;
 import ar.com.gtsoftware.rules.OfertaDto;
 import org.mapstruct.Mapper;
 

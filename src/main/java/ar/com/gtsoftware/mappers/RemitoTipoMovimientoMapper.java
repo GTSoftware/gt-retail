@@ -17,8 +17,8 @@
 
 package ar.com.gtsoftware.mappers;
 
-import ar.com.gtsoftware.domain.RemitoTipoMovimiento;
 import ar.com.gtsoftware.dto.domain.RemitoTipoMovimientoDto;
+import ar.com.gtsoftware.entity.RemitoTipoMovimiento;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

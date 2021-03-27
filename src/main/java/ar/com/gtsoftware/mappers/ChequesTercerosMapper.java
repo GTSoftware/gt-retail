@@ -17,8 +17,8 @@
 
 package ar.com.gtsoftware.mappers;
 
-import ar.com.gtsoftware.domain.ChequesTerceros;
 import ar.com.gtsoftware.dto.domain.ChequesTercerosDto;
+import ar.com.gtsoftware.entity.ChequesTerceros;
 import org.mapstruct.Mapper;
 
 @Mapper(

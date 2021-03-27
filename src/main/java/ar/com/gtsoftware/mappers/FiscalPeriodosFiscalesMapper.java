@@ -17,8 +17,8 @@
 
 package ar.com.gtsoftware.mappers;
 
-import ar.com.gtsoftware.domain.FiscalPeriodosFiscales;
 import ar.com.gtsoftware.dto.domain.FiscalPeriodosFiscalesDto;
+import ar.com.gtsoftware.entity.FiscalPeriodosFiscales;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

@@ -15,9 +15,9 @@
  */
 package ar.com.gtsoftware.dao;
 
-import ar.com.gtsoftware.domain.LegalTiposDocumento;
-import ar.com.gtsoftware.domain.LegalTiposDocumento_;
-import ar.com.gtsoftware.domain.LegalTiposPersoneria_;
+import ar.com.gtsoftware.entity.LegalTiposDocumento;
+import ar.com.gtsoftware.entity.LegalTiposDocumento_;
+import ar.com.gtsoftware.entity.LegalTiposPersoneria_;
 import ar.com.gtsoftware.search.LegalTiposDocumentoSearchFilter;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;

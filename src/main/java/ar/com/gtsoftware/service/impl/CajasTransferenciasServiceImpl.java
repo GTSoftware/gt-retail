@@ -19,9 +19,9 @@ package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.dao.CajasMovimientosFacade;
 import ar.com.gtsoftware.dao.CajasTransferenciasFacade;
-import ar.com.gtsoftware.domain.CajasMovimientos;
-import ar.com.gtsoftware.domain.CajasTransferencias;
 import ar.com.gtsoftware.dto.domain.CajasTransferenciasDto;
+import ar.com.gtsoftware.entity.CajasMovimientos;
+import ar.com.gtsoftware.entity.CajasTransferencias;
 import ar.com.gtsoftware.mappers.CajasTransferenciasMapper;
 import ar.com.gtsoftware.mappers.helper.CycleAvoidingMappingContext;
 import ar.com.gtsoftware.search.CajasTransferenciasSearchFilter;

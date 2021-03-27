@@ -18,8 +18,8 @@
 package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.dao.FiscalAlicuotasIvaFacade;
-import ar.com.gtsoftware.domain.FiscalAlicuotasIva;
 import ar.com.gtsoftware.dto.domain.FiscalAlicuotasIvaDto;
+import ar.com.gtsoftware.entity.FiscalAlicuotasIva;
 import ar.com.gtsoftware.mappers.FiscalAlicuotasIvaMapper;
 import ar.com.gtsoftware.search.AbstractSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;

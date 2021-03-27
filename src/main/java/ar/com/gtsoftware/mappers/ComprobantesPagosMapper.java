@@ -17,8 +17,8 @@
 
 package ar.com.gtsoftware.mappers;
 
-import ar.com.gtsoftware.domain.ComprobantesPagos;
 import ar.com.gtsoftware.dto.domain.ComprobantesPagosDto;
+import ar.com.gtsoftware.entity.ComprobantesPagos;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

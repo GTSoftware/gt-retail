@@ -18,8 +18,8 @@
 package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.dao.ProductosListasPreciosFacade;
-import ar.com.gtsoftware.domain.ProductosListasPrecios;
 import ar.com.gtsoftware.dto.domain.ProductosListasPreciosDto;
+import ar.com.gtsoftware.entity.ProductosListasPrecios;
 import ar.com.gtsoftware.mappers.ProductosListasPreciosMapper;
 import ar.com.gtsoftware.search.ProductosListasPreciosSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;

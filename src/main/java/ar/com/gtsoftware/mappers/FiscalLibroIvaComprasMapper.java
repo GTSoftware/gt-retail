@@ -17,8 +17,8 @@
 
 package ar.com.gtsoftware.mappers;
 
-import ar.com.gtsoftware.domain.FiscalLibroIvaCompras;
 import ar.com.gtsoftware.dto.domain.FiscalLibroIvaComprasDto;
+import ar.com.gtsoftware.entity.FiscalLibroIvaCompras;
 import org.mapstruct.Mapper;
 
 @Mapper(

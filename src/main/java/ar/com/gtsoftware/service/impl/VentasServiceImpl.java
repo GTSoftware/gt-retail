@@ -18,9 +18,9 @@
 package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.dao.*;
-import ar.com.gtsoftware.domain.*;
 import ar.com.gtsoftware.dto.RegistroVentaDto;
 import ar.com.gtsoftware.dto.domain.ComprobantesDto;
+import ar.com.gtsoftware.entity.*;
 import ar.com.gtsoftware.enums.NegocioTiposComprobanteEnum;
 import ar.com.gtsoftware.enums.Parametros;
 import ar.com.gtsoftware.mappers.ComprobantesMapper;

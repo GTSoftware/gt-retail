@@ -15,8 +15,8 @@
  */
 package ar.com.gtsoftware.dao;
 
-import ar.com.gtsoftware.domain.ProductosListasPrecios;
-import ar.com.gtsoftware.domain.ProductosListasPrecios_;
+import ar.com.gtsoftware.entity.ProductosListasPrecios;
+import ar.com.gtsoftware.entity.ProductosListasPrecios_;
 import ar.com.gtsoftware.search.ProductosListasPreciosSearchFilter;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;

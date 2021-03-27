@@ -18,8 +18,8 @@
 package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.dao.NegocioTiposComprobanteFacade;
-import ar.com.gtsoftware.domain.NegocioTiposComprobante;
 import ar.com.gtsoftware.dto.domain.NegocioTiposComprobanteDto;
+import ar.com.gtsoftware.entity.NegocioTiposComprobante;
 import ar.com.gtsoftware.mappers.NegocioTiposComprobanteMapper;
 import ar.com.gtsoftware.search.NegocioTiposComprobanteSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;

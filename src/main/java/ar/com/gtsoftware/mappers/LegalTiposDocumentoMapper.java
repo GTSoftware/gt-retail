@@ -17,8 +17,8 @@
 
 package ar.com.gtsoftware.mappers;
 
-import ar.com.gtsoftware.domain.LegalTiposDocumento;
 import ar.com.gtsoftware.dto.domain.LegalTiposDocumentoDto;
+import ar.com.gtsoftware.entity.LegalTiposDocumento;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

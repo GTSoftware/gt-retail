@@ -17,8 +17,8 @@
 
 package ar.com.gtsoftware.mappers;
 
-import ar.com.gtsoftware.domain.ProveedoresOrdenesCompra;
 import ar.com.gtsoftware.dto.domain.ProveedoresOrdenesCompraDto;
+import ar.com.gtsoftware.entity.ProveedoresOrdenesCompra;
 import org.mapstruct.Mapper;
 
 @Mapper(

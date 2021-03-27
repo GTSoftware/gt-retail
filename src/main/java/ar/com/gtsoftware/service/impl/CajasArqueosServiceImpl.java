@@ -18,8 +18,8 @@
 package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.dao.CajasArqueosFacade;
-import ar.com.gtsoftware.domain.CajasArqueos;
 import ar.com.gtsoftware.dto.domain.CajasArqueosDto;
+import ar.com.gtsoftware.entity.CajasArqueos;
 import ar.com.gtsoftware.mappers.CajasArqueosMapper;
 import ar.com.gtsoftware.search.CajasArqueosSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;

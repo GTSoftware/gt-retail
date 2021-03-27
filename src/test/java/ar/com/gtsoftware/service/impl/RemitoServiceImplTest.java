@@ -7,11 +7,11 @@ import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import ar.com.gtsoftware.dao.*;
-import ar.com.gtsoftware.domain.Depositos;
-import ar.com.gtsoftware.domain.Productos;
-import ar.com.gtsoftware.domain.Remito;
-import ar.com.gtsoftware.domain.RemitoDetalle;
 import ar.com.gtsoftware.dto.ProductoMovimiento;
+import ar.com.gtsoftware.entity.Depositos;
+import ar.com.gtsoftware.entity.Productos;
+import ar.com.gtsoftware.entity.Remito;
+import ar.com.gtsoftware.entity.RemitoDetalle;
 import ar.com.gtsoftware.mappers.ProductosMapper;
 import ar.com.gtsoftware.mappers.RemitoMapper;
 import ar.com.gtsoftware.search.RemitoDetalleSearchFilter;

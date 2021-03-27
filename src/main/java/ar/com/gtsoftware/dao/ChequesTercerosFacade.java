@@ -15,8 +15,8 @@
  */
 package ar.com.gtsoftware.dao;
 
-import ar.com.gtsoftware.domain.ChequesTerceros;
-import ar.com.gtsoftware.domain.ChequesTerceros_;
+import ar.com.gtsoftware.entity.ChequesTerceros;
+import ar.com.gtsoftware.entity.ChequesTerceros_;
 import ar.com.gtsoftware.search.ChequesTercerosSearchFilter;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;

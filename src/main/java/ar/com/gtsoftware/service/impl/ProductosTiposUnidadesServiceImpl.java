@@ -18,8 +18,8 @@
 package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.dao.ProductosTiposUnidadesFacade;
-import ar.com.gtsoftware.domain.ProductosTiposUnidades;
 import ar.com.gtsoftware.dto.domain.ProductosTiposUnidadesDto;
+import ar.com.gtsoftware.entity.ProductosTiposUnidades;
 import ar.com.gtsoftware.mappers.ProductosTiposUnidadesMapper;
 import ar.com.gtsoftware.search.UnidadesSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;

@@ -18,8 +18,8 @@
 package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.dao.FiscalPeriodosFiscalesFacade;
-import ar.com.gtsoftware.domain.FiscalPeriodosFiscales;
 import ar.com.gtsoftware.dto.domain.FiscalPeriodosFiscalesDto;
+import ar.com.gtsoftware.entity.FiscalPeriodosFiscales;
 import ar.com.gtsoftware.mappers.FiscalPeriodosFiscalesMapper;
 import ar.com.gtsoftware.search.FiscalPeriodosFiscalesSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;

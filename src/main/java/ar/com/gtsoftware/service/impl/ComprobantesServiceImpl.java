@@ -18,8 +18,8 @@
 package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.dao.ComprobantesFacade;
-import ar.com.gtsoftware.domain.Comprobantes;
 import ar.com.gtsoftware.dto.domain.ComprobantesDto;
+import ar.com.gtsoftware.entity.Comprobantes;
 import ar.com.gtsoftware.mappers.ComprobantesMapper;
 import ar.com.gtsoftware.mappers.PersonasMapper;
 import ar.com.gtsoftware.search.ComprobantesSearchFilter;

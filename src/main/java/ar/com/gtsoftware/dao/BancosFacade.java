@@ -15,8 +15,8 @@
  */
 package ar.com.gtsoftware.dao;
 
-import ar.com.gtsoftware.domain.Bancos;
-import ar.com.gtsoftware.domain.Bancos_;
+import ar.com.gtsoftware.entity.Bancos;
+import ar.com.gtsoftware.entity.Bancos_;
 import ar.com.gtsoftware.search.BancosSearchFilter;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;

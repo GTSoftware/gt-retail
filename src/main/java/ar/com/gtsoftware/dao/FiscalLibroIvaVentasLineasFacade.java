@@ -15,9 +15,9 @@
  */
 package ar.com.gtsoftware.dao;
 
-import ar.com.gtsoftware.domain.FiscalLibroIvaVentas;
-import ar.com.gtsoftware.domain.FiscalLibroIvaVentasLineas;
-import ar.com.gtsoftware.domain.FiscalLibroIvaVentasLineas_;
+import ar.com.gtsoftware.entity.FiscalLibroIvaVentas;
+import ar.com.gtsoftware.entity.FiscalLibroIvaVentasLineas;
+import ar.com.gtsoftware.entity.FiscalLibroIvaVentasLineas_;
 import ar.com.gtsoftware.search.AbstractSearchFilter;
 import java.util.List;
 import javax.persistence.EntityManager;

@@ -15,8 +15,8 @@
  */
 package ar.com.gtsoftware.dao;
 
-import ar.com.gtsoftware.domain.ProductosRubros;
-import ar.com.gtsoftware.domain.ProductosRubros_;
+import ar.com.gtsoftware.entity.ProductosRubros;
+import ar.com.gtsoftware.entity.ProductosRubros_;
 import ar.com.gtsoftware.search.RubrosSearchFilter;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;

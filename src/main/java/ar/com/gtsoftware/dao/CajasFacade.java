@@ -15,7 +15,7 @@
  */
 package ar.com.gtsoftware.dao;
 
-import ar.com.gtsoftware.domain.*;
+import ar.com.gtsoftware.entity.*;
 import ar.com.gtsoftware.search.CajasSearchFilter;
 import java.math.BigDecimal;
 import javax.persistence.EntityManager;

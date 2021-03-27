@@ -16,7 +16,7 @@
  */
 package ar.com.gtsoftware.dao;
 
-import ar.com.gtsoftware.domain.ProveedoresOrdenesCompraEstados;
+import ar.com.gtsoftware.entity.ProveedoresOrdenesCompraEstados;
 import ar.com.gtsoftware.search.AbstractSearchFilter;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;

@@ -17,8 +17,8 @@
 
 package ar.com.gtsoftware.mappers;
 
-import ar.com.gtsoftware.domain.RemitoDetalle;
 import ar.com.gtsoftware.dto.domain.RemitoDetalleDto;
+import ar.com.gtsoftware.entity.RemitoDetalle;
 import org.mapstruct.Mapper;
 
 @Mapper(

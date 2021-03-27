@@ -1,6 +1,6 @@
 package ar.com.gtsoftware.service.afip;
 
-import ar.com.gtsoftware.domain.FiscalLibroIvaVentas;
+import ar.com.gtsoftware.entity.FiscalLibroIvaVentas;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.math.BigDecimal;

@@ -17,8 +17,8 @@
 
 package ar.com.gtsoftware.mappers;
 
-import ar.com.gtsoftware.domain.Recibos;
 import ar.com.gtsoftware.dto.domain.RecibosDto;
+import ar.com.gtsoftware.entity.Recibos;
 import org.mapstruct.Mapper;
 
 @Mapper(

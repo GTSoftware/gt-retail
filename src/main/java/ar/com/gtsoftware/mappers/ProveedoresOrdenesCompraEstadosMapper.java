@@ -17,8 +17,8 @@
 
 package ar.com.gtsoftware.mappers;
 
-import ar.com.gtsoftware.domain.ProveedoresOrdenesCompraEstados;
 import ar.com.gtsoftware.dto.domain.ProveedoresOrdenesCompraEstadosDto;
+import ar.com.gtsoftware.entity.ProveedoresOrdenesCompraEstados;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

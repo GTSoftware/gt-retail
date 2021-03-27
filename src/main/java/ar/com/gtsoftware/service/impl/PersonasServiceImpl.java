@@ -18,8 +18,8 @@
 package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.dao.PersonasFacade;
-import ar.com.gtsoftware.domain.Personas;
 import ar.com.gtsoftware.dto.domain.PersonasDto;
+import ar.com.gtsoftware.entity.Personas;
 import ar.com.gtsoftware.mappers.PersonasMapper;
 import ar.com.gtsoftware.search.PersonasSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;

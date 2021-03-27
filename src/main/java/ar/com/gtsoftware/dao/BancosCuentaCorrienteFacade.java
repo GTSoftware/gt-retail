@@ -15,7 +15,7 @@
  */
 package ar.com.gtsoftware.dao;
 
-import ar.com.gtsoftware.domain.BancosCuentaCorriente;
+import ar.com.gtsoftware.entity.BancosCuentaCorriente;
 import ar.com.gtsoftware.search.AbstractSearchFilter;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;

@@ -17,8 +17,8 @@
 
 package ar.com.gtsoftware.mappers;
 
-import ar.com.gtsoftware.domain.CajasMovimientos;
 import ar.com.gtsoftware.dto.domain.CajasMovimientosDto;
+import ar.com.gtsoftware.entity.CajasMovimientos;
 import org.mapstruct.Mapper;
 
 @Mapper(

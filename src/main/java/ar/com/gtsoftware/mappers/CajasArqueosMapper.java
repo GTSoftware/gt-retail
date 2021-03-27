@@ -17,8 +17,8 @@
 
 package ar.com.gtsoftware.mappers;
 
-import ar.com.gtsoftware.domain.CajasArqueos;
 import ar.com.gtsoftware.dto.domain.CajasArqueosDto;
+import ar.com.gtsoftware.entity.CajasArqueos;
 import org.mapstruct.Mapper;
 
 @Mapper(

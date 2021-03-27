@@ -18,8 +18,8 @@
 package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.dao.ProductoXDepositoFacade;
-import ar.com.gtsoftware.domain.ProductoXDeposito;
 import ar.com.gtsoftware.dto.domain.ProductoXDepositoDto;
+import ar.com.gtsoftware.entity.ProductoXDeposito;
 import ar.com.gtsoftware.mappers.ProductoXDepositoMapper;
 import ar.com.gtsoftware.search.ProductoXDepositoSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;

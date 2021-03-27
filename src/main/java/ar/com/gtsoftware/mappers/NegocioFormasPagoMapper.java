@@ -17,8 +17,8 @@
 
 package ar.com.gtsoftware.mappers;
 
-import ar.com.gtsoftware.domain.NegocioFormasPago;
 import ar.com.gtsoftware.dto.domain.NegocioFormasPagoDto;
+import ar.com.gtsoftware.entity.NegocioFormasPago;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

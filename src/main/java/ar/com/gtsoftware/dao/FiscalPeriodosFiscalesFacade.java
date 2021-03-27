@@ -15,8 +15,8 @@
  */
 package ar.com.gtsoftware.dao;
 
-import ar.com.gtsoftware.domain.FiscalPeriodosFiscales;
-import ar.com.gtsoftware.domain.FiscalPeriodosFiscales_;
+import ar.com.gtsoftware.entity.FiscalPeriodosFiscales;
+import ar.com.gtsoftware.entity.FiscalPeriodosFiscales_;
 import ar.com.gtsoftware.search.FiscalPeriodosFiscalesSearchFilter;
 import java.time.LocalDateTime;
 import java.util.Objects;

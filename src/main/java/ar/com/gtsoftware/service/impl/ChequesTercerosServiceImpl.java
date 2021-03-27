@@ -18,8 +18,8 @@
 package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.dao.ChequesTercerosFacade;
-import ar.com.gtsoftware.domain.ChequesTerceros;
 import ar.com.gtsoftware.dto.domain.ChequesTercerosDto;
+import ar.com.gtsoftware.entity.ChequesTerceros;
 import ar.com.gtsoftware.mappers.ChequesTercerosMapper;
 import ar.com.gtsoftware.search.ChequesTercerosSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;

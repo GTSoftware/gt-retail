@@ -22,9 +22,9 @@
 package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.dao.*;
-import ar.com.gtsoftware.domain.*;
 import ar.com.gtsoftware.dto.domain.FiscalPuntosVentaDto;
 import ar.com.gtsoftware.dto.fiscal.TotalesAlicuotas;
+import ar.com.gtsoftware.entity.*;
 import ar.com.gtsoftware.enums.TiposPuntosVenta;
 import ar.com.gtsoftware.mappers.FiscalAlicuotasIvaMapper;
 import ar.com.gtsoftware.mappers.FiscalPuntosVentaMapper;

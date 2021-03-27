@@ -17,8 +17,8 @@
 
 package ar.com.gtsoftware.mappers;
 
-import ar.com.gtsoftware.domain.NegocioPlanesPagoDetalle;
 import ar.com.gtsoftware.dto.domain.NegocioPlanesPagoDetalleDto;
+import ar.com.gtsoftware.entity.NegocioPlanesPagoDetalle;
 import org.mapstruct.Mapper;
 
 @Mapper(

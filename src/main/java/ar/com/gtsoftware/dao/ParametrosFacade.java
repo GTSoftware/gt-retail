@@ -15,8 +15,8 @@
  */
 package ar.com.gtsoftware.dao;
 
-import ar.com.gtsoftware.domain.Parametros;
-import ar.com.gtsoftware.domain.Parametros_;
+import ar.com.gtsoftware.entity.Parametros;
+import ar.com.gtsoftware.entity.Parametros_;
 import ar.com.gtsoftware.search.AbstractSearchFilter;
 import java.util.Collections;
 import java.util.List;

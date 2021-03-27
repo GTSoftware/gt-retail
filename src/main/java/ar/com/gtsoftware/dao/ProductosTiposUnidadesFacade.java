@@ -15,8 +15,8 @@
  */
 package ar.com.gtsoftware.dao;
 
-import ar.com.gtsoftware.domain.ProductosTiposUnidades;
-import ar.com.gtsoftware.domain.ProductosTiposUnidades_;
+import ar.com.gtsoftware.entity.ProductosTiposUnidades;
+import ar.com.gtsoftware.entity.ProductosTiposUnidades_;
 import ar.com.gtsoftware.search.UnidadesSearchFilter;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;

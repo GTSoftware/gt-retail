@@ -15,9 +15,9 @@
  */
 package ar.com.gtsoftware.dao;
 
-import ar.com.gtsoftware.domain.FiscalTiposComprobante;
-import ar.com.gtsoftware.domain.FiscalTiposComprobante_;
-import ar.com.gtsoftware.domain.NegocioTiposComprobante_;
+import ar.com.gtsoftware.entity.FiscalTiposComprobante;
+import ar.com.gtsoftware.entity.FiscalTiposComprobante_;
+import ar.com.gtsoftware.entity.NegocioTiposComprobante_;
 import ar.com.gtsoftware.search.FiscalTiposComprobanteSearchFilter;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;

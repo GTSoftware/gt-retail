@@ -18,8 +18,8 @@
 package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.dao.NegocioPlanesPagoFacade;
-import ar.com.gtsoftware.domain.NegocioPlanesPago;
 import ar.com.gtsoftware.dto.domain.NegocioPlanesPagoDto;
+import ar.com.gtsoftware.entity.NegocioPlanesPago;
 import ar.com.gtsoftware.mappers.NegocioPlanesPagoMapper;
 import ar.com.gtsoftware.search.PlanesPagoSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;

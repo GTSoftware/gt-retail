@@ -15,8 +15,8 @@
  */
 package ar.com.gtsoftware.dao;
 
-import ar.com.gtsoftware.domain.ProductosMarcas;
-import ar.com.gtsoftware.domain.ProductosMarcas_;
+import ar.com.gtsoftware.entity.ProductosMarcas;
+import ar.com.gtsoftware.entity.ProductosMarcas_;
 import ar.com.gtsoftware.search.MarcasSearchFilter;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;

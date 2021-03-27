@@ -17,8 +17,8 @@
 
 package ar.com.gtsoftware.service;
 
-import ar.com.gtsoftware.domain.Personas;
 import ar.com.gtsoftware.dto.domain.PersonasCuentaCorrienteDto;
+import ar.com.gtsoftware.entity.Personas;
 import ar.com.gtsoftware.search.PersonasCuentaCorrienteSearchFilter;
 import java.math.BigDecimal;
 import javax.validation.constraints.NotNull;

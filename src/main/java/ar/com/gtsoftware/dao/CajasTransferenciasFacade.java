@@ -16,10 +16,10 @@
  */
 package ar.com.gtsoftware.dao;
 
-import ar.com.gtsoftware.domain.CajasTransferencias;
-import ar.com.gtsoftware.domain.CajasTransferencias_;
-import ar.com.gtsoftware.domain.Cajas_;
-import ar.com.gtsoftware.domain.NegocioFormasPago_;
+import ar.com.gtsoftware.entity.CajasTransferencias;
+import ar.com.gtsoftware.entity.CajasTransferencias_;
+import ar.com.gtsoftware.entity.Cajas_;
+import ar.com.gtsoftware.entity.NegocioFormasPago_;
 import ar.com.gtsoftware.search.CajasSearchFilter;
 import ar.com.gtsoftware.search.CajasTransferenciasSearchFilter;
 import java.math.BigDecimal;

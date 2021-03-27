@@ -20,7 +20,7 @@ package ar.com.gtsoftware.service.impl;
 import static java.util.Objects.isNull;
 
 import ar.com.gtsoftware.dao.FiscalLetrasComprobantesFacade;
-import ar.com.gtsoftware.domain.FiscalLetrasComprobantes;
+import ar.com.gtsoftware.entity.FiscalLetrasComprobantes;
 import ar.com.gtsoftware.search.FiscalLetrasComprobantesSearchFilter;
 import ar.com.gtsoftware.service.FiscalLetrasComprobantesService;
 import javax.validation.constraints.NotNull;

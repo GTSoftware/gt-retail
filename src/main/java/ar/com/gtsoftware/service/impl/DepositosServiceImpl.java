@@ -18,8 +18,8 @@
 package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.dao.DepositosFacade;
-import ar.com.gtsoftware.domain.Depositos;
 import ar.com.gtsoftware.dto.domain.DepositosDto;
+import ar.com.gtsoftware.entity.Depositos;
 import ar.com.gtsoftware.mappers.DepositosMapper;
 import ar.com.gtsoftware.search.DepositosSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;

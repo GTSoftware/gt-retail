@@ -15,10 +15,10 @@
  */
 package ar.com.gtsoftware.dao;
 
-import ar.com.gtsoftware.domain.ProductosPorcentajes;
-import ar.com.gtsoftware.domain.ProductosPorcentajes_;
-import ar.com.gtsoftware.domain.ProductosTiposPorcentajes_;
-import ar.com.gtsoftware.domain.Productos_;
+import ar.com.gtsoftware.entity.ProductosPorcentajes;
+import ar.com.gtsoftware.entity.ProductosPorcentajes_;
+import ar.com.gtsoftware.entity.ProductosTiposPorcentajes_;
+import ar.com.gtsoftware.entity.Productos_;
 import ar.com.gtsoftware.search.ProductosPorcentajesSearchFilter;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;

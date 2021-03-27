@@ -18,8 +18,8 @@
 package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.dao.LegalTiposPersoneriaFacade;
-import ar.com.gtsoftware.domain.LegalTiposPersoneria;
 import ar.com.gtsoftware.dto.domain.LegalTiposPersoneriaDto;
+import ar.com.gtsoftware.entity.LegalTiposPersoneria;
 import ar.com.gtsoftware.mappers.LegalTiposPersoneriaMapper;
 import ar.com.gtsoftware.search.AbstractSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;

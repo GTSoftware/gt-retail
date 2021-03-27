@@ -18,11 +18,11 @@
 package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.dao.*;
-import ar.com.gtsoftware.domain.Remito;
-import ar.com.gtsoftware.domain.RemitoDetalle;
-import ar.com.gtsoftware.domain.RemitoRecepcion;
 import ar.com.gtsoftware.dto.ProductoMovimiento;
 import ar.com.gtsoftware.dto.domain.RemitoDto;
+import ar.com.gtsoftware.entity.Remito;
+import ar.com.gtsoftware.entity.RemitoDetalle;
+import ar.com.gtsoftware.entity.RemitoRecepcion;
 import ar.com.gtsoftware.mappers.ProductosMapper;
 import ar.com.gtsoftware.mappers.RemitoMapper;
 import ar.com.gtsoftware.mappers.helper.CycleAvoidingMappingContext;

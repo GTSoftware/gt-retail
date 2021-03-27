@@ -18,8 +18,8 @@
 package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.dao.ProductosTiposProveeduriaFacade;
-import ar.com.gtsoftware.domain.ProductosTiposProveeduria;
 import ar.com.gtsoftware.dto.domain.ProductosTiposProveeduriaDto;
+import ar.com.gtsoftware.entity.ProductosTiposProveeduria;
 import ar.com.gtsoftware.mappers.ProductosTiposProveeduriaMapper;
 import ar.com.gtsoftware.search.AbstractSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;

@@ -18,8 +18,8 @@
 package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.dao.ComprobantesPagosFacade;
-import ar.com.gtsoftware.domain.ComprobantesPagos;
 import ar.com.gtsoftware.dto.domain.ComprobantesPagosDto;
+import ar.com.gtsoftware.entity.ComprobantesPagos;
 import ar.com.gtsoftware.mappers.ComprobantesPagosMapper;
 import ar.com.gtsoftware.search.ComprobantesPagosSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;

@@ -15,9 +15,9 @@
  */
 package ar.com.gtsoftware.dao;
 
-import ar.com.gtsoftware.domain.NegocioPlanesPagoDetalle;
-import ar.com.gtsoftware.domain.NegocioPlanesPagoDetalle_;
-import ar.com.gtsoftware.domain.NegocioPlanesPago_;
+import ar.com.gtsoftware.entity.NegocioPlanesPagoDetalle;
+import ar.com.gtsoftware.entity.NegocioPlanesPagoDetalle_;
+import ar.com.gtsoftware.entity.NegocioPlanesPago_;
 import ar.com.gtsoftware.search.PlanesPagoDetalleSearchFilter;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;

@@ -16,9 +16,9 @@
  */
 package ar.com.gtsoftware.dao;
 
-import ar.com.gtsoftware.domain.FiscalLibroIvaCompras;
-import ar.com.gtsoftware.domain.FiscalLibroIvaCompras_;
-import ar.com.gtsoftware.domain.FiscalPeriodosFiscales_;
+import ar.com.gtsoftware.entity.FiscalLibroIvaCompras;
+import ar.com.gtsoftware.entity.FiscalLibroIvaCompras_;
+import ar.com.gtsoftware.entity.FiscalPeriodosFiscales_;
 import ar.com.gtsoftware.search.LibroIVASearchFilter;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;

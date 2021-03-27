@@ -18,7 +18,7 @@
 package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.dao.OfertasFacade;
-import ar.com.gtsoftware.domain.Ofertas;
+import ar.com.gtsoftware.entity.Ofertas;
 import ar.com.gtsoftware.mappers.OfertasMapper;
 import ar.com.gtsoftware.rules.OfertaDto;
 import ar.com.gtsoftware.search.OfertasSearchFilter;

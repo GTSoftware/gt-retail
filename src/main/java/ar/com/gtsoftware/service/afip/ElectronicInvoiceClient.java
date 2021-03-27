@@ -2,10 +2,10 @@ package ar.com.gtsoftware.service.afip;
 
 import static java.lang.Integer.parseInt;
 
-import ar.com.gtsoftware.domain.AFIPAuthServices;
-import ar.com.gtsoftware.domain.FiscalLibroIvaVentas;
-import ar.com.gtsoftware.domain.FiscalLibroIvaVentasLineas;
 import ar.com.gtsoftware.dto.fiscal.CAEResponse;
+import ar.com.gtsoftware.entity.AFIPAuthServices;
+import ar.com.gtsoftware.entity.FiscalLibroIvaVentas;
+import ar.com.gtsoftware.entity.FiscalLibroIvaVentasLineas;
 import ar.com.gtsoftware.enums.Parametros;
 import ar.com.gtsoftware.service.ParametrosService;
 import ar.com.gtsoftware.service.afip.client.fe.*;

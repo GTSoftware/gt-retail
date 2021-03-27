@@ -17,8 +17,8 @@
 
 package ar.com.gtsoftware.mappers;
 
-import ar.com.gtsoftware.domain.Bancos;
 import ar.com.gtsoftware.dto.domain.BancosDto;
+import ar.com.gtsoftware.entity.Bancos;
 import org.mapstruct.Mapper;
 
 @Mapper(

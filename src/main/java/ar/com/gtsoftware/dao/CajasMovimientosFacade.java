@@ -15,9 +15,9 @@
  */
 package ar.com.gtsoftware.dao;
 
-import ar.com.gtsoftware.domain.CajasMovimientos;
-import ar.com.gtsoftware.domain.CajasMovimientos_;
-import ar.com.gtsoftware.domain.Cajas_;
+import ar.com.gtsoftware.entity.CajasMovimientos;
+import ar.com.gtsoftware.entity.CajasMovimientos_;
+import ar.com.gtsoftware.entity.Cajas_;
 import ar.com.gtsoftware.search.CajasMovimientosSearchFilter;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;

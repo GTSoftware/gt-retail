@@ -15,7 +15,7 @@
  */
 package ar.com.gtsoftware.dao;
 
-import ar.com.gtsoftware.domain.RemitoRecepcion;
+import ar.com.gtsoftware.entity.RemitoRecepcion;
 import ar.com.gtsoftware.search.AbstractSearchFilter;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;

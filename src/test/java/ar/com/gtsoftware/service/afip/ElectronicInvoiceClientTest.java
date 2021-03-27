@@ -6,8 +6,8 @@ import static org.mockito.Mockito.when;
 import static org.springframework.ws.test.client.RequestMatchers.payload;
 import static org.springframework.ws.test.client.ResponseCreators.withPayload;
 
-import ar.com.gtsoftware.domain.*;
 import ar.com.gtsoftware.dto.fiscal.CAEResponse;
+import ar.com.gtsoftware.entity.*;
 import ar.com.gtsoftware.enums.Parametros;
 import java.math.BigDecimal;
 import java.time.LocalDate;

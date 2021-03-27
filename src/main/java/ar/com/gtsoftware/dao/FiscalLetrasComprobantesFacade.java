@@ -15,9 +15,9 @@
  */
 package ar.com.gtsoftware.dao;
 
-import ar.com.gtsoftware.domain.FiscalLetrasComprobantes;
-import ar.com.gtsoftware.domain.FiscalLetrasComprobantes_;
-import ar.com.gtsoftware.domain.FiscalResponsabilidadesIva_;
+import ar.com.gtsoftware.entity.FiscalLetrasComprobantes;
+import ar.com.gtsoftware.entity.FiscalLetrasComprobantes_;
+import ar.com.gtsoftware.entity.FiscalResponsabilidadesIva_;
 import ar.com.gtsoftware.search.FiscalLetrasComprobantesSearchFilter;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;

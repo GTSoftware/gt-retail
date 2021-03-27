@@ -15,8 +15,8 @@
  */
 package ar.com.gtsoftware.dao;
 
-import ar.com.gtsoftware.domain.AFIPAuthServices;
-import ar.com.gtsoftware.domain.AFIPAuthServices_;
+import ar.com.gtsoftware.entity.AFIPAuthServices;
+import ar.com.gtsoftware.entity.AFIPAuthServices_;
 import ar.com.gtsoftware.search.AFIPAuthServicesSearchFilter;
 import java.time.LocalDateTime;
 import javax.persistence.EntityManager;

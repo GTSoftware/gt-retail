@@ -15,9 +15,9 @@
  */
 package ar.com.gtsoftware.dao;
 
-import ar.com.gtsoftware.domain.ComprobantesPagos;
-import ar.com.gtsoftware.domain.ComprobantesPagos_;
-import ar.com.gtsoftware.domain.Comprobantes_;
+import ar.com.gtsoftware.entity.ComprobantesPagos;
+import ar.com.gtsoftware.entity.ComprobantesPagos_;
+import ar.com.gtsoftware.entity.Comprobantes_;
 import ar.com.gtsoftware.search.ComprobantesPagosSearchFilter;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;

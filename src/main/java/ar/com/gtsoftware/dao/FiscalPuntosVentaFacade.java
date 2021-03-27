@@ -15,9 +15,9 @@
  */
 package ar.com.gtsoftware.dao;
 
-import ar.com.gtsoftware.domain.FiscalPuntosVenta;
-import ar.com.gtsoftware.domain.FiscalPuntosVenta_;
-import ar.com.gtsoftware.domain.Sucursales_;
+import ar.com.gtsoftware.entity.FiscalPuntosVenta;
+import ar.com.gtsoftware.entity.FiscalPuntosVenta_;
+import ar.com.gtsoftware.entity.Sucursales_;
 import ar.com.gtsoftware.search.FiscalPuntosVentaSearchFilter;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;

@@ -17,9 +17,9 @@ package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.api.exception.CustomerValidationException;
 import ar.com.gtsoftware.dao.*;
-import ar.com.gtsoftware.domain.Personas;
-import ar.com.gtsoftware.domain.PersonasTelefonos;
 import ar.com.gtsoftware.dto.domain.PersonasDto;
+import ar.com.gtsoftware.entity.Personas;
+import ar.com.gtsoftware.entity.PersonasTelefonos;
 import ar.com.gtsoftware.mappers.PersonasMapper;
 import ar.com.gtsoftware.mappers.helper.CycleAvoidingMappingContext;
 import ar.com.gtsoftware.search.PersonasSearchFilter;

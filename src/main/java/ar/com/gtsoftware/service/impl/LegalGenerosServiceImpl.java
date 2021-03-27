@@ -18,8 +18,8 @@
 package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.dao.LegalGenerosFacade;
-import ar.com.gtsoftware.domain.LegalGeneros;
 import ar.com.gtsoftware.dto.domain.LegalGenerosDto;
+import ar.com.gtsoftware.entity.LegalGeneros;
 import ar.com.gtsoftware.mappers.LegalGenerosMapper;
 import ar.com.gtsoftware.search.GenerosSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;

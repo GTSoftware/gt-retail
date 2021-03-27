@@ -56,21 +56,21 @@ public class ParametrosServiceImpl implements ParametrosService {
 
   @Override
   public boolean getBooleanParam(Parametros parametro) {
-    ar.com.gtsoftware.domain.Parametros parametroEntity =
+    ar.com.gtsoftware.entity.Parametros parametroEntity =
         facade.findParametroByName(parametro.getNombreParametro());
     return Boolean.parseBoolean(parametroEntity.getValorParametro());
   }
 
   @Override
   public Long getLongParam(Parametros parametro) {
-    ar.com.gtsoftware.domain.Parametros parametroEntity =
+    ar.com.gtsoftware.entity.Parametros parametroEntity =
         facade.findParametroByName(parametro.getNombreParametro());
     return Long.parseLong(parametroEntity.getValorParametro());
   }
 
   @Override
   public String getStringParam(Parametros parametro) {
-    ar.com.gtsoftware.domain.Parametros parametroEntity =
+    ar.com.gtsoftware.entity.Parametros parametroEntity =
         facade.findParametroByName(parametro.getNombreParametro());
     return parametroEntity.getValorParametro();
   }

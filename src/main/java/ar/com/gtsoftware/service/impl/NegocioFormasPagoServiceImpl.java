@@ -18,8 +18,8 @@
 package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.dao.NegocioFormasPagoFacade;
-import ar.com.gtsoftware.domain.NegocioFormasPago;
 import ar.com.gtsoftware.dto.domain.NegocioFormasPagoDto;
+import ar.com.gtsoftware.entity.NegocioFormasPago;
 import ar.com.gtsoftware.mappers.NegocioFormasPagoMapper;
 import ar.com.gtsoftware.search.FormasPagoSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;

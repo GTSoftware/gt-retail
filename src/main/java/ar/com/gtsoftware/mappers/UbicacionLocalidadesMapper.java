@@ -17,8 +17,8 @@
 
 package ar.com.gtsoftware.mappers;
 
-import ar.com.gtsoftware.domain.UbicacionLocalidades;
 import ar.com.gtsoftware.dto.domain.UbicacionLocalidadesDto;
+import ar.com.gtsoftware.entity.UbicacionLocalidades;
 import org.mapstruct.Mapper;
 
 @Mapper(

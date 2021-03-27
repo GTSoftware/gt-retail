@@ -18,8 +18,8 @@
 package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.dao.FiscalPuntosVentaFacade;
-import ar.com.gtsoftware.domain.FiscalPuntosVenta;
 import ar.com.gtsoftware.dto.domain.FiscalPuntosVentaDto;
+import ar.com.gtsoftware.entity.FiscalPuntosVenta;
 import ar.com.gtsoftware.mappers.FiscalPuntosVentaMapper;
 import ar.com.gtsoftware.search.FiscalPuntosVentaSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;

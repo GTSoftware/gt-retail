@@ -18,7 +18,7 @@
 package ar.com.gtsoftware.service;
 
 import ar.com.gtsoftware.dao.AbstractFacade;
-import ar.com.gtsoftware.domain.GTEntity;
+import ar.com.gtsoftware.entity.GTEntity;
 import ar.com.gtsoftware.mappers.GenericMapper;
 import ar.com.gtsoftware.mappers.helper.CycleAvoidingMappingContext;
 import ar.com.gtsoftware.search.AbstractSearchFilter;
