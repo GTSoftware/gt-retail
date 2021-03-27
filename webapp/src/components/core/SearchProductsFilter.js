@@ -110,7 +110,7 @@ export class SearchProductsFilter extends Component {
           checked={searchFilter.conStock}
         />
         <label htmlFor="soloStock" className="p-checkbox-label">
-          Solo con stock
+          {"Solo con stock"}
         </label>
       </>
     )

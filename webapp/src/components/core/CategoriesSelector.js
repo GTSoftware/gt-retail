@@ -6,6 +6,7 @@ import { CategoriesService } from "../../service/CategoriesService"
 export class CategoriesSelector extends Component {
   static propTypes = {
     onCategorySelect: PropTypes.func.isRequired,
+    selectedCategory: PropTypes.object,
   }
 
   constructor(props) {
@@ -14,7 +15,7 @@ export class CategoriesSelector extends Component {
     this.state = {
       loaded: false,
       categories: [],
-      selectedCategory: null,
+      selectedCategory: props.selectedCategory || null,
     }
 
     this.service = new CategoriesService()

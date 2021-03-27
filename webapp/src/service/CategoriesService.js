@@ -10,7 +10,7 @@ export class CategoriesService {
   }
 
   getSubCategories(categoryId, successCallback) {
-    let promise = axios.get(`/products/sub-categories?categoryId=${categoryId}`)
+    let promise = axios.get(`/products/categories/${categoryId}/sub-categories`)
 
     if (successCallback) {
       promise.then((response) => successCallback(response.data))

@@ -1,6 +1,6 @@
 import React from "react"
 import { cleanup, render, screen } from "@testing-library/react"
-import { LoadingButton } from "./LoadingButton"
+import { LoadingButton } from "../LoadingButton"
 
 describe("LoadingButton", () => {
   const mockProps = {

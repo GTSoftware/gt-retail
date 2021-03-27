@@ -12,6 +12,17 @@ export class ProductsService {
     }
   }
 
+  getProduct(productId, successCallback, errorCallback) {
+    let promise = axios.post(`/products/${productId}`)
+
+    if (successCallback) {
+      promise.then((response) => successCallback(response.data))
+    }
+    if (errorCallback) {
+      promise.catch((error) => errorCallback(error.response.data))
+    }
+  }
+
   getSupplyTypes(successCallback) {
     let promise = axios.get(`/products/supply-types`)
 

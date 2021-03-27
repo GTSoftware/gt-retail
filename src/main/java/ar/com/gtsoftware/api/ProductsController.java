@@ -16,22 +16,13 @@ public interface ProductsController {
   PaginatedResponse<ProductSearchResult> findBySearchFilter(
       @Valid @RequestBody PaginatedSearchRequest<ProductosSearchFilter> searchRequest);
 
-  @GetMapping(path = "/products/categories")
-  List<ProductCategory> getProductCategories();
-
-  @GetMapping(path = "/products/sub-categories")
-  List<ProductSubCategory> getProductSubCategories(@RequestParam Long categoryId);
-
-  @GetMapping(path = "/products/supply-types")
-  List<ProductSupplyType> getProductSupplyTypes();
-
-  @GetMapping(path = "/products/brands")
-  List<ProductBrand> getProductBrands();
-
   @PutMapping(path = "/products/pricing")
   @ResponseStatus(code = HttpStatus.NO_CONTENT)
   void batchUpdatePrices(@RequestBody BatchPricingUpdateRequest batchUpdateRequest);
 
   @GetMapping(path = "/products/pricing/percent-types")
   List<ProductosTiposPorcentajesDto> getPercentTypes();
+
+  @GetMapping(path = "/products/{productId}")
+  ProductResponse getProductById(@PathVariable Long productId);
 }

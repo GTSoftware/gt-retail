@@ -6,14 +6,16 @@ import { BrandsService } from "../../service/BrandsService"
 export class BrandsSelector extends Component {
   static propTypes = {
     onBrandSelect: PropTypes.func.isRequired,
+    selectedBrand: PropTypes.object,
   }
+
   constructor(props) {
     super(props)
 
     this.state = {
       loadedBrands: false,
       brands: [],
-      selectedBrand: null,
+      selectedBrand: props.selectedBrand || null,
     }
 
     this.service = new BrandsService()

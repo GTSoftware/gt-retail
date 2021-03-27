@@ -7,6 +7,7 @@ export class SubCategoriesSelector extends Component {
   static propTypes = {
     onSubCategorySelect: PropTypes.func.isRequired,
     categoryId: PropTypes.number,
+    selectedSubCategory: PropTypes.object,
   }
 
   constructor(props) {
@@ -14,7 +15,7 @@ export class SubCategoriesSelector extends Component {
 
     this.state = {
       subCategories: [],
-      selectedSubCategory: null,
+      selectedSubCategory: props.selectedSubCategory || null,
     }
 
     this.service = new CategoriesService()
