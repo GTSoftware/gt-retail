@@ -1,6 +1,7 @@
 package ar.com.gtsoftware.api.transformer.fromDomain;
 
 import ar.com.gtsoftware.api.response.ProductSupplyType;
+import ar.com.gtsoftware.api.transformer.Transformer;
 import ar.com.gtsoftware.dto.domain.ProductosTiposProveeduriaDto;
 import java.util.LinkedList;
 import java.util.List;
@@ -8,24 +9,25 @@ import java.util.Objects;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SupplyTypesTransformer {
+public class SupplyTypesTransformer
+    implements Transformer<ProductosTiposProveeduriaDto, ProductSupplyType> {
 
-  private static final String DISPLAY_NAME_FMT = "[%d] %s";
-
-  public List<ProductSupplyType> transformSupplyTypes(
+  @Override
+  public List<ProductSupplyType> transform(
       List<ProductosTiposProveeduriaDto> tiposProveeduriaDtos) {
     Objects.requireNonNull(tiposProveeduriaDtos);
 
     List<ProductSupplyType> supplyTypes = new LinkedList<>();
 
     for (ProductosTiposProveeduriaDto tipoProveeduria : tiposProveeduriaDtos) {
-      supplyTypes.add(transformSupplyType(tipoProveeduria));
+      supplyTypes.add(transform(tipoProveeduria));
     }
 
     return supplyTypes;
   }
 
-  public ProductSupplyType transformSupplyType(ProductosTiposProveeduriaDto tipoProveeduria) {
+  @Override
+  public ProductSupplyType transform(ProductosTiposProveeduriaDto tipoProveeduria) {
     Objects.requireNonNull(tipoProveeduria);
 
     return ProductSupplyType.builder()

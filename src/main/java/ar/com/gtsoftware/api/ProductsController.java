@@ -3,9 +3,7 @@ package ar.com.gtsoftware.api;
 import ar.com.gtsoftware.api.request.BatchPricingUpdateRequest;
 import ar.com.gtsoftware.api.request.PaginatedSearchRequest;
 import ar.com.gtsoftware.api.response.*;
-import ar.com.gtsoftware.dto.domain.ProductosTiposPorcentajesDto;
 import ar.com.gtsoftware.search.ProductosSearchFilter;
-import java.util.List;
 import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -19,9 +17,6 @@ public interface ProductsController {
   @PutMapping(path = "/products/pricing")
   @ResponseStatus(code = HttpStatus.NO_CONTENT)
   void batchUpdatePrices(@RequestBody BatchPricingUpdateRequest batchUpdateRequest);
-
-  @GetMapping(path = "/products/pricing/percent-types")
-  List<ProductosTiposPorcentajesDto> getPercentTypes();
 
   @GetMapping(path = "/products/{productId}")
   ProductResponse getProductById(@PathVariable Long productId);

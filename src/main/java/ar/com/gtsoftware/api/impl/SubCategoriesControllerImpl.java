@@ -22,7 +22,6 @@ public class SubCategoriesControllerImpl implements SubCategoriesController {
         SubRubroSearchFilter.builder().idProductosRubros(categoryId).build();
     sf.addSortField("nombreSubRubro", true);
 
-    return subCategoriesTransformer.transformSubCategories(
-        subRubrosService.findAllBySearchFilter(sf));
+    return subCategoriesTransformer.transform(subRubrosService.findAllBySearchFilter(sf));
   }
 }

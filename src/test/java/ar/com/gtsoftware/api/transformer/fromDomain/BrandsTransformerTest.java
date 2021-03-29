@@ -1,7 +1,6 @@
 package ar.com.gtsoftware.api.transformer.fromDomain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 import ar.com.gtsoftware.api.response.ProductBrand;
@@ -31,7 +30,7 @@ class BrandsTransformerTest {
   @Test
   void shouldTransformBrand() {
 
-    final ProductBrand productBrand = transformer.transformBrand(marcaDto);
+    final ProductBrand productBrand = transformer.transform(marcaDto);
 
     assertThat(productBrand).isNotNull();
     brandAssertions(productBrand);
@@ -40,7 +39,7 @@ class BrandsTransformerTest {
   @Test
   void shouldTransformBrands() {
 
-    final List<ProductBrand> productBrands = transformer.transformBrands(List.of(marcaDto));
+    final List<ProductBrand> productBrands = transformer.transform(List.of(marcaDto));
 
     assertThat(productBrands).isNotEmpty();
     assertThat(productBrands).hasSize(1);

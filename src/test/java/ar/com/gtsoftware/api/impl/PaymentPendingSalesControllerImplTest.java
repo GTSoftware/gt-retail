@@ -61,7 +61,7 @@ class PaymentPendingSalesControllerImplTest {
     when(mockSecurityUtils.getUserDetails())
         .thenReturn(JwtUserDetails.builder().sucursalId(3L).build());
     when(mockComprobantesService.countBySearchFilter(any())).thenReturn(1);
-    when(mockPaymentPendingSaleTransformer.transformSales(any()))
+    when(mockPaymentPendingSaleTransformer.transform(any()))
         .thenReturn(Collections.singletonList(PaymentPendingSale.builder().saleId(1L).build()));
   }
 

@@ -48,7 +48,7 @@ public class CustomerTransformer {
                 personasDto.getIdLocalidad().getNombreLocalidad(),
                 personasDto.getIdProvincia().getNombreProvincia(),
                 personasDto.getIdPais().getNombrePais()))
-        .phones(phoneTransformer.transformPhones(personasDto.getPersonasTelefonosList()))
+        .phones(phoneTransformer.transform(personasDto.getPersonasTelefonosList()))
         .responsabilidadIVA(personasDto.getIdResponsabilidadIva().getNombreResponsabildiad())
         .build();
   }

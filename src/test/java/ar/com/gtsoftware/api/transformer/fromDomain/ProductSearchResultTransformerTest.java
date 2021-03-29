@@ -114,9 +114,9 @@ class ProductSearchResultTransformerTest {
   }
 
   private void verifyTransformers() {
-    verify(brandsTransformer).transformBrand(marcasDto);
-    verify(categoriesTransformer).transformCategory(rubrosDto);
-    verify(subCategoriesTransformer).transformSubCategory(subRubrosDto);
-    verify(supplyTypesTransformer).transformSupplyType(tiposProveeduriaDto);
+    verify(brandsTransformer).transform(marcasDto);
+    verify(categoriesTransformer).transform(rubrosDto);
+    verify(subCategoriesTransformer).transform(subRubrosDto);
+    verify(supplyTypesTransformer).transform(tiposProveeduriaDto);
   }
 }

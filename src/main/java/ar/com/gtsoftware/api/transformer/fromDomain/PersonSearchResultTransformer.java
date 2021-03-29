@@ -1,6 +1,7 @@
 package ar.com.gtsoftware.api.transformer.fromDomain;
 
 import ar.com.gtsoftware.api.response.PersonSearchResult;
+import ar.com.gtsoftware.api.transformer.Transformer;
 import ar.com.gtsoftware.dto.domain.PersonasDto;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,22 +10,24 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class PersonSearchResultTransformer {
+public class PersonSearchResultTransformer implements Transformer<PersonasDto, PersonSearchResult> {
 
   private static final String ADDRESS_FORMAT = "%s %s Piso: %s Dpto: %s (%s) %s - %s - %s";
   private static final String IDENTIFICATION_FORMAT = "%s %s";
   private static final String DISPLAY_NAME_FORMAT = "[%s] %s";
 
-  public List<PersonSearchResult> transformPersons(List<PersonasDto> personasDtoList) {
+  @Override
+  public List<PersonSearchResult> transform(List<PersonasDto> personasDtoList) {
     List<PersonSearchResult> persons = new ArrayList<>(personasDtoList.size());
     for (PersonasDto persona : personasDtoList) {
-      persons.add(transformPerson(persona));
+      persons.add(transform(persona));
     }
 
     return persons;
   }
 
-  public PersonSearchResult transformPerson(PersonasDto personaDto) {
+  @Override
+  public PersonSearchResult transform(PersonasDto personaDto) {
     return PersonSearchResult.builder()
         .branchId(personaDto.getIdSucursal().getId())
         .personId(personaDto.getId())

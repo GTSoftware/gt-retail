@@ -5,6 +5,7 @@ import { SearchProductsFilter } from "../core/SearchProductsFilter"
 import { DataTable } from "primereact/datatable"
 import { Column } from "primereact/column"
 import { formatDate } from "../../utils/DateUtils"
+import { Button } from "primereact/button"
 
 const productColumns = [
   { field: "codigoPropio", header: "Código" },
@@ -34,6 +35,7 @@ export class ProductsInventory extends Component {
       loading: false,
       products: [],
       rows: 20,
+      selectedIds: new Map(),
     }
 
     this.productsService = new ProductsService()
@@ -61,14 +63,7 @@ export class ProductsInventory extends Component {
   }
 
   renderSearchResults = () => {
-    const {
-      products,
-      rows,
-      totalRecords,
-      first,
-      loading,
-      selectedProduct,
-    } = this.state
+    const { products, rows, totalRecords, first, loading } = this.state
 
     return (
       <DataTable
@@ -78,10 +73,9 @@ export class ProductsInventory extends Component {
         totalRecords={totalRecords}
         lazy={true}
         first={first}
+        rowClassName={this.getRowClass}
         onPage={this.onPageEvent}
         loading={loading}
-        selectionMode="single"
-        selection={selectedProduct}
         onSelectionChange={(e) => this.setState({ selectedProduct: e.value })}
         loadingIcon="fa fa-fw fa-spin fa-spinner"
         resizableColumns
@@ -89,6 +83,12 @@ export class ProductsInventory extends Component {
         {this.renderColumns()}
       </DataTable>
     )
+  }
+
+  getRowClass = (product) => {
+    const { selectedIds } = this.state
+
+    return { "p-highlight": selectedIds.get(product.productId) }
   }
 
   renderColumns = () => {
@@ -103,6 +103,8 @@ export class ProductsInventory extends Component {
         />
       )
     })
+
+    columns.push(<Column body={this.getLinkActions} />)
 
     return columns
   }
@@ -179,5 +181,28 @@ export class ProductsInventory extends Component {
     }
 
     return field
+  }
+
+  getLinkActions = (rowData) => {
+    const { productId } = rowData
+
+    return (
+      <Button
+        type="button"
+        icon="fa fa-fw fa-edit"
+        onClick={() => this.handleEditProduct(productId)}
+      />
+    )
+  }
+
+  handleEditProduct = (productId) => {
+    const { selectedIds } = this.state
+    let newSelectedIds = new Map(selectedIds)
+
+    newSelectedIds.set(productId, true)
+
+    this.setState({ selectedIds: newSelectedIds })
+
+    window.open(`#/product/${productId}`, "_blank")
   }
 }

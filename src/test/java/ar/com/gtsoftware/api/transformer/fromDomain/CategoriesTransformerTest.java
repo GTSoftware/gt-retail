@@ -29,7 +29,7 @@ class CategoriesTransformerTest {
 
   @Test
   void shouldTransformCategory() {
-    final ProductCategory productCategory = transformer.transformCategory(rubroDto);
+    final ProductCategory productCategory = transformer.transform(rubroDto);
 
     assertThat(productCategory).isNotNull();
     categoryAssertions(productCategory);
@@ -37,8 +37,7 @@ class CategoriesTransformerTest {
 
   @Test
   void shouldTransformCategories() {
-    final List<ProductCategory> productCategories =
-        transformer.transformCategories(List.of(rubroDto));
+    final List<ProductCategory> productCategories = transformer.transform(List.of(rubroDto));
 
     assertThat(productCategories).isNotEmpty();
     assertThat(productCategories).hasSize(1);

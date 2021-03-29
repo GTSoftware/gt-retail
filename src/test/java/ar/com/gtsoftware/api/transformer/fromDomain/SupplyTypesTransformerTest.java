@@ -29,8 +29,7 @@ class SupplyTypesTransformerTest {
 
   @Test
   void shouldTransformSupplyType() {
-    final ProductSupplyType productSupplyType =
-        transformer.transformSupplyType(tiposProveeduriaDto);
+    final ProductSupplyType productSupplyType = transformer.transform(tiposProveeduriaDto);
 
     assertThat(productSupplyType).isNotNull();
     supplyTypeAssertions(productSupplyType);
@@ -39,7 +38,7 @@ class SupplyTypesTransformerTest {
   @Test
   void shouldTransformSupplyTypes() {
     final List<ProductSupplyType> productSupplyTypes =
-        transformer.transformSupplyTypes(List.of(tiposProveeduriaDto));
+        transformer.transform(List.of(tiposProveeduriaDto));
 
     assertThat(productSupplyTypes).isNotEmpty();
     assertThat(productSupplyTypes).hasSize(1);

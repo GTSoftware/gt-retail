@@ -54,7 +54,7 @@ public class PaymentPendingSalesControllerImpl implements PaymentPendingSalesCon
       final List<ComprobantesDto> comprobantes =
           comprobantesService.findBySearchFilter(
               searchFilter, request.getFirstResult(), request.getMaxResults());
-      response.setData(pendingSaleTransformer.transformSales(comprobantes));
+      response.setData(pendingSaleTransformer.transform(comprobantes));
     }
 
     return response;

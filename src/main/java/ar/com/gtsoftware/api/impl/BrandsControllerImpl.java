@@ -21,6 +21,6 @@ public class BrandsControllerImpl implements BrandsController {
     MarcasSearchFilter sf = new MarcasSearchFilter();
     sf.addSortField("nombreMarca", true);
 
-    return brandsTransformer.transformBrands(productosMarcasService.findAllBySearchFilter(sf));
+    return brandsTransformer.transform(productosMarcasService.findAllBySearchFilter(sf));
   }
 }

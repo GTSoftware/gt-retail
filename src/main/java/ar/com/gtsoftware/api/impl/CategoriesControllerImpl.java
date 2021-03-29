@@ -21,6 +21,6 @@ public class CategoriesControllerImpl implements CategoriesController {
     final RubrosSearchFilter sf = new RubrosSearchFilter();
     sf.addSortField("nombreRubro", true);
 
-    return transformer.transformCategories(rubrosService.findAllBySearchFilter(sf));
+    return transformer.transform(rubrosService.findAllBySearchFilter(sf));
   }
 }

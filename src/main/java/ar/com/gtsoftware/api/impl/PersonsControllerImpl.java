@@ -33,7 +33,7 @@ public class PersonsControllerImpl implements PersonsController {
       final List<PersonasDto> personasDtoList =
           personasService.findBySearchFilter(
               searchFilter, searchRequest.getFirstResult(), searchRequest.getMaxResults());
-      response.setData(searchResultTransformer.transformPersons(personasDtoList));
+      response.setData(searchResultTransformer.transform(personasDtoList));
     }
 
     return response;

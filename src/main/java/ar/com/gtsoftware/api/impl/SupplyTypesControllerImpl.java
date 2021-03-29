@@ -17,6 +17,6 @@ public class SupplyTypesControllerImpl implements SupplyTypesController {
 
   @Override
   public List<ProductSupplyType> getProductSupplyTypes() {
-    return supplyTypesTransformer.transformSupplyTypes(tiposProveeduriaService.findAll());
+    return supplyTypesTransformer.transform(tiposProveeduriaService.findAll());
   }
 }

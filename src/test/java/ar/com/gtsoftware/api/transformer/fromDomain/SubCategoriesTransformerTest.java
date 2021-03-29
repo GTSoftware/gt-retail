@@ -34,7 +34,7 @@ class SubCategoriesTransformerTest {
 
   @Test
   void shouldTransformSubCategory() {
-    final ProductSubCategory productSubCategory = transformer.transformSubCategory(subRubroDto);
+    final ProductSubCategory productSubCategory = transformer.transform(subRubroDto);
 
     assertThat(productSubCategory).isNotNull();
     subCategoryAssertions(productSubCategory);
@@ -43,7 +43,7 @@ class SubCategoriesTransformerTest {
   @Test
   void shouldTransformSubCategories() {
     final List<ProductSubCategory> productSubCategories =
-        transformer.transformSubCategories(List.of(subRubroDto));
+        transformer.transform(List.of(subRubroDto));
 
     assertThat(productSubCategories).isNotEmpty();
     assertThat(productSubCategories).hasSize(1);

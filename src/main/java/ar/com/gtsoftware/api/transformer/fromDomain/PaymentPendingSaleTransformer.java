@@ -1,24 +1,29 @@
 package ar.com.gtsoftware.api.transformer.fromDomain;
 
 import ar.com.gtsoftware.api.response.PaymentPendingSale;
+import ar.com.gtsoftware.api.transformer.Transformer;
 import ar.com.gtsoftware.dto.domain.ComprobantesDto;
 import ar.com.gtsoftware.dto.domain.FiscalLibroIvaVentasDto;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PaymentPendingSaleTransformer {
+public class PaymentPendingSaleTransformer
+    implements Transformer<ComprobantesDto, PaymentPendingSale> {
 
-  public List<PaymentPendingSale> transformSales(List<ComprobantesDto> comprobantesDtos) {
+  @Override
+  public List<PaymentPendingSale> transform(List<ComprobantesDto> comprobantesDtos) {
     List<PaymentPendingSale> results = new ArrayList<>(comprobantesDtos.size());
     for (ComprobantesDto comprobantesDto : comprobantesDtos) {
-      results.add(transformSale(comprobantesDto));
+      results.add(transform(comprobantesDto));
     }
     return results;
   }
 
-  public PaymentPendingSale transformSale(ComprobantesDto comprobantesDto) {
+  @Override
+  public PaymentPendingSale transform(ComprobantesDto comprobantesDto) {
     return PaymentPendingSale.builder()
         .saleId(comprobantesDto.getId())
         .branch(comprobantesDto.getIdSucursal().getNombreSucursal())
@@ -36,7 +41,7 @@ public class PaymentPendingSaleTransformer {
 
   private String transformInvoiceNumber(ComprobantesDto comprobantesDto) {
     final FiscalLibroIvaVentasDto regFiscal = comprobantesDto.getIdRegistro();
-    if (regFiscal != null) {
+    if (Objects.nonNull(regFiscal)) {
       return String.format(
           "%s %s-%s",
           comprobantesDto.getLetra(),

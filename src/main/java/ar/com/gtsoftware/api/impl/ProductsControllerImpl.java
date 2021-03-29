@@ -1,16 +1,21 @@
 package ar.com.gtsoftware.api.impl;
 
 import ar.com.gtsoftware.api.ProductsController;
+import ar.com.gtsoftware.api.exception.ProductNotFoundException;
 import ar.com.gtsoftware.api.exception.UserNotAllowedException;
 import ar.com.gtsoftware.api.request.BatchPricingUpdateRequest;
 import ar.com.gtsoftware.api.request.PaginatedSearchRequest;
-import ar.com.gtsoftware.api.response.*;
+import ar.com.gtsoftware.api.response.PaginatedResponse;
+import ar.com.gtsoftware.api.response.ProductResponse;
+import ar.com.gtsoftware.api.response.ProductSearchResult;
+import ar.com.gtsoftware.api.transformer.fromDomain.ProductResponseTransformer;
 import ar.com.gtsoftware.api.transformer.fromDomain.ProductSearchResultTransformer;
 import ar.com.gtsoftware.auth.Roles;
-import ar.com.gtsoftware.dto.domain.*;
+import ar.com.gtsoftware.dto.domain.ProductosDto;
 import ar.com.gtsoftware.enums.Parametros;
 import ar.com.gtsoftware.search.ProductosSearchFilter;
-import ar.com.gtsoftware.service.*;
+import ar.com.gtsoftware.service.ParametrosService;
+import ar.com.gtsoftware.service.ProductosService;
 import ar.com.gtsoftware.utils.SecurityUtils;
 import java.util.List;
 import java.util.Objects;
@@ -25,8 +30,8 @@ public class ProductsControllerImpl implements ProductsController {
   private final ProductosService productosService;
   private final ParametrosService parametrosService;
   private final ProductSearchResultTransformer productSearchResultTransformer;
+  private final ProductResponseTransformer productResponseTransformer;
   private final SecurityUtils securityUtils;
-  private final ProductosTiposPorcentajesService productosTiposPorcentajesService;
 
   @Override
   public PaginatedResponse<ProductSearchResult> findBySearchFilter(
@@ -60,12 +65,12 @@ public class ProductsControllerImpl implements ProductsController {
   }
 
   @Override
-  public List<ProductosTiposPorcentajesDto> getPercentTypes() {
-    return productosTiposPorcentajesService.findAll();
-  }
-
-  @Override
   public ProductResponse getProductById(Long productId) {
-    return null;
+    final ProductosDto productosDto = productosService.find(productId);
+    if (Objects.isNull(productosDto)) {
+      throw new ProductNotFoundException();
+    }
+
+    return productResponseTransformer.transform(productosDto);
   }
 }
