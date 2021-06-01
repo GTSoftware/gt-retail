@@ -1,10 +1,9 @@
 //
-// Este archivo ha sido generado por la arquitectura JavaTM para la implantación de la referencia de
-// enlace (JAXB) XML v2.2.8-b130911.1802
-// Visite <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a>
+// Este archivo ha sido generado por Eclipse Implementation of JAXB v2.3.4
+// Visite https://eclipse-ee4j.github.io/jaxb-ri
 // Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el
 // esquema de origen.
-// Generado el: 2020.05.28 a las 09:17:55 PM ART
+// Generado el: 2021.04.20 a las 01:12:11 AM ART
 //
 
 @javax.xml.bind.annotation.XmlSchema(

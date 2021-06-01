@@ -1,60 +1,42 @@
-import axios from "axios"
+import { get, post } from "../utils/HTTPService"
 import _ from "lodash"
 
 class ShopCartService {
   addProduct(searchData) {
-    return axios.post(`/shop-cart/add-product`, searchData)
+    post(`/shop-cart/add-product`, searchData)
   }
 
   getDefaultCustomer(successCallback, errorCallback) {
-    let promise = axios.get(`/shop-cart/default-customer`)
-
-    if (successCallback) {
-      promise.then((response) => successCallback(response.data))
-    }
-    if (errorCallback) {
-      promise.catch((error) => errorCallback(error))
-    }
+    get(`/shop-cart/default-customer`, successCallback, errorCallback)
   }
 
   searchCustomers(query, successCallback) {
-    let promise = axios.get(`/shop-cart/customers-search?query=${query}`)
-
-    if (successCallback) {
-      promise.then((response) => successCallback(response.data))
-    }
+    get(`/shop-cart/customers-search?query=${query}`, successCallback)
   }
 
   getSaleTypes(successCallback) {
-    let promise = axios.get(`/shop-cart/sale-types`)
-
-    if (successCallback) {
-      promise.then((response) => successCallback(response.data))
-    }
+    get(`/shop-cart/sale-types`, successCallback)
   }
 
-  getSaleConditions() {
-    return axios.get(`/shop-cart/sale-conditions`)
+  getSaleConditions(successCallback) {
+    get(`/shop-cart/sale-conditions`, successCallback)
   }
 
-  getPaymentMethods() {
-    return axios.get(`/shop-cart/payment-methods`)
+  getPaymentMethods(successCallback) {
+    get(`/shop-cart/payment-methods`, successCallback)
   }
 
   saveSale(shopCart, successCallback, errorCallback) {
     let saleRequest = transformToSaleRequest(shopCart)
-    let promise = axios.post(`/shop-cart/sale`, saleRequest)
 
-    if (successCallback) {
-      promise.then((response) => successCallback(response.data))
-    }
-    if (errorCallback) {
-      promise.catch((error) => errorCallback(error))
-    }
+    post(`/shop-cart/sale`, saleRequest, successCallback, errorCallback)
   }
 
-  getPaymentPlans(paymentMethod) {
-    return axios.get(`/shop-cart/payment-plans?paymentPlanId=${paymentMethod.id}`)
+  getPaymentPlans(paymentMethod, successCallback) {
+    get(
+      `/shop-cart/payment-plans?paymentPlanId=${paymentMethod.id}`,
+      successCallback
+    )
   }
 }
 

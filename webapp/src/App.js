@@ -31,6 +31,7 @@ import { SearchPendingSales } from "./components/payment/SearchPendingSales"
 import Helmet from "react-helmet"
 import { FiscalBooks } from "./components/fiscal/FiscalBooks"
 import { ProductsInventory } from "./components/products/ProductsInventory"
+import { ProductDetails } from "./components/products/ProductDetails"
 
 const ProtectedRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -353,6 +354,7 @@ class App extends Component {
             />
             <ProtectedRoute path="/fiscal-books" component={FiscalBooks} />
             <ProtectedRoute path="/products" component={ProductsInventory} />
+            <ProtectedRoute path="/product/:productId" component={ProductDetails} />
             <Route component={PageNotFound} />
           </Switch>
         </div>

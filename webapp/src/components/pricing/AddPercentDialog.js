@@ -2,10 +2,9 @@ import React, { Component } from "react"
 import { Dialog } from "primereact/dialog"
 import { Button } from "primereact/button"
 import PropTypes from "prop-types"
-import { ProductsService } from "../../service/ProductsService"
 import { RadioButton } from "primereact/radiobutton"
 import { InputNumber } from "primereact/inputnumber"
-import { Dropdown } from "primereact/dropdown"
+import { PercentTypesSelector } from "../core/PercentTypesSelector"
 
 const ACTION_TYPE = {
   ADD: "add",
@@ -20,25 +19,12 @@ export class AddPercentDialog extends Component {
   constructor(props, context) {
     super(props, context)
 
-    this.productsService = new ProductsService()
-
     this.state = {
       percent: {
         action: ACTION_TYPE.ADD,
         percentType: null,
         value: 0,
       },
-      percentTypes: [],
-    }
-  }
-
-  componentDidMount() {
-    const { percentTypes } = this.state
-
-    if (percentTypes.length === 0) {
-      this.productsService.getPercentTypes((data) =>
-        this.setState({ percentTypes: data })
-      )
     }
   }
 
@@ -60,7 +46,7 @@ export class AddPercentDialog extends Component {
               checked={percent.action === ACTION_TYPE.ADD}
             />
             <label htmlFor="addAction" className="p-radiobutton-label">
-              Agregar
+              {"Agregar"}
             </label>
           </div>
 
@@ -72,24 +58,21 @@ export class AddPercentDialog extends Component {
               checked={percent.action === ACTION_TYPE.REMOVE}
             />
             <label htmlFor="removeAction" className="p-radiobutton-label">
-              Remover
+              {"Remover"}
             </label>
           </div>
 
           <div className="p-col-12">
-            <label htmlFor="percentType">Tipo:</label>
-            <Dropdown
-              id="percentType"
-              dataKey="id"
-              options={this.state.percentTypes}
-              value={percent.percentType}
-              optionLabel="nombreTipo"
-              onChange={(e) => this.handlePropertyChange("percentType", e.value)}
+            <label htmlFor="percentType">{"Tipo:"}</label>
+            <PercentTypesSelector
+              onSelect={(percentType) =>
+                this.handlePropertyChange("percentType", percentType)
+              }
             />
           </div>
 
           <div className="p-col-12">
-            <label htmlFor="value">Valor:</label>
+            <label htmlFor="value">{"Valor:"}</label>
             <InputNumber
               id="value"
               placeholder="Valor"
@@ -99,7 +82,7 @@ export class AddPercentDialog extends Component {
               showButtons
               mode="decimal"
               onChange={(e) => {
-                this.handlePropertyChange("value", e.target.value)
+                this.handlePropertyChange("value", e.value)
               }}
             />
           </div>

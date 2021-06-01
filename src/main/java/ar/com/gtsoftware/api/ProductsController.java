@@ -2,6 +2,7 @@ package ar.com.gtsoftware.api;
 
 import ar.com.gtsoftware.api.request.BatchPricingUpdateRequest;
 import ar.com.gtsoftware.api.request.PaginatedSearchRequest;
+import ar.com.gtsoftware.api.request.products.CreateOrUpdateProductRequest;
 import ar.com.gtsoftware.api.response.*;
 import ar.com.gtsoftware.search.ProductosSearchFilter;
 import javax.validation.Valid;
@@ -20,4 +21,9 @@ public interface ProductsController {
 
   @GetMapping(path = "/products/{productId}")
   ProductResponse getProductById(@PathVariable Long productId);
+
+  @PatchMapping(path = "/products/{productId}")
+  @ResponseStatus(code = HttpStatus.NO_CONTENT)
+  void updateProduct(
+      @PathVariable Long productId, @RequestBody CreateOrUpdateProductRequest updateProductRequest);
 }

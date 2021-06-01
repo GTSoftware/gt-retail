@@ -1,93 +1,53 @@
-import axios from "axios"
+import { get, post } from "../utils/HTTPService"
 import { toUpperCaseTrim, toLowerCaseTrim } from "../utils/StringUtils"
 
 export class CustomersService {
   addNewCustomer(formData, successCallback, errorCallback) {
-    let newCustomer = transformFormData(formData)
-    let promise = axios.post(`/customers/customer`, newCustomer)
+    const newCustomer = transformFormData(formData)
 
-    if (successCallback) {
-      promise.then((response) => successCallback(response.data))
-    }
-    if (errorCallback) {
-      promise.catch((error) => errorCallback(error))
-    }
+    post(`/customers/customer`, newCustomer, successCallback, errorCallback)
   }
 
   retrieveCustomer(searchData, successCallback, errorCallback) {
     const identificationTypeId = searchData.idTipoDocumento
     const identificationNumber = searchData.documento
-    let promise = axios.get(
-      `/customers/customer?identificationTypeId=${identificationTypeId}&identificationNumber=${identificationNumber}`
+    get(
+      `/customers/customer?identificationTypeId=${identificationTypeId}&identificationNumber=${identificationNumber}`,
+      successCallback,
+      errorCallback
     )
-
-    if (successCallback) {
-      promise.then((response) => successCallback(response.data))
-    }
-    if (errorCallback) {
-      promise.catch((error) => errorCallback(error))
-    }
   }
 
   getLegalStatusTypes(successCallback) {
-    let promise = axios.get(`/legal/status-types`)
-
-    if (successCallback) {
-      promise.then((response) => successCallback(response.data))
-    }
+    get(`/legal/status-types`, successCallback)
   }
 
   getGenders(legalStatusId, successCallback) {
-    let promise = axios.get(`/legal/genders?legalStatusId=${legalStatusId}`)
-
-    if (successCallback) {
-      promise.then((response) => successCallback(response.data))
-    }
+    get(`/legal/genders?legalStatusId=${legalStatusId}`, successCallback)
   }
 
   getIdentificationTypes(legalStatusId, successCallback) {
-    let promise = axios.get(
-      `/legal/identification-types?legalStatusId=${legalStatusId}`
+    get(
+      `/legal/identification-types?legalStatusId=${legalStatusId}`,
+      successCallback
     )
-
-    if (successCallback) {
-      promise.then((response) => successCallback(response.data))
-    }
   }
 
   getResponsabilidadesIva(successCallback) {
-    let promise = axios.get(`/fiscal/responsabilidades-iva`)
-
-    if (successCallback) {
-      promise.then((response) => successCallback(response.data))
-    }
+    get(`/fiscal/responsabilidades-iva`, successCallback)
   }
 
   //TODO these location-related methods should be moved to a proper service.
   getCountries(successCallback) {
-    let promise = axios.get(`/locations/countries`)
-
-    if (successCallback) {
-      promise.then((response) => successCallback(response.data))
-    }
+    get(`/locations/countries`, successCallback)
   }
 
   getProvinces(countryId, successCallback) {
-    let promise = axios.get(`/locations/provinces?countryId=${countryId}`)
-
-    if (successCallback) {
-      promise.then((response) => successCallback(response.data))
-    }
+    get(`/locations/provinces?countryId=${countryId}`, successCallback)
   }
 
   getTowns(provinceId, query, successCallback) {
-    let promise = axios.get(
-      `/locations/towns?provinceId=${provinceId}&query=${query}`
-    )
-
-    if (successCallback) {
-      promise.then((response) => successCallback(response.data))
-    }
+    get(`/locations/towns?provinceId=${provinceId}&query=${query}`, successCallback)
   }
 }
 

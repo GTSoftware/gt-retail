@@ -1,35 +1,19 @@
-import axios from "axios"
+import { get } from "../utils/HTTPService"
 
 export class DashboardService {
   getSalesQuantity(successCallback) {
-    let promise = axios.get(`/dashboard/sales-quantity`)
-
-    if (successCallback) {
-      promise.then((response) => successCallback(response.data))
-    }
+    get(`/dashboard/sales-quantity`, successCallback)
   }
 
   getNewCustomersQuantity(successCallback) {
-    let promise = axios.get(`/dashboard/new-customers`)
-
-    if (successCallback) {
-      promise.then((response) => successCallback(response.data))
-    }
+    get(`/dashboard/new-customers`, successCallback)
   }
 
   getYearSalesReport(successCallback) {
-    let promise = axios.get(`/dashboard/monthly-sales`)
-
-    if (successCallback) {
-      promise.then((response) => successCallback(response.data))
-    }
+    get(`/dashboard/monthly-sales`, successCallback)
   }
 
   getStockBreakReport(successCallback) {
-    let promise = axios.get(`/dashboard/stock-break`)
-
-    if (successCallback) {
-      promise.then((response) => successCallback(response.data))
-    }
+    get(`/dashboard/stock-break`, successCallback)
   }
 }

@@ -4,28 +4,30 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
-@RequiredArgsConstructor
 @Getter
 public class JwtUserDetails implements UserDetails {
 
   private static final long serialVersionUID = 5155720064139820502L;
 
-  private final Long id;
-  private final String loginName;
-  private final String password;
-  private final String completeUserName;
-  private final Long sucursalId;
-  private final String sucursalName;
-  private final List<String> userRoles;
+  private Long id;
+  private String loginName;
+  private String password;
+  private String completeUserName;
+  private Long sucursalId;
+  private String sucursalName;
+  private List<String> userRoles;
 
   public Long getId() {
     return id;

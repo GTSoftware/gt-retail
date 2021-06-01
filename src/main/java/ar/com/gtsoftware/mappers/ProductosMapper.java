@@ -21,5 +21,17 @@ import ar.com.gtsoftware.dto.domain.ProductosDto;
 import ar.com.gtsoftware.entity.Productos;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring")
+@Mapper(
+    componentModel = "spring",
+    uses = {
+      PersonasMapper.class,
+      ProductosTiposPorcentajesMapper.class,
+      ProductosMarcasMapper.class,
+      ProductosRubrosMapper.class,
+      ProductosSubRubrosMapper.class,
+      ProductosTiposProveeduriaMapper.class,
+      ProductosTiposUnidadesMapper.class,
+      ProductosListasPreciosMapper.class,
+      FiscalAlicuotasIvaMapper.class
+    })
 public interface ProductosMapper extends GenericMapper<Productos, ProductosDto> {}

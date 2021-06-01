@@ -1,10 +1,9 @@
 //
-// Este archivo ha sido generado por la arquitectura JavaTM para la implantación de la referencia de
-// enlace (JAXB) XML v2.2.8-b130911.1802
-// Visite <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a>
+// Este archivo ha sido generado por Eclipse Implementation of JAXB v2.3.4
+// Visite https://eclipse-ee4j.github.io/jaxb-ri
 // Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el
 // esquema de origen.
-// Generado el: 2020.05.28 a las 09:17:55 PM ART
+// Generado el: 2021.04.20 a las 01:12:11 AM ART
 //
 
 package ar.com.gtsoftware.service.afip.client.fe;
@@ -22,15 +21,15 @@ import javax.xml.bind.annotation.XmlType;
  * clase.
  *
  * <pre>
- * &lt;complexType name="FECAEADetResponse">
- *   &lt;complexContent>
- *     &lt;extension base="{http://ar.gov.afip.dif.FEV1/}FEDetResponse">
- *       &lt;sequence>
- *         &lt;element name="CAEA" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *       &lt;/sequence>
- *     &lt;/extension>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType name="FECAEADetResponse"&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;extension base="{http://ar.gov.afip.dif.FEV1/}FEDetResponse"&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element name="CAEA" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *       &lt;/sequence&gt;
+ *     &lt;/extension&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -38,16 +37,16 @@ import javax.xml.bind.annotation.XmlType;
     name = "FECAEADetResponse",
     propOrder = {"caea"})
 @Generated(
-    value = "com.sun.tools.internal.xjc.Driver",
-    date = "2020-05-28T09:17:55-03:00",
-    comments = "JAXB RI v2.2.8-b130911.1802")
+    value = "com.sun.tools.xjc.Driver",
+    comments = "JAXB RI v2.3.4",
+    date = "2021-04-20T01:12:11-03:00")
 public class FECAEADetResponse extends FEDetResponse {
 
   @XmlElement(name = "CAEA")
   @Generated(
-      value = "com.sun.tools.internal.xjc.Driver",
-      date = "2020-05-28T09:17:55-03:00",
-      comments = "JAXB RI v2.2.8-b130911.1802")
+      value = "com.sun.tools.xjc.Driver",
+      comments = "JAXB RI v2.3.4",
+      date = "2021-04-20T01:12:11-03:00")
   protected String caea;
 
   /**
@@ -56,9 +55,9 @@ public class FECAEADetResponse extends FEDetResponse {
    * @return possible object is {@link String }
    */
   @Generated(
-      value = "com.sun.tools.internal.xjc.Driver",
-      date = "2020-05-28T09:17:55-03:00",
-      comments = "JAXB RI v2.2.8-b130911.1802")
+      value = "com.sun.tools.xjc.Driver",
+      comments = "JAXB RI v2.3.4",
+      date = "2021-04-20T01:12:11-03:00")
   public String getCAEA() {
     return caea;
   }
@@ -69,9 +68,9 @@ public class FECAEADetResponse extends FEDetResponse {
    * @param value allowed object is {@link String }
    */
   @Generated(
-      value = "com.sun.tools.internal.xjc.Driver",
-      date = "2020-05-28T09:17:55-03:00",
-      comments = "JAXB RI v2.2.8-b130911.1802")
+      value = "com.sun.tools.xjc.Driver",
+      comments = "JAXB RI v2.3.4",
+      date = "2021-04-20T01:12:11-03:00")
   public void setCAEA(String value) {
     this.caea = value;
   }

@@ -16,6 +16,7 @@ import { BrandsSelector } from "../core/BrandsSelector"
 import { AutocompleteSupplierFilter } from "../core/AutocompleteSupplierFilter"
 import { CategoriesSelector } from "../core/CategoriesSelector"
 import { SubCategoriesSelector } from "../core/SubCategoriesSelector"
+import { v4 as uuid } from "uuid"
 
 export class BatchPricing extends Component {
   constructor(props, context) {
@@ -44,7 +45,6 @@ export class BatchPricing extends Component {
         percentsToDelete: [],
       },
       updatingPrices: false,
-      itemNumber: 1,
     }
 
     this.productsService = new ProductsService()
@@ -87,7 +87,7 @@ export class BatchPricing extends Component {
     return (
       <div className="p-grid p-fluid">
         <div className="p-col-12">
-          <label htmlFor="supplyType">Tipo de proveeduría:</label>
+          <label htmlFor="supplyType">{"Tipo de proveeduría:"}</label>
           <Dropdown
             id="supplyType"
             dataKey="supplyTypeId"
@@ -102,7 +102,7 @@ export class BatchPricing extends Component {
         </div>
 
         <div className="p-col-12">
-          <label htmlFor="supplier">Proveedor:</label>
+          <label htmlFor="supplier">{"Proveedor:"}</label>
           <AutocompleteSupplierFilter
             onSupplierSelect={(supplier) =>
               this.handleProductsSearchOptionsChange("supplier", supplier)
@@ -120,7 +120,7 @@ export class BatchPricing extends Component {
         </div>
 
         <div className="p-col-6">
-          <label htmlFor="category">Rubro:</label>
+          <label htmlFor="category">{"Rubro:"}</label>
           <CategoriesSelector
             onCategorySelect={(category) => {
               this.handleProductsSearchOptionsChange("category", category)
@@ -137,7 +137,7 @@ export class BatchPricing extends Component {
           />
         </div>
         <div className="p-col-12">
-          <label htmlFor="containsText">Contiene:</label>
+          <label htmlFor="containsText">{"Contiene:"}</label>
           <InputText
             placeholder="La descripción contiene"
             id="containsText"
@@ -180,7 +180,7 @@ export class BatchPricing extends Component {
       <div className="p-grid p-fluid">
         {this.renderAddPercentDialog()}
         <div className="p-col-6">
-          <label htmlFor="updateCostField">Actualizar costo:</label>
+          <label htmlFor="updateCostField">{"Actualizar costo:"}</label>
           <div className="p-inputgroup">
             <span className="p-inputgroup-addon">
               <Checkbox
@@ -203,7 +203,7 @@ export class BatchPricing extends Component {
               disabled={!updateCost}
               value={costPercent}
               onChange={(e) => {
-                this.handleUpdateOptionsChange("costPercent", e.target.value)
+                this.handleUpdateOptionsChange("costPercent", e.value)
               }}
             />
           </div>
@@ -212,7 +212,7 @@ export class BatchPricing extends Component {
         <div className="p-col-6" />
 
         <div className="p-col-6">
-          <label htmlFor="updatePercent">Actualizar porcentajes:</label>
+          <label htmlFor="updatePercent">{"Actualizar porcentajes:"}</label>
           <Checkbox
             id="updatePercent"
             onChange={(e) => {
@@ -265,9 +265,9 @@ export class BatchPricing extends Component {
 
   handleAddPercent = (percent) => {
     let percentItem = { ...percent }
-    let { updateOptions, itemNumber } = this.state
+    let { updateOptions } = this.state
 
-    percentItem.item = itemNumber
+    percentItem.item = uuid()
     if (percentItem.action === "add") {
       updateOptions.percentsToAdd.splice(0, 0, percentItem)
     } else {
@@ -276,7 +276,6 @@ export class BatchPricing extends Component {
 
     this.setState({
       updateOptions: updateOptions,
-      itemNumber: itemNumber + 1,
     })
   }
 
@@ -403,7 +402,7 @@ export class BatchPricing extends Component {
         resizableColumns={true}
         responsive={true}
       >
-        <Column field="percentType.nombreTipo" header="Tipo" />
+        <Column field="percentType.displayName" header="Tipo" />
         <Column field="value" header="Valor" />
         <Column
           key="actions"

@@ -8,8 +8,8 @@ export class PageNotFound extends Component {
         <div className="p-col-12">
           <div className="card">
             <h1>404 - Not found!</h1>
-            <p>Oops! La página a la que quizo acceder no es válida.</p>
-            <Link to={"/"}>¡Sáquenme de este momento incómodo!</Link>
+            <p>{"Oops! La página a la que quizo acceder no es válida."}</p>
+            <Link to={"/"}>{"¡Sáquenme de este momento incómodo!"}</Link>
           </div>
         </div>
       </div>

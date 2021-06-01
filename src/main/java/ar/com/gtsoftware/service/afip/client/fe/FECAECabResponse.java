@@ -1,10 +1,9 @@
 //
-// Este archivo ha sido generado por la arquitectura JavaTM para la implantación de la referencia de
-// enlace (JAXB) XML v2.2.8-b130911.1802
-// Visite <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a>
+// Este archivo ha sido generado por Eclipse Implementation of JAXB v2.3.4
+// Visite https://eclipse-ee4j.github.io/jaxb-ri
 // Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el
 // esquema de origen.
-// Generado el: 2020.05.28 a las 09:17:55 PM ART
+// Generado el: 2021.04.20 a las 01:12:11 AM ART
 //
 
 package ar.com.gtsoftware.service.afip.client.fe;
@@ -21,18 +20,18 @@ import javax.xml.bind.annotation.XmlType;
  * clase.
  *
  * <pre>
- * &lt;complexType name="FECAECabResponse">
- *   &lt;complexContent>
- *     &lt;extension base="{http://ar.gov.afip.dif.FEV1/}FECabResponse">
- *     &lt;/extension>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType name="FECAECabResponse"&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;extension base="{http://ar.gov.afip.dif.FEV1/}FECabResponse"&gt;
+ *     &lt;/extension&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "FECAECabResponse")
 @Generated(
-    value = "com.sun.tools.internal.xjc.Driver",
-    date = "2020-05-28T09:17:55-03:00",
-    comments = "JAXB RI v2.2.8-b130911.1802")
+    value = "com.sun.tools.xjc.Driver",
+    comments = "JAXB RI v2.3.4",
+    date = "2021-04-20T01:12:11-03:00")
 public class FECAECabResponse extends FECabResponse {}

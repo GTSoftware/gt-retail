@@ -1,71 +1,44 @@
-import axios from "axios"
+import { post, get } from "../utils/HTTPService"
 
 export class DeliveryNotesService {
   getWarehouses(successCallback) {
-    let promise = axios.get(`/delivery-notes/warehouses`)
-
-    if (successCallback) {
-      promise.then((response) => successCallback(response.data))
-    }
+    get(`/delivery-notes/warehouses`, successCallback)
   }
 
   getDeliveryTypes(successCallback) {
-    let promise = axios.get(`/delivery-notes/delivery-types`)
-
-    if (successCallback) {
-      promise.then((response) => successCallback(response.data))
-    }
+    get(`/delivery-notes/delivery-types`, successCallback)
   }
 
   searchPersons(query, successCallback) {
     let searchData = transformPersonSearchData(query)
-    let promise = axios.post(`/persons/search`, searchData)
-
-    if (successCallback) {
-      promise.then((response) => successCallback(response.data.data))
-    }
+    post(`/persons/search`, searchData, successCallback)
   }
 
   addProduct(searchCriteria, successCallback, errorCallback) {
-    let promise = axios.post(`/delivery-notes/add-product`, searchCriteria)
-
-    if (successCallback) {
-      promise.then((response) => successCallback(response.data))
-    }
-    if (errorCallback) {
-      promise.catch((error) => errorCallback(error))
-    }
+    post(
+      `/delivery-notes/add-product`,
+      searchCriteria,
+      successCallback,
+      errorCallback
+    )
   }
 
   saveDeliveryNote(deliveryNote, successCallback, errorCallback) {
     let addDeliveryNote = transformDeliveryNote(deliveryNote)
-    let promise = axios.post(`/delivery-notes/delivery-note`, addDeliveryNote)
-
-    if (successCallback) {
-      promise.then((response) => successCallback(response.data))
-    }
-    if (errorCallback) {
-      promise.catch((error) => errorCallback(error))
-    }
+    post(
+      `/delivery-notes/delivery-note`,
+      addDeliveryNote,
+      successCallback,
+      errorCallback
+    )
   }
 
   searchDeliveryNotes(searchOptions, successCallback, errorCallback) {
-    let promise = axios.post(`/delivery-notes/search`, searchOptions)
-
-    if (successCallback) {
-      promise.then((response) => successCallback(response.data))
-    }
-    if (errorCallback) {
-      promise.catch((error) => errorCallback(error))
-    }
+    post(`/delivery-notes/search`, searchOptions, successCallback, errorCallback)
   }
 
   getDeliveryNoteDetails(deliveryNoteId, successCallback) {
-    let promise = axios.get(`/delivery-notes/${deliveryNoteId}/details`)
-
-    if (successCallback) {
-      promise.then((response) => successCallback(response.data))
-    }
+    get(`/delivery-notes/${deliveryNoteId}/details`, successCallback)
   }
 }
 

@@ -5,11 +5,13 @@ import ar.com.gtsoftware.api.exception.ProductNotFoundException;
 import ar.com.gtsoftware.api.exception.UserNotAllowedException;
 import ar.com.gtsoftware.api.request.BatchPricingUpdateRequest;
 import ar.com.gtsoftware.api.request.PaginatedSearchRequest;
+import ar.com.gtsoftware.api.request.products.CreateOrUpdateProductRequest;
 import ar.com.gtsoftware.api.response.PaginatedResponse;
 import ar.com.gtsoftware.api.response.ProductResponse;
 import ar.com.gtsoftware.api.response.ProductSearchResult;
 import ar.com.gtsoftware.api.transformer.fromDomain.ProductResponseTransformer;
 import ar.com.gtsoftware.api.transformer.fromDomain.ProductSearchResultTransformer;
+import ar.com.gtsoftware.api.transformer.toDomain.ProductoDtoTransformer;
 import ar.com.gtsoftware.auth.Roles;
 import ar.com.gtsoftware.dto.domain.ProductosDto;
 import ar.com.gtsoftware.enums.Parametros;
@@ -21,6 +23,7 @@ import java.util.List;
 import java.util.Objects;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -31,6 +34,7 @@ public class ProductsControllerImpl implements ProductsController {
   private final ParametrosService parametrosService;
   private final ProductSearchResultTransformer productSearchResultTransformer;
   private final ProductResponseTransformer productResponseTransformer;
+  private final ProductoDtoTransformer productoDtoTransformer;
   private final SecurityUtils securityUtils;
 
   @Override
@@ -72,5 +76,18 @@ public class ProductsControllerImpl implements ProductsController {
     }
 
     return productResponseTransformer.transform(productosDto);
+  }
+
+  @Override
+  @Transactional
+  public void updateProduct(
+      Long productId, @Valid CreateOrUpdateProductRequest updateProductRequest) {
+    final ProductosDto productosDto = productosService.find(productId);
+    if (Objects.isNull(productosDto)) {
+      throw new ProductNotFoundException();
+    }
+
+    productosService.createOrEdit(
+        productoDtoTransformer.transformFromExisting(updateProductRequest, productosDto));
   }
 }

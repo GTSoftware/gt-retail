@@ -1,55 +1,23 @@
-import axios from "axios"
+import { get, post } from "../utils/HTTPService"
 
 export class SalesService {
   searchSales(searchOptions, successCallback, errorCallback) {
-    let promise = axios.post(`/sales/search`, searchOptions)
-
-    if (successCallback) {
-      promise.then((response) => successCallback(response.data))
-    }
-    if (errorCallback) {
-      promise.catch((error) => errorCallback(error.response.data))
-    }
+    post(`/sales/search`, searchOptions, successCallback, errorCallback)
   }
 
   getSalesTotals(searchOptions, successCallback) {
-    let promise = axios.post(`/sales/totals`, searchOptions)
-
-    if (successCallback) {
-      promise.then((response) => successCallback(response.data))
-    }
+    post(`/sales/totals`, searchOptions, successCallback)
   }
 
   getSale(saleId, successCallback, errorCallback) {
-    let promise = axios.get(`/sale/${saleId}`)
-
-    if (successCallback) {
-      promise.then((response) => successCallback(response.data))
-    }
-    if (errorCallback) {
-      promise.catch((error) => errorCallback(error.response.data))
-    }
+    get(`/sale/${saleId}`, successCallback, errorCallback)
   }
 
   getPointsOfSale(successCallback, errorCallback) {
-    let promise = axios.get(`/points-of-sale`)
-
-    if (successCallback) {
-      promise.then((response) => successCallback(response.data))
-    }
-    if (errorCallback) {
-      promise.catch((error) => errorCallback(error.response.data))
-    }
+    get(`/points-of-sale`, successCallback, errorCallback)
   }
 
   registerInvoice(invoiceToRegister, successCallback, errorCallback) {
-    let promise = axios.post(`/invoice`, invoiceToRegister)
-
-    if (successCallback) {
-      promise.then((response) => successCallback(response.data))
-    }
-    if (errorCallback) {
-      promise.catch((error) => errorCallback(error.response.data))
-    }
+    post(`/invoice`, invoiceToRegister, successCallback, errorCallback)
   }
 }

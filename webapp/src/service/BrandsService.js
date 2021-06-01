@@ -1,11 +1,7 @@
-import axios from "axios"
+import { get } from "../utils/HTTPService"
 
 export class BrandsService {
   getBrands(successCallback) {
-    let promise = axios.get(`/products/brands`)
-
-    if (successCallback) {
-      promise.then((response) => successCallback(response.data))
-    }
+    get(`/products/brands`, successCallback)
   }
 }

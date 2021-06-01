@@ -1,51 +1,39 @@
-import axios from "axios"
+import { post } from "../utils/HTTPService"
 import jwt from "jwt-decode"
 
-export const USER_TOKEN_STORE = "userToken"
+const USER_TOKEN_STORE = "userToken"
 
 class LoginService {
   constructor() {
-    if (!this.axiosInterceptorId && this.isUserLoggedIn()) {
+    if (this.isUserLoggedIn()) {
       let userToken = sessionStorage.getItem(USER_TOKEN_STORE)
 
       this.userDetails = jwt(userToken).userDetails
-
-      this.setUpInterceptors(this.createTokenHeaderValue(userToken))
     }
   }
 
-  performLogin(userCredentials) {
-    return axios.post("authenticate", userCredentials)
+  performLogin(userCredentials, okCallback, errorCallback) {
+    post(
+      "authenticate",
+      userCredentials,
+      (response) => {
+        this.initUserSession(response.token)
+        if (okCallback) {
+          okCallback()
+        }
+      },
+      errorCallback
+    )
   }
 
   initUserSession(token) {
     this.userDetails = jwt(token).userDetails
 
     sessionStorage.setItem(USER_TOKEN_STORE, token)
-
-    this.setUpInterceptors(this.createTokenHeaderValue(token))
-  }
-
-  setUpInterceptors(tokenHeaderValue) {
-    if (this.axiosInterceptorId) {
-      axios.interceptors.request.eject(this.axiosInterceptorId)
-    }
-
-    this.axiosInterceptorId = axios.interceptors.request.use((config) => {
-      if (this.isUserLoggedIn()) {
-        config.headers.authorization = tokenHeaderValue
-      }
-
-      return config
-    })
-  }
-
-  createTokenHeaderValue(token) {
-    return "Bearer " + token
   }
 
   isUserLoggedIn() {
-    let userToken = sessionStorage.getItem(USER_TOKEN_STORE)
+    const userToken = sessionStorage.getItem(USER_TOKEN_STORE)
 
     return userToken || false
   }
@@ -62,7 +50,6 @@ class LoginService {
   }
 
   performLogout() {
-    axios.interceptors.request.eject(this.axiosInterceptorId)
     sessionStorage.removeItem(USER_TOKEN_STORE)
     delete this.userDetails
   }

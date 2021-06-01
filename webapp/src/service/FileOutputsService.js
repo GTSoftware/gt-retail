@@ -1,37 +1,16 @@
-import axios from "axios"
-import FileSaver from "file-saver"
+import { getWithFileDownload } from "../utils/HTTPService"
 
 class FileOutputsService {
   getSaleBudget(saleId) {
-    axios
-      .get(`/downloads/budget?saleId=${saleId}`, { responseType: "blob" })
-      .then((response) => {
-        let fileName = response.headers["content-disposition"].split("filename=")[1]
-
-        FileSaver.saveAs(response.data, fileName)
-      })
+    getWithFileDownload(`/downloads/budget?saleId=${saleId}`)
   }
 
   getInvoice(saleId) {
-    axios
-      .get(`/downloads/invoice?saleId=${saleId}`, { responseType: "blob" })
-      .then((response) => {
-        let fileName = response.headers["content-disposition"].split("filename=")[1]
-
-        FileSaver.saveAs(response.data, fileName)
-      })
+    getWithFileDownload(`/downloads/invoice?saleId=${saleId}`)
   }
 
   getDeliveryNote(deliveryNoteId) {
-    axios
-      .get(`/downloads/deliveryNote?deliveryNoteId=${deliveryNoteId}`, {
-        responseType: "blob",
-      })
-      .then((response) => {
-        let fileName = response.headers["content-disposition"].split("filename=")[1]
-
-        FileSaver.saveAs(response.data, fileName)
-      })
+    getWithFileDownload(`/downloads/deliveryNote?deliveryNoteId=${deliveryNoteId}`)
   }
 }
 

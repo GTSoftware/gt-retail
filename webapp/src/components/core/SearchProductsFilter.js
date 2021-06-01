@@ -254,7 +254,7 @@ export class SearchProductsFilter extends Component {
   }
 
   handleSearchFilterPropertyChange = (property, value) => {
-    let { searchFilter } = this.state
+    let searchFilter = Object.assign({}, this.state.searchFilter)
 
     searchFilter[property] = value
 
@@ -262,7 +262,7 @@ export class SearchProductsFilter extends Component {
       searchFilter.idSubRubro = null
     }
 
-    this.setState({ searchFilter: searchFilter })
+    this.setState({ searchFilter })
   }
 
   handleEnterKeyPress = (event) => {

@@ -42,12 +42,10 @@ export class UsersList extends Component {
   }
 
   componentDidMount() {
-    UsersService.retrieveUsers().then((response) =>
-      this.handleRetrieveUsers(response.data)
-    )
+    UsersService.retrieveUsers((response) => this.handleRetrieveUsers(response))
 
-    SucursalesService.retrieveActiveSucursales().then((response) =>
-      this.handleRetrieveSucursales(response.data)
+    SucursalesService.retrieveActiveSucursales((response) =>
+      this.handleRetrieveSucursales(response)
     )
   }
 
@@ -260,20 +258,20 @@ export class UsersList extends Component {
   }
 
   handleResetPassword(rowData) {
-    UsersService.resetUserPassword(rowData)
-      .then((response) =>
+    UsersService.resetUserPassword(
+      rowData,
+      (response) =>
         this.toast.show({
           severity: "info",
           summary: "Clave reestablecida a:",
-          detail: response.data.newPassword,
-        })
-      )
-      .catch((error) =>
+          detail: response.newPassword,
+        }),
+      (error) =>
         this.toast.show({
           severity: "error",
           summary: "Error al intentar reestablecer la clave",
-          detail: error.response.data.message,
+          detail: error.message,
         })
-      )
+    )
   }
 }

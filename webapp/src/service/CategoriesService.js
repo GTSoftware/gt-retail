@@ -1,19 +1,11 @@
-import axios from "axios"
+import { get } from "../utils/HTTPService"
 
 export class CategoriesService {
   getCategories(successCallback) {
-    let promise = axios.get(`/products/categories`)
-
-    if (successCallback) {
-      promise.then((response) => successCallback(response.data))
-    }
+    get(`/products/categories`, successCallback)
   }
 
   getSubCategories(categoryId, successCallback) {
-    let promise = axios.get(`/products/categories/${categoryId}/sub-categories`)
-
-    if (successCallback) {
-      promise.then((response) => successCallback(response.data))
-    }
+    get(`/products/categories/${categoryId}/sub-categories`, successCallback)
   }
 }

@@ -5,7 +5,6 @@ import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInA
 import static org.hamcrest.core.Is.is;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
-import static org.mockito.MockitoAnnotations.initMocks;
 
 import ar.com.gtsoftware.api.exception.PointOfSaleNotFoundException;
 import ar.com.gtsoftware.api.exception.SaleNotFoundException;
@@ -29,43 +28,44 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
+import org.mockito.Spy;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+@ExtendWith(MockitoExtension.class)
 class InvoiceControllerImplTest {
 
   private InvoiceControllerImpl controller;
-  @Mock private SecurityUtils securityUtilsMock;
-  @Mock private FiscalPuntosVentaService puntosVentaServiceMock;
-  @Mock private ComprobantesService comprobantesServiceMock;
-  @Mock private FacturacionVentasService facturacionServiceMock;
+
+  @Mock private SecurityUtils securityUtils;
+  @Mock private FiscalPuntosVentaService puntosVentaService;
+  @Mock private ComprobantesService comprobantesService;
+  @Mock private FacturacionVentasService facturacionService;
 
   @Captor private ArgumentCaptor<FiscalPuntosVentaSearchFilter> captor;
 
+  @Spy private JwtUserDetails userDetails;
+
   @BeforeEach
   void setUp() {
-    initMocks(this);
     controller =
         new InvoiceControllerImpl(
-            securityUtilsMock,
-            puntosVentaServiceMock,
-            comprobantesServiceMock,
-            facturacionServiceMock);
+            securityUtils, puntosVentaService, comprobantesService, facturacionService);
   }
 
   @Test
   public void shouldGetPointsOfSale() {
-    final JwtUserDetails userDetails = JwtUserDetails.builder().sucursalId(1L).build();
-    when(securityUtilsMock.getUserDetails()).thenReturn(userDetails);
-    when(puntosVentaServiceMock.findAllBySearchFilter(any(FiscalPuntosVentaSearchFilter.class)))
+    when(userDetails.getSucursalId()).thenReturn(1L);
+    when(securityUtils.getUserDetails()).thenReturn(userDetails);
+    when(puntosVentaService.findAllBySearchFilter(any(FiscalPuntosVentaSearchFilter.class)))
         .thenReturn(dummyPuntosVenta());
 
     final List<PointOfSale> pointsOfSale = controller.getPointsOfSale();
 
-    verify(securityUtilsMock).getUserDetails();
-
-    verify(puntosVentaServiceMock).findAllBySearchFilter(captor.capture());
+    verify(puntosVentaService).findAllBySearchFilter(captor.capture());
 
     final FiscalPuntosVentaSearchFilter filter = captor.getValue();
     assertThat(filter.getActivo(), is(true));
@@ -105,7 +105,7 @@ class InvoiceControllerImplTest {
   public void shouldInvoice() throws ServiceException {
     final FiscalPuntosVentaDto puntoVentaDummy =
         FiscalPuntosVentaDto.builder().nroPuntoVenta(1).build();
-    when(comprobantesServiceMock.find(1L))
+    when(comprobantesService.find(1L))
         .thenReturn(ComprobantesDto.builder().id(1L).build())
         .thenReturn(
             ComprobantesDto.builder()
@@ -117,7 +117,7 @@ class InvoiceControllerImplTest {
                         .numeroFactura("00000001")
                         .build())
                 .build());
-    when(puntosVentaServiceMock.find(1)).thenReturn(puntoVentaDummy);
+    when(puntosVentaService.find(1)).thenReturn(puntoVentaDummy);
 
     final InvoiceRequest invoiceRequest =
         InvoiceRequest.builder().pointOfSale(1).saleId(1L).build();
@@ -126,18 +126,17 @@ class InvoiceControllerImplTest {
 
     assertThat(invoiceResponse.getInvoiceNumber(), is("B 0001-00000001"));
 
-    verify(facturacionServiceMock)
-        .registrarFacturaVenta(eq(1L), eq(puntoVentaDummy), eq(0L), isNull());
-    verify(comprobantesServiceMock, times(2)).find(eq(1L));
-    verify(puntosVentaServiceMock).find(eq(1));
+    verify(facturacionService).registrarFacturaVenta(eq(1L), eq(puntoVentaDummy), eq(0L), isNull());
+    verify(comprobantesService, times(2)).find(eq(1L));
+    verify(puntosVentaService).find(eq(1));
   }
 
   @Test
   public void shouldThrowSaleNotFoundWhenInvoiceWithInvalidSaleId() {
     final FiscalPuntosVentaDto puntoVentaDummy =
         FiscalPuntosVentaDto.builder().nroPuntoVenta(1).build();
-    when(comprobantesServiceMock.find(1L)).thenReturn(null);
-    when(puntosVentaServiceMock.find(1)).thenReturn(puntoVentaDummy);
+    when(comprobantesService.find(1L)).thenReturn(null);
+    when(puntosVentaService.find(1)).thenReturn(puntoVentaDummy);
 
     final InvoiceRequest invoiceRequest =
         InvoiceRequest.builder().pointOfSale(1).saleId(1L).build();
@@ -145,14 +144,14 @@ class InvoiceControllerImplTest {
     Assertions.assertThrows(
         SaleNotFoundException.class, () -> controller.invoiceSale(invoiceRequest));
 
-    verify(comprobantesServiceMock).find(eq(1L));
-    verify(puntosVentaServiceMock).find(eq(1));
+    verify(comprobantesService).find(eq(1L));
+    verify(puntosVentaService).find(eq(1));
   }
 
   @Test
   public void shouldThrowPointOfSaleNotFoundWhenInvoiceWithInvalidPointOfSale() {
-    when(comprobantesServiceMock.find(1L)).thenReturn(ComprobantesDto.builder().id(1L).build());
-    when(puntosVentaServiceMock.find(1)).thenReturn(null);
+    when(comprobantesService.find(1L)).thenReturn(ComprobantesDto.builder().id(1L).build());
+    when(puntosVentaService.find(1)).thenReturn(null);
 
     final InvoiceRequest invoiceRequest =
         InvoiceRequest.builder().pointOfSale(1).saleId(1L).build();
@@ -160,7 +159,7 @@ class InvoiceControllerImplTest {
     Assertions.assertThrows(
         PointOfSaleNotFoundException.class, () -> controller.invoiceSale(invoiceRequest));
 
-    verify(comprobantesServiceMock).find(eq(1L));
-    verify(puntosVentaServiceMock).find(eq(1));
+    verify(comprobantesService).find(eq(1L));
+    verify(puntosVentaService).find(eq(1));
   }
 }

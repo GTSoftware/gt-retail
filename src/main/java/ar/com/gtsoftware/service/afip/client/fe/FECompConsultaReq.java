@@ -1,10 +1,9 @@
 //
-// Este archivo ha sido generado por la arquitectura JavaTM para la implantación de la referencia de
-// enlace (JAXB) XML v2.2.8-b130911.1802
-// Visite <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a>
+// Este archivo ha sido generado por Eclipse Implementation of JAXB v2.3.4
+// Visite https://eclipse-ee4j.github.io/jaxb-ri
 // Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el
 // esquema de origen.
-// Generado el: 2020.05.28 a las 09:17:55 PM ART
+// Generado el: 2021.04.20 a las 01:12:11 AM ART
 //
 
 package ar.com.gtsoftware.service.afip.client.fe;
@@ -22,17 +21,17 @@ import javax.xml.bind.annotation.XmlType;
  * clase.
  *
  * <pre>
- * &lt;complexType name="FECompConsultaReq">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="CbteTipo" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="CbteNro" type="{http://www.w3.org/2001/XMLSchema}long"/>
- *         &lt;element name="PtoVta" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *       &lt;/sequence>
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType name="FECompConsultaReq"&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element name="CbteTipo" type="{http://www.w3.org/2001/XMLSchema}int"/&gt;
+ *         &lt;element name="CbteNro" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
+ *         &lt;element name="PtoVta" type="{http://www.w3.org/2001/XMLSchema}int"/&gt;
+ *       &lt;/sequence&gt;
+ *     &lt;/restriction&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -40,82 +39,82 @@ import javax.xml.bind.annotation.XmlType;
     name = "FECompConsultaReq",
     propOrder = {"cbteTipo", "cbteNro", "ptoVta"})
 @Generated(
-    value = "com.sun.tools.internal.xjc.Driver",
-    date = "2020-05-28T09:17:55-03:00",
-    comments = "JAXB RI v2.2.8-b130911.1802")
+    value = "com.sun.tools.xjc.Driver",
+    comments = "JAXB RI v2.3.4",
+    date = "2021-04-20T01:12:11-03:00")
 public class FECompConsultaReq {
 
   @XmlElement(name = "CbteTipo")
   @Generated(
-      value = "com.sun.tools.internal.xjc.Driver",
-      date = "2020-05-28T09:17:55-03:00",
-      comments = "JAXB RI v2.2.8-b130911.1802")
+      value = "com.sun.tools.xjc.Driver",
+      comments = "JAXB RI v2.3.4",
+      date = "2021-04-20T01:12:11-03:00")
   protected int cbteTipo;
 
   @XmlElement(name = "CbteNro")
   @Generated(
-      value = "com.sun.tools.internal.xjc.Driver",
-      date = "2020-05-28T09:17:55-03:00",
-      comments = "JAXB RI v2.2.8-b130911.1802")
+      value = "com.sun.tools.xjc.Driver",
+      comments = "JAXB RI v2.3.4",
+      date = "2021-04-20T01:12:11-03:00")
   protected long cbteNro;
 
   @XmlElement(name = "PtoVta")
   @Generated(
-      value = "com.sun.tools.internal.xjc.Driver",
-      date = "2020-05-28T09:17:55-03:00",
-      comments = "JAXB RI v2.2.8-b130911.1802")
+      value = "com.sun.tools.xjc.Driver",
+      comments = "JAXB RI v2.3.4",
+      date = "2021-04-20T01:12:11-03:00")
   protected int ptoVta;
 
   /** Obtiene el valor de la propiedad cbteTipo. */
   @Generated(
-      value = "com.sun.tools.internal.xjc.Driver",
-      date = "2020-05-28T09:17:55-03:00",
-      comments = "JAXB RI v2.2.8-b130911.1802")
+      value = "com.sun.tools.xjc.Driver",
+      comments = "JAXB RI v2.3.4",
+      date = "2021-04-20T01:12:11-03:00")
   public int getCbteTipo() {
     return cbteTipo;
   }
 
   /** Define el valor de la propiedad cbteTipo. */
   @Generated(
-      value = "com.sun.tools.internal.xjc.Driver",
-      date = "2020-05-28T09:17:55-03:00",
-      comments = "JAXB RI v2.2.8-b130911.1802")
+      value = "com.sun.tools.xjc.Driver",
+      comments = "JAXB RI v2.3.4",
+      date = "2021-04-20T01:12:11-03:00")
   public void setCbteTipo(int value) {
     this.cbteTipo = value;
   }
 
   /** Obtiene el valor de la propiedad cbteNro. */
   @Generated(
-      value = "com.sun.tools.internal.xjc.Driver",
-      date = "2020-05-28T09:17:55-03:00",
-      comments = "JAXB RI v2.2.8-b130911.1802")
+      value = "com.sun.tools.xjc.Driver",
+      comments = "JAXB RI v2.3.4",
+      date = "2021-04-20T01:12:11-03:00")
   public long getCbteNro() {
     return cbteNro;
   }
 
   /** Define el valor de la propiedad cbteNro. */
   @Generated(
-      value = "com.sun.tools.internal.xjc.Driver",
-      date = "2020-05-28T09:17:55-03:00",
-      comments = "JAXB RI v2.2.8-b130911.1802")
+      value = "com.sun.tools.xjc.Driver",
+      comments = "JAXB RI v2.3.4",
+      date = "2021-04-20T01:12:11-03:00")
   public void setCbteNro(long value) {
     this.cbteNro = value;
   }
 
   /** Obtiene el valor de la propiedad ptoVta. */
   @Generated(
-      value = "com.sun.tools.internal.xjc.Driver",
-      date = "2020-05-28T09:17:55-03:00",
-      comments = "JAXB RI v2.2.8-b130911.1802")
+      value = "com.sun.tools.xjc.Driver",
+      comments = "JAXB RI v2.3.4",
+      date = "2021-04-20T01:12:11-03:00")
   public int getPtoVta() {
     return ptoVta;
   }
 
   /** Define el valor de la propiedad ptoVta. */
   @Generated(
-      value = "com.sun.tools.internal.xjc.Driver",
-      date = "2020-05-28T09:17:55-03:00",
-      comments = "JAXB RI v2.2.8-b130911.1802")
+      value = "com.sun.tools.xjc.Driver",
+      comments = "JAXB RI v2.3.4",
+      date = "2021-04-20T01:12:11-03:00")
   public void setPtoVta(int value) {
     this.ptoVta = value;
   }

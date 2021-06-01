@@ -24,12 +24,6 @@ export class Login extends Component {
       loginDisabled: true,
       loading: false,
     }
-
-    this.performLogin = this.performLogin.bind(this)
-    this.showError = this.showError.bind(this)
-    this.handleLoginButton = this.handleLoginButton.bind(this)
-    this.handleLoginDone = this.handleLoginDone.bind(this)
-    this.handleEnterKeyPress = this.handleEnterKeyPress.bind(this)
   }
 
   render() {
@@ -103,13 +97,13 @@ export class Login extends Component {
     this.handleLoginButton()
   }
 
-  handleEnterKeyPress(event) {
+  handleEnterKeyPress = (event) => {
     if (event.key === "Enter" && !this.state.loginDisabled) {
       this.performLogin()
     }
   }
 
-  handleLoginButton() {
+  handleLoginButton = () => {
     let userCredentials = this.state.userCredentials
     let loginDisabled = true
 
@@ -119,24 +113,23 @@ export class Login extends Component {
     this.setState({ loginDisabled })
   }
 
-  performLogin() {
+  performLogin = () => {
     this.setState({ loading: true })
-    LoginService.performLogin(this.state.userCredentials)
-      .then(this.handleLoginDone)
-      .catch(() => {
-        this.showError()
-      })
+    LoginService.performLogin(
+      this.state.userCredentials,
+      this.handleLoginDone,
+      this.showError
+    )
   }
 
-  handleLoginDone(response) {
-    LoginService.initUserSession(response.data.token)
+  handleLoginDone = () => {
     if (this.props.onLoginSuccess) {
       this.props.onLoginSuccess()
     }
     this.props.history.replace("/")
   }
 
-  showError() {
+  showError = () => {
     this.setState({ loading: false })
     this.messages.show({
       severity: "error",

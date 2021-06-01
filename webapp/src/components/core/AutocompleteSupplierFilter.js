@@ -38,9 +38,9 @@ export class AutocompleteSupplierFilter extends Component {
   }
 
   filterSuppliers = (query) => {
-    this.service.searchSuppliers(query, (suppliers) =>
-      this.setState({ filteredSuppliers: suppliers })
-    )
+    this.service.searchSuppliers(query, (suppliers) => {
+      this.setState({ filteredSuppliers: suppliers.data })
+    })
   }
 
   handleSelectionChange = (value) => {

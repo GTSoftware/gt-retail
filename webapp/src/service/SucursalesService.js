@@ -1,12 +1,12 @@
-import axios from "axios"
+import { post } from "../utils/HTTPService"
 
 class SucursalesService {
-  retrieveActiveSucursales() {
-    let activeSucursalesFilter = {
+  retrieveActiveSucursales(successCallback) {
+    const activeSucursalesFilter = {
       activa: true,
     }
 
-    return axios.post(`/sucursales/search-all`, activeSucursalesFilter)
+    post(`/sucursales/search-all`, activeSucursalesFilter, successCallback)
   }
 }
 

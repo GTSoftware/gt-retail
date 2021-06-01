@@ -29,7 +29,6 @@ const productColumns = [
 export class ProductsInventory extends Component {
   constructor(props, context) {
     super(props, context)
-    this.productsService = new ProductsService()
 
     this.state = {
       loading: false,
@@ -68,6 +67,7 @@ export class ProductsInventory extends Component {
     return (
       <DataTable
         value={products}
+        dataKey={"productId"}
         paginator={true}
         rows={rows}
         totalRecords={totalRecords}

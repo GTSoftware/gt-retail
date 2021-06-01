@@ -1,10 +1,9 @@
 //
-// Este archivo ha sido generado por la arquitectura JavaTM para la implantación de la referencia de
-// enlace (JAXB) XML v2.2.8-b130911.1802
-// Visite <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a>
+// Este archivo ha sido generado por Eclipse Implementation of JAXB v2.3.4
+// Visite https://eclipse-ee4j.github.io/jaxb-ri
 // Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el
 // esquema de origen.
-// Generado el: 2020.05.28 a las 09:17:55 PM ART
+// Generado el: 2021.04.20 a las 01:12:11 AM ART
 //
 
 package ar.com.gtsoftware.service.afip.client.fe;
@@ -22,18 +21,18 @@ import javax.xml.bind.annotation.XmlType;
  * clase.
  *
  * <pre>
- * &lt;complexType name="PtoVenta">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="Nro" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="EmisionTipo" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="Bloqueado" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="FchBaja" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *       &lt;/sequence>
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType name="PtoVenta"&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element name="Nro" type="{http://www.w3.org/2001/XMLSchema}int"/&gt;
+ *         &lt;element name="EmisionTipo" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="Bloqueado" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="FchBaja" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *       &lt;/sequence&gt;
+ *     &lt;/restriction&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -41,53 +40,53 @@ import javax.xml.bind.annotation.XmlType;
     name = "PtoVenta",
     propOrder = {"nro", "emisionTipo", "bloqueado", "fchBaja"})
 @Generated(
-    value = "com.sun.tools.internal.xjc.Driver",
-    date = "2020-05-28T09:17:55-03:00",
-    comments = "JAXB RI v2.2.8-b130911.1802")
+    value = "com.sun.tools.xjc.Driver",
+    comments = "JAXB RI v2.3.4",
+    date = "2021-04-20T01:12:11-03:00")
 public class PtoVenta {
 
   @XmlElement(name = "Nro")
   @Generated(
-      value = "com.sun.tools.internal.xjc.Driver",
-      date = "2020-05-28T09:17:55-03:00",
-      comments = "JAXB RI v2.2.8-b130911.1802")
+      value = "com.sun.tools.xjc.Driver",
+      comments = "JAXB RI v2.3.4",
+      date = "2021-04-20T01:12:11-03:00")
   protected int nro;
 
   @XmlElement(name = "EmisionTipo")
   @Generated(
-      value = "com.sun.tools.internal.xjc.Driver",
-      date = "2020-05-28T09:17:55-03:00",
-      comments = "JAXB RI v2.2.8-b130911.1802")
+      value = "com.sun.tools.xjc.Driver",
+      comments = "JAXB RI v2.3.4",
+      date = "2021-04-20T01:12:11-03:00")
   protected String emisionTipo;
 
   @XmlElement(name = "Bloqueado")
   @Generated(
-      value = "com.sun.tools.internal.xjc.Driver",
-      date = "2020-05-28T09:17:55-03:00",
-      comments = "JAXB RI v2.2.8-b130911.1802")
+      value = "com.sun.tools.xjc.Driver",
+      comments = "JAXB RI v2.3.4",
+      date = "2021-04-20T01:12:11-03:00")
   protected String bloqueado;
 
   @XmlElement(name = "FchBaja")
   @Generated(
-      value = "com.sun.tools.internal.xjc.Driver",
-      date = "2020-05-28T09:17:55-03:00",
-      comments = "JAXB RI v2.2.8-b130911.1802")
+      value = "com.sun.tools.xjc.Driver",
+      comments = "JAXB RI v2.3.4",
+      date = "2021-04-20T01:12:11-03:00")
   protected String fchBaja;
 
   /** Obtiene el valor de la propiedad nro. */
   @Generated(
-      value = "com.sun.tools.internal.xjc.Driver",
-      date = "2020-05-28T09:17:55-03:00",
-      comments = "JAXB RI v2.2.8-b130911.1802")
+      value = "com.sun.tools.xjc.Driver",
+      comments = "JAXB RI v2.3.4",
+      date = "2021-04-20T01:12:11-03:00")
   public int getNro() {
     return nro;
   }
 
   /** Define el valor de la propiedad nro. */
   @Generated(
-      value = "com.sun.tools.internal.xjc.Driver",
-      date = "2020-05-28T09:17:55-03:00",
-      comments = "JAXB RI v2.2.8-b130911.1802")
+      value = "com.sun.tools.xjc.Driver",
+      comments = "JAXB RI v2.3.4",
+      date = "2021-04-20T01:12:11-03:00")
   public void setNro(int value) {
     this.nro = value;
   }
@@ -98,9 +97,9 @@ public class PtoVenta {
    * @return possible object is {@link String }
    */
   @Generated(
-      value = "com.sun.tools.internal.xjc.Driver",
-      date = "2020-05-28T09:17:55-03:00",
-      comments = "JAXB RI v2.2.8-b130911.1802")
+      value = "com.sun.tools.xjc.Driver",
+      comments = "JAXB RI v2.3.4",
+      date = "2021-04-20T01:12:11-03:00")
   public String getEmisionTipo() {
     return emisionTipo;
   }
@@ -111,9 +110,9 @@ public class PtoVenta {
    * @param value allowed object is {@link String }
    */
   @Generated(
-      value = "com.sun.tools.internal.xjc.Driver",
-      date = "2020-05-28T09:17:55-03:00",
-      comments = "JAXB RI v2.2.8-b130911.1802")
+      value = "com.sun.tools.xjc.Driver",
+      comments = "JAXB RI v2.3.4",
+      date = "2021-04-20T01:12:11-03:00")
   public void setEmisionTipo(String value) {
     this.emisionTipo = value;
   }
@@ -124,9 +123,9 @@ public class PtoVenta {
    * @return possible object is {@link String }
    */
   @Generated(
-      value = "com.sun.tools.internal.xjc.Driver",
-      date = "2020-05-28T09:17:55-03:00",
-      comments = "JAXB RI v2.2.8-b130911.1802")
+      value = "com.sun.tools.xjc.Driver",
+      comments = "JAXB RI v2.3.4",
+      date = "2021-04-20T01:12:11-03:00")
   public String getBloqueado() {
     return bloqueado;
   }
@@ -137,9 +136,9 @@ public class PtoVenta {
    * @param value allowed object is {@link String }
    */
   @Generated(
-      value = "com.sun.tools.internal.xjc.Driver",
-      date = "2020-05-28T09:17:55-03:00",
-      comments = "JAXB RI v2.2.8-b130911.1802")
+      value = "com.sun.tools.xjc.Driver",
+      comments = "JAXB RI v2.3.4",
+      date = "2021-04-20T01:12:11-03:00")
   public void setBloqueado(String value) {
     this.bloqueado = value;
   }
@@ -150,9 +149,9 @@ public class PtoVenta {
    * @return possible object is {@link String }
    */
   @Generated(
-      value = "com.sun.tools.internal.xjc.Driver",
-      date = "2020-05-28T09:17:55-03:00",
-      comments = "JAXB RI v2.2.8-b130911.1802")
+      value = "com.sun.tools.xjc.Driver",
+      comments = "JAXB RI v2.3.4",
+      date = "2021-04-20T01:12:11-03:00")
   public String getFchBaja() {
     return fchBaja;
   }
@@ -163,9 +162,9 @@ public class PtoVenta {
    * @param value allowed object is {@link String }
    */
   @Generated(
-      value = "com.sun.tools.internal.xjc.Driver",
-      date = "2020-05-28T09:17:55-03:00",
-      comments = "JAXB RI v2.2.8-b130911.1802")
+      value = "com.sun.tools.xjc.Driver",
+      comments = "JAXB RI v2.3.4",
+      date = "2021-04-20T01:12:11-03:00")
   public void setFchBaja(String value) {
     this.fchBaja = value;
   }

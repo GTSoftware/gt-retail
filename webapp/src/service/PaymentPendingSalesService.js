@@ -1,15 +1,8 @@
-import axios from "axios"
+import { post } from "../utils/HTTPService"
 
 export class PaymentPendingSalesService {
   searchSales(searchOptions, successCallback, errorCallback) {
-    let promise = axios.post(`/sales/payment-pending`, searchOptions)
-
-    if (successCallback) {
-      promise.then((response) => successCallback(response.data))
-    }
-    if (errorCallback) {
-      promise.catch((error) => errorCallback(error.response.data))
-    }
+    post(`/sales/payment-pending`, searchOptions, successCallback, errorCallback)
   }
 
   prepareToPay(selectedSales, successCallback, errorCallback) {
@@ -18,13 +11,12 @@ export class PaymentPendingSalesService {
         return sale.saleId
       }),
     }
-    let promise = axios.post(`/sales/prepare-to-pay`, prepareToPayRequest)
 
-    if (successCallback) {
-      promise.then((response) => successCallback(response.data))
-    }
-    if (errorCallback) {
-      promise.catch((error) => errorCallback(error.response.data))
-    }
+    post(
+      `/sales/prepare-to-pay`,
+      prepareToPayRequest,
+      successCallback,
+      errorCallback
+    )
   }
 }

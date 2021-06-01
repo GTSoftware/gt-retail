@@ -10,7 +10,7 @@
     <queryString>
         <![CDATA[]]>
     </queryString>
-    <field name="alicuota" class="ar.com.gtsoftware.domain.FiscalAlicuotasIva">
+    <field name="alicuota" class="ar.com.gtsoftware.dto.domain.FiscalAlicuotasIvaDto">
         <fieldDescription><![CDATA[alicuota]]></fieldDescription>
     </field>
     <field name="importeIva" class="java.math.BigDecimal">

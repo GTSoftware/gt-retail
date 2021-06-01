@@ -12,24 +12,34 @@ import ar.com.gtsoftware.enums.Parametros;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Collections;
+import java.util.List;
 import javax.xml.transform.Source;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Spy;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.ws.test.client.MockWebServiceServer;
 import org.springframework.xml.transform.StringSource;
 
-@ExtendWith(SpringExtension.class)
+@ExtendWith({SpringExtension.class, MockitoExtension.class})
 @ContextConfiguration(classes = AfipClientTestConfiguration.class)
 class ElectronicInvoiceClientTest {
 
   @Autowired private ElectronicInvoiceClient client;
 
   private MockWebServiceServer mockServer;
+
+  @Spy private NegocioTiposComprobante negocioTipoComprobante;
+  @Spy private FiscalLibroIvaVentas registroVenta;
+  @Spy private FiscalTiposComprobante fiscalTipoComprobante;
+  @Spy private Personas persona;
+  @Spy private LegalTiposDocumento tipoDocumento;
+  @Spy private FiscalLibroIvaVentasLineas lineaRegistro;
+  @Spy private FiscalAlicuotasIva alicuotaIva;
 
   @BeforeEach
   void setUp() {
@@ -98,6 +108,8 @@ class ElectronicInvoiceClientTest {
 
   @Test
   void shouldRequestElectronicAuthorization() {
+    setUpMocks();
+
     final AFIPAuthServices afipAuthServices = new AFIPAuthServices();
     afipAuthServices.setSign("sign");
     afipAuthServices.setToken("token");
@@ -184,47 +196,40 @@ class ElectronicInvoiceClientTest {
     mockServer.expect(payload(requestPayload)).andRespond(withPayload(responsePayload));
 
     final CAEResponse caeResponse =
-        client.requestElectronicAuthorization(afipAuthServices, buildDummyIvaVentas());
+        client.requestElectronicAuthorization(afipAuthServices, registroVenta);
 
     assertThat(caeResponse.getCae(), is(1234L));
     assertThat(caeResponse.getFechaVencimientoCae(), is(LocalDate.of(2020, 1, 6)));
     mockServer.verify();
   }
 
-  private FiscalLibroIvaVentas buildDummyIvaVentas() {
-    final FiscalLibroIvaVentas dummyLibro = new FiscalLibroIvaVentas();
-    dummyLibro.setDocumento("88888888");
-    dummyLibro.setNumeroFactura("1");
+  private void setUpMocks() {
+    when(registroVenta.getDocumento()).thenReturn("88888888");
+    when(registroVenta.getNumeroFactura()).thenReturn("1");
+    when(registroVenta.getFechaFactura()).thenReturn(LocalDateTime.of(2020, 1, 1, 13, 21));
+    when(registroVenta.getImporteExento()).thenReturn(BigDecimal.TEN);
+    when(registroVenta.getImporteIva()).thenReturn(BigDecimal.TEN);
+    when(registroVenta.getImporteNetoGravado()).thenReturn(BigDecimal.TEN);
+    when(registroVenta.getImporteTributos()).thenReturn(BigDecimal.TEN);
+    when(registroVenta.getImporteNetoNoGravado()).thenReturn(BigDecimal.TEN);
+    when(registroVenta.getTotalFactura()).thenReturn(BigDecimal.valueOf(10.53));
+    when(registroVenta.getPuntoVentaFactura()).thenReturn("1");
+    when(registroVenta.getCodigoTipoComprobante()).thenReturn(fiscalTipoComprobante);
 
-    final FiscalTiposComprobante fiscalTiposComprobante = new FiscalTiposComprobante();
-    fiscalTiposComprobante.setCodigoTipoComprobante("99");
-    dummyLibro.setCodigoTipoComprobante(fiscalTiposComprobante);
+    when(registroVenta.getIdPersona()).thenReturn(persona);
+    when(persona.getIdTipoDocumento()).thenReturn(tipoDocumento);
+    when(tipoDocumento.getFiscalCodigoTipoDocumento()).thenReturn(99);
 
-    dummyLibro.setFechaFactura(LocalDateTime.of(2020, 1, 1, 13, 21));
-    dummyLibro.setImporteExento(BigDecimal.TEN);
-    dummyLibro.setImporteIva(BigDecimal.TEN);
-    dummyLibro.setImporteNetoGravado(BigDecimal.TEN);
-    dummyLibro.setImporteTributos(BigDecimal.TEN);
-    dummyLibro.setImporteNetoNoGravado(BigDecimal.TEN);
-    dummyLibro.setTotalFactura(new BigDecimal("10.53"));
-    dummyLibro.setPuntoVentaFactura("1");
+    when(fiscalTipoComprobante.getCodigoTipoComprobante()).thenReturn("99");
+    when(fiscalTipoComprobante.getTipoComprobante()).thenReturn(negocioTipoComprobante);
+    when(negocioTipoComprobante.getId()).thenReturn(1L);
 
-    Personas persona = new Personas();
-    final LegalTiposDocumento tipoDoc = new LegalTiposDocumento();
-    tipoDoc.setFiscalCodigoTipoDocumento(99);
-    persona.setIdTipoDocumento(tipoDoc);
-    dummyLibro.setIdPersona(persona);
+    when(registroVenta.getFiscalLibroIvaVentasLineasList()).thenReturn(List.of(lineaRegistro));
 
-    FiscalLibroIvaVentasLineas linea = new FiscalLibroIvaVentasLineas();
-    linea.setNoGravado(BigDecimal.TEN);
-    linea.setImporteIva(BigDecimal.TEN);
-    linea.setNetoGravado(BigDecimal.TEN);
-    FiscalAlicuotasIva alicuota = new FiscalAlicuotasIva();
-    alicuota.setFiscalCodigoAlicuota(1);
-    linea.setIdAlicuotaIva(alicuota);
-
-    dummyLibro.setFiscalLibroIvaVentasLineasList(Collections.singletonList(linea));
-
-    return dummyLibro;
+    when(lineaRegistro.getNoGravado()).thenReturn(BigDecimal.TEN);
+    when(lineaRegistro.getImporteIva()).thenReturn(BigDecimal.TEN);
+    when(lineaRegistro.getNetoGravado()).thenReturn(BigDecimal.TEN);
+    when(lineaRegistro.getIdAlicuotaIva()).thenReturn(alicuotaIva);
+    when(alicuotaIva.getFiscalCodigoAlicuota()).thenReturn(1);
   }
 }

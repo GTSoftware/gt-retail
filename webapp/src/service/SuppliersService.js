@@ -1,13 +1,10 @@
-import axios from "axios"
+import { post } from "../utils/HTTPService"
 
 export class SuppliersService {
   searchSuppliers(query, successCallback) {
-    let searchData = transformSuppliersSearchData(query)
-    let promise = axios.post(`/persons/search`, searchData)
+    const searchData = transformSuppliersSearchData(query)
 
-    if (successCallback) {
-      promise.then((response) => successCallback(response.data.data))
-    }
+    post(`/persons/search`, searchData, successCallback)
   }
 }
 

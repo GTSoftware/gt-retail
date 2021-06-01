@@ -41,8 +41,8 @@ export class FiscalBooks extends Component {
     if (fiscalPeriods.length === 0) {
       this.fiscalBookService.getFiscalPeriods((fiscalPeriods) =>
         this.setState({
-          fiscalPeriods: fiscalPeriods,
-          fiscalPeriod: fiscalPeriods[0],
+          fiscalPeriods: fiscalPeriods.data,
+          fiscalPeriod: fiscalPeriods.data[0],
         })
       )
     }

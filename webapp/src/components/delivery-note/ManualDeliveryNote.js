@@ -535,7 +535,7 @@ export class ManualDeliveryNote extends Component {
 
   filterPersons = (query) => {
     this.deliveryNotesService.searchPersons(query, (data) =>
-      this.setState({ filteredPersons: data })
+      this.setState({ filteredPersons: data.data })
     )
   }
 
@@ -595,7 +595,7 @@ export class ManualDeliveryNote extends Component {
     this.toast.show({
       severity: "error",
       summary: "No se pudo encontrar el producto",
-      detail: error.response.data.message,
+      detail: error.message,
     })
   }
 

@@ -14,7 +14,6 @@ import {
 import { LoadingButton } from "../core/LoadingButton"
 import { Dropdown } from "primereact/dropdown"
 import { AutoComplete } from "primereact/autocomplete"
-import { InputNumber } from "primereact/inputnumber"
 import { Toast } from "primereact/toast"
 import { DataTable } from "primereact/datatable"
 import { Column } from "primereact/column"
@@ -239,7 +238,7 @@ export class AddNewCustomerDialog extends Component {
                 <div className="p-inputgroup">
                   <Field
                     id="documento"
-                    component={InputNumber}
+                    component={InputText}
                     name="documento"
                     mode="decimal"
                     autoFocus={true}
@@ -584,13 +583,13 @@ export class AddNewCustomerDialog extends Component {
 
     this.setState({ loading: false })
 
-    if (_.get(error, "response.data.errorCode") === "400999") {
-      detail = error.response.data.fieldErrors.map((errorField) => {
+    if (_.get(error, "errorCode") === "400999") {
+      detail = error.fieldErrors.map((errorField) => {
         return errorField + "\n"
       })
     }
-    if (_.get(error, "response.data.errorCode") === "400001") {
-      detail = error.response.data.message
+    if (_.get(error, "errorCode") === "400001") {
+      detail = error.message
     }
 
     this.toast.show({
@@ -780,7 +779,7 @@ export class AddNewCustomerDialog extends Component {
   }
 
   handleNotExistentCustomer = (error) => {
-    if (error.response.data.errorCode === "404002") {
+    if (error.errorCode === "404002") {
       this.setState({ saveDisabled: false })
     }
   }

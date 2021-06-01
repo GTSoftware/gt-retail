@@ -24,9 +24,18 @@ import ar.com.gtsoftware.dao.ProductosFacade;
 import ar.com.gtsoftware.dao.ProductosPreciosFacade;
 import ar.com.gtsoftware.dao.ProductosTiposPorcentajesFacade;
 import ar.com.gtsoftware.dto.domain.ProductosDto;
+import ar.com.gtsoftware.entity.FiscalAlicuotasIva;
+import ar.com.gtsoftware.entity.Personas;
 import ar.com.gtsoftware.entity.Productos;
+import ar.com.gtsoftware.entity.ProductosListasPrecios;
+import ar.com.gtsoftware.entity.ProductosMarcas;
 import ar.com.gtsoftware.entity.ProductosPorcentajes;
 import ar.com.gtsoftware.entity.ProductosPrecios;
+import ar.com.gtsoftware.entity.ProductosRubros;
+import ar.com.gtsoftware.entity.ProductosSubRubros;
+import ar.com.gtsoftware.entity.ProductosTiposPorcentajes;
+import ar.com.gtsoftware.entity.ProductosTiposProveeduria;
+import ar.com.gtsoftware.entity.ProductosTiposUnidades;
 import ar.com.gtsoftware.mappers.ProductosMapper;
 import ar.com.gtsoftware.search.ProductoXDepositoSearchFilter;
 import ar.com.gtsoftware.search.ProductosPreciosSearchFilter;
@@ -37,8 +46,9 @@ import ar.com.gtsoftware.utils.BusinessDateUtils;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
+import javax.persistence.EntityManager;
 import javax.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
@@ -52,6 +62,7 @@ public class ProductosServiceImpl
     implements ProductosService {
 
   private static final BigDecimal CIEN = new BigDecimal(100);
+  private final EntityManager em;
   private final ProductosFacade facade;
   private final ProductosPreciosFacade preciosFacade;
   private final ProductosTiposPorcentajesFacade tiposPorcentajesFacade;
@@ -108,8 +119,8 @@ public class ProductosServiceImpl
   @Override
   public ProductosDto findFirstBySearchFilter(@NotNull ProductosSearchFilter sf) {
     ProductosDto productosDto = super.findFirstBySearchFilter(sf);
-    if (productosDto != null) {
-      establecerPrecioYStock(Collections.singletonList(productosDto), sf);
+    if (Objects.nonNull(productosDto)) {
+      establecerPrecioYStock(List.of(productosDto), sf);
     }
     return productosDto;
   }
@@ -148,6 +159,7 @@ public class ProductosServiceImpl
           pp.setValor(toAdd.getPercentValue());
           pp.setFechaModificacion(today);
           porcentajes.add(pp);
+          facade.edit(producto);
         }
       }
 
@@ -179,6 +191,50 @@ public class ProductosServiceImpl
         pp.setFechaModificacion(today);
         pp.setPrecio(pp.getNeto().multiply(coeficienteIVA).setScale(2, RoundingMode.HALF_UP));
       }
+    }
+  }
+
+  @Override
+  protected void completeTransientEntity(Productos entityFromDto) {
+    entityFromDto.setIdAlicuotaIva(
+        em.find(FiscalAlicuotasIva.class, entityFromDto.getIdAlicuotaIva().getId()));
+    entityFromDto.setIdProveedorHabitual(
+        em.find(Personas.class, entityFromDto.getIdProveedorHabitual().getId()));
+    entityFromDto.setIdMarca(em.find(ProductosMarcas.class, entityFromDto.getIdMarca().getId()));
+    entityFromDto.setIdRubro(em.find(ProductosRubros.class, entityFromDto.getIdRubro().getId()));
+    entityFromDto.setIdSubRubro(
+        em.find(ProductosSubRubros.class, entityFromDto.getIdSubRubro().getId()));
+    entityFromDto.setIdTipoProveeduria(
+        em.find(ProductosTiposProveeduria.class, entityFromDto.getIdTipoProveeduria().getId()));
+    entityFromDto.setIdTipoUnidadCompra(
+        em.find(ProductosTiposUnidades.class, entityFromDto.getIdTipoUnidadCompra().getId()));
+    entityFromDto.setIdTipoUnidadVenta(
+        em.find(ProductosTiposUnidades.class, entityFromDto.getIdTipoUnidadVenta().getId()));
+    completeSalePrices(entityFromDto);
+    completePercentages(entityFromDto);
+    entityFromDto.setFechaUltimaModificacion(dateUtils.getCurrentDateTime());
+
+    if (entityFromDto.isNew()) {
+      entityFromDto.setActivo(true);
+      entityFromDto.setFechaAlta(dateUtils.getCurrentDateTime());
+    }
+  }
+
+  private void completeSalePrices(Productos entityFromDto) {
+    for (ProductosPrecios precio : entityFromDto.getPrecios()) {
+      precio.setIdProducto(entityFromDto);
+      precio.setIdListaPrecios(
+          em.find(ProductosListasPrecios.class, precio.getIdListaPrecios().getId()));
+      precio.setFechaModificacion(dateUtils.getCurrentDateTime());
+    }
+  }
+
+  private void completePercentages(Productos entityFromDto) {
+    for (ProductosPorcentajes porcentaje : entityFromDto.getPorcentajes()) {
+      porcentaje.setIdProducto(entityFromDto);
+      porcentaje.setFechaModificacion(dateUtils.getCurrentDateTime());
+      porcentaje.setIdTipoPorcentaje(
+          em.find(ProductosTiposPorcentajes.class, porcentaje.getIdTipoPorcentaje().getId()));
     }
   }
 }

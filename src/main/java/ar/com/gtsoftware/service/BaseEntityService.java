@@ -35,9 +35,15 @@ public abstract class BaseEntityService<D, S extends AbstractSearchFilter, E ext
 
   @Override
   public D createOrEdit(@NotNull D dto) {
-    E entity =
-        getFacade().createOrEdit(getMapper().dtoToEntity(dto, new CycleAvoidingMappingContext()));
+    final E entityFromDto = getMapper().dtoToEntity(dto, new CycleAvoidingMappingContext());
+    completeTransientEntity(entityFromDto);
+    E entity = getFacade().createOrEdit(entityFromDto);
     return getMapper().entityToDto(entity, new CycleAvoidingMappingContext());
+  }
+
+  protected void completeTransientEntity(E entityFromDto) {
+    // In most cases there is nothing on the entity that must be completed. Each subclass must
+    // implement this method if required.
   }
 
   @Override

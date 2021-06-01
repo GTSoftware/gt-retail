@@ -11,8 +11,11 @@ import ar.com.gtsoftware.service.ParametrosService;
 import ar.com.gtsoftware.service.afip.client.fe.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 import org.springframework.ws.soap.SoapMessage;
 
@@ -26,6 +29,7 @@ public class ElectronicInvoiceClient extends WebServiceGatewaySupport {
   private static final String SUCCESS_RESULT = "A";
   private static final DateTimeFormatter DATE_TIME_FORMATTER =
       DateTimeFormatter.ofPattern("yyyyMMdd");
+  private static final Logger logger = Logger.getLogger(ElectronicInvoiceClient.class.getName());
 
   private final ParametrosService parametrosService;
 
@@ -85,9 +89,38 @@ public class ElectronicInvoiceClient extends WebServiceGatewaySupport {
 
       return new CAEResponse(cae, fechaVencimientoCae);
     }
+    String errorMessage = getErrorMessageFromResponse(caeReponse);
+    logger.log(Level.SEVERE, "Error solicitando CAE {0}", errorMessage);
 
-    throw new RuntimeException(
-        caeReponse.getFECAESolicitarResult().getErrors().getErr().toString());
+    throw new RuntimeException(errorMessage);
+  }
+
+  private String getErrorMessageFromResponse(FECAESolicitarResponse caeReponse) {
+    StringBuilder sb = new StringBuilder();
+    if (Objects.nonNull(caeReponse.getFECAESolicitarResult().getErrors())) {
+      for (Err err : caeReponse.getFECAESolicitarResult().getErrors().getErr()) {
+        sb.append("Código=")
+            .append(err.getCode())
+            .append(StringUtils.SPACE)
+            .append("Mensaje=")
+            .append(err.getMsg());
+      }
+    }
+
+    for (FECAEDetResponse detResponse :
+        caeReponse.getFECAESolicitarResult().getFeDetResp().getFECAEDetResponse()) {
+      sb.append("Resultado=").append(detResponse.getResultado()).append(StringUtils.LF);
+      sb.append("Observaciones=" + StringUtils.LF);
+      for (Obs obs : detResponse.getObservaciones().getObs()) {
+        sb.append("Código=")
+            .append(obs.getCode())
+            .append(StringUtils.SPACE)
+            .append("Mensaje=")
+            .append(obs.getMsg());
+      }
+    }
+
+    return sb.toString();
   }
 
   private FECAERequest transformCaeRequest(FiscalLibroIvaVentas registro) {
@@ -138,10 +171,23 @@ public class ElectronicInvoiceClient extends WebServiceGatewaySupport {
     detRequest.setMonId("PES");
     detRequest.setMonCotiz(1);
 
+    if (isDebitoCredito(registro)) {
+      Periodo periodoAsoc = new Periodo();
+      periodoAsoc.setFchDesde(formattedInvoiceDate);
+      periodoAsoc.setFchHasta(formattedInvoiceDate);
+      detRequest.setPeriodoAsoc(periodoAsoc);
+    }
+
     arrayDetRequest.getFECAEDetRequest().add(detRequest);
     caeRequest.setFeDetReq(arrayDetRequest);
 
     return caeRequest;
+  }
+
+  private boolean isDebitoCredito(FiscalLibroIvaVentas registro) {
+    final Long idTipoComp = registro.getCodigoTipoComprobante().getTipoComprobante().getId();
+
+    return idTipoComp == 2 || idTipoComp == 3;
   }
 
   protected ParametrosService getParametrosService() {

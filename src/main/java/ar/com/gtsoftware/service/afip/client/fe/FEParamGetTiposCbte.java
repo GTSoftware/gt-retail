@@ -1,16 +1,19 @@
 //
-// Este archivo ha sido generado por la arquitectura JavaTM para la implantación de la referencia de
-// enlace (JAXB) XML v2.2.8-b130911.1802
-// Visite <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a>
+// Este archivo ha sido generado por Eclipse Implementation of JAXB v2.3.4
+// Visite https://eclipse-ee4j.github.io/jaxb-ri
 // Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el
 // esquema de origen.
-// Generado el: 2020.05.28 a las 09:17:55 PM ART
+// Generado el: 2021.04.20 a las 01:12:11 AM ART
 //
 
 package ar.com.gtsoftware.service.afip.client.fe;
 
 import javax.annotation.Generated;
-import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  * Clase Java para anonymous complex type.
@@ -19,15 +22,15 @@ import javax.xml.bind.annotation.*;
  * clase.
  *
  * <pre>
- * &lt;complexType>
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="Auth" type="{http://ar.gov.afip.dif.FEV1/}FEAuthRequest" minOccurs="0"/>
- *       &lt;/sequence>
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element name="Auth" type="{http://ar.gov.afip.dif.FEV1/}FEAuthRequest" minOccurs="0"/&gt;
+ *       &lt;/sequence&gt;
+ *     &lt;/restriction&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -36,16 +39,16 @@ import javax.xml.bind.annotation.*;
     propOrder = {"auth"})
 @XmlRootElement(name = "FEParamGetTiposCbte")
 @Generated(
-    value = "com.sun.tools.internal.xjc.Driver",
-    date = "2020-05-28T09:17:55-03:00",
-    comments = "JAXB RI v2.2.8-b130911.1802")
+    value = "com.sun.tools.xjc.Driver",
+    comments = "JAXB RI v2.3.4",
+    date = "2021-04-20T01:12:11-03:00")
 public class FEParamGetTiposCbte {
 
   @XmlElement(name = "Auth")
   @Generated(
-      value = "com.sun.tools.internal.xjc.Driver",
-      date = "2020-05-28T09:17:55-03:00",
-      comments = "JAXB RI v2.2.8-b130911.1802")
+      value = "com.sun.tools.xjc.Driver",
+      comments = "JAXB RI v2.3.4",
+      date = "2021-04-20T01:12:11-03:00")
   protected FEAuthRequest auth;
 
   /**
@@ -54,9 +57,9 @@ public class FEParamGetTiposCbte {
    * @return possible object is {@link FEAuthRequest }
    */
   @Generated(
-      value = "com.sun.tools.internal.xjc.Driver",
-      date = "2020-05-28T09:17:55-03:00",
-      comments = "JAXB RI v2.2.8-b130911.1802")
+      value = "com.sun.tools.xjc.Driver",
+      comments = "JAXB RI v2.3.4",
+      date = "2021-04-20T01:12:11-03:00")
   public FEAuthRequest getAuth() {
     return auth;
   }
@@ -67,9 +70,9 @@ public class FEParamGetTiposCbte {
    * @param value allowed object is {@link FEAuthRequest }
    */
   @Generated(
-      value = "com.sun.tools.internal.xjc.Driver",
-      date = "2020-05-28T09:17:55-03:00",
-      comments = "JAXB RI v2.2.8-b130911.1802")
+      value = "com.sun.tools.xjc.Driver",
+      comments = "JAXB RI v2.3.4",
+      date = "2021-04-20T01:12:11-03:00")
   public void setAuth(FEAuthRequest value) {
     this.auth = value;
   }

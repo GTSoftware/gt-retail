@@ -73,8 +73,8 @@ export class GTDashboard extends Component {
     return (
       <div className="p-col-12 p-lg-4">
         <div className="card summary">
-          <span className="title">Ventas</span>
-          <span className="detail">Número de ventas</span>
+          <span className="title">{"Ventas"}</span>
+          <span className="detail">{"Número de ventas"}</span>
           <span className="count purchases">{salesQuantitySection}</span>
         </div>
       </div>
@@ -92,8 +92,8 @@ export class GTDashboard extends Component {
     return (
       <div className="p-col-12 p-lg-4">
         <div className="card summary">
-          <span className="title">Clientes</span>
-          <span className="detail">Clientes Nuevos</span>
+          <span className="title">{"Clientes"}</span>
+          <span className="detail">{"Clientes Nuevos"}</span>
           <span className="count visitors">{customersQuantity}</span>
         </div>
       </div>
@@ -103,7 +103,7 @@ export class GTDashboard extends Component {
   renderStockBreakReport = () => {
     let reportSection = null
     const { loadingStockBreakReport, productsWithBreaks } = this.state
-    var header = (
+    const header = (
       <div style={{ textAlign: "left" }}>
         <Button
           type="button"

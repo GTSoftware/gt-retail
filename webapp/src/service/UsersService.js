@@ -1,16 +1,16 @@
-import axios from "axios"
+import { get, put } from "../utils/HTTPService"
 
 class UsersService {
-  retrieveUsers() {
-    return axios.get("users")
+  retrieveUsers(cb) {
+    get("users", cb)
   }
 
-  retrieveUser(userId) {
-    return axios.get(`users/${userId}`)
+  retrieveUser(userId, cb) {
+    get(`users/${userId}`, cb)
   }
 
-  resetUserPassword(user) {
-    return axios.put(`users/${user.id}/reset-password`)
+  resetUserPassword(user, cb) {
+    put(`users/${user.id}/reset-password`, cb)
   }
 }
 

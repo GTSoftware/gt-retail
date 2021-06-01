@@ -75,13 +75,13 @@ export class ShopCartPayment extends Component {
       ShopCartService.getSaleTypes((saleTypes) => this.handleSaleTypes(saleTypes))
     }
     if (!state.saleCondition || !state.saleConditions) {
-      ShopCartService.getSaleConditions().then((response) =>
-        this.handleSaleConditions(response.data)
+      ShopCartService.getSaleConditions((response) =>
+        this.handleSaleConditions(response)
       )
     }
     if (!state.payments || !state.paymentMethods) {
-      ShopCartService.getPaymentMethods().then((response) =>
-        this.handlePaymentMethods(response.data)
+      ShopCartService.getPaymentMethods((response) =>
+        this.handlePaymentMethods(response)
       )
     }
   }
@@ -411,9 +411,8 @@ export class ShopCartPayment extends Component {
 
     if (propertyName === "idFormaPago" && value.requierePlan) {
       ShopCartService.getPaymentPlans(
-        this.state.newPayment.idFormaPago
-      ).then((response) =>
-        this.handleNewPaymentPropertyChange("paymentPlans", response.data)
+        this.state.newPayment.idFormaPago,
+        (response) => this.handleNewPaymentPropertyChange("paymentPlans", response)
       )
     }
   }
