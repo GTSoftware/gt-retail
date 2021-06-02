@@ -4,7 +4,7 @@ plugins {
     id 'java'
     id 'war'
     id 'com.github.node-gradle.node' version '2.2.3'
-    id 'com.github.sherter.google-java-format' version '0.8'
+    id 'com.github.sherter.google-java-format' version '0.9'
 }
 
 group = 'ar.com.gtsoftware'
@@ -81,7 +81,7 @@ dependencies {
 
 test {
     useJUnitPlatform()
-    maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
+    maxParallelForks = Runtime.runtime.availableProcessors() / 2 ?: 1
 }
 
 
@@ -119,7 +119,7 @@ task appNpmBuild(type: NpmTask) {
 
 appNpmBuild.dependsOn appNpmInstall
 copyWebApp.dependsOn appNpmBuild
-classes.dependsOn copyWebApp
+classes.dependsOn (copyWebApp, compileJasperJava)
 
 node {
     download = true

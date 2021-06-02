@@ -70,9 +70,7 @@ public class NoExtraCostPaymentMethodsServiceImpl implements NoExtraCostPaymentM
 
   private List<PlanDetail> getPlanDetails(NegocioPlanesPagoDto planPagoDto) {
     final List<NegocioPlanesPagoDetalleDto> detallePlan =
-        planPagoDto
-            .getNegocioPlanesPagoDetalles()
-            .stream()
+        planPagoDto.getNegocioPlanesPagoDetalles().stream()
             .filter(
                 detalle ->
                     detalle.isActivo()

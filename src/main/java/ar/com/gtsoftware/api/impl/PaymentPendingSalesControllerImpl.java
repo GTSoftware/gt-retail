@@ -89,8 +89,7 @@ public class PaymentPendingSalesControllerImpl implements PaymentPendingSalesCon
 
   private List<Bank> getBanks(List<SaleToPayDto> salesToPay) {
     final Optional<SaleToPayDto> cheque =
-        salesToPay
-            .stream()
+        salesToPay.stream()
             .filter(
                 sale ->
                     nonNull(sale.getPayment())
@@ -102,8 +101,7 @@ public class PaymentPendingSalesControllerImpl implements PaymentPendingSalesCon
       final List<BancosDto> bancos = bancosService.findAll();
       banks = new ArrayList<>(bancos.size());
       banks.addAll(
-          bancos
-              .stream()
+          bancos.stream()
               .map(
                   bank ->
                       Bank.builder().bankId(bank.getId()).bankName(bank.getRazonSocial()).build())
