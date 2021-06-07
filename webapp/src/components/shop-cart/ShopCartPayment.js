@@ -12,6 +12,7 @@ import { InputText } from "primereact/inputtext"
 import { Toast } from "primereact/toast"
 import { LoadingButton } from "../core/LoadingButton"
 import { Dialog } from "primereact/dialog"
+import { v4 as uuid } from "uuid"
 
 const paymentColums = [
   { field: "idFormaPago.nombreFormaPago", header: "Forma de pago" },
@@ -54,7 +55,6 @@ export class ShopCartPayment extends Component {
     this.removePayment = this.removePayment.bind(this)
     this.getPaymentsTableProps = this.getPaymentsTableProps.bind(this)
     this.getTotalPayment = this.getTotalPayment.bind(this)
-    this.getNextItemNumber = this.getNextItemNumber.bind(this)
     this.isAbleToSave = this.isAbleToSave.bind(this)
     this.renderAdditionalInfoPanel = this.renderAdditionalInfoPanel.bind(this)
     this.handleSave = this.handleSave.bind(this)
@@ -64,7 +64,6 @@ export class ShopCartPayment extends Component {
     this.sortPaymentPlanDetails = this.sortPaymentPlanDetails.bind(this)
     this.getRemainingAmount = this.getRemainingAmount.bind(this)
     this.handleAddNewPayment = this.handleAddNewPayment.bind(this)
-    this.addSurchargeItem = this.addSurchargeItem.bind(this)
     this.handleSavedSale = this.handleSavedSale.bind(this)
   }
 
@@ -363,13 +362,12 @@ export class ShopCartPayment extends Component {
   addPaymentPlanDetail(negocioPlanesPagoDetalles, montoPago) {
     if (negocioPlanesPagoDetalles) {
       negocioPlanesPagoDetalles.forEach((d) => {
-        d.detallePlan =
-          "" +
-          d.cuotas +
-          " x $" +
-          ((d.coeficienteInteres * montoPago) / d.cuotas).toFixed(2) +
-          " = $" +
-          (d.coeficienteInteres * montoPago).toFixed(2)
+        const cuotas = d.cuotas
+        const coefInteres = d.coeficienteInteres
+        const importeCuota = ((coefInteres * montoPago) / cuotas).toFixed(2)
+        const montoTotal = (coefInteres * montoPago).toFixed(2)
+        d.detallePlan = `${cuotas} de $${importeCuota} = $${montoTotal}`
+
       })
     }
   }
@@ -461,13 +459,11 @@ export class ShopCartPayment extends Component {
       let defaultPayment = {
         idFormaPago: defaultPaymentMethod,
         montoPagado: 0,
-        itemNumber: state.itemNumber,
         montoPago: this.getCartTotal(),
       }
       this.setState({
         payments: [defaultPayment],
         paymentMethods: paymentMethods,
-        itemNumber: state.itemNumber + 1,
       })
     } else {
       this.setState({ paymentMethods: paymentMethods })
@@ -540,23 +536,6 @@ export class ShopCartPayment extends Component {
     })
   }
 
-  getNextItemNumber() {
-    const payments = this.state.payments
-
-    if (!payments || payments.length === 0) {
-      return 1
-    } else {
-      return (
-        Math.max.apply(
-          Math,
-          payments.map((p) => {
-            return p.itemNumber
-          })
-        ) + 1
-      )
-    }
-  }
-
   isAbleToSave() {
     const state = this.state
     const pagoTotal = _.get(state, "saleCondition.pagoTotal")
@@ -569,12 +548,11 @@ export class ShopCartPayment extends Component {
   }
 
   handleAddNewPayment() {
-    let payments = this.state.payments
-    let itemNumber = this.getNextItemNumber()
+    let payments = [...this.state.payments]
     let newPayment = this.state.newPayment
     let surchargeItemNumber
 
-    newPayment.itemNumber = itemNumber
+    newPayment.itemNumber = uuid()
     newPayment.montoPago = parseFloat(newPayment.montoPago).toFixed(2)
     delete newPayment.paymentPlans
     delete newPayment.paymentMethods
@@ -601,15 +579,14 @@ export class ShopCartPayment extends Component {
 
     this.setState({
       payments: payments,
-      itemNumber: itemNumber + 1,
       newPayment: {},
       showAddPaymentDialog: false,
     })
   }
 
-  addSurchargeItem(surchargeAmount, nombrePlan, cuotas) {
-    let products = this.state.products
-    let itemNumber = this.getProductsNextItemNumber()
+  addSurchargeItem = (surchargeAmount, nombrePlan, cuotas) => {
+    let products = [...this.state.products]
+    const itemNumber = uuid()
     let surchargeItem = {
       itemNumber: itemNumber,
       cantidadEditable: false,
@@ -622,28 +599,11 @@ export class ShopCartPayment extends Component {
       subTotal: surchargeAmount,
     }
 
-    products.splice(0, 0, surchargeItem)
+    products.push(surchargeItem)
 
     this.setState({ products: products })
 
     return itemNumber
-  }
-
-  getProductsNextItemNumber() {
-    const products = this.state.products
-
-    if (!products || products.length === 0) {
-      return 1
-    } else {
-      return (
-        Math.max.apply(
-          Math,
-          products.map((p) => {
-            return p.itemNumber
-          })
-        ) + 1
-      )
-    }
   }
 
   handleSave() {

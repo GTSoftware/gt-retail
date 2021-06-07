@@ -12,6 +12,7 @@ import { ShopCartStore } from "../../stores/ShopCartStore"
 import { Dialog } from "primereact/dialog"
 import LoginService from "../../service/LoginService"
 import { SearchProductsDialog } from "../core/SearchProductsDialog"
+import { v4 as uuid } from "uuid"
 
 const productColumns = [
   { field: "codigoPropio", header: "Código", style: { width: "10%" } },
@@ -36,30 +37,10 @@ export class ShopCartItems extends Component {
         productId: "",
         productCode: "",
       },
-      itemNumber: this.getNextItemNumber(),
       loadingAddProduct: false,
       showEditItemDialog: false,
       showSearchProductsDialog: false,
     }
-
-    this.getItemsTableProps = this.getItemsTableProps.bind(this)
-    this.getTableActions = this.getTableActions.bind(this)
-    this.renderColumns = this.renderColumns.bind(this)
-    this.updateProperty = this.updateProperty.bind(this)
-    this.getCartTotal = this.getCartTotal.bind(this)
-    this.tryAddProduct = this.tryAddProduct.bind(this)
-    this.handleFoundProduct = this.handleFoundProduct.bind(this)
-    this.initProductSearch = this.initProductSearch.bind(this)
-    this.removeItem = this.removeItem.bind(this)
-    this.handleUpdatedItem = this.handleUpdatedItem.bind(this)
-    this.handleProductNotFoundError = this.handleProductNotFoundError.bind(this)
-    this.handleEnterKeyPress = this.handleEnterKeyPress.bind(this)
-    this.handleGoNext = this.handleGoNext.bind(this)
-    this.getNextItemNumber = this.getNextItemNumber.bind(this)
-    this.renderAddProductSection = this.renderAddProductSection.bind(this)
-    this.renderDialogContent = this.renderDialogContent.bind(this)
-    this.renderSearchProductsDialog = this.renderSearchProductsDialog.bind(this)
-    this.handleSelectedProduct = this.handleSelectedProduct.bind(this)
   }
 
   render() {
@@ -87,7 +68,7 @@ export class ShopCartItems extends Component {
     )
   }
 
-  renderAddProductSection() {
+  renderAddProductSection = () => {
     return (
       <div className="p-card-body p-fluid p-grid">
         <div className="p-col-12 p-lg-4">
@@ -158,7 +139,7 @@ export class ShopCartItems extends Component {
     )
   }
 
-  renderEditProductDialog() {
+  renderEditProductDialog = () => {
     let dialogFooter = (
       <div className="ui-dialog-buttonpane p-clearfix">
         <Button
@@ -187,7 +168,7 @@ export class ShopCartItems extends Component {
     )
   }
 
-  renderSearchProductsDialog() {
+  renderSearchProductsDialog = () => {
     return (
       <SearchProductsDialog
         visible={this.state.showSearchProductsDialog}
@@ -198,7 +179,7 @@ export class ShopCartItems extends Component {
     )
   }
 
-  renderDialogContent() {
+  renderDialogContent = () => {
     const showEditItemDialog = this.state.showEditItemDialog
     let dialogContent = null
 
@@ -227,7 +208,7 @@ export class ShopCartItems extends Component {
     return dialogContent
   }
 
-  renderDescripcionToEdit() {
+  renderDescripcionToEdit = () => {
     let descripcion = null
 
     if (this.isUserAdmin) {
@@ -254,7 +235,7 @@ export class ShopCartItems extends Component {
     return descripcion
   }
 
-  renderColumns() {
+  renderColumns = () => {
     let columns = productColumns.map((col, i) => {
       if (col.field === "cantidad") {
         return (
@@ -288,7 +269,7 @@ export class ShopCartItems extends Component {
     return columns
   }
 
-  handleItemToEditPropertyChange(property, value) {
+  handleItemToEditPropertyChange = (property, value) => {
     let itemToEdit = this.state.itemToEdit
 
     itemToEdit[property] = value.toUpperCase()
@@ -296,7 +277,7 @@ export class ShopCartItems extends Component {
     this.setState({ itemToEdit: itemToEdit })
   }
 
-  getItemsTableProps() {
+  getItemsTableProps = () => {
     let header = <div className="p-clearfix">Productos</div>
     let footer = (
       <div className="p-clearfix">
@@ -316,7 +297,7 @@ export class ShopCartItems extends Component {
     return tableProps
   }
 
-  cantidadTemplate(rowData, column) {
+  cantidadTemplate = (rowData, column) => {
     if (rowData.stockControl && rowData.stockActualEnSucursal < rowData.cantidad) {
       return (
         <span>
@@ -334,7 +315,7 @@ export class ShopCartItems extends Component {
     return <span>{rowData.cantidad}</span>
   }
 
-  getTableActions(rowData, column) {
+  getTableActions = (rowData, column) => {
     let buttonToRender = null
 
     if (rowData.deletable) {
@@ -363,42 +344,47 @@ export class ShopCartItems extends Component {
     return buttonToRender
   }
 
-  updateProperty(property, value) {
+  updateProperty = (property, value) => {
     let productToSearch = this.state.productToSearch
 
     productToSearch[property] = value
     this.setState({ productToSearch: productToSearch })
   }
 
-  getCartTotal() {
+  getCartTotal = () => {
     let total = 0
-    this.state.products.map((product) => (total = total + product.subTotal))
+    const { products } = this.state
+
+    products.map((product) => (total = total + product.subTotal))
 
     return +total.toFixed(2)
   }
 
-  tryAddProduct() {
-    if (
-      this.state.productToSearch.productCode ||
-      this.state.productToSearch.productId
-    ) {
+  tryAddProduct = () => {
+    const { productToSearch } = this.state
+
+    if (productToSearch.productCode || productToSearch.productId) {
       this.setState({ loadingAddProduct: true })
 
-      ShopCartService.addProduct(this.state.productToSearch)
-        .then((response) => this.handleFoundProduct(response.data, 0))
-        .catch((error) => this.handleProductNotFoundError(error))
+      ShopCartService.addProduct(
+        productToSearch,
+        (product) => this.handleFoundProduct(product, 0),
+        this.handleProductNotFoundError
+      )
     }
   }
 
-  handleFoundProduct(product, atIndex, itemToEdit) {
-    let state = this.state
-    let products = state.products
-    let itemNumberIncrement = 1
+  handleFoundProduct = (product, atIndex, itemToEdit) => {
+    const state = this.state
+    let products =  [...state.products]
+    //console.log(JSON.stringify(products))
 
-    product.itemNumber = state.itemNumber
+    product.itemNumber = uuid()
     product.cantidadEditable = true
     product.deletable = true
     products.splice(atIndex, 0, product)
+    console.log(JSON.stringify(products))
+
 
     if (itemToEdit) {
       product.descripcion = itemToEdit.descripcion
@@ -406,7 +392,7 @@ export class ShopCartItems extends Component {
 
     if (product.discountItem) {
       product.discountItem.cantidadEditable = false
-      product.discountItem.itemNumber = product.itemNumber + 1
+      product.discountItem.itemNumber = uuid()
       product.discountItem.parentItem = product.itemNumber
       product.discountItem.deletable = false
 
@@ -414,18 +400,17 @@ export class ShopCartItems extends Component {
 
       delete product.discountItem
 
-      itemNumberIncrement++
+      //itemNumberIncrement++
     }
 
     this.initProductSearch()
     this.setState({
       products: products,
-      itemNumber: state.itemNumber + itemNumberIncrement,
       loadingAddProduct: false,
     })
   }
 
-  handleUpdateItem() {
+  handleUpdateItem = () => {
     let itemToEdit = this.state.itemToEdit
     let cantidad
 
@@ -440,7 +425,7 @@ export class ShopCartItems extends Component {
     }
   }
 
-  initProductSearch() {
+  initProductSearch = () => {
     this.setState({
       productToSearch: {
         cantidad: 1,
@@ -450,7 +435,7 @@ export class ShopCartItems extends Component {
     })
   }
 
-  handleSelectedProduct(searchProduct) {
+  handleSelectedProduct = (searchProduct) => {
     let productToSearch = this.state.productToSearch
 
     productToSearch.productId = searchProduct.productId
@@ -459,7 +444,7 @@ export class ShopCartItems extends Component {
     this.tryAddProduct()
   }
 
-  removeItem(rowData) {
+  removeItem = (rowData) => {
     let products = this.state.products
     let index
 
@@ -481,61 +466,44 @@ export class ShopCartItems extends Component {
     return index
   }
 
-  handleEditRow(rowData) {
+  handleEditRow = (rowData) => {
     this.setState({
       showEditItemDialog: true,
       itemToEdit: { ...{}, ...rowData },
     })
   }
 
-  handleUpdatedItem(itemToEdit) {
-    let removedIndex = this.removeItem(itemToEdit)
+  handleUpdatedItem = (itemToEdit) => {
+    const removedIndex = this.removeItem(itemToEdit)
 
-    ShopCartService.addProduct({
-      cantidad: itemToEdit.cantidad,
-      productId: itemToEdit.id,
-    })
-      .then((response) =>
-        this.handleFoundProduct(response.data, removedIndex, itemToEdit)
-      )
-      .catch((error) => this.handleProductNotFoundError(error))
+    ShopCartService.addProduct(
+      {
+        cantidad: itemToEdit.cantidad,
+        productId: itemToEdit.id,
+      },
+      (response) => this.handleFoundProduct(response.data, removedIndex, itemToEdit),
+      this.handleProductNotFoundError
+    )
   }
 
-  handleProductNotFoundError(error) {
+  handleProductNotFoundError = (error) => {
     this.setState({ loadingAddProduct: false })
 
     this.toast.show({
       severity: "error",
       summary: "No se pudo encontrar el producto",
-      detail: error.response.data.message,
+      detail: error.message,
     })
   }
 
-  handleEnterKeyPress(event) {
+  handleEnterKeyPress = (event) => {
     if (event.key === "Enter" && !this.state.loadingAddProduct) {
       this.tryAddProduct()
     }
   }
 
-  handleGoNext() {
+  handleGoNext = () => {
     this.shopCartStore.setProducts(this.state.products)
     this.props.goNextCallback()
-  }
-
-  getNextItemNumber() {
-    const products = this.shopCartStore.getProducts()
-
-    if (!products || products.length === 0) {
-      return 1
-    } else {
-      return (
-        Math.max.apply(
-          Math,
-          products.map((p) => {
-            return p.itemNumber
-          })
-        ) + 1
-      )
-    }
   }
 }

@@ -176,13 +176,8 @@ export class ProductDetails extends Component {
   }
 
   renderIdentificationSection = () => {
-    const {
-      productId,
-      description,
-      code,
-      factoryCode,
-      observations,
-    } = this.state.product
+    const { productId, description, code, factoryCode, observations } =
+      this.state.product
 
     return (
       <div className="p-card-body p-fluid p-grid">

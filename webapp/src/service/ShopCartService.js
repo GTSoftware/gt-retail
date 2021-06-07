@@ -2,8 +2,8 @@ import { get, post } from "../utils/HTTPService"
 import _ from "lodash"
 
 class ShopCartService {
-  addProduct(searchData) {
-    post(`/shop-cart/add-product`, searchData)
+  addProduct(searchData, successCallback, errorCallback) {
+    post(`/shop-cart/add-product`, searchData, successCallback, errorCallback)
   }
 
   getDefaultCustomer(successCallback, errorCallback) {
