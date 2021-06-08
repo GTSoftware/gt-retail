@@ -3,7 +3,7 @@
 // Visite https://eclipse-ee4j.github.io/jaxb-ri
 // Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el
 // esquema de origen.
-// Generado el: 2021.04.20 a las 01:12:11 AM ART
+// Generado el: 2021.06.08 a las 12:50:16 AM ART
 //
 
 package ar.com.gtsoftware.service.afip.client.fe;
@@ -37,32 +37,33 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(
     name = "Cotizacion",
+    namespace = "http://ar.gov.afip.dif.FEV1/",
     propOrder = {"monId", "monCotiz", "fchCotiz"})
 @Generated(
     value = "com.sun.tools.xjc.Driver",
     comments = "JAXB RI v2.3.4",
-    date = "2021-04-20T01:12:11-03:00")
+    date = "2021-06-08T00:50:15-03:00")
 public class Cotizacion {
 
-  @XmlElement(name = "MonId")
+  @XmlElement(name = "MonId", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected String monId;
 
-  @XmlElement(name = "MonCotiz")
+  @XmlElement(name = "MonCotiz", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected double monCotiz;
 
-  @XmlElement(name = "FchCotiz")
+  @XmlElement(name = "FchCotiz", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected String fchCotiz;
 
   /**
@@ -73,7 +74,7 @@ public class Cotizacion {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public String getMonId() {
     return monId;
   }
@@ -86,7 +87,7 @@ public class Cotizacion {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setMonId(String value) {
     this.monId = value;
   }
@@ -95,7 +96,7 @@ public class Cotizacion {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public double getMonCotiz() {
     return monCotiz;
   }
@@ -104,7 +105,7 @@ public class Cotizacion {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setMonCotiz(double value) {
     this.monCotiz = value;
   }
@@ -117,7 +118,7 @@ public class Cotizacion {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public String getFchCotiz() {
     return fchCotiz;
   }
@@ -130,7 +131,7 @@ public class Cotizacion {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setFchCotiz(String value) {
     this.fchCotiz = value;
   }

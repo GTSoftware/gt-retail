@@ -3,7 +3,7 @@
 // Visite https://eclipse-ee4j.github.io/jaxb-ri
 // Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el
 // esquema de origen.
-// Generado el: 2021.04.20 a las 01:12:11 AM ART
+// Generado el: 2021.06.08 a las 12:50:16 AM ART
 //
 
 package ar.com.gtsoftware.service.afip.client.fe;
@@ -42,68 +42,69 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(
     name = "FECabResponse",
+    namespace = "http://ar.gov.afip.dif.FEV1/",
     propOrder = {"cuit", "ptoVta", "cbteTipo", "fchProceso", "cantReg", "resultado", "reproceso"})
 @XmlSeeAlso({FECAECabResponse.class, FECAEACabResponse.class})
 @Generated(
     value = "com.sun.tools.xjc.Driver",
     comments = "JAXB RI v2.3.4",
-    date = "2021-04-20T01:12:11-03:00")
+    date = "2021-06-08T00:50:15-03:00")
 public class FECabResponse {
 
-  @XmlElement(name = "Cuit")
+  @XmlElement(name = "Cuit", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected long cuit;
 
-  @XmlElement(name = "PtoVta")
+  @XmlElement(name = "PtoVta", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected int ptoVta;
 
-  @XmlElement(name = "CbteTipo")
+  @XmlElement(name = "CbteTipo", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected int cbteTipo;
 
-  @XmlElement(name = "FchProceso")
+  @XmlElement(name = "FchProceso", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected String fchProceso;
 
-  @XmlElement(name = "CantReg")
+  @XmlElement(name = "CantReg", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected int cantReg;
 
-  @XmlElement(name = "Resultado")
+  @XmlElement(name = "Resultado", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected String resultado;
 
-  @XmlElement(name = "Reproceso")
+  @XmlElement(name = "Reproceso", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected String reproceso;
 
   /** Obtiene el valor de la propiedad cuit. */
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public long getCuit() {
     return cuit;
   }
@@ -112,7 +113,7 @@ public class FECabResponse {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setCuit(long value) {
     this.cuit = value;
   }
@@ -121,7 +122,7 @@ public class FECabResponse {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public int getPtoVta() {
     return ptoVta;
   }
@@ -130,7 +131,7 @@ public class FECabResponse {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setPtoVta(int value) {
     this.ptoVta = value;
   }
@@ -139,7 +140,7 @@ public class FECabResponse {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public int getCbteTipo() {
     return cbteTipo;
   }
@@ -148,7 +149,7 @@ public class FECabResponse {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setCbteTipo(int value) {
     this.cbteTipo = value;
   }
@@ -161,7 +162,7 @@ public class FECabResponse {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public String getFchProceso() {
     return fchProceso;
   }
@@ -174,7 +175,7 @@ public class FECabResponse {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setFchProceso(String value) {
     this.fchProceso = value;
   }
@@ -183,7 +184,7 @@ public class FECabResponse {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public int getCantReg() {
     return cantReg;
   }
@@ -192,7 +193,7 @@ public class FECabResponse {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setCantReg(int value) {
     this.cantReg = value;
   }
@@ -205,7 +206,7 @@ public class FECabResponse {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public String getResultado() {
     return resultado;
   }
@@ -218,7 +219,7 @@ public class FECabResponse {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setResultado(String value) {
     this.resultado = value;
   }
@@ -231,7 +232,7 @@ public class FECabResponse {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public String getReproceso() {
     return reproceso;
   }
@@ -244,7 +245,7 @@ public class FECabResponse {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setReproceso(String value) {
     this.reproceso = value;
   }

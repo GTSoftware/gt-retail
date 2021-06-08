@@ -21,6 +21,8 @@ public class LoginClient extends WebServiceGatewaySupport {
 
   public AuthTicket login(String service) {
 
+    logger.info("Attempting AFIP LogIn...");
+
     final LoginTicketRequest loginTicketRequest =
         loginTicketRequestBuilder.buildLoginTicketRequest(service);
 
@@ -41,11 +43,14 @@ public class LoginClient extends WebServiceGatewaySupport {
             new StringReader(loginCmsResponse.getLoginCmsReturn()), LoginTicketResponse.class);
     final CredentialsType credentials = ticketResponse.getCredentials();
 
-    return AuthTicket.builder()
-        .sign(credentials.getSign())
-        .token(credentials.getToken())
-        .expirationDate(transformExpirationDate(ticketResponse.getHeader().getExpirationTime()))
-        .build();
+    final String sign = credentials.getSign();
+    final String token = credentials.getToken();
+    final LocalDateTime expiration =
+        transformExpirationDate(ticketResponse.getHeader().getExpirationTime());
+
+    logger.info("Login Successful - Token: {} Sign: {} Expiration: {}", token, sign, expiration);
+
+    return AuthTicket.builder().sign(sign).token(token).expirationDate(expiration).build();
   }
 
   private LocalDateTime transformExpirationDate(XMLGregorianCalendar expirationTime) {

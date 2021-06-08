@@ -54,7 +54,10 @@ public class ProductResponseTransformer implements Transformer<ProductosDto, Pro
         .purchaseUnitsToSaleUnitEquivalence(from.getUnidadesCompraUnidadesVenta())
         .subCategory(subCategoryTransformer.transform(from.getIdSubRubro()))
         .supplyType(supplyTypeTransformer.transform(from.getIdTipoProveeduria()))
-        .regularSupplier(personSearchResultTransformer.transform(from.getIdProveedorHabitual()))
+        .regularSupplier(
+            Objects.isNull(from.getIdProveedorHabitual())
+                ? null
+                : personSearchResultTransformer.transform(from.getIdProveedorHabitual()))
         .salePrices(transformSalePrices(from.getPrecios()))
         .build();
   }

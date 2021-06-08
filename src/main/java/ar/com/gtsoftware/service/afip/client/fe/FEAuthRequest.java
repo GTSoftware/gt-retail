@@ -3,7 +3,7 @@
 // Visite https://eclipse-ee4j.github.io/jaxb-ri
 // Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el
 // esquema de origen.
-// Generado el: 2021.04.20 a las 01:12:11 AM ART
+// Generado el: 2021.06.08 a las 12:50:16 AM ART
 //
 
 package ar.com.gtsoftware.service.afip.client.fe;
@@ -37,32 +37,33 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(
     name = "FEAuthRequest",
+    namespace = "http://ar.gov.afip.dif.FEV1/",
     propOrder = {"token", "sign", "cuit"})
 @Generated(
     value = "com.sun.tools.xjc.Driver",
     comments = "JAXB RI v2.3.4",
-    date = "2021-04-20T01:12:11-03:00")
+    date = "2021-06-08T00:50:15-03:00")
 public class FEAuthRequest {
 
-  @XmlElement(name = "Token")
+  @XmlElement(name = "Token", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected String token;
 
-  @XmlElement(name = "Sign")
+  @XmlElement(name = "Sign", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected String sign;
 
-  @XmlElement(name = "Cuit")
+  @XmlElement(name = "Cuit", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected long cuit;
 
   /**
@@ -73,7 +74,7 @@ public class FEAuthRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public String getToken() {
     return token;
   }
@@ -86,7 +87,7 @@ public class FEAuthRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setToken(String value) {
     this.token = value;
   }
@@ -99,7 +100,7 @@ public class FEAuthRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public String getSign() {
     return sign;
   }
@@ -112,7 +113,7 @@ public class FEAuthRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setSign(String value) {
     this.sign = value;
   }
@@ -121,7 +122,7 @@ public class FEAuthRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public long getCuit() {
     return cuit;
   }
@@ -130,7 +131,7 @@ public class FEAuthRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setCuit(long value) {
     this.cuit = value;
   }

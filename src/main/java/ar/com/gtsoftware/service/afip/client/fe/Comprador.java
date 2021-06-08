@@ -3,7 +3,7 @@
 // Visite https://eclipse-ee4j.github.io/jaxb-ri
 // Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el
 // esquema de origen.
-// Generado el: 2021.04.20 a las 01:12:11 AM ART
+// Generado el: 2021.06.08 a las 12:50:16 AM ART
 //
 
 package ar.com.gtsoftware.service.afip.client.fe;
@@ -37,39 +37,40 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(
     name = "Comprador",
+    namespace = "http://ar.gov.afip.dif.FEV1/",
     propOrder = {"docTipo", "docNro", "porcentaje"})
 @Generated(
     value = "com.sun.tools.xjc.Driver",
     comments = "JAXB RI v2.3.4",
-    date = "2021-04-20T01:12:11-03:00")
+    date = "2021-06-08T00:50:15-03:00")
 public class Comprador {
 
-  @XmlElement(name = "DocTipo")
+  @XmlElement(name = "DocTipo", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected int docTipo;
 
-  @XmlElement(name = "DocNro")
+  @XmlElement(name = "DocNro", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected long docNro;
 
-  @XmlElement(name = "Porcentaje")
+  @XmlElement(name = "Porcentaje", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected double porcentaje;
 
   /** Obtiene el valor de la propiedad docTipo. */
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public int getDocTipo() {
     return docTipo;
   }
@@ -78,7 +79,7 @@ public class Comprador {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setDocTipo(int value) {
     this.docTipo = value;
   }
@@ -87,7 +88,7 @@ public class Comprador {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public long getDocNro() {
     return docNro;
   }
@@ -96,7 +97,7 @@ public class Comprador {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setDocNro(long value) {
     this.docNro = value;
   }
@@ -105,7 +106,7 @@ public class Comprador {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public double getPorcentaje() {
     return porcentaje;
   }
@@ -114,7 +115,7 @@ public class Comprador {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setPorcentaje(double value) {
     this.porcentaje = value;
   }

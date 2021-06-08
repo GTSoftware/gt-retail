@@ -3,7 +3,7 @@
 // Visite https://eclipse-ee4j.github.io/jaxb-ri
 // Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el
 // esquema de origen.
-// Generado el: 2021.04.20 a las 01:12:11 AM ART
+// Generado el: 2021.06.08 a las 12:50:16 AM ART
 //
 
 package ar.com.gtsoftware.service.afip.client.fe;
@@ -37,39 +37,40 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(
     name = "FECompConsultaReq",
+    namespace = "http://ar.gov.afip.dif.FEV1/",
     propOrder = {"cbteTipo", "cbteNro", "ptoVta"})
 @Generated(
     value = "com.sun.tools.xjc.Driver",
     comments = "JAXB RI v2.3.4",
-    date = "2021-04-20T01:12:11-03:00")
+    date = "2021-06-08T00:50:15-03:00")
 public class FECompConsultaReq {
 
-  @XmlElement(name = "CbteTipo")
+  @XmlElement(name = "CbteTipo", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected int cbteTipo;
 
-  @XmlElement(name = "CbteNro")
+  @XmlElement(name = "CbteNro", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected long cbteNro;
 
-  @XmlElement(name = "PtoVta")
+  @XmlElement(name = "PtoVta", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected int ptoVta;
 
   /** Obtiene el valor de la propiedad cbteTipo. */
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public int getCbteTipo() {
     return cbteTipo;
   }
@@ -78,7 +79,7 @@ public class FECompConsultaReq {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setCbteTipo(int value) {
     this.cbteTipo = value;
   }
@@ -87,7 +88,7 @@ public class FECompConsultaReq {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public long getCbteNro() {
     return cbteNro;
   }
@@ -96,7 +97,7 @@ public class FECompConsultaReq {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setCbteNro(long value) {
     this.cbteNro = value;
   }
@@ -105,7 +106,7 @@ public class FECompConsultaReq {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public int getPtoVta() {
     return ptoVta;
   }
@@ -114,7 +115,7 @@ public class FECompConsultaReq {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setPtoVta(int value) {
     this.ptoVta = value;
   }

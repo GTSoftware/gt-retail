@@ -214,7 +214,6 @@ public class FacturacionVentasServiceImpl implements FacturacionVentasService {
   private void generarFacturaElectronica(
       FiscalLibroIvaVentas registro, FiscalPuntosVenta puntoVentaComprobante)
       throws ServiceException {
-    // AFIPAuthServices loginTicket = afipService.obtenerLoginTicket("wsfe");
 
     int ultimoNro =
         afipService.obtenerUltimoComprobanteAutorizado(

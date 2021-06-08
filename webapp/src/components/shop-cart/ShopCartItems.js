@@ -13,6 +13,7 @@ import { Dialog } from "primereact/dialog"
 import LoginService from "../../service/LoginService"
 import { SearchProductsDialog } from "../core/SearchProductsDialog"
 import { v4 as uuid } from "uuid"
+import { toUpperCaseTrim } from "../../utils/StringUtils"
 
 const productColumns = [
   { field: "codigoPropio", header: "Código", style: { width: "10%" } },
@@ -145,7 +146,7 @@ export class ShopCartItems extends Component {
         <Button
           label="Aceptar"
           icon="fa fa-fw fa-check"
-          onClick={() => this.handleUpdateItem()}
+          onClick={this.handleUpdateItem}
         />
       </div>
     )
@@ -180,7 +181,7 @@ export class ShopCartItems extends Component {
   }
 
   renderDialogContent = () => {
-    const showEditItemDialog = this.state.showEditItemDialog
+    const {showEditItemDialog} = this.state
     let dialogContent = null
 
     if (showEditItemDialog) {
@@ -270,11 +271,11 @@ export class ShopCartItems extends Component {
   }
 
   handleItemToEditPropertyChange = (property, value) => {
-    let itemToEdit = this.state.itemToEdit
+    let {itemToEdit} = {...this.state}
 
-    itemToEdit[property] = value.toUpperCase()
+    itemToEdit[property] = toUpperCaseTrim(value)
 
-    this.setState({ itemToEdit: itemToEdit })
+    this.setState({ itemToEdit })
   }
 
   getItemsTableProps = () => {
@@ -411,7 +412,7 @@ export class ShopCartItems extends Component {
   }
 
   handleUpdateItem = () => {
-    let itemToEdit = this.state.itemToEdit
+    let {itemToEdit} = {...this.state}
     let cantidad
 
     if (itemToEdit) {
@@ -481,7 +482,7 @@ export class ShopCartItems extends Component {
         cantidad: itemToEdit.cantidad,
         productId: itemToEdit.id,
       },
-      (response) => this.handleFoundProduct(response.data, removedIndex, itemToEdit),
+      (product) => this.handleFoundProduct(product, removedIndex, itemToEdit),
       this.handleProductNotFoundError
     )
   }

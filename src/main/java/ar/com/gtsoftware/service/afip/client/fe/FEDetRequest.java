@@ -3,7 +3,7 @@
 // Visite https://eclipse-ee4j.github.io/jaxb-ri
 // Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el
 // esquema de origen.
-// Generado el: 2021.04.20 a las 01:12:11 AM ART
+// Generado el: 2021.06.08 a las 12:50:16 AM ART
 //
 
 package ar.com.gtsoftware.service.afip.client.fe;
@@ -58,6 +58,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(
     name = "FEDetRequest",
+    namespace = "http://ar.gov.afip.dif.FEV1/",
     propOrder = {
       "concepto",
       "docTipo",
@@ -87,175 +88,175 @@ import javax.xml.bind.annotation.XmlType;
 @Generated(
     value = "com.sun.tools.xjc.Driver",
     comments = "JAXB RI v2.3.4",
-    date = "2021-04-20T01:12:11-03:00")
+    date = "2021-06-08T00:50:15-03:00")
 public class FEDetRequest {
 
-  @XmlElement(name = "Concepto")
+  @XmlElement(name = "Concepto", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected int concepto;
 
-  @XmlElement(name = "DocTipo")
+  @XmlElement(name = "DocTipo", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected int docTipo;
 
-  @XmlElement(name = "DocNro")
+  @XmlElement(name = "DocNro", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected long docNro;
 
-  @XmlElement(name = "CbteDesde")
+  @XmlElement(name = "CbteDesde", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected long cbteDesde;
 
-  @XmlElement(name = "CbteHasta")
+  @XmlElement(name = "CbteHasta", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected long cbteHasta;
 
-  @XmlElement(name = "CbteFch")
+  @XmlElement(name = "CbteFch", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected String cbteFch;
 
-  @XmlElement(name = "ImpTotal")
+  @XmlElement(name = "ImpTotal", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected double impTotal;
 
-  @XmlElement(name = "ImpTotConc")
+  @XmlElement(name = "ImpTotConc", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected double impTotConc;
 
-  @XmlElement(name = "ImpNeto")
+  @XmlElement(name = "ImpNeto", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected double impNeto;
 
-  @XmlElement(name = "ImpOpEx")
+  @XmlElement(name = "ImpOpEx", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected double impOpEx;
 
-  @XmlElement(name = "ImpTrib")
+  @XmlElement(name = "ImpTrib", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected double impTrib;
 
-  @XmlElement(name = "ImpIVA")
+  @XmlElement(name = "ImpIVA", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected double impIVA;
 
-  @XmlElement(name = "FchServDesde")
+  @XmlElement(name = "FchServDesde", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected String fchServDesde;
 
-  @XmlElement(name = "FchServHasta")
+  @XmlElement(name = "FchServHasta", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected String fchServHasta;
 
-  @XmlElement(name = "FchVtoPago")
+  @XmlElement(name = "FchVtoPago", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected String fchVtoPago;
 
-  @XmlElement(name = "MonId")
+  @XmlElement(name = "MonId", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected String monId;
 
-  @XmlElement(name = "MonCotiz")
+  @XmlElement(name = "MonCotiz", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected double monCotiz;
 
-  @XmlElement(name = "CbtesAsoc")
+  @XmlElement(name = "CbtesAsoc", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected ArrayOfCbteAsoc cbtesAsoc;
 
-  @XmlElement(name = "Tributos")
+  @XmlElement(name = "Tributos", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected ArrayOfTributo tributos;
 
-  @XmlElement(name = "Iva")
+  @XmlElement(name = "Iva", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected ArrayOfAlicIva iva;
 
-  @XmlElement(name = "Opcionales")
+  @XmlElement(name = "Opcionales", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected ArrayOfOpcional opcionales;
 
-  @XmlElement(name = "Compradores")
+  @XmlElement(name = "Compradores", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected ArrayOfComprador compradores;
 
-  @XmlElement(name = "PeriodoAsoc")
+  @XmlElement(name = "PeriodoAsoc", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected Periodo periodoAsoc;
 
   /** Obtiene el valor de la propiedad concepto. */
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public int getConcepto() {
     return concepto;
   }
@@ -264,7 +265,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setConcepto(int value) {
     this.concepto = value;
   }
@@ -273,7 +274,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public int getDocTipo() {
     return docTipo;
   }
@@ -282,7 +283,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setDocTipo(int value) {
     this.docTipo = value;
   }
@@ -291,7 +292,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public long getDocNro() {
     return docNro;
   }
@@ -300,7 +301,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setDocNro(long value) {
     this.docNro = value;
   }
@@ -309,7 +310,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public long getCbteDesde() {
     return cbteDesde;
   }
@@ -318,7 +319,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setCbteDesde(long value) {
     this.cbteDesde = value;
   }
@@ -327,7 +328,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public long getCbteHasta() {
     return cbteHasta;
   }
@@ -336,7 +337,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setCbteHasta(long value) {
     this.cbteHasta = value;
   }
@@ -349,7 +350,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public String getCbteFch() {
     return cbteFch;
   }
@@ -362,7 +363,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setCbteFch(String value) {
     this.cbteFch = value;
   }
@@ -371,7 +372,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public double getImpTotal() {
     return impTotal;
   }
@@ -380,7 +381,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setImpTotal(double value) {
     this.impTotal = value;
   }
@@ -389,7 +390,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public double getImpTotConc() {
     return impTotConc;
   }
@@ -398,7 +399,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setImpTotConc(double value) {
     this.impTotConc = value;
   }
@@ -407,7 +408,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public double getImpNeto() {
     return impNeto;
   }
@@ -416,7 +417,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setImpNeto(double value) {
     this.impNeto = value;
   }
@@ -425,7 +426,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public double getImpOpEx() {
     return impOpEx;
   }
@@ -434,7 +435,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setImpOpEx(double value) {
     this.impOpEx = value;
   }
@@ -443,7 +444,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public double getImpTrib() {
     return impTrib;
   }
@@ -452,7 +453,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setImpTrib(double value) {
     this.impTrib = value;
   }
@@ -461,7 +462,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public double getImpIVA() {
     return impIVA;
   }
@@ -470,7 +471,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setImpIVA(double value) {
     this.impIVA = value;
   }
@@ -483,7 +484,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public String getFchServDesde() {
     return fchServDesde;
   }
@@ -496,7 +497,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setFchServDesde(String value) {
     this.fchServDesde = value;
   }
@@ -509,7 +510,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public String getFchServHasta() {
     return fchServHasta;
   }
@@ -522,7 +523,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setFchServHasta(String value) {
     this.fchServHasta = value;
   }
@@ -535,7 +536,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public String getFchVtoPago() {
     return fchVtoPago;
   }
@@ -548,7 +549,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setFchVtoPago(String value) {
     this.fchVtoPago = value;
   }
@@ -561,7 +562,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public String getMonId() {
     return monId;
   }
@@ -574,7 +575,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setMonId(String value) {
     this.monId = value;
   }
@@ -583,7 +584,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public double getMonCotiz() {
     return monCotiz;
   }
@@ -592,7 +593,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setMonCotiz(double value) {
     this.monCotiz = value;
   }
@@ -605,7 +606,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public ArrayOfCbteAsoc getCbtesAsoc() {
     return cbtesAsoc;
   }
@@ -618,7 +619,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setCbtesAsoc(ArrayOfCbteAsoc value) {
     this.cbtesAsoc = value;
   }
@@ -631,7 +632,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public ArrayOfTributo getTributos() {
     return tributos;
   }
@@ -644,7 +645,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setTributos(ArrayOfTributo value) {
     this.tributos = value;
   }
@@ -657,7 +658,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public ArrayOfAlicIva getIva() {
     return iva;
   }
@@ -670,7 +671,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setIva(ArrayOfAlicIva value) {
     this.iva = value;
   }
@@ -683,7 +684,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public ArrayOfOpcional getOpcionales() {
     return opcionales;
   }
@@ -696,7 +697,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setOpcionales(ArrayOfOpcional value) {
     this.opcionales = value;
   }
@@ -709,7 +710,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public ArrayOfComprador getCompradores() {
     return compradores;
   }
@@ -722,7 +723,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setCompradores(ArrayOfComprador value) {
     this.compradores = value;
   }
@@ -735,7 +736,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public Periodo getPeriodoAsoc() {
     return periodoAsoc;
   }
@@ -748,7 +749,7 @@ public class FEDetRequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setPeriodoAsoc(Periodo value) {
     this.periodoAsoc = value;
   }

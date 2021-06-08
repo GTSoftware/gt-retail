@@ -8,14 +8,30 @@ import ar.com.gtsoftware.entity.FiscalLibroIvaVentas;
 import ar.com.gtsoftware.entity.FiscalLibroIvaVentasLineas;
 import ar.com.gtsoftware.enums.Parametros;
 import ar.com.gtsoftware.service.ParametrosService;
-import ar.com.gtsoftware.service.afip.client.fe.*;
+import ar.com.gtsoftware.service.afip.client.fe.AlicIva;
+import ar.com.gtsoftware.service.afip.client.fe.ArrayOfAlicIva;
+import ar.com.gtsoftware.service.afip.client.fe.ArrayOfFECAEDetRequest;
+import ar.com.gtsoftware.service.afip.client.fe.Err;
+import ar.com.gtsoftware.service.afip.client.fe.FEAuthRequest;
+import ar.com.gtsoftware.service.afip.client.fe.FECAECabRequest;
+import ar.com.gtsoftware.service.afip.client.fe.FECAECabResponse;
+import ar.com.gtsoftware.service.afip.client.fe.FECAEDetRequest;
+import ar.com.gtsoftware.service.afip.client.fe.FECAEDetResponse;
+import ar.com.gtsoftware.service.afip.client.fe.FECAERequest;
+import ar.com.gtsoftware.service.afip.client.fe.FECAESolicitar;
+import ar.com.gtsoftware.service.afip.client.fe.FECAESolicitarResponse;
+import ar.com.gtsoftware.service.afip.client.fe.FECompUltimoAutorizado;
+import ar.com.gtsoftware.service.afip.client.fe.FECompUltimoAutorizadoResponse;
+import ar.com.gtsoftware.service.afip.client.fe.FERecuperaLastCbteResponse;
+import ar.com.gtsoftware.service.afip.client.fe.Obs;
+import ar.com.gtsoftware.service.afip.client.fe.Periodo;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 import org.springframework.ws.soap.SoapMessage;
 
@@ -29,7 +45,7 @@ public class ElectronicInvoiceClient extends WebServiceGatewaySupport {
   private static final String SUCCESS_RESULT = "A";
   private static final DateTimeFormatter DATE_TIME_FORMATTER =
       DateTimeFormatter.ofPattern("yyyyMMdd");
-  private static final Logger logger = Logger.getLogger(ElectronicInvoiceClient.class.getName());
+  private final Logger logger = LoggerFactory.getLogger(ElectronicInvoiceClient.class);
 
   private final ParametrosService parametrosService;
 
@@ -41,6 +57,11 @@ public class ElectronicInvoiceClient extends WebServiceGatewaySupport {
     lastAuthorizedRequest.setPtoVta(pointOfSale);
     lastAuthorizedRequest.setAuth(transformAuth(authToken));
 
+    logger.info(
+        "Solicitando último comprobante autorizado - Tipo: {} Punto de venta: {}",
+        invoiceType,
+        pointOfSale);
+
     final Object soapResponse =
         getWebServiceTemplate()
             .marshalSendAndReceive(
@@ -48,8 +69,25 @@ public class ElectronicInvoiceClient extends WebServiceGatewaySupport {
                 message -> ((SoapMessage) message).setSoapAction(ULTIMO_AUTORIZADO_SOAP_ACTION));
 
     FECompUltimoAutorizadoResponse lastInvoice = (FECompUltimoAutorizadoResponse) soapResponse;
+    final FERecuperaLastCbteResponse ultimoAutorizadoResult =
+        lastInvoice.getFECompUltimoAutorizadoResult();
 
-    return lastInvoice.getFECompUltimoAutorizadoResult().getCbteNro();
+    final int cbteNro = ultimoAutorizadoResult.getCbteNro();
+
+    if (Objects.nonNull(ultimoAutorizadoResult.getErrors())) {
+      StringBuilder sb = new StringBuilder("Errores solicitando último autorizado");
+      for (Err err : ultimoAutorizadoResult.getErrors().getErr()) {
+        sb.append(String.format("\nCode: %s Msg: %s", err.getCode(), err.getMsg()));
+      }
+      final String errorMsg = sb.toString();
+      logger.error(errorMsg);
+
+      throw new RuntimeException(errorMsg);
+    }
+
+    logger.info("Último comprobante autorizado - Número: {}", cbteNro);
+
+    return cbteNro;
   }
 
   private FEAuthRequest transformAuth(AFIPAuthServices authToken) {
@@ -69,6 +107,11 @@ public class ElectronicInvoiceClient extends WebServiceGatewaySupport {
     FECAERequest caeRequest = transformCaeRequest(registro);
 
     solicitarRequest.setFeCAEReq(caeRequest);
+    logger.info(
+        "Solicitando CAE - PV: {} Nro: {} Documento: {}",
+        registro.getPuntoVentaFactura(),
+        registro.getNumeroFactura(),
+        registro.getDocumento());
 
     final Object soapResponse =
         getWebServiceTemplate()
@@ -76,12 +119,14 @@ public class ElectronicInvoiceClient extends WebServiceGatewaySupport {
                 solicitarRequest,
                 message -> ((SoapMessage) message).setSoapAction(CAE_SOLICITAR_SOAP_ACTION));
 
-    FECAESolicitarResponse caeReponse = (FECAESolicitarResponse) soapResponse;
-    final FECAECabResponse cabResp = caeReponse.getFECAESolicitarResult().getFeCabResp();
+    FECAESolicitarResponse caeResponse = (FECAESolicitarResponse) soapResponse;
+    final FECAECabResponse cabResp = caeResponse.getFECAESolicitarResult().getFeCabResp();
 
-    if (cabResp != null && StringUtils.equals(SUCCESS_RESULT, cabResp.getResultado())) {
+    logger.info("CAE Solicitado");
+
+    if (Objects.nonNull(cabResp) && StringUtils.equals(SUCCESS_RESULT, cabResp.getResultado())) {
       final FECAEDetResponse fecaeDetResponse =
-          caeReponse.getFECAESolicitarResult().getFeDetResp().getFECAEDetResponse().get(0);
+          caeResponse.getFECAESolicitarResult().getFeDetResp().getFECAEDetResponse().get(0);
 
       final long cae = Long.parseLong(fecaeDetResponse.getCAE());
       final LocalDate fechaVencimientoCae =
@@ -89,8 +134,8 @@ public class ElectronicInvoiceClient extends WebServiceGatewaySupport {
 
       return new CAEResponse(cae, fechaVencimientoCae);
     }
-    String errorMessage = getErrorMessageFromResponse(caeReponse);
-    logger.log(Level.SEVERE, "Error solicitando CAE {0}", errorMessage);
+    final String errorMessage = getErrorMessageFromResponse(caeResponse);
+    logger.error("Error solicitando CAE {}", errorMessage);
 
     throw new RuntimeException(errorMessage);
   }
@@ -111,12 +156,14 @@ public class ElectronicInvoiceClient extends WebServiceGatewaySupport {
         caeReponse.getFECAESolicitarResult().getFeDetResp().getFECAEDetResponse()) {
       sb.append("Resultado=").append(detResponse.getResultado()).append(StringUtils.LF);
       sb.append("Observaciones=" + StringUtils.LF);
-      for (Obs obs : detResponse.getObservaciones().getObs()) {
-        sb.append("Código=")
-            .append(obs.getCode())
-            .append(StringUtils.SPACE)
-            .append("Mensaje=")
-            .append(obs.getMsg());
+      if (Objects.nonNull(detResponse.getObservaciones())) {
+        for (Obs obs : detResponse.getObservaciones().getObs()) {
+          sb.append("Código=")
+              .append(obs.getCode())
+              .append(StringUtils.SPACE)
+              .append("Mensaje=")
+              .append(obs.getMsg());
+        }
       }
     }
 

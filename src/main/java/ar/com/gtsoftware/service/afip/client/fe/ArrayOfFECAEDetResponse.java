@@ -3,7 +3,7 @@
 // Visite https://eclipse-ee4j.github.io/jaxb-ri
 // Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el
 // esquema de origen.
-// Generado el: 2021.04.20 a las 01:12:11 AM ART
+// Generado el: 2021.06.08 a las 12:50:16 AM ART
 //
 
 package ar.com.gtsoftware.service.afip.client.fe;
@@ -37,18 +37,22 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(
     name = "ArrayOfFECAEDetResponse",
+    namespace = "http://ar.gov.afip.dif.FEV1/",
     propOrder = {"fecaeDetResponse"})
 @Generated(
     value = "com.sun.tools.xjc.Driver",
     comments = "JAXB RI v2.3.4",
-    date = "2021-04-20T01:12:11-03:00")
+    date = "2021-06-08T00:50:15-03:00")
 public class ArrayOfFECAEDetResponse {
 
-  @XmlElement(name = "FECAEDetResponse", nillable = true)
+  @XmlElement(
+      name = "FECAEDetResponse",
+      namespace = "http://ar.gov.afip.dif.FEV1/",
+      nillable = true)
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected List<FECAEDetResponse> fecaeDetResponse;
 
   /**
@@ -69,7 +73,7 @@ public class ArrayOfFECAEDetResponse {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public List<FECAEDetResponse> getFECAEDetResponse() {
     if (fecaeDetResponse == null) {
       fecaeDetResponse = new ArrayList<FECAEDetResponse>();

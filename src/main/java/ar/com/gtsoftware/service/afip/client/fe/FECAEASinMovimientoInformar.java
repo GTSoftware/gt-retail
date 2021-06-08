@@ -3,7 +3,7 @@
 // Visite https://eclipse-ee4j.github.io/jaxb-ri
 // Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el
 // esquema de origen.
-// Generado el: 2021.04.20 a las 01:12:11 AM ART
+// Generado el: 2021.06.08 a las 12:50:16 AM ART
 //
 
 package ar.com.gtsoftware.service.afip.client.fe;
@@ -39,32 +39,32 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(
     name = "",
     propOrder = {"auth", "ptoVta", "caea"})
-@XmlRootElement(name = "FECAEASinMovimientoInformar")
+@XmlRootElement(name = "FECAEASinMovimientoInformar", namespace = "http://ar.gov.afip.dif.FEV1/")
 @Generated(
     value = "com.sun.tools.xjc.Driver",
     comments = "JAXB RI v2.3.4",
-    date = "2021-04-20T01:12:11-03:00")
+    date = "2021-06-08T00:50:15-03:00")
 public class FECAEASinMovimientoInformar {
 
-  @XmlElement(name = "Auth")
+  @XmlElement(name = "Auth", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected FEAuthRequest auth;
 
-  @XmlElement(name = "PtoVta")
+  @XmlElement(name = "PtoVta", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected int ptoVta;
 
-  @XmlElement(name = "CAEA")
+  @XmlElement(name = "CAEA", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected String caea;
 
   /**
@@ -75,7 +75,7 @@ public class FECAEASinMovimientoInformar {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public FEAuthRequest getAuth() {
     return auth;
   }
@@ -88,7 +88,7 @@ public class FECAEASinMovimientoInformar {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setAuth(FEAuthRequest value) {
     this.auth = value;
   }
@@ -97,7 +97,7 @@ public class FECAEASinMovimientoInformar {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public int getPtoVta() {
     return ptoVta;
   }
@@ -106,7 +106,7 @@ public class FECAEASinMovimientoInformar {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setPtoVta(int value) {
     this.ptoVta = value;
   }
@@ -119,7 +119,7 @@ public class FECAEASinMovimientoInformar {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public String getCAEA() {
     return caea;
   }
@@ -132,7 +132,7 @@ public class FECAEASinMovimientoInformar {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setCAEA(String value) {
     this.caea = value;
   }

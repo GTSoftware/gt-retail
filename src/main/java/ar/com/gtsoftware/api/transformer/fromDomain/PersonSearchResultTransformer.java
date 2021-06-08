@@ -3,7 +3,7 @@ package ar.com.gtsoftware.api.transformer.fromDomain;
 import ar.com.gtsoftware.api.response.PersonSearchResult;
 import ar.com.gtsoftware.api.transformer.Transformer;
 import ar.com.gtsoftware.dto.domain.PersonasDto;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -18,7 +18,7 @@ public class PersonSearchResultTransformer implements Transformer<PersonasDto, P
 
   @Override
   public List<PersonSearchResult> transform(List<PersonasDto> personasDtoList) {
-    List<PersonSearchResult> persons = new ArrayList<>(personasDtoList.size());
+    List<PersonSearchResult> persons = new LinkedList<>();
     for (PersonasDto persona : personasDtoList) {
       persons.add(transform(persona));
     }

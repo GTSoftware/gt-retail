@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.xml.transform.Source;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -74,16 +75,6 @@ class ElectronicInvoiceClientTest {
                 + "        <PtoVta>1</PtoVta>\n"
                 + "        <CbteTipo>1</CbteTipo>\n"
                 + "        <CbteNro>14</CbteNro>\n"
-                + "        <Errors>\n"
-                + "            <Err>\n"
-                + "                <Code>int</Code>\n"
-                + "                <Msg>string</Msg>\n"
-                + "            </Err>\n"
-                + "            <Err>\n"
-                + "                <Code>int</Code>\n"
-                + "                <Msg>string</Msg>\n"
-                + "            </Err>\n"
-                + "        </Errors>\n"
                 + "        <Events>\n"
                 + "            <Evt>\n"
                 + "                <Code>int</Code>\n"
@@ -103,6 +94,63 @@ class ElectronicInvoiceClientTest {
         client.getLastAuthorizedInvoiceNumber(afipAuthServices, 1, 1);
 
     assertThat(lastAuthorizedInvoiceNumber, is(14));
+    mockServer.verify();
+  }
+
+  @Test
+  void shouldThrowRuntimeExceptionWhenGetLastAuthorizedInvoiceNumberHasErrors() {
+    final AFIPAuthServices afipAuthServices = new AFIPAuthServices();
+    afipAuthServices.setSign("sign");
+    afipAuthServices.setToken("token");
+
+    Source requestPayload =
+        new StringSource(
+            "<ns2:FECompUltimoAutorizado xmlns:ns2=\"http://ar.gov.afip.dif.FEV1/\">\n"
+                + "    <ns2:Auth>\n"
+                + "        <ns2:Token>token</ns2:Token>\n"
+                + "        <ns2:Sign>sign</ns2:Sign>\n"
+                + "        <ns2:Cuit>99999999999</ns2:Cuit>\n"
+                + "    </ns2:Auth>\n"
+                + "    <ns2:PtoVta>1</ns2:PtoVta>\n"
+                + "    <ns2:CbteTipo>1</ns2:CbteTipo>\n"
+                + "</ns2:FECompUltimoAutorizado>");
+
+    Source responsePayload =
+        new StringSource(
+            "<FECompUltimoAutorizadoResponse xmlns=\"http://ar.gov.afip.dif.FEV1/\">\n"
+                + "    <FECompUltimoAutorizadoResult>\n"
+                + "        <PtoVta>1</PtoVta>\n"
+                + "        <CbteTipo>1</CbteTipo>\n"
+                + "        <CbteNro>14</CbteNro>\n"
+                + "        <Errors>\n"
+                + "            <Err>\n"
+                + "                <Code>005</Code>\n"
+                + "                <Msg>Some error</Msg>\n"
+                + "            </Err>\n"
+                + "            <Err>\n"
+                + "                <Code>006</Code>\n"
+                + "                <Msg>Other error</Msg>\n"
+                + "            </Err>\n"
+                + "        </Errors>\n"
+                + "        <Events>\n"
+                + "            <Evt>\n"
+                + "                <Code>int</Code>\n"
+                + "                <Msg>string</Msg>\n"
+                + "            </Evt>\n"
+                + "            <Evt>\n"
+                + "                <Code>int</Code>\n"
+                + "                <Msg>string</Msg>\n"
+                + "            </Evt>\n"
+                + "        </Events>\n"
+                + "    </FECompUltimoAutorizadoResult>\n"
+                + "</FECompUltimoAutorizadoResponse>");
+
+    mockServer.expect(payload(requestPayload)).andRespond(withPayload(responsePayload));
+
+    Assertions.assertThrows(
+        RuntimeException.class,
+        () -> client.getLastAuthorizedInvoiceNumber(afipAuthServices, 1, 1));
+
     mockServer.verify();
   }
 

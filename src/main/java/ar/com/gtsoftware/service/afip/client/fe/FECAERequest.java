@@ -3,7 +3,7 @@
 // Visite https://eclipse-ee4j.github.io/jaxb-ri
 // Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el
 // esquema de origen.
-// Generado el: 2021.04.20 a las 01:12:11 AM ART
+// Generado el: 2021.06.08 a las 12:50:16 AM ART
 //
 
 package ar.com.gtsoftware.service.afip.client.fe;
@@ -36,25 +36,26 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(
     name = "FECAERequest",
+    namespace = "http://ar.gov.afip.dif.FEV1/",
     propOrder = {"feCabReq", "feDetReq"})
 @Generated(
     value = "com.sun.tools.xjc.Driver",
     comments = "JAXB RI v2.3.4",
-    date = "2021-04-20T01:12:11-03:00")
+    date = "2021-06-08T00:50:15-03:00")
 public class FECAERequest {
 
-  @XmlElement(name = "FeCabReq")
+  @XmlElement(name = "FeCabReq", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected FECAECabRequest feCabReq;
 
-  @XmlElement(name = "FeDetReq")
+  @XmlElement(name = "FeDetReq", namespace = "http://ar.gov.afip.dif.FEV1/")
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   protected ArrayOfFECAEDetRequest feDetReq;
 
   /**
@@ -65,7 +66,7 @@ public class FECAERequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public FECAECabRequest getFeCabReq() {
     return feCabReq;
   }
@@ -78,7 +79,7 @@ public class FECAERequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setFeCabReq(FECAECabRequest value) {
     this.feCabReq = value;
   }
@@ -91,7 +92,7 @@ public class FECAERequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public ArrayOfFECAEDetRequest getFeDetReq() {
     return feDetReq;
   }
@@ -104,7 +105,7 @@ public class FECAERequest {
   @Generated(
       value = "com.sun.tools.xjc.Driver",
       comments = "JAXB RI v2.3.4",
-      date = "2021-04-20T01:12:11-03:00")
+      date = "2021-06-08T00:50:15-03:00")
   public void setFeDetReq(ArrayOfFECAEDetRequest value) {
     this.feDetReq = value;
   }
