@@ -24,6 +24,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -65,7 +66,10 @@ class ShopCartControllerImpl implements ShopCartController {
 
     ProductosDto productosDto = productosService.findFirstBySearchFilter(psf);
 
-    if (productosDto != null) {
+    if (Objects.nonNull(productosDto)) {
+      if (Objects.nonNull(addCartItemRequest.getPrecioVentaUnitario())) {
+        productosDto.setPrecioVenta(addCartItemRequest.getPrecioVentaUnitario());
+      }
       BigDecimal fixedCantidad = fixCantidad(productosDto, addCartItemRequest);
       PromotionCartItem promotionCartItem = applyPromotions(productosDto, fixedCantidad);
 

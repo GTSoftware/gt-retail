@@ -181,7 +181,7 @@ export class ShopCartItems extends Component {
   }
 
   renderDialogContent = () => {
-    const {showEditItemDialog} = this.state
+    const { showEditItemDialog } = this.state
     let dialogContent = null
 
     if (showEditItemDialog) {
@@ -202,11 +202,36 @@ export class ShopCartItems extends Component {
               required={true}
             />
           </div>
+          {this.isUserAdmin && this.renderSalePriceEdit()}
         </div>
       )
     }
 
     return dialogContent
+  }
+
+  renderSalePriceEdit = () => {
+    return (
+      <>
+        <div className="p-col-4">
+          <label htmlFor="precio">Precio:</label>
+        </div>
+        <div className="p-col-8">
+          <InputText
+            id="precio"
+            keyfilter="pnum"
+            onChange={(e) => {
+              this.handleItemToEditPropertyChange(
+                "precioVentaUnitario",
+                e.target.value
+              )
+            }}
+            value={this.state.itemToEdit.precioVentaUnitario}
+            required={true}
+          />
+        </div>
+      </>
+    )
   }
 
   renderDescripcionToEdit = () => {
@@ -271,9 +296,9 @@ export class ShopCartItems extends Component {
   }
 
   handleItemToEditPropertyChange = (property, value) => {
-    let {itemToEdit} = {...this.state}
+    let { itemToEdit } = { ...this.state }
 
-    itemToEdit[property] = toUpperCaseTrim(value)
+    itemToEdit[property] = value
 
     this.setState({ itemToEdit })
   }
@@ -377,18 +402,15 @@ export class ShopCartItems extends Component {
 
   handleFoundProduct = (product, atIndex, itemToEdit) => {
     const state = this.state
-    let products =  [...state.products]
-    //console.log(JSON.stringify(products))
+    let products = [...state.products]
 
     product.itemNumber = uuid()
     product.cantidadEditable = true
     product.deletable = true
     products.splice(atIndex, 0, product)
-    console.log(JSON.stringify(products))
-
 
     if (itemToEdit) {
-      product.descripcion = itemToEdit.descripcion
+      product.descripcion = toUpperCaseTrim(itemToEdit.descripcion)
     }
 
     if (product.discountItem) {
@@ -400,8 +422,6 @@ export class ShopCartItems extends Component {
       products.splice(atIndex + 1, 0, product.discountItem)
 
       delete product.discountItem
-
-      //itemNumberIncrement++
     }
 
     this.initProductSearch()
@@ -412,7 +432,7 @@ export class ShopCartItems extends Component {
   }
 
   handleUpdateItem = () => {
-    let {itemToEdit} = {...this.state}
+    let { itemToEdit } = { ...this.state }
     let cantidad
 
     if (itemToEdit) {
@@ -481,6 +501,9 @@ export class ShopCartItems extends Component {
       {
         cantidad: itemToEdit.cantidad,
         productId: itemToEdit.id,
+        precioVentaUnitario: this.isUserAdmin
+          ? parseFloat(itemToEdit.precioVentaUnitario).toFixed(2)
+          : null,
       },
       (product) => this.handleFoundProduct(product, removedIndex, itemToEdit),
       this.handleProductNotFoundError

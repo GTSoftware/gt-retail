@@ -198,8 +198,10 @@ public class ProductosServiceImpl
   protected void completeTransientEntity(Productos entityFromDto) {
     entityFromDto.setIdAlicuotaIva(
         em.find(FiscalAlicuotasIva.class, entityFromDto.getIdAlicuotaIva().getId()));
-    entityFromDto.setIdProveedorHabitual(
-        em.find(Personas.class, entityFromDto.getIdProveedorHabitual().getId()));
+    if (Objects.nonNull(entityFromDto.getIdProveedorHabitual())) {
+      entityFromDto.setIdProveedorHabitual(
+          em.find(Personas.class, entityFromDto.getIdProveedorHabitual().getId()));
+    }
     entityFromDto.setIdMarca(em.find(ProductosMarcas.class, entityFromDto.getIdMarca().getId()));
     entityFromDto.setIdRubro(em.find(ProductosRubros.class, entityFromDto.getIdRubro().getId()));
     entityFromDto.setIdSubRubro(

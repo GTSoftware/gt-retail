@@ -367,7 +367,6 @@ export class ShopCartPayment extends Component {
         const importeCuota = ((coefInteres * montoPago) / cuotas).toFixed(2)
         const montoTotal = (coefInteres * montoPago).toFixed(2)
         d.detallePlan = `${cuotas} de $${importeCuota} = $${montoTotal}`
-
       })
     }
   }

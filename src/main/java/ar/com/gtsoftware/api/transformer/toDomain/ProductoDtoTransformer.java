@@ -119,6 +119,9 @@ public class ProductoDtoTransformer
   }
 
   private PersonasDto transformProveedor(Long regularSupplierId) {
+    if (Objects.isNull(regularSupplierId)) {
+      return null;
+    }
     return PersonasDto.builder().id(regularSupplierId).build();
   }
 

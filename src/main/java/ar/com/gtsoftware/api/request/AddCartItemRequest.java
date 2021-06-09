@@ -15,4 +15,6 @@ public class AddCartItemRequest {
   @NotNull
   @DecimalMin("0.01")
   private BigDecimal cantidad;
+
+  private BigDecimal precioVentaUnitario;
 }

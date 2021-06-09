@@ -27,7 +27,7 @@ public class CreateOrUpdateProductRequest {
   @NotNull private Long supplyTypeId;
   @NotNull private Long categoryId;
   @NotNull private Long subCategoryId;
-  @NotNull private Long regularSupplierId;
+  private Long regularSupplierId;
   @NotNull private Long fiscalTaxRateId;
   @NotNull private Long brandId;
   @NotEmpty @NotNull @Valid private List<SalePrice> salePrices;

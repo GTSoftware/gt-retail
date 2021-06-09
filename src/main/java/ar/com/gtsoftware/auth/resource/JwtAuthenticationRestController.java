@@ -6,6 +6,8 @@ import java.util.Objects;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,6 +26,7 @@ public class JwtAuthenticationRestController {
   private final AuthenticationManager authenticationManager;
   private final JwtTokenUtil jwtTokenUtil;
   private final UserDetailsService jwtInMemoryUserDetailsService;
+  private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
   @Value("${jwt.http.request.header}")
   private String tokenHeader;
@@ -32,10 +35,14 @@ public class JwtAuthenticationRestController {
   public ResponseEntity createAuthenticationToken(
       @RequestBody @Valid JwtTokenRequest authenticationRequest) {
 
-    authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+    final String username = authenticationRequest.getUsername();
+    logger.info("Trying to authenticate username: {}", username);
 
-    final UserDetails userDetails =
-        jwtInMemoryUserDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+    authenticate(username, authenticationRequest.getPassword());
+
+    logger.info("User {} authentication successful", username);
+
+    final UserDetails userDetails = jwtInMemoryUserDetailsService.loadUserByUsername(username);
 
     final String token = jwtTokenUtil.generateToken(userDetails);
 
