@@ -589,7 +589,7 @@ export class ProductDetails extends Component {
       const netPrice = netCost + netCost * utility
 
       salePrice.netPrice = netPrice.toFixed(4)
-      salePrice.finalPrice = (netPrice * taxRate).toFixed(2)
+      salePrice.finalPrice = (netPrice * taxRate).toFixed(4)
     })
 
     this.setState({ product })

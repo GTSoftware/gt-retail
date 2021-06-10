@@ -21,6 +21,7 @@ public class NewCustomerRequest {
               + "[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@"
               + "(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",
       message = "Debe ser un mail válido Ej: alguien@host.com.")
+  @Size(max = 100)
   private String email;
 
   @NotNull
@@ -54,6 +55,7 @@ public class NewCustomerRequest {
 
   @NotNull
   @Size(min = 1, max = 13)
+  @Pattern(regexp = "^[0-9]*$", message = "Solo se aceptan números")
   private String documento;
 
   @NotNull private Long provinciaId;

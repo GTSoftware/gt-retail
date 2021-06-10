@@ -266,7 +266,7 @@ class ShopCartControllerImpl implements ShopCartController {
     linea.setDescripcion(prod.getDescripcion());
     linea.setIdProducto(prod);
     linea.setPrecioUnitario(prod.getPrecioVenta());
-    linea.setSubTotal(linea.getCantidad().multiply(linea.getIdProducto().getPrecioVenta()));
+    linea.setSubTotal(cantidad.multiply(prod.getPrecioVenta()).setScale(2, RoundingMode.HALF_UP));
 
     return linea;
   }

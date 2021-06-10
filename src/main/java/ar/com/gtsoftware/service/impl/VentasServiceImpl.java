@@ -169,7 +169,11 @@ public class VentasServiceImpl implements VentasService {
       }
       linea.setCostoBrutoUnitario(producto.getCostoAdquisicionNeto());
       linea.setCostoNetoUnitario(producto.getCostoFinal());
-      linea.setSubTotal(linea.getCantidad().multiply(linea.getPrecioUnitario()));
+      linea.setSubTotal(
+          linea
+              .getCantidad()
+              .multiply(linea.getPrecioUnitario())
+              .setScale(2, RoundingMode.HALF_UP));
       linea.setItem(item++);
 
       total = total.add(linea.getSubTotal());

@@ -2,6 +2,7 @@ package ar.com.gtsoftware.api.request;
 
 import java.math.BigDecimal;
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,8 +14,10 @@ public class AddCartItemRequest {
   private String productCode;
 
   @NotNull
-  @DecimalMin("0.01")
+  @DecimalMin(value = "0.0", inclusive = false)
+  @Digits(integer = 17, fraction = 2)
   private BigDecimal cantidad;
 
+  @Digits(integer = 15, fraction = 4)
   private BigDecimal precioVentaUnitario;
 }

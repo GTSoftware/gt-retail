@@ -46,7 +46,7 @@ const newCustomerSchema = {
     altura: { type: "string", maxLength: 50, pattern: "^[-0-9]*$" },
     piso: { type: "string", maxLength: 3, pattern: "^[-0-9]*$" },
     depto: { type: "string", maxLength: 5, pattern: "^[-a-zA-Z0-9]*$" },
-    documento: { type: "integer", minimum: 9999999, maximum: 9999999999999 },
+    documento: { type: "string", minLength: 7, maxLength: 13, pattern: "^[0-9]*$" },
     tipoPersoneria: { type: "object" },
     genero: { type: "object" },
     tipoDocumento: { type: "object" },
@@ -96,7 +96,7 @@ export class AddNewCustomerDialog extends Component {
     this.state = {
       formData: {
         email: "",
-        documento: null,
+        documento: "",
         tipoPersoneria: null,
         genero: null,
         tipoDocumento: null,

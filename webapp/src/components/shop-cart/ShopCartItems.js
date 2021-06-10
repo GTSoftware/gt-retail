@@ -502,7 +502,7 @@ export class ShopCartItems extends Component {
         cantidad: itemToEdit.cantidad,
         productId: itemToEdit.id,
         precioVentaUnitario: this.isUserAdmin
-          ? parseFloat(itemToEdit.precioVentaUnitario).toFixed(2)
+          ? parseFloat(itemToEdit.precioVentaUnitario).toFixed(4)
           : null,
       },
       (product) => this.handleFoundProduct(product, removedIndex, itemToEdit),
