@@ -178,7 +178,7 @@ export class BatchPricing extends Component {
 
     return (
       <div className="p-grid p-fluid">
-        {this.renderAddPercentDialog()}
+        {this.state.showAddPercentDialog && this.renderAddPercentDialog()}
         <div className="p-col-6">
           <label htmlFor="updateCostField">{"Actualizar costo:"}</label>
           <div className="p-inputgroup">
