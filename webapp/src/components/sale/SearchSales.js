@@ -21,6 +21,7 @@ import { MultiSelect } from "primereact/multiselect"
 import { AutoComplete } from "primereact/autocomplete"
 import { TriStateCheckbox } from "primereact/tristatecheckbox"
 import LoginService from "../../service/LoginService"
+import { exportToExcel } from "./ExportSalesUtils"
 
 export class SearchSales extends Component {
   constructor(props, context) {
@@ -213,6 +214,11 @@ export class SearchSales extends Component {
     const header = <div className="p-clearfix">Comprobantes</div>
     const footer = (
       <div className="p-clearfix">
+        <Button
+          type="button"
+          icon="fa fa-fw fa-file-excel"
+          onClick={this.exportToExcel}
+        />
         <label>Comprobantes: {totalRecords}</label>
       </div>
     )
@@ -294,13 +300,16 @@ export class SearchSales extends Component {
   filterSales = (first) => {
     let searchOptions = this.getPaginatedSearchOptions(first)
 
-    this.salesService.searchSales(searchOptions, (sales) =>
-      this.setState({
-        loading: false,
-        sales: sales.data,
-        first: searchOptions.firstResult,
-        totalRecords: sales.totalResults,
-      })
+    this.salesService.searchSales(
+      searchOptions,
+      (sales) =>
+        this.setState({
+          loading: false,
+          sales: sales.data,
+          first: searchOptions.firstResult,
+          totalRecords: sales.totalResults,
+        }),
+      this.handleSearchError
     )
 
     if (this.state.adminUser && first === 0) {
@@ -343,5 +352,29 @@ export class SearchSales extends Component {
     ShopCartService.searchCustomers(query, (customers) => {
       this.setState({ filteredCustomers: customers })
     })
+  }
+
+  exportToExcel = () => {
+    const { totalRecords } = this.state
+
+    if (totalRecords) {
+      let searchOptions = this.getPaginatedSearchOptions(0)
+      searchOptions.maxResults = totalRecords
+
+      this.salesService.searchSales(
+        searchOptions,
+        (sales) => exportToExcel(sales.data),
+        this.handleSearchError
+      )
+    }
+  }
+
+  handleSearchError = (error) => {
+    this.toast.show({
+      severity: "error",
+      summary: "No se pudo realizar la búsqueda",
+      detail: _.get(error, "response.data.message", ""),
+    })
+    this.setState({ loading: false })
   }
 }
