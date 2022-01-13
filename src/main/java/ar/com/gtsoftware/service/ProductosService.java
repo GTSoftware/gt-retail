@@ -20,8 +20,11 @@ package ar.com.gtsoftware.service;
 import ar.com.gtsoftware.api.request.BatchPricingUpdateRequest;
 import ar.com.gtsoftware.dto.domain.ProductosDto;
 import ar.com.gtsoftware.search.ProductosSearchFilter;
+import ar.com.gtsoftware.service.exceptions.ServiceException;
 
 public interface ProductosService extends EntityService<ProductosDto, ProductosSearchFilter> {
 
   void updatePrices(BatchPricingUpdateRequest batchUpdateRequest);
+
+  void validateProductCode(String codigo, Long id) throws ServiceException;
 }

@@ -1,5 +1,5 @@
 import _ from "lodash"
-import { post, get, put, patch } from "../utils/HTTPService"
+import { get, patch, post, put } from "../utils/HTTPService"
 import { toUpperCaseTrim } from "../utils/StringUtils"
 
 export class ProductsService {
@@ -28,6 +28,10 @@ export class ProductsService {
     get(`/products/price-list`, successCallback)
   }
 
+  getUnitTypes(successCallback) {
+    get(`/products/unit-types`, successCallback)
+  }
+
   updateProduct(product, successCallback, errorCallback) {
     patch(
       `/products/${product.productId}`,
@@ -36,12 +40,32 @@ export class ProductsService {
       errorCallback
     )
   }
+
+  createProduct(product, successCallback, errorCallback) {
+    post(`/products`, transformProduct(product), successCallback, errorCallback)
+  }
+
+  validateProductCode(product, errorCallback) {
+    const searchParams = new URLSearchParams("")
+
+    searchParams.set("productCode", product.code)
+
+    if (product.productId) {
+      searchParams.set("productId", product.productId)
+    }
+
+    get(`/products/valid-code?${searchParams}`, () => {}, errorCallback)
+  }
 }
 
 function transformProduct(product) {
-  let result = { ...product }
+  let result = {}
 
-  result.salePrices = result.salePrices.map((salePrice) => {
+  result.productId = product.productId
+  result.version = product.version
+  result.observations = product.observations
+  result.active = product.active
+  result.salePrices = product.salePrices.map((salePrice) => {
     return {
       salePriceId: salePrice.salePriceId,
       priceListId: _.get(salePrice, "priceList.priceListId"),
@@ -51,7 +75,7 @@ function transformProduct(product) {
       version: salePrice.version,
     }
   })
-  result.percentages = result.percentages.map((percent) => {
+  result.percentages = product.percentages.map((percent) => {
     return {
       productPricePercentId: _.get(percent, "productPricePercentId"),
       percentTypeId: _.get(percent, "percentType.percentTypeId"),
@@ -59,17 +83,22 @@ function transformProduct(product) {
       version: percent.version,
     }
   })
-  result.saleUnitTypeId = _.get(result, "saleUnit.unitTypeId")
-  result.purchaseUnitTypeId = _.get(result, "purchaseUnit.unitTypeId")
-  result.supplyTypeId = _.get(result, "supplyType.supplyTypeId")
-  result.categoryId = _.get(result, "category.categoryId")
-  result.subCategoryId = _.get(result, "subCategory.subCategoryId")
-  result.regularSupplierId = _.get(result, "regularSupplier.personId")
-  result.fiscalTaxRateId = _.get(result, "fiscalTaxRate.taxRateId")
-  result.brandId = _.get(result, "brand.brandId")
-  result.description = toUpperCaseTrim(result.description)
-  result.factoryCode = toUpperCaseTrim(result.factoryCode)
-  result.code = toUpperCaseTrim(result.code)
+  result.netCost = product.netCost
+  result.grossCost = product.grossCost
+  result.purchaseUnitsToSaleUnitEquivalence =
+    product.purchaseUnitsToSaleUnitEquivalence
+  result.minimumStock = product.minimumStock
+  result.saleUnitTypeId = _.get(product, "saleUnit.unitTypeId")
+  result.purchaseUnitTypeId = _.get(product, "purchaseUnit.unitTypeId")
+  result.supplyTypeId = _.get(product, "supplyType.supplyTypeId")
+  result.categoryId = _.get(product, "category.categoryId")
+  result.subCategoryId = _.get(product, "subCategory.subCategoryId")
+  result.regularSupplierId = _.get(product, "regularSupplier.personId")
+  result.fiscalTaxRateId = _.get(product, "fiscalTaxRate.taxRateId")
+  result.brandId = _.get(product, "brand.brandId")
+  result.description = toUpperCaseTrim(product.description)
+  result.factoryCode = toUpperCaseTrim(product.factoryCode)
+  result.code = toUpperCaseTrim(product.code)
 
   return result
 }

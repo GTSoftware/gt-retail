@@ -16,9 +16,21 @@ export class SubCategoriesSelector extends Component {
     this.state = {
       subCategories: [],
       selectedSubCategory: props.selectedSubCategory || null,
+      loaded: false,
     }
 
     this.service = new CategoriesService()
+  }
+
+  componentDidMount() {
+    const { loaded } = this.state
+    const { categoryId } = this.props
+
+    if (!loaded && categoryId) {
+      this.service.getSubCategories(categoryId, (subCategories) =>
+        this.setState({ subCategories: subCategories, loaded: true })
+      )
+    }
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {

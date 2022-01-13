@@ -42,6 +42,7 @@ import ar.com.gtsoftware.search.ProductosPreciosSearchFilter;
 import ar.com.gtsoftware.search.ProductosSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;
 import ar.com.gtsoftware.service.ProductosService;
+import ar.com.gtsoftware.service.exceptions.ServiceException;
 import ar.com.gtsoftware.utils.BusinessDateUtils;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -237,6 +238,23 @@ public class ProductosServiceImpl
       porcentaje.setFechaModificacion(dateUtils.getCurrentDateTime());
       porcentaje.setIdTipoPorcentaje(
           em.find(ProductosTiposPorcentajes.class, porcentaje.getIdTipoPorcentaje().getId()));
+    }
+  }
+
+  @Override
+  public void validateProductCode(String code, Long productId) throws ServiceException {
+    ProductosSearchFilter sf = ProductosSearchFilter.builder().codigoPropio(code).build();
+    Productos existingProduct = facade.findFirstBySearchFilter(sf);
+    if (Objects.isNull(existingProduct)) {
+      return;
+    }
+    if (Objects.isNull(productId) || !Objects.equals(productId, existingProduct.getId())) {
+      final String message =
+          String.format(
+              "El código %s ya existe para el producto: [%d] %s",
+              code, existingProduct.getId(), existingProduct.getDescripcion());
+
+      throw new ServiceException(message);
     }
   }
 }

@@ -1,6 +1,7 @@
 package ar.com.gtsoftware.api.impl;
 
 import ar.com.gtsoftware.api.ProductsController;
+import ar.com.gtsoftware.api.exception.DuplicatedProductCodeException;
 import ar.com.gtsoftware.api.exception.ProductNotFoundException;
 import ar.com.gtsoftware.api.exception.UserNotAllowedException;
 import ar.com.gtsoftware.api.request.BatchPricingUpdateRequest;
@@ -18,6 +19,7 @@ import ar.com.gtsoftware.enums.Parametros;
 import ar.com.gtsoftware.search.ProductosSearchFilter;
 import ar.com.gtsoftware.service.ParametrosService;
 import ar.com.gtsoftware.service.ProductosService;
+import ar.com.gtsoftware.service.exceptions.ServiceException;
 import ar.com.gtsoftware.utils.SecurityUtils;
 import java.util.List;
 import java.util.Objects;
@@ -87,7 +89,33 @@ public class ProductsControllerImpl implements ProductsController {
       throw new ProductNotFoundException();
     }
 
+    validateProductCode(updateProductRequest.getCode(), updateProductRequest.getProductId());
+
     productosService.createOrEdit(
         productoDtoTransformer.transformFromExisting(updateProductRequest, productosDto));
+  }
+
+  @Override
+  @Transactional
+  public ProductResponse createProduct(CreateOrUpdateProductRequest updateProductRequest) {
+    validateProductCode(updateProductRequest.getCode(), updateProductRequest.getProductId());
+
+    final ProductosDto createdProduct =
+        productosService.createOrEdit(productoDtoTransformer.transform(updateProductRequest));
+
+    return productResponseTransformer.transform(createdProduct);
+  }
+
+  @Override
+  public void validateCode(String code, Long id) {
+    validateProductCode(code, id);
+  }
+
+  private void validateProductCode(String code, Long id) {
+    try {
+      productosService.validateProductCode(code, id);
+    } catch (ServiceException e) {
+      throw new DuplicatedProductCodeException(e.getMessage());
+    }
   }
 }

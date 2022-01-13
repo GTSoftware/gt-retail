@@ -5,6 +5,7 @@ import ar.com.gtsoftware.api.request.PaginatedSearchRequest;
 import ar.com.gtsoftware.api.request.products.CreateOrUpdateProductRequest;
 import ar.com.gtsoftware.api.response.*;
 import ar.com.gtsoftware.search.ProductosSearchFilter;
+import ar.com.gtsoftware.service.exceptions.ServiceException;
 import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -26,4 +27,14 @@ public interface ProductsController {
   @ResponseStatus(code = HttpStatus.NO_CONTENT)
   void updateProduct(
       @PathVariable Long productId, @RequestBody CreateOrUpdateProductRequest updateProductRequest);
+
+  @PostMapping(path = "/products")
+  ProductResponse createProduct(@RequestBody CreateOrUpdateProductRequest updateProductRequest);
+
+  @GetMapping(path = "/products/valid-code")
+  @ResponseStatus(code = HttpStatus.NO_CONTENT)
+  void validateCode(
+      @RequestParam(name = "productCode") String code,
+      @RequestParam(name = "productId", required = false) Long id)
+      throws ServiceException;
 }

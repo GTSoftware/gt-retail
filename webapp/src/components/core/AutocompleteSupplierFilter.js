@@ -6,6 +6,7 @@ import { SuppliersService } from "../../service/SuppliersService"
 export class AutocompleteSupplierFilter extends Component {
   static propTypes = {
     onSupplierSelect: PropTypes.func.isRequired,
+    selectedSupplier: PropTypes.object,
   }
 
   constructor(props, context) {
@@ -13,7 +14,7 @@ export class AutocompleteSupplierFilter extends Component {
 
     this.state = {
       filteredSuppliers: [],
-      selectedSupplier: null,
+      selectedSupplier: props.selectedSupplier || null,
     }
 
     this.service = new SuppliersService()

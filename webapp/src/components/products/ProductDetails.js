@@ -8,6 +8,7 @@ import PropTypes from "prop-types"
 import { Toast } from "primereact/toast"
 import { TabPanel, TabView } from "primereact/tabview"
 import { InputText } from "primereact/inputtext"
+import { Checkbox } from "primereact/checkbox"
 import { InputTextarea } from "primereact/inputtextarea"
 import {
   fieldRequiredDefaultMessage,
@@ -21,6 +22,12 @@ import { PercentTypesSelector } from "../core/PercentTypesSelector"
 import { isNotEmpty } from "../../utils/StringUtils"
 import { PriceListSelector } from "../core/PriceListSelector"
 import { LoadingButton } from "../core/LoadingButton"
+import { ProductSupplyTypeSelector } from "../core/ProductSupplyTypeSelector"
+import { CategoriesSelector } from "../core/CategoriesSelector"
+import { SubCategoriesSelector } from "../core/SubCategoriesSelector"
+import { BrandsSelector } from "../core/BrandsSelector"
+import { ProductUnitTypeSelector } from "../core/ProductUnitTypeSelector"
+import { AutocompleteSupplierFilter } from "../core/AutocompleteSupplierFilter"
 
 const productSchema = {
   type: "object",
@@ -36,11 +43,56 @@ const productSchema = {
     observations: { type: "string", maxLength: 2048 },
     location: { type: "string", maxLength: 60 },
     grossCost: { pattern: "^(-)?(?!0\\d)\\d*(\\.\\d{1,4})?$" },
+    purchaseUnitsToSaleUnitEquivalence: { pattern: "^(?!0\\d)\\d*(\\.\\d{1,2})?$" },
     fiscalTaxRate: { type: "object" },
     salePrices: { type: "array" },
     percentages: { type: "array" },
+    supplyType: { type: "object" },
+    category: { type: "object" },
+    subCategory: { type: "object" },
+    brand: { type: "object" },
+    purchaseUnit: { type: "object" },
+    saleUnit: { type: "object" },
+    regularSupplier: { type: "object" },
+    minimumStock: { pattern: "^(?!0\\d)\\d*(\\.\\d{1,2})?$" },
   },
-  required: ["description", "code", "grossCost", "fiscalTaxRate", "salePrices"],
+  required: [
+    "description",
+    "code",
+    "grossCost",
+    "fiscalTaxRate",
+    "salePrices",
+    "supplyType",
+    "category",
+    "subCategory",
+    "brand",
+    "purchaseUnitsToSaleUnitEquivalence",
+    "purchaseUnit",
+    "saleUnit",
+    "minimumStock",
+  ],
+}
+
+const newProduct = {
+  productId: null,
+  code: "",
+  description: "",
+  factoryCode: "",
+  observations: "",
+  location: "",
+  grossCost: 0,
+  purchaseUnitsToSaleUnitEquivalence: 1,
+  fiscalTaxRate: null,
+  salePrices: [],
+  percentages: [],
+  supplyType: null,
+  category: null,
+  subCategory: null,
+  brand: null,
+  purchaseUnit: null,
+  saleUnit: null,
+  regularSupplier: null,
+  minimumStock: 0,
 }
 
 export class ProductDetails extends Component {
@@ -69,11 +121,15 @@ export class ProductDetails extends Component {
     const { product, productId } = this.state
 
     if (!product) {
-      this.productsService.getProduct(
-        productId,
-        (productInfo) => this.handleGetProductInfo(productInfo),
-        this.handleGetProductError
-      )
+      if (productId === "new") {
+        this.setState({ product: newProduct, loading: false, productId: null })
+      } else {
+        this.productsService.getProduct(
+          productId,
+          (productInfo) => this.handleGetProductInfo(productInfo),
+          this.handleGetProductError
+        )
+      }
     }
   }
 
@@ -107,11 +163,9 @@ export class ProductDetails extends Component {
               </TabPanel>
               <TabPanel header="Precio">{this.renderPricingSection()}</TabPanel>
               <TabPanel header="Clasificación">
-                {/*{this.renderAdvancedSearchOptions()}*/}
+                {this.renderClassificationSection()}
               </TabPanel>
-              <TabPanel header="Stock">
-                {/*{this.renderAdvancedSearchOptions()}*/}
-              </TabPanel>
+              <TabPanel header="Stock">{this.renderStockSection()}</TabPanel>
             </TabView>
             <LoadingButton
               type="submit"
@@ -130,7 +184,19 @@ export class ProductDetails extends Component {
 
     this.setState({ loading: true })
 
-    this.productsService.updateProduct(product, this.handleSuccess, this.handleError)
+    if (product.productId) {
+      this.productsService.updateProduct(
+        product,
+        this.handleSuccess,
+        this.handleError
+      )
+    } else {
+      this.productsService.createProduct(
+        product,
+        this.handleCreationSuccess,
+        this.handleError
+      )
+    }
   }
 
   handleSuccess = () => {
@@ -148,6 +214,17 @@ export class ProductDetails extends Component {
     )
   }
 
+  handleCreationSuccess = (productInfo) => {
+    const { productId } = productInfo
+
+    this.toast.show({
+      severity: "info",
+      summary: `El producto ${productId} fue creado exitosamente`,
+    })
+
+    this.handleGetProductInfo(productInfo)
+  }
+
   handleError = (error) => {
     this.setState({ loading: false })
 
@@ -162,7 +239,7 @@ export class ProductDetails extends Component {
     const { productId } = this.state
 
     if (productId) {
-      return "Edición de producto"
+      return `Edición de producto: ${productId}`
     }
     return "Nuevo producto"
   }
@@ -170,26 +247,32 @@ export class ProductDetails extends Component {
   handleGetProductError = (error) => {
     this.toast.show({
       severity: "error",
-      summary: "No se pudo encontrar el producto",
+      summary: `No se ha podido encontrar el producto [${error.errorCode}]`,
       detail: _.get(error, "message", ""),
     })
   }
 
   renderIdentificationSection = () => {
-    const { productId, description, code, factoryCode, observations } =
+    const { productId, description, code, factoryCode, observations, active } =
       this.state.product
 
     return (
       <div className="p-card-body p-fluid p-grid">
         <label className="p-col-3 ">{"Id:"}</label>
-        <div className="p-col-9 ">{productId}</div>
-        <div className="p-col-3 ">{"Código:"}</div>
-        <div className="p-col-9 ">
-          <Field id="code" component={InputText} name="code" value={code} />
+        <div className="p-col-9">{productId}</div>
+        <div className="p-col-3">{"Código:"}</div>
+        <div className="p-col-9">
+          <Field
+            id="code"
+            component={InputText}
+            name="code"
+            value={code}
+            onBlur={this.validateProductCode}
+          />
           <FieldError name="code" />
         </div>
-        <div className="p-col-3 ">{"Descripción:"}</div>
-        <div className="p-col-9 ">
+        <div className="p-col-3">{"Descripción:"}</div>
+        <div className="p-col-9">
           <Field
             id="description"
             component={InputText}
@@ -198,8 +281,8 @@ export class ProductDetails extends Component {
           />
           <FieldError name="description" />
         </div>
-        <div className="p-col-3 ">{"Código de fábrica:"}</div>
-        <div className="p-col-9 ">
+        <div className="p-col-3">{"Código de fábrica:"}</div>
+        <div className="p-col-9">
           <Field
             id="factoryCode"
             component={InputText}
@@ -208,8 +291,8 @@ export class ProductDetails extends Component {
           />
           <FieldError name="factoryCode" />
         </div>
-        <div className="p-col-3 ">{"Observaciones:"}</div>
-        <div className="p-col-9 ">
+        <div className="p-col-3">{"Observaciones:"}</div>
+        <div className="p-col-9">
           <Field
             id="observations"
             component={InputTextarea}
@@ -217,6 +300,11 @@ export class ProductDetails extends Component {
             value={observations || ""}
           />
           <FieldError name="observations" />
+        </div>
+
+        <div className="p-col-3">{"Activo:"}</div>
+        <div className="p-col-9">
+          <Field id="active" component={Checkbox} name="active" checked={active} />
         </div>
       </div>
     )
@@ -323,6 +411,132 @@ export class ProductDetails extends Component {
           style={{ textAlign: "center", width: "7em" }}
         />
       </DataTable>
+    )
+  }
+
+  renderClassificationSection = () => {
+    const {
+      supplyType,
+      category,
+      subCategory,
+      brand,
+      saleUnit,
+      purchaseUnit,
+      purchaseUnitsToSaleUnitEquivalence,
+      regularSupplier,
+    } = this.state.product
+
+    return (
+      <div className="p-card-body p-fluid p-grid">
+        <div className="p-col-3">{"Tipo de producto:"}</div>
+        <div className="p-col-9">
+          <ProductSupplyTypeSelector
+            selectedSupplyType={supplyType}
+            onSupplyTypeSelect={(supplyType) =>
+              this.handleProductPropertyChange("supplyType", supplyType)
+            }
+          />
+          <FieldError name="supplyType" />
+        </div>
+
+        <div className="p-col-3">{"Proveedor habitual:"}</div>
+        <div className="p-col-9">
+          <AutocompleteSupplierFilter
+            selectedSupplier={regularSupplier}
+            onSupplierSelect={(supplier) =>
+              this.handleProductPropertyChange("regularSupplier", supplier)
+            }
+          />
+          <FieldError name="regularSupplier" />
+        </div>
+
+        <div className="p-col-3">{"Rubro:"}</div>
+        <div className="p-col-9">
+          <CategoriesSelector
+            selectedCategory={category}
+            onCategorySelect={(category) =>
+              this.handleProductPropertyChange("category", category)
+            }
+          />
+          <FieldError name="category" />
+        </div>
+        <div className="p-col-3">{"Sub-Rubro:"}</div>
+        <div className="p-col-9">
+          {category && (
+            <SubCategoriesSelector
+              categoryId={category.categoryId}
+              selectedSubCategory={subCategory}
+              onSubCategorySelect={(subCategory) =>
+                this.handleProductPropertyChange("subCategory", subCategory)
+              }
+            />
+          )}
+          <FieldError name="subCategory" />
+        </div>
+
+        <div className="p-col-3">{"Marca:"}</div>
+        <div className="p-col-9">
+          <BrandsSelector
+            selectedBrand={brand}
+            onBrandSelect={(brand) =>
+              this.handleProductPropertyChange("brand", brand)
+            }
+          />
+          <FieldError name="brand" />
+        </div>
+
+        <div className="p-col-3">{"Unidad de compra:"}</div>
+        <div className="p-col-9">
+          <ProductUnitTypeSelector
+            selectedUnitType={purchaseUnit}
+            onSelectUnitType={(purchaseUnit) =>
+              this.handleProductPropertyChange("purchaseUnit", purchaseUnit)
+            }
+          />
+          <FieldError name="purchaseUnit" />
+        </div>
+
+        <div className="p-col-3">{"Unidad de venta:"}</div>
+        <div className="p-col-9">
+          <ProductUnitTypeSelector
+            selectedUnitType={saleUnit}
+            onSelectUnitType={(saleUnit) =>
+              this.handleProductPropertyChange("saleUnit", saleUnit)
+            }
+          />
+          <FieldError name="saleUnit" />
+        </div>
+
+        <div className="p-col-3">{"Equivalencia un. compra por un. venta:"}</div>
+        <div className="p-col-3">
+          <Field
+            id="purchaseUnitsToSaleUnitEquivalence"
+            component={InputText}
+            name="purchaseUnitsToSaleUnitEquivalence"
+            value={purchaseUnitsToSaleUnitEquivalence}
+          />
+          <FieldError name="purchaseUnitsToSaleUnitEquivalence" />
+        </div>
+      </div>
+    )
+  }
+
+  renderStockSection = () => {
+    const { minimumStock } = this.state.product
+
+    return (
+      <div className="p-card-body p-fluid p-grid">
+        <div className="p-col-3">{"Stock mínimo:"}</div>
+        <div className="p-col-3">
+          <Field
+            id="minimumStock"
+            component={InputText}
+            name="minimumStock"
+            value={minimumStock}
+          />
+          <FieldError name="minimumStock" />
+        </div>
+      </div>
     )
   }
 
@@ -510,15 +724,16 @@ export class ProductDetails extends Component {
 
     product[property] = value
 
-    // if (property === "idRubro") {
-    //   searchFilter.idSubRubro = null
-    // }
+    if (property === "category") {
+      product.subCategory = null
+    }
+
     this.updatePrices(product)
     this.setState({ product })
   }
 
   handleGetProductInfo = (productInfo) => {
-    let { percentages, salePrices } = productInfo
+    let { percentages, salePrices, productId } = productInfo
 
     percentages.forEach((percent) => {
       percent.uid = uuid()
@@ -527,7 +742,7 @@ export class ProductDetails extends Component {
       salePrice.uid = uuid()
     })
 
-    this.setState({ product: productInfo, loading: false })
+    this.setState({ product: productInfo, loading: false, productId: productId })
   }
 
   renderPercentTableHeader = () => {
@@ -593,5 +808,23 @@ export class ProductDetails extends Component {
     })
 
     this.setState({ product })
+  }
+
+  validateProductCode = () => {
+    const { product } = this.state
+
+    if (product.code) {
+      this.productsService.validateProductCode(this.state.product, (error) =>
+        this.handleDuplicatedCodeError(error)
+      )
+    }
+  }
+
+  handleDuplicatedCodeError = (error) => {
+    this.toast.show({
+      severity: "error",
+      summary: `Código duplicado [${error.errorCode}]`,
+      detail: error.message,
+    })
   }
 }
