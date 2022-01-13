@@ -1,35 +1,30 @@
 package ar.com.gtsoftware.utils;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.MockitoAnnotations.initMocks;
 
-import java.time.*;
+import java.time.Clock;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 
 class BusinessDateUtilsTest {
 
   private static final LocalDateTime LOCAL_DATE_TIME = LocalDateTime.of(2020, 2, 13, 13, 13, 4);
   private static final ZonedDateTime ZONED_DATE_TIME =
-      ZonedDateTime.of(2020, 2, 13, 13, 13, 4, 0, ZoneId.systemDefault());
+      ZonedDateTime.of(2020, 2, 13, 13, 13, 4, 0, ZoneId.of("Europe/Amsterdam"));
   private static final LocalDate LOCAL_DATE = LocalDate.of(2020, 2, 13);
-
-  @Mock private Clock clock;
 
   private BusinessDateUtils businessDateUtils;
 
   @BeforeEach
   void setUp() {
-    initMocks(this);
 
-    Clock fixedClock =
-        Clock.fixed(LOCAL_DATE_TIME.toInstant(ZoneOffset.ofHours(-3)), ZoneId.systemDefault());
-    doReturn(fixedClock.instant()).when(clock).instant();
-    doReturn(fixedClock.getZone()).when(clock).getZone();
+    Clock fixedClock = Clock.fixed(ZONED_DATE_TIME.toInstant(), ZoneId.of("Europe/Amsterdam"));
 
-    businessDateUtils = new BusinessDateUtils(clock);
+    businessDateUtils = new BusinessDateUtils(fixedClock);
   }
 
   @Test
