@@ -1,0 +1,23 @@
+
+# The identifier Backend is internal to nginx, and used to name this specific upstream
+upstream Backend {
+    # hello is the internal DNS name used by the backend Service inside Kubernetes
+    server ${API_HOST}:${API_PORT};
+}
+
+server {
+  listen ${WEB_PORT};
+
+  root /usr/share/nginx/html/;
+
+  location / {
+    include /etc/nginx/mime.types;
+    try_files $uri $uri/ /index.html;
+  }
+
+  location /api {
+    proxy_set_header  Host  $host;
+
+    proxy_pass http://Backend;
+  }
+}

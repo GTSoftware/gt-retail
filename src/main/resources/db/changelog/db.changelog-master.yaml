@@ -1,0 +1,16 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/V_1.0-schema.sql
+      preConditions:
+        - onFail: FAIL
+        - sqlCheck:
+            expectedResult: 0
+            sql: SELECT COUNT(1) FROM pg_tables WHERE TABLENAME = 'usuarios'
+  - include:
+      file: db/changelog/V_1.1-data.sql
+      preConditions:
+        - onFail: FAIL
+        - sqlCheck:
+            expectedResult: 0
+            sql: SELECT COUNT(1) FROM usuarios
+

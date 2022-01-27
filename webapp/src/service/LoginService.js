@@ -14,7 +14,7 @@ class LoginService {
 
   performLogin(userCredentials, okCallback, errorCallback) {
     post(
-      "authenticate",
+      "/authenticate",
       userCredentials,
       (response) => {
         this.initUserSession(response.token)

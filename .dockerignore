@@ -1,0 +1,10 @@
+**/node_modules
+**/npm-debug.log
+.idea
+.git
+.gradle
+
+docs/
+out/
+webapp/
+build/
