@@ -36,7 +36,7 @@ function getErrorData(errorResp) {
   return _.get(errorResp, "response.data", {})
 }
 
-const  getUrl = (url) => {
+const getUrl = (url) => {
   return `${BASE_URL}${url}`
 }
 

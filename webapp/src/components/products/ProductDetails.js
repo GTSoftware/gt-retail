@@ -6,7 +6,6 @@ import { Column } from "primereact/column"
 import { Button } from "primereact/button"
 import PropTypes from "prop-types"
 import { Toast } from "primereact/toast"
-import { TabPanel, TabView } from "primereact/tabview"
 import { InputText } from "primereact/inputtext"
 import { Checkbox } from "primereact/checkbox"
 import { InputTextarea } from "primereact/inputtextarea"
@@ -154,24 +153,40 @@ export class ProductDetails extends Component {
               pattern: () => invalidPatternMessage,
             }}
           >
-            <TabView
-              activeIndex={this.state.activeTab}
-              onTabChange={(e) => this.setState({ activeTab: e.index })}
-            >
-              <TabPanel header="Identificación">
-                {this.renderIdentificationSection()}
-              </TabPanel>
-              <TabPanel header="Precio">{this.renderPricingSection()}</TabPanel>
-              <TabPanel header="Clasificación">
-                {this.renderClassificationSection()}
-              </TabPanel>
-              <TabPanel header="Stock">{this.renderStockSection()}</TabPanel>
-            </TabView>
+            <div className="card ">
+              <h1 style={{ fontSize: "16px" }}>Identificación</h1>
+              {this.renderIdentificationSection()}
+            </div>
+
+            <div className="card ">
+              <h1 style={{ fontSize: "16px" }}>Precios</h1>
+              {this.renderPricingSection()}
+            </div>
+
+            <div className="card ">
+              <h1 style={{ fontSize: "16px" }}>Clasificación</h1>
+              {this.renderClassificationSection()}
+            </div>
+
+            <div className="card ">
+              <h1 style={{ fontSize: "16px" }}>Stock</h1>
+              {this.renderStockSection()}
+            </div>
+
             <LoadingButton
               type="submit"
               label="Guardar"
               loading={this.state.loading}
               icon="fa fa-fw fa-save"
+            />
+            <Button
+              type="button"
+              label="Cerrar"
+              className="p-button-secondary"
+              icon="fa fa-fw fa-arrow-left"
+              onClick={() => {
+                window.close()
+              }}
             />
           </Form>
         )}
