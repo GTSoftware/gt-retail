@@ -24,7 +24,7 @@
     "lodash": "^4.17.21",
     "loglevel": "^1.7.1",
     "moment": "^2.29.1",
-    "node-sass": "^4.14.1",
+    "node-sass": "^7.0.0",
     "primeflex": "2.0.0",
     "primeicons": "1.0.0",
     "primereact": "^6.3.2",
