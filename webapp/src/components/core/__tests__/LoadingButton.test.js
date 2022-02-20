@@ -8,7 +8,7 @@ describe("LoadingButton", () => {
     label: "ClickMe",
   }
 
-  afterEach(() => {
+  beforeEach(() => {
     cleanup()
   })
 
@@ -37,7 +37,7 @@ describe("LoadingButton", () => {
     const button = screen.getByRole("button")
 
     const elementsByClassName = button.getElementsByClassName(
-      "fa fa-spinner fa-spin"
+      "pi pi-spinner pi-spin"
     )
 
     expect(elementsByClassName[0]).toBeDefined()
@@ -49,7 +49,7 @@ describe("LoadingButton", () => {
     const button = screen.getByRole("button")
 
     const elementsByClassName = button.getElementsByClassName(
-      "fa fa-spinner fa-spin"
+      "pi pi-spinner pi-spin"
     )
 
     expect(elementsByClassName[0]).toBeUndefined()

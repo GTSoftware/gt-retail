@@ -1,140 +1,126 @@
-import React, { Component } from "react"
+import React, { useRef, useState } from "react"
 import { InputText } from "primereact/inputtext"
 import { Password } from "primereact/password"
 import LoginService from "../service/LoginService.js"
 import { Messages } from "primereact/messages"
-import { Redirect } from "react-router-dom"
+import { Redirect, useHistory } from "react-router-dom"
 import { LoadingButton } from "./core/LoadingButton"
 import "./LogIn.scss"
 import PropTypes from "prop-types"
 
-export class Login extends Component {
-  static propTypes = {
-    onLoginSuccess: PropTypes.func,
-  }
+const LOGO = "assets/layout/images/logo-gt-dark.svg"
 
-  constructor() {
-    super()
+export const Login = ({ onLoginSuccess }) => {
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
+  const [loginDisabled, setLoginDisabled] = useState(true)
+  const [loading, setLoading] = useState(false)
+  const messages = useRef(null)
+  const history = useHistory()
 
-    this.state = {
-      userCredentials: {
-        username: "",
-        password: "",
-      },
-      loginDisabled: true,
-      loading: false,
+  const handleEnterKeyPress = (event) => {
+    if (event.key === "Enter" && !loginDisabled) {
+      performLogin()
     }
   }
 
-  render() {
-    const logo = "assets/layout/images/logo-gt-dark.svg"
-
-    if (LoginService.isUserLoggedIn()) {
-      return <Redirect to="/" />
-    }
-
-    return (
-      <div className="p-grid p-fluid">
-        <div className="p-col-12 p-lg-6">
-          <div className="login-logo--container">
-            <img className="login-logo--img" alt="Logo" src={logo} />
-          </div>
-          <div className="card card-w-title">
-            <h1>LogIn</h1>
-            <span className="p-float-label p-col-12 login-input--field">
-              <InputText
-                id="username"
-                value={this.state.userCredentials.username}
-                onChange={(e) =>
-                  this.handlePropertyChange("username", e.target.value)
-                }
-                autoFocus
-                onKeyPress={this.handleEnterKeyPress}
-              />
-              <label className="login-input--label" htmlFor="username">
-                Usuario
-              </label>
-            </span>
-
-            <span className="p-float-label p-col-12 login-input--field">
-              <Password
-                id="password"
-                feedback={false}
-                value={this.state.userCredentials.password}
-                onChange={(e) =>
-                  this.handlePropertyChange("password", e.target.value)
-                }
-                onKeyPress={this.handleEnterKeyPress}
-              />
-              <label className="login-input--label" htmlFor="password">
-                Clave
-              </label>
-            </span>
-
-            <div className="login-button">
-              <LoadingButton
-                icon="fas fa-lock-open"
-                label="LogIn"
-                loading={this.state.loading}
-                onClick={this.performLogin}
-                disabled={this.state.loginDisabled}
-              />
-            </div>
-            <Messages ref={(el) => (this.messages = el)} />
-          </div>
-        </div>
-      </div>
-    )
-  }
-
-  handlePropertyChange(propertyName, value) {
-    let userCredentials = this.state.userCredentials
-    userCredentials[propertyName] = value
-
-    this.setState({
-      userCredentials,
-    })
-    this.handleLoginButton()
-  }
-
-  handleEnterKeyPress = (event) => {
-    if (event.key === "Enter" && !this.state.loginDisabled) {
-      this.performLogin()
-    }
-  }
-
-  handleLoginButton = () => {
-    let userCredentials = this.state.userCredentials
+  const handleLoginButton = () => {
     let loginDisabled = true
 
-    if (userCredentials.username.length > 1 && userCredentials.password.length > 1) {
+    if (username.length > 1 && password.length > 1) {
       loginDisabled = false
     }
-    this.setState({ loginDisabled })
+
+    setLoginDisabled(loginDisabled)
   }
 
-  performLogin = () => {
-    this.setState({ loading: true })
-    LoginService.performLogin(
-      this.state.userCredentials,
-      this.handleLoginDone,
-      this.showError
-    )
+  const performLogin = () => {
+    setLoading(true)
+    LoginService.performLogin({ username, password }, handleLoginDone, showError)
   }
 
-  handleLoginDone = () => {
-    if (this.props.onLoginSuccess) {
-      this.props.onLoginSuccess()
+  const handleLoginDone = () => {
+    if (onLoginSuccess) {
+      onLoginSuccess()
     }
-    this.props.history.replace("/")
+    history.replace("/")
   }
 
-  showError = () => {
-    this.setState({ loading: false })
-    this.messages.show({
+  const showError = () => {
+    setLoading(false)
+
+    messages.current.show({
       severity: "error",
       summary: "Credenciales no válidas",
       detail: "",
     })
   }
+
+  const loginForm = (
+    <div className="p-grid p-fluid p-justify-center ">
+      <div className="p-col-6 p-lg-6 ">
+        <div className="login-logo--container">
+          <img className="login-logo--img" alt="Logo" src={LOGO} />
+        </div>
+        <div className="card card-w-title ">
+          <h1>LogIn</h1>
+          <span className="p-float-label p-col-12 login-input--field">
+            <InputText
+              id="username"
+              value={username}
+              onChange={(e) => {
+                setUsername(e.target.value)
+                handleLoginButton()
+              }}
+              autoFocus
+              onKeyPress={handleEnterKeyPress}
+            />
+            <label className="login-input--label" htmlFor="username">
+              Usuario
+            </label>
+          </span>
+
+          <span className="p-float-label p-col-12 login-input--field">
+            <Password
+              id="password"
+              feedback={false}
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value)
+                handleLoginButton()
+              }}
+              onKeyPress={handleEnterKeyPress}
+            />
+            <label className="login-input--label" htmlFor="password">
+              Clave
+            </label>
+          </span>
+
+          <div className="login-button">
+            <LoadingButton
+              icon="fas fa-lock-open"
+              label="LogIn"
+              loading={loading}
+              onClick={performLogin}
+              disabled={loginDisabled}
+            />
+          </div>
+          <Messages ref={messages} />
+        </div>
+      </div>
+    </div>
+  )
+
+  const getLoginForm = () => {
+    if (LoginService.isUserLoggedIn()) {
+      return <Redirect to="/" />
+    }
+    return loginForm
+  }
+
+  return getLoginForm()
+}
+
+Login.propTypes = {
+  onLoginSuccess: PropTypes.func,
 }
