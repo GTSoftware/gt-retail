@@ -16,7 +16,10 @@
 	<parameter name="empresa.fechainicio" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="codigobarras" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="logoAfip" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="subreport" class="java.lang.String" isForPrompting="false">
+	<parameter name="subreport" class="net.sf.jasperreports.engine.JasperReport" isForPrompting="false">
+		<defaultValueExpression><![CDATA["reports/vistaVentas_lineas.jasper"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="alicuotasSubReport" class="net.sf.jasperreports.engine.JasperReport" isForPrompting="false">
 		<defaultValueExpression><![CDATA["reports/vistaVentas_lineas.jasper"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="copia" class="java.lang.String" isForPrompting="false">
@@ -285,7 +288,7 @@
 			<subreport>
 				<reportElement x="0" y="0" width="555" height="39" uuid="10711ce8-702b-409f-8b53-d843a6d96eba"/>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{idRegistro}.getFiscalLibroIvaVentasLineasList())]]></dataSourceExpression>
-				<subreportExpression><![CDATA["reports/vistaVentas_alicuotas.jasper"]]></subreportExpression>
+				<subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{alicuotasSubReport}]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>

@@ -1,7 +1,6 @@
 package ar.com.gtsoftware.auth;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,11 +33,6 @@ public class JWTWebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Value("${jwt.get.token.uri}")
   private String authenticationPath;
 
-  @Autowired
-  public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-    auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoderBean());
-  }
-
   @Bean
   public PasswordEncoder passwordEncoderBean() {
     return new HashPasswordEncoder();
@@ -48,6 +42,12 @@ public class JWTWebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   public AuthenticationManager authenticationManagerBean() throws Exception {
     return super.authenticationManagerBean();
+  }
+
+  @Override
+  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    super.configure(auth);
+    auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoderBean());
   }
 
   @Override

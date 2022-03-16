@@ -1,11 +1,30 @@
-import { get, post } from "../utils/HTTPService"
+import { get, patch, post } from "../utils/HTTPService"
 import { toUpperCaseTrim, toLowerCaseTrim } from "../utils/StringUtils"
 
 export class CustomersService {
   addNewCustomer(formData, successCallback, errorCallback) {
     const newCustomer = transformFormData(formData)
 
-    post(`/customers/customer`, newCustomer, successCallback, errorCallback)
+    post(`/customers`, newCustomer, successCallback, errorCallback)
+  }
+
+  updateCustomer(formData, successCallback, errorCallback) {
+    const customerUpdateRequest = transformFormData(formData)
+
+    patch(
+      `/customers/${customerUpdateRequest.customerId}`,
+      customerUpdateRequest,
+      successCallback,
+      errorCallback
+    )
+  }
+
+  searchCustomers(searchData, successCallback) {
+    post(`persons/search`, searchData, successCallback)
+  }
+
+  getCustomer(customerId, successCallback, errorCallback) {
+    get(`/customers/${customerId}`, successCallback, errorCallback)
   }
 
   retrieveCustomer(searchData, successCallback, errorCallback) {

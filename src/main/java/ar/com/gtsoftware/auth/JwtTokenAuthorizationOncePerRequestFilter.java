@@ -52,7 +52,7 @@ public class JwtTokenAuthorizationOncePerRequestFilter extends OncePerRequestFil
         log.error("Illegal JWT reason: {} token: {}", ex.getMessage(), jwtToken);
       }
     } else {
-      log.warn("JWT_TOKEN_DOES_NOT_START_WITH_BEARER_STRING");
+      log.debug("JWT_TOKEN_DOES_NOT_START_WITH_BEARER_STRING");
     }
 
     log.debug("JWT_TOKEN_USERNAME_VALUE '{}'", username);

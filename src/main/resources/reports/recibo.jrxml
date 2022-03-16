@@ -20,6 +20,8 @@
 	<parameter name="totalEnLetras" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["CERO"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="reciboDetalleSubReport" class="net.sf.jasperreports.engine.JasperReport" isForPrompting="false"/>
+
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -189,7 +191,7 @@
 				<reportElement x="0" y="0" width="555" height="113" uuid="68590962-37cc-404b-bab4-e92bd2f0cfbe"/>
 				<dataSourceExpression>
 					<![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{recibosDetalles})]]></dataSourceExpression>
-				<subreportExpression><![CDATA["reports/reciboDetalle.jasper"]]></subreportExpression>
+				<subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{reciboDetalleSubReport}]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>

@@ -23,6 +23,6 @@ import org.mapstruct.Mapper;
 
 @Mapper(
     componentModel = "spring",
-    uses = {FiscalLibroIvaVentasMapper.class, FiscalAlicuotasIvaMapper.class})
+    uses = {FiscalAlicuotasIvaMapper.class})
 public interface FiscalLibroIvaVentasLineasMapper
     extends GenericMapper<FiscalLibroIvaVentasLineas, FiscalLibroIvaVentasLineasDto> {}

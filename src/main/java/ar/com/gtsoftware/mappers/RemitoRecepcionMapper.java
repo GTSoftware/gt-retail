@@ -23,5 +23,5 @@ import org.mapstruct.Mapper;
 
 @Mapper(
     componentModel = "spring",
-    uses = {RemitoMapper.class, PersonasMapper.class, DepositosMapper.class, UsuariosMapper.class})
+    uses = {PersonasMapper.class, DepositosMapper.class, UsuariosMapper.class})
 public interface RemitoRecepcionMapper extends GenericMapper<RemitoRecepcion, RemitoRecepcionDto> {}

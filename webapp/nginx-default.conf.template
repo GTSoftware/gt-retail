@@ -10,14 +10,14 @@ server {
 
   root /usr/share/nginx/html/;
 
+  location /api {
+    proxy_set_header Origin "";
+
+    proxy_pass http://Backend;
+  }
+
   location / {
     include /etc/nginx/mime.types;
     try_files $uri $uri/ /index.html;
-  }
-
-  location /api {
-    proxy_set_header  Host  $host;
-
-    proxy_pass http://Backend;
   }
 }

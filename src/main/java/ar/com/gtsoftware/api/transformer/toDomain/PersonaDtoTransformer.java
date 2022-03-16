@@ -1,6 +1,6 @@
 package ar.com.gtsoftware.api.transformer.toDomain;
 
-import ar.com.gtsoftware.api.request.NewCustomerRequest;
+import ar.com.gtsoftware.api.request.CreateOrUpdateCustomerRequest;
 import ar.com.gtsoftware.dto.domain.*;
 import ar.com.gtsoftware.utils.SecurityUtils;
 import lombok.RequiredArgsConstructor;
@@ -12,35 +12,53 @@ public class PersonaDtoTransformer {
 
   private final SecurityUtils securityUtils;
 
-  public PersonasDto transformNewCustomer(NewCustomerRequest newCustomerRequest) {
+  public PersonasDto transformNewCustomer(
+      CreateOrUpdateCustomerRequest createOrUpdateCustomerRequest) {
     return PersonasDto.builder()
         .idSucursal(
             SucursalesDto.builder().id(securityUtils.getUserDetails().getSucursalId()).build())
-        .razonSocial(newCustomerRequest.getRazonSocial())
-        .apellidos(newCustomerRequest.getApellidos())
-        .nombreFantasia(newCustomerRequest.getNombreFantasia())
-        .nombres(newCustomerRequest.getNombres())
-        .calle(newCustomerRequest.getCalle())
-        .altura(newCustomerRequest.getAltura())
-        .piso(newCustomerRequest.getPiso())
-        .depto(newCustomerRequest.getDepto())
-        .documento(newCustomerRequest.getDocumento())
-        .email(newCustomerRequest.getEmail())
-        .idGenero(LegalGenerosDto.builder().id(newCustomerRequest.getGeneroId()).build())
+        .razonSocial(createOrUpdateCustomerRequest.getRazonSocial())
+        .apellidos(createOrUpdateCustomerRequest.getApellidos())
+        .nombreFantasia(createOrUpdateCustomerRequest.getNombreFantasia())
+        .nombres(createOrUpdateCustomerRequest.getNombres())
+        .calle(createOrUpdateCustomerRequest.getCalle())
+        .altura(createOrUpdateCustomerRequest.getAltura())
+        .piso(createOrUpdateCustomerRequest.getPiso())
+        .depto(createOrUpdateCustomerRequest.getDepto())
+        .documento(createOrUpdateCustomerRequest.getDocumento())
+        .email(createOrUpdateCustomerRequest.getEmail())
+        .idGenero(LegalGenerosDto.builder().id(createOrUpdateCustomerRequest.getGeneroId()).build())
         .idLocalidad(
-            UbicacionLocalidadesDto.builder().id(newCustomerRequest.getLocalidadId()).build())
-        .idPais(UbicacionPaisesDto.builder().id(newCustomerRequest.getPaisId()).build())
+            UbicacionLocalidadesDto.builder()
+                .id(createOrUpdateCustomerRequest.getLocalidadId())
+                .build())
+        .idPais(UbicacionPaisesDto.builder().id(createOrUpdateCustomerRequest.getPaisId()).build())
         .idProvincia(
-            UbicacionProvinciasDto.builder().id(newCustomerRequest.getProvinciaId()).build())
+            UbicacionProvinciasDto.builder()
+                .id(createOrUpdateCustomerRequest.getProvinciaId())
+                .build())
         .idResponsabilidadIva(
             FiscalResponsabilidadesIvaDto.builder()
-                .id(newCustomerRequest.getResponsabilidadIvaId())
+                .id(createOrUpdateCustomerRequest.getResponsabilidadIvaId())
                 .build())
         .idTipoDocumento(
-            LegalTiposDocumentoDto.builder().id(newCustomerRequest.getTipoDocumentoId()).build())
+            LegalTiposDocumentoDto.builder()
+                .id(createOrUpdateCustomerRequest.getTipoDocumentoId())
+                .build())
         .idTipoPersoneria(
-            LegalTiposPersoneriaDto.builder().id(newCustomerRequest.getTipoPersoneriaId()).build())
-        .personasTelefonosList(newCustomerRequest.getTelefonos())
+            LegalTiposPersoneriaDto.builder()
+                .id(createOrUpdateCustomerRequest.getTipoPersoneriaId())
+                .build())
+        .personasTelefonosList(createOrUpdateCustomerRequest.getTelefonos())
         .build();
+  }
+
+  public PersonasDto transformFromExisting(
+      CreateOrUpdateCustomerRequest updateCustomerRequest, PersonasDto existingCustomer) {
+    final PersonasDto customer = transformNewCustomer(updateCustomerRequest);
+    customer.setFechaAlta(existingCustomer.getFechaAlta());
+    customer.setIdSucursal(existingCustomer.getIdSucursal());
+
+    return customer;
   }
 }

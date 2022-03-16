@@ -1,9 +1,9 @@
-FROM openjdk:11-jdk AS builder
+FROM gradle:7-jdk11 AS builder
 
 WORKDIR /app
 COPY . ./
 
-RUN ./gradlew build
+RUN gradle build --no-daemon
 
 FROM openjdk:11-jre AS production
 

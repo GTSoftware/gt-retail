@@ -4,7 +4,13 @@ services:
   backend:
     container_name: gt-retail-backend
     image: backend-app-prod
-    env_file: env.list
+    environment:
+      APP_NAME: gt-retail
+      JWT_SIGN_KEY: secret
+      DB_URL: jdbc:postgresql://192.168.2.5:5432/retail_rt
+      DB_PASSWRD: postgres
+      DB_USER: postgres
+      PROFILE: local
     ports:
       - '8090:8090'
     build:

@@ -92,23 +92,6 @@
         ]]></query>
     </named-native-query>
 
-    <sql-result-set-mapping name="ReporteVentasMapping">
-
-        <constructor-result target-class="ar.com.gtsoftware.dto.reportes.VentaPorProducto">
-            <column name="id_producto" class="java.lang.Long"/>
-            <column name="codigo_propio" class="java.lang.String"/>
-            <column name="codigo_fabricante" class="java.lang.String"/>
-            <column name="descripcion" class="java.lang.String"/>
-            <column name="nombre_unidad" class="java.lang.String"/>
-            <column name="stock_minimo" class="java.math.BigDecimal"/>
-            <column name="stock_actual" class="java.math.BigDecimal"/>
-            <column name="cantidad_vendida" class="java.math.BigDecimal"/>
-            <column name="costo_total_ventas" class="java.math.BigDecimal"/>
-            <column name="total_precio_venta" class="java.math.BigDecimal"/>
-            <column name="cant_comprobantes" class="java.lang.Integer"/>
-            <column name="proveedor" class="java.lang.String"/>
-        </constructor-result>
-    </sql-result-set-mapping>
 
     <named-native-query name="VentasMensualesQueryCount">
         <query>
@@ -147,14 +130,6 @@
         </query>
     </named-native-query>
 
-    <sql-result-set-mapping name="VentasMensualesMapping">
-
-        <constructor-result target-class="ar.com.gtsoftware.dto.reportes.VentaMensual">
-            <column name="anno" class="java.lang.Integer"/>
-            <column name="mes" class="java.lang.Integer"/>
-            <column name="total" class="java.math.BigDecimal"/>
-        </constructor-result>
-    </sql-result-set-mapping>
 
     <named-native-query name="QuiebreStockQuery" result-set-mapping="QuiebreStockMapping">
         <query>
@@ -198,6 +173,33 @@
             ]]>
         </query>
     </named-native-query>
+
+    <sql-result-set-mapping name="VentasMensualesMapping">
+
+        <constructor-result target-class="ar.com.gtsoftware.dto.reportes.VentaMensual">
+            <column name="anno" class="java.lang.Integer"/>
+            <column name="mes" class="java.lang.Integer"/>
+            <column name="total" class="java.math.BigDecimal"/>
+        </constructor-result>
+    </sql-result-set-mapping>
+
+    <sql-result-set-mapping name="ReporteVentasMapping">
+
+        <constructor-result target-class="ar.com.gtsoftware.dto.reportes.VentaPorProducto">
+            <column name="id_producto" class="java.lang.Long"/>
+            <column name="codigo_propio" class="java.lang.String"/>
+            <column name="codigo_fabricante" class="java.lang.String"/>
+            <column name="descripcion" class="java.lang.String"/>
+            <column name="nombre_unidad" class="java.lang.String"/>
+            <column name="stock_minimo" class="java.math.BigDecimal"/>
+            <column name="stock_actual" class="java.math.BigDecimal"/>
+            <column name="cantidad_vendida" class="java.math.BigDecimal"/>
+            <column name="costo_total_ventas" class="java.math.BigDecimal"/>
+            <column name="total_precio_venta" class="java.math.BigDecimal"/>
+            <column name="cant_comprobantes" class="java.lang.Integer"/>
+            <column name="proveedor" class="java.lang.String"/>
+        </constructor-result>
+    </sql-result-set-mapping>
 
     <sql-result-set-mapping name="QuiebreStockMapping">
 

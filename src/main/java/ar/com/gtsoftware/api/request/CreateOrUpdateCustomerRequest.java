@@ -13,7 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class NewCustomerRequest {
+public class CreateOrUpdateCustomerRequest {
 
   @Pattern(
       regexp =

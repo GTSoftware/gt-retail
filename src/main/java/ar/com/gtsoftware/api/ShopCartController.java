@@ -9,7 +9,6 @@ import ar.com.gtsoftware.dto.domain.NegocioCondicionesOperacionesDto;
 import ar.com.gtsoftware.dto.domain.NegocioFormasPagoDto;
 import ar.com.gtsoftware.dto.domain.NegocioPlanesPagoDto;
 import ar.com.gtsoftware.dto.domain.NegocioTiposComprobanteDto;
-import io.swagger.annotations.ApiModel;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@ApiModel(value = "API para carrito de compras")
 public interface ShopCartController {
   @PostMapping(path = "/shop-cart/add-product")
   CartItemResponse addProduct(@RequestBody @Valid AddCartItemRequest addCartItemRequest);

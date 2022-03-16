@@ -1,16 +1,33 @@
 databaseChangeLog:
-  - include:
-      file: db/changelog/V_1.0-schema.sql
+  - changeSet:
+      id: 1
+      author: Rodrigo
+      changes:
+        - sqlFile:
+            dbms: postgresql
+            encoding: utf8
+            stripComments: true
+            path: V_1.0-schema.sql
+            endDelimiter: \n/\s*\n|\n/\s*$
+            relativeToChangelogFile: true
       preConditions:
-        - onFail: FAIL
+        - onFail: MARK_RAN
         - sqlCheck:
             expectedResult: 0
             sql: SELECT COUNT(1) FROM pg_tables WHERE TABLENAME = 'usuarios'
-  - include:
-      file: db/changelog/V_1.1-data.sql
+  - changeSet:
+      id: 2
+      author: Rodrigo
+      changes:
+        - sqlFile:
+            dbms: postgresql
+            encoding: utf8
+            stripComments: true
+            path: V_1.1-data.sql
+            relativeToChangelogFile: true
       preConditions:
-        - onFail: FAIL
+        - onFail: MARK_RAN
         - sqlCheck:
             expectedResult: 0
-            sql: SELECT COUNT(1) FROM usuarios
+            sql: SELECT COUNT(1) FROM public.usuarios
 

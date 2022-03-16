@@ -20,7 +20,7 @@
 	<parameter name="empresa.fechainicio" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="codigobarras" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="logoAfip" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="subreport" class="java.lang.String" isForPrompting="false">
+	<parameter name="subreport" class="net.sf.jasperreports.engine.JasperReport" isForPrompting="false">
 		<defaultValueExpression><![CDATA["reports/vistaVentas_lineas.jasper"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="copia" class="java.lang.String" isForPrompting="false">
@@ -292,7 +292,7 @@
 				</subreportParameter>
 				<dataSourceExpression>
 					<![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{comprobantesLineasList})]]></dataSourceExpression>
-				<subreportExpression><![CDATA[$P{subreport}]]></subreportExpression>
+				<subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{subreport}]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>

@@ -16,7 +16,13 @@
     <parameter name="empresa.fechainicio" class="java.lang.String" isForPrompting="false"/>
     <parameter name="codigobarras" class="java.lang.String" isForPrompting="false"/>
     <parameter name="logoAfip" class="java.lang.String" isForPrompting="false"/>
-    <parameter name="subreport" class="java.lang.String" isForPrompting="false">
+    <parameter name="subreport" class="net.sf.jasperreports.engine.JasperReport" isForPrompting="false">
+        <defaultValueExpression><![CDATA["reports/vistaVentas_lineas.jasper"]]></defaultValueExpression>
+    </parameter>
+    <parameter name="facturaReport" class="net.sf.jasperreports.engine.JasperReport" isForPrompting="false">
+        <defaultValueExpression><![CDATA["reports/factura.jasper"]]></defaultValueExpression>
+    </parameter>
+    <parameter name="alicuotasSubReport" class="net.sf.jasperreports.engine.JasperReport" isForPrompting="false">
         <defaultValueExpression><![CDATA["reports/vistaVentas_lineas.jasper"]]></defaultValueExpression>
     </parameter>
     <parameter name="subDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
@@ -30,6 +36,9 @@
                 <reportElement x="0" y="0" width="595" height="49" uuid="fffa08ff-34c3-4b0f-963a-1bb46e8bbcda"/>
                 <subreportParameter name="subreport">
                     <subreportParameterExpression><![CDATA[$P{subreport}]]></subreportParameterExpression>
+                </subreportParameter>
+                <subreportParameter name="alicuotasSubReport">
+                    <subreportParameterExpression><![CDATA[$P{alicuotasSubReport}]]></subreportParameterExpression>
                 </subreportParameter>
                 <subreportParameter name="logoAfip">
                     <subreportParameterExpression><![CDATA[$P{logoAfip}]]></subreportParameterExpression>
@@ -71,7 +80,7 @@
                     <subreportParameterExpression><![CDATA[$P{empresa.nombre_fantasia}]]></subreportParameterExpression>
                 </subreportParameter>
                 <dataSourceExpression><![CDATA[$P{subDataSource}]]></dataSourceExpression>
-                <subreportExpression><![CDATA["reports/factura.jasper"]]></subreportExpression>
+                <subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{facturaReport}]]></subreportExpression>
             </subreport>
             <break>
                 <reportElement x="0" y="49" width="555" height="1" uuid="9c30e974-d4df-43f0-9f73-0eb75b709bf3"/>
@@ -82,6 +91,9 @@
                 <reportElement x="0" y="0" width="595" height="38" uuid="346c9e00-05bf-470b-8f70-10d0c77f6b83"/>
                 <subreportParameter name="subreport">
                     <subreportParameterExpression><![CDATA[$P{subreport}]]></subreportParameterExpression>
+                </subreportParameter>
+                <subreportParameter name="alicuotasSubReport">
+                    <subreportParameterExpression><![CDATA[$P{alicuotasSubReport}]]></subreportParameterExpression>
                 </subreportParameter>
                 <subreportParameter name="logoAfip">
                     <subreportParameterExpression><![CDATA[$P{logoAfip}]]></subreportParameterExpression>
@@ -123,7 +135,7 @@
                     <subreportParameterExpression><![CDATA[$P{empresa.nombre_fantasia}]]></subreportParameterExpression>
                 </subreportParameter>
                 <dataSourceExpression><![CDATA[$P{subDataSource2}]]></dataSourceExpression>
-                <subreportExpression><![CDATA["reports/factura.jasper"]]></subreportExpression>
+                <subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{facturaReport}]]></subreportExpression>
             </subreport>
         </band>
     </detail>

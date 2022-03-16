@@ -49,10 +49,9 @@ class LoginClientTest {
 
     Source requestPayload =
         new StringSource(
-            "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n"
-                + "<loginCms xmlns=\"http://wsaa.view.sua.dvadac.desein.afip.gov\">\n"
-                + "    <in0>signedRequest</in0>\n"
-                + "</loginCms>");
+            "<ns3:loginCms xmlns:ns3=\"http://wsaa.view.sua.dvadac.desein.afip.gov\" xmlns:ns4=\"https://wsaa.afip.gov.ar/ws/services/LoginCms\" xmlns=\"\">"
+                + "<ns3:in0>signedRequest</ns3:in0>"
+                + "</ns3:loginCms>");
 
     Source responsePayload =
         new StringSource(

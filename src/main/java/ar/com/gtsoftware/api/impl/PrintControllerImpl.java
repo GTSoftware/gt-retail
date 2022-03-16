@@ -1,6 +1,16 @@
 package ar.com.gtsoftware.api.impl;
 
-import static ar.com.gtsoftware.enums.Parametros.*;
+import static ar.com.gtsoftware.enums.Parametros.EMPRESA_CUIT;
+import static ar.com.gtsoftware.enums.Parametros.EMPRESA_DIRECCION;
+import static ar.com.gtsoftware.enums.Parametros.EMPRESA_EMAIL;
+import static ar.com.gtsoftware.enums.Parametros.EMPRESA_FECHA_INICIO;
+import static ar.com.gtsoftware.enums.Parametros.EMPRESA_LOCALIDAD;
+import static ar.com.gtsoftware.enums.Parametros.EMPRESA_NOMBRE;
+import static ar.com.gtsoftware.enums.Parametros.EMPRESA_NOMBRE_FANTASIA;
+import static ar.com.gtsoftware.enums.Parametros.EMPRESA_PROVINCIA;
+import static ar.com.gtsoftware.enums.Parametros.EMPRESA_RAZON_SOCIAL;
+import static ar.com.gtsoftware.enums.Parametros.EMPRESA_TELEFONO;
+import static ar.com.gtsoftware.enums.Parametros.PRESUPUESTO_MOSTRAR_DETALLE_PRECIOS;
 
 import ar.com.gtsoftware.api.PrintController;
 import ar.com.gtsoftware.api.exception.FileGenerationException;
@@ -16,14 +26,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import javax.annotation.PostConstruct;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
@@ -42,6 +55,8 @@ public class PrintControllerImpl implements PrintController {
   private final HttpServletResponse response;
   private final ResourceLoader resourceLoader;
 
+  private final transient Map<String, JasperReport> REPORTS_MAP = new HashMap<>();
+
   @Override
   public void getSaleBudget(Long saleId) {
     ComprobantesDto comprobante = ventasService.obtenerComprobante(saleId);
@@ -53,14 +68,13 @@ public class PrintControllerImpl implements PrintController {
         parametrosService.getBooleanParam(PRESUPUESTO_MOSTRAR_DETALLE_PRECIOS);
 
     JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(ventas);
-    Resource resource = resourceLoader.getResource("classpath:reports/presupuesto.jasper");
 
     Map<String, Object> parameters = loadCompanyParameters();
     parameters.put(PRESUPUESTO_MOSTRAR_DETALLE_PRECIOS.getNombreParametro(), mostrarDetallePrecios);
-
+    parameters.put("subreport", REPORTS_MAP.get("vistaVentas_lineas"));
     String fileName = String.format("venta-%d", saleId);
 
-    handlePDFExport(fileName, beanCollectionDataSource, resource, parameters);
+    handlePDFExport(fileName, beanCollectionDataSource, "presupuesto", parameters);
   }
 
   @Override
@@ -75,30 +89,25 @@ public class PrintControllerImpl implements PrintController {
     JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(ventas);
     JRBeanCollectionDataSource beanCollectionDataSource1 = new JRBeanCollectionDataSource(ventas);
     JRBeanCollectionDataSource beanCollectionDataSource2 = new JRBeanCollectionDataSource(ventas);
-    Resource reportResource =
-        resourceLoader.getResource("classpath:reports/facturaConDuplicado.jasper");
-    Resource logoAfip = resourceLoader.getResource("classpath:images/afip.png");
 
     Map<String, Object> parameters = loadCompanyParameters();
 
-    try {
-      parameters.put("logoAfip", logoAfip.getURI().getPath());
-    } catch (IOException e) {
-      log.warn("Could not get AFIP logo", e);
-    }
+    parameters.put("logoAfip", "classpath:images/afip.png");
     parameters.put("codigobarras", comprobante.getCodigoBarrasFactura());
+    parameters.put("facturaReport", REPORTS_MAP.get("factura"));
+    parameters.put("alicuotasSubReport", REPORTS_MAP.get("vistaVentas_alicuotas"));
 
     if (comprobante.getIdRegistro().getLetraFactura().equals("A")) {
-      parameters.put("subreport", "reports/vistaVentas_lineasNeto.jasper");
+      parameters.put("subreport", REPORTS_MAP.get("vistaVentas_lineasNeto"));
     } else {
-      parameters.put("subreport", "reports/vistaVentas_lineas.jasper");
+      parameters.put("subreport", REPORTS_MAP.get("vistaVentas_lineas"));
     }
     parameters.put("subDataSource", beanCollectionDataSource1);
     parameters.put("subDataSource2", beanCollectionDataSource2);
 
     String fileName = String.format("factura-%d", saleId);
 
-    handlePDFExport(fileName, beanCollectionDataSource, reportResource, parameters);
+    handlePDFExport(fileName, beanCollectionDataSource, "facturaConDuplicado", parameters);
   }
 
   @Override
@@ -110,25 +119,26 @@ public class PrintControllerImpl implements PrintController {
     List<RemitoDto> remitos = Collections.singletonList(remito);
 
     JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(remitos);
-    Resource resource = resourceLoader.getResource("classpath:reports/remito.jasper");
 
     Map<String, Object> parameters = loadCompanyParameters();
+    parameters.put("subreportParameter", REPORTS_MAP.get("remito_lineas"));
 
     String fileName = String.format("remito-%d", deliveryNoteId);
 
-    handlePDFExport(fileName, beanCollectionDataSource, resource, parameters);
+    handlePDFExport(fileName, beanCollectionDataSource, "remito", parameters);
   }
 
   private void handlePDFExport(
       String fileName,
       JRBeanCollectionDataSource beanCollectionDataSource,
-      Resource resource,
+      String reportName,
       Map<String, Object> parameters) {
 
     try {
+
       JasperPrint jasperPrint =
           JasperFillManager.fillReport(
-              resource.getInputStream(), parameters, beanCollectionDataSource);
+              REPORTS_MAP.get(reportName), parameters, beanCollectionDataSource);
 
       response.addHeader(
           HttpHeaders.CONTENT_DISPOSITION, String.format("attachment; filename=%s.pdf", fileName));
@@ -178,5 +188,36 @@ public class PrintControllerImpl implements PrintController {
         EMPRESA_TELEFONO.getNombreParametro(), parametrosService.getStringParam(EMPRESA_TELEFONO));
 
     return parametros;
+  }
+
+  @PostConstruct
+  private void compileReports() {
+
+    final List<String> reports =
+        List.of(
+            "classpath:reports/factura.jrxml",
+            "classpath:reports/facturaConDuplicado.jrxml",
+            "classpath:reports/presupuesto.jrxml",
+            "classpath:reports/productoEtiqueta.jrxml",
+            "classpath:reports/recibo.jrxml",
+            "classpath:reports/reciboDetalle.jrxml",
+            "classpath:reports/remito.jrxml",
+            "classpath:reports/remito_lineas.jrxml",
+            "classpath:reports/vistaVentas_alicuotas.jrxml",
+            "classpath:reports/vistaVentas_lineas.jrxml",
+            "classpath:reports/vistaVentas_lineasNeto.jrxml");
+    try {
+      for (String reportFilePath : reports) {
+        log.debug("Compiling report:" + reportFilePath);
+
+        final Resource reportResource = resourceLoader.getResource(reportFilePath);
+        JasperReport compiledReport =
+            JasperCompileManager.compileReport(reportResource.getInputStream());
+        REPORTS_MAP.put(reportResource.getFilename().replace(".jrxml", ""), compiledReport);
+      }
+
+    } catch (IOException | JRException ex) {
+      log.error("Error compiling reports", ex);
+    }
   }
 }
