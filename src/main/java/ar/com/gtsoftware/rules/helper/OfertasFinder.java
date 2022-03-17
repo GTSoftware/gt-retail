@@ -5,7 +5,6 @@ import ar.com.gtsoftware.search.OfertasSearchFilter;
 import ar.com.gtsoftware.service.OfertasService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -14,10 +13,15 @@ public class OfertasFinder {
 
   private final OfertasService ofertasService;
 
-  @Cacheable(cacheNames = "offers")
   public List<OfertaDto> findOfertas() {
     final OfertasSearchFilter filter = OfertasSearchFilter.builder().activas(true).build();
 
     return ofertasService.findAllBySearchFilter(filter);
+  }
+
+  public boolean existsActiveOffers() {
+    final OfertasSearchFilter filter = OfertasSearchFilter.builder().activas(true).build();
+
+    return ofertasService.countBySearchFilter(filter) > 0;
   }
 }

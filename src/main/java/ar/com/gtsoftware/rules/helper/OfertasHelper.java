@@ -24,38 +24,45 @@ import ar.com.gtsoftware.rules.CondicionIlegalException;
 import ar.com.gtsoftware.rules.OfertaDto;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 import lombok.RequiredArgsConstructor;
-import org.jeasy.rules.api.*;
+import lombok.extern.slf4j.Slf4j;
+import org.jeasy.rules.api.Facts;
+import org.jeasy.rules.api.Rule;
+import org.jeasy.rules.api.Rules;
+import org.jeasy.rules.api.RulesEngine;
+import org.jeasy.rules.api.RulesEngineParameters;
 import org.jeasy.rules.core.DefaultRulesEngine;
 import org.jeasy.rules.mvel.MVELRule;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class OfertasHelper {
 
   private final OfertasFinder ofertasFinder;
+  private final CacheManager cacheManager;
 
   public void ejecutarReglasOferta(PromotionCartItem promotionCartItem) {
-    final List<OfertaDto> ofertasList = ofertasFinder.findOfertas();
-
-    if (!ofertasList.isEmpty()) {
-      List<Rule> offerRules = getOfferRules(ofertasList);
-
-      Facts facts = new Facts();
-      facts.put("promotionCartItem", promotionCartItem);
-      facts.put("linea", promotionCartItem.getLinea());
-
-      Rules rules = new Rules();
-      for (Rule rule : offerRules) {
-        rules.register(rule);
-      }
-      RulesEngineParameters params = new RulesEngineParameters();
-      params.setSkipOnFirstAppliedRule(true);
-
-      RulesEngine engine = new DefaultRulesEngine(params);
-      engine.fire(rules, facts);
+    if (!ofertasFinder.existsActiveOffers()) {
+      return;
     }
+
+    Facts facts = new Facts();
+    facts.put("promotionCartItem", promotionCartItem);
+    facts.put("linea", promotionCartItem.getLinea());
+
+    RulesEngineParameters params = new RulesEngineParameters();
+    params.setSkipOnFirstAppliedRule(true);
+
+    RulesEngine engine = new DefaultRulesEngine(params);
+    engine.fire(loadOffersFromCache(), facts);
   }
 
   private List<Rule> getOfferRules(List<OfertaDto> ofertasList) {
@@ -78,6 +85,39 @@ public class OfertasHelper {
         //
       }
     }
+
+    return rules;
+  }
+
+  // TODO this is here until the add/edit offers is done
+  @Scheduled(fixedDelay = 30, timeUnit = TimeUnit.MINUTES)
+  public void invalidateCache() {
+    log.debug("Evicting offers cache...");
+    cacheManager.getCache("offers").invalidate();
+  }
+
+  @Scheduled(fixedDelay = 5, timeUnit = TimeUnit.MINUTES)
+  @Transactional
+  public Rules loadOffersFromCache() {
+    if (!ofertasFinder.existsActiveOffers()) {
+      return null;
+    }
+
+    final Cache offersCache = cacheManager.getCache("offers");
+    Rules cachedRules = offersCache.get("rules", Rules.class);
+    if (Objects.nonNull(cachedRules)) {
+      return cachedRules;
+    }
+
+    final List<OfertaDto> ofertasList = ofertasFinder.findOfertas();
+    log.debug("Loading {} offers into cache...", ofertasList.size());
+
+    List<Rule> offerRules = getOfferRules(ofertasList);
+    Rules rules = new Rules();
+    for (Rule rule : offerRules) {
+      rules.register(rule);
+    }
+    offersCache.put("rules", rules);
 
     return rules;
   }

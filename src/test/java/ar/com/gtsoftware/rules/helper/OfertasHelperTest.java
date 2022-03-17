@@ -4,7 +4,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
 
 import ar.com.gtsoftware.api.PromotionCartItem;
 import ar.com.gtsoftware.dto.domain.ComprobantesLineasDto;
@@ -12,25 +11,35 @@ import ar.com.gtsoftware.rules.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import org.jeasy.rules.api.Rules;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 
+@ExtendWith(MockitoExtension.class)
 class OfertasHelperTest {
 
   private OfertasHelper helper;
 
   @Mock private OfertasFinder ofertasFinderMock;
+  @Mock private CacheManager cacheManager;
+  @Mock private Cache cache;
 
   @BeforeEach
   void setUp() {
-    initMocks(this);
+    helper = new OfertasHelper(ofertasFinderMock, cacheManager);
 
-    helper = new OfertasHelper(ofertasFinderMock);
+    when(cacheManager.getCache("offers")).thenReturn(cache);
+    when(cache.get("rules", Rules.class)).thenReturn(null);
   }
 
   @Test
   public void shouldEjecutarReglas() {
+    when(ofertasFinderMock.existsActiveOffers()).thenReturn(true);
     when(ofertasFinderMock.findOfertas()).thenReturn(buildDummyOfertas());
 
     PromotionCartItem cartItem = new PromotionCartItem();
