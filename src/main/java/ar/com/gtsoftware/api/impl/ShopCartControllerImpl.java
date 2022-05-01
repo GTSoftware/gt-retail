@@ -9,7 +9,7 @@ import ar.com.gtsoftware.api.request.SalePayment;
 import ar.com.gtsoftware.api.request.SaleRequest;
 import ar.com.gtsoftware.api.response.CartItemResponse;
 import ar.com.gtsoftware.api.response.CreatedSaleResponse;
-import ar.com.gtsoftware.api.response.Customer;
+import ar.com.gtsoftware.api.response.CustomerResponse;
 import ar.com.gtsoftware.api.response.DiscountItem;
 import ar.com.gtsoftware.api.transformer.fromDomain.CustomerTransformer;
 import ar.com.gtsoftware.auth.JwtUserDetails;
@@ -80,14 +80,14 @@ class ShopCartControllerImpl implements ShopCartController {
   }
 
   @Override
-  public Customer getDefaultCustomer() {
+  public CustomerResponse getDefaultCustomer() {
     Long idClienteDefecto = parametrosService.getLongParam(Parametros.ID_CLIENTE_DEFECTO);
 
     return customerTransformer.transformCustomer(personasService.find(idClienteDefecto));
   }
 
   @Override
-  public List<Customer> searchCustomers(String query) {
+  public List<CustomerResponse> searchCustomers(String query) {
     PersonasSearchFilter filter =
         PersonasSearchFilter.builder().activo(true).cliente(true).txt(query).build();
     filter.addSortField("razonSocial", true);

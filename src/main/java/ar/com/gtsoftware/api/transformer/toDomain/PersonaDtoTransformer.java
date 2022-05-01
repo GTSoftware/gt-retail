@@ -58,6 +58,10 @@ public class PersonaDtoTransformer {
     final PersonasDto customer = transformNewCustomer(updateCustomerRequest);
     customer.setFechaAlta(existingCustomer.getFechaAlta());
     customer.setIdSucursal(existingCustomer.getIdSucursal());
+    customer.setVersion(updateCustomerRequest.getVersion());
+    customer.setId(existingCustomer.getId());
+    customer.setActivo(updateCustomerRequest.isActivo());
+    customer.setCliente(existingCustomer.isCliente());
 
     return customer;
   }

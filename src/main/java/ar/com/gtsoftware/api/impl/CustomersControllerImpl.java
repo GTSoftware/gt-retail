@@ -3,7 +3,7 @@ package ar.com.gtsoftware.api.impl;
 import ar.com.gtsoftware.api.CustomersController;
 import ar.com.gtsoftware.api.exception.CustomerNotFoundException;
 import ar.com.gtsoftware.api.request.CreateOrUpdateCustomerRequest;
-import ar.com.gtsoftware.api.response.Customer;
+import ar.com.gtsoftware.api.response.CustomerResponse;
 import ar.com.gtsoftware.api.transformer.fromDomain.CustomerTransformer;
 import ar.com.gtsoftware.api.transformer.toDomain.PersonaDtoTransformer;
 import ar.com.gtsoftware.dto.domain.PersonasDto;
@@ -13,6 +13,7 @@ import ar.com.gtsoftware.service.PersonasService;
 import java.util.Objects;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -25,14 +26,15 @@ public class CustomersControllerImpl implements CustomersController {
   private final PersonaDtoTransformer personaDtoTransformer;
 
   @Override
-  public Customer addNewCustomer(@Valid CreateOrUpdateCustomerRequest newCustomer) {
+  @Transactional
+  public CustomerResponse addNewCustomer(@Valid CreateOrUpdateCustomerRequest newCustomer) {
     PersonasDto customer = personaDtoTransformer.transformNewCustomer(newCustomer);
 
     return customerTransformer.transformCustomer(clientesService.guardarCliente(customer));
   }
 
   @Override
-  public Customer getCustomer(Long identificationTypeId, Long identificationNumber) {
+  public CustomerResponse getCustomer(Long identificationTypeId, Long identificationNumber) {
     final PersonasSearchFilter psf =
         PersonasSearchFilter.builder()
             .idTipoDocumento(identificationTypeId)
@@ -49,7 +51,7 @@ public class CustomersControllerImpl implements CustomersController {
   }
 
   @Override
-  public Customer getCustomerById(Long customerId) {
+  public CustomerResponse getCustomerById(Long customerId) {
     final PersonasDto personaDto = personasService.find(customerId);
 
     if (personaDto == null) {
@@ -60,6 +62,7 @@ public class CustomersControllerImpl implements CustomersController {
   }
 
   @Override
+  @Transactional
   public void updateCustomer(
       Long customerId, @Valid CreateOrUpdateCustomerRequest updateCustomerRequest) {
     final PersonasDto personaDto = personasService.find(customerId);
@@ -67,7 +70,7 @@ public class CustomersControllerImpl implements CustomersController {
       throw new CustomerNotFoundException();
     }
 
-    personasService.createOrEdit(
+    clientesService.guardarCliente(
         personaDtoTransformer.transformFromExisting(updateCustomerRequest, personaDto));
   }
 }

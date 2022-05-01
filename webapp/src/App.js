@@ -32,6 +32,8 @@ import Helmet from "react-helmet"
 import { FiscalBooks } from "./components/fiscal/FiscalBooks"
 import { ProductsInventory } from "./components/products/ProductsInventory"
 import { ProductDetails } from "./components/products/ProductDetails"
+import { CustomersInventory } from "./components/customers/CustomersInventory"
+import { CustomerDetails } from "./components/customers/CustomerDetails"
 
 const ProtectedRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -218,6 +220,13 @@ class App extends Component {
             window.location = "#/sales"
           },
         },
+        {
+          label: "Clientes",
+          icon: "fa fa-fw fa-users",
+          command: () => {
+            window.location = "#/customerResponses"
+          },
+        },
       ],
     }
   }
@@ -355,6 +364,16 @@ class App extends Component {
             <ProtectedRoute path="/fiscal-books" component={FiscalBooks} />
             <ProtectedRoute path="/products" component={ProductsInventory} />
             <ProtectedRoute path="/product/:productId" component={ProductDetails} />
+            <ProtectedRoute
+              path="/customerResponses"
+              component={CustomersInventory}
+            />
+            <ProtectedRoute
+              path="/customer/:customerId"
+              component={CustomerDetails}
+            />
+            <ProtectedRoute path="/customer/" component={CustomerDetails} />
+
             <Route component={PageNotFound} />
           </Switch>
         </div>

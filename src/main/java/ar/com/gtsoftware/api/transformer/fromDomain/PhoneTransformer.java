@@ -15,7 +15,12 @@ public class PhoneTransformer implements Transformer<PersonasTelefonosDto, Phone
   public Phone transform(PersonasTelefonosDto from) {
     Objects.requireNonNull(from);
 
-    return Phone.builder().phoneNumber(from.getNumero()).reference(from.getReferencia()).build();
+    return Phone.builder()
+        .phoneId(from.getId())
+        .version(from.getVersion())
+        .phoneNumber(from.getNumero())
+        .reference(from.getReferencia())
+        .build();
   }
 
   @Override

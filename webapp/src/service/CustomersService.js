@@ -12,7 +12,7 @@ export class CustomersService {
     const customerUpdateRequest = transformFormData(formData)
 
     patch(
-      `/customers/${customerUpdateRequest.customerId}`,
+      `/customers/${formData.customerId}`,
       customerUpdateRequest,
       successCallback,
       errorCallback
@@ -20,7 +20,7 @@ export class CustomersService {
   }
 
   searchCustomers(searchData, successCallback) {
-    post(`persons/search`, searchData, successCallback)
+    post(`/persons/search`, searchData, successCallback)
   }
 
   getCustomer(customerId, successCallback, errorCallback) {
@@ -94,6 +94,8 @@ function transformFormData(formData) {
     generoId: formData.genero.id,
     responsabilidadIvaId: formData.responsabilidadIva.id,
     telefonos: transformPhoneNumbers(formData.telefonos),
+    version: formData.version,
+    activo: formData.activo,
   }
 }
 
@@ -103,6 +105,8 @@ function transformPhoneNumbers(telefonos) {
       return {
         numero: `${telefono.areaCode} ${telefono.number}`,
         referencia: toUpperCaseTrim(telefono.reference),
+        version: telefono.version,
+        id: telefono.id,
       }
     })
   }

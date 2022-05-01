@@ -6,7 +6,6 @@ import { ShopCartStore } from "../../stores/ShopCartStore"
 import ShopCartService from "../../service/ShopCartService"
 import _ from "lodash"
 import { InputTextarea } from "primereact/inputtextarea"
-import { AddNewCustomerDialog } from "./AddNewCustomerDialog"
 
 export class ShopCartCustomer extends Component {
   constructor(props) {
@@ -39,7 +38,7 @@ export class ShopCartCustomer extends Component {
 
     return (
       <div className="card card-w-title">
-        {this.renderAddNewCustomerDialog()}
+        {/*{this.renderAddNewCustomerDialog()}*/}
         <div className="p-card-body p-fluid ">
           <div className="p-grid">
             <div className="p-col">
@@ -63,7 +62,7 @@ export class ShopCartCustomer extends Component {
                   icon="fa fa-fw fa-plus"
                   tooltip="Cliente nuevo"
                   className="p-button-success"
-                  onClick={() => this.setState({ showAddNewCustomerDialog: true })}
+                  onClick={() => window.open(`#/customer/`, "_blank")}
                 />
               </div>
             </div>
@@ -136,21 +135,6 @@ export class ShopCartCustomer extends Component {
           </div>
         </div>
       </div>
-    )
-  }
-
-  renderAddNewCustomerDialog = () => {
-    const { showAddNewCustomerDialog } = this.state
-
-    return (
-      showAddNewCustomerDialog && (
-        <AddNewCustomerDialog
-          visible={this.state.showAddNewCustomerDialog}
-          modal={true}
-          handleNewCustomer={this.handleSetCustomer}
-          onHide={() => this.setState({ showAddNewCustomerDialog: false })}
-        />
-      )
     )
   }
 

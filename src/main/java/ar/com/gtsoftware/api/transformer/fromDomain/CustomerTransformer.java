@@ -1,6 +1,7 @@
 package ar.com.gtsoftware.api.transformer.fromDomain;
 
-import ar.com.gtsoftware.api.response.Customer;
+import ar.com.gtsoftware.api.response.CustomerResponse;
+import ar.com.gtsoftware.api.response.IdentificationType;
 import ar.com.gtsoftware.dto.domain.PersonasDto;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,18 +16,18 @@ public class CustomerTransformer {
   private static final String IDENTIFICATION_FORMAT = "%s %s";
   private final PhoneTransformer phoneTransformer;
 
-  public List<Customer> transformCustomers(List<PersonasDto> personasDtoList) {
-    List<Customer> customers = new ArrayList<>(personasDtoList.size());
+  public List<CustomerResponse> transformCustomers(List<PersonasDto> personasDtoList) {
+    List<CustomerResponse> customerResponses = new ArrayList<>(personasDtoList.size());
     for (PersonasDto persona : personasDtoList) {
-      customers.add(transformCustomer(persona));
+      customerResponses.add(transformCustomer(persona));
     }
 
-    return customers;
+    return customerResponses;
   }
 
-  public Customer transformCustomer(PersonasDto personasDto) {
+  public CustomerResponse transformCustomer(PersonasDto personasDto) {
 
-    return Customer.builder()
+    return CustomerResponse.builder()
         .branchId(personasDto.getIdSucursal().getId())
         .customerId(personasDto.getId())
         .businessName(personasDto.getRazonSocial())
@@ -50,6 +51,27 @@ public class CustomerTransformer {
                 personasDto.getIdPais().getNombrePais()))
         .phones(phoneTransformer.transform(personasDto.getPersonasTelefonosList()))
         .responsabilidadIVA(personasDto.getIdResponsabilidadIva().getNombreResponsabildiad())
+        .version(personasDto.getVersion())
+        .pais(personasDto.getIdPais())
+        .provincia(personasDto.getIdProvincia())
+        .localidad(personasDto.getIdLocalidad())
+        .genero(personasDto.getIdGenero())
+        .tipoDocumento(
+            IdentificationType.builder()
+                .id(personasDto.getIdTipoDocumento().getId())
+                .identificationTypeName(personasDto.getIdTipoDocumento().getNombreTipoDocumento())
+                .build())
+        .documento(personasDto.getDocumento())
+        .tipoPersoneria(personasDto.getIdTipoPersoneria())
+        .calle(personasDto.getCalle())
+        .altura(personasDto.getAltura())
+        .piso(personasDto.getPiso())
+        .depto(personasDto.getDepto())
+        .nombres(personasDto.getNombres())
+        .apellidos(personasDto.getApellidos())
+        .tipoResponsableIva(personasDto.getIdResponsabilidadIva())
+        .razonSocial(personasDto.getRazonSocial())
+        .activo(personasDto.isActivo())
         .build();
   }
 }

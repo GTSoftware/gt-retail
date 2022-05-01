@@ -66,4 +66,7 @@ public class CreateOrUpdateCustomerRequest {
   @NotNull private Long generoId;
   @NotNull private Long responsabilidadIvaId;
   @Valid private List<PersonasTelefonosDto> telefonos;
+  private boolean activo;
+
+  private Integer version;
 }
