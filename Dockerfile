@@ -9,8 +9,9 @@ FROM openjdk:11-jre AS production
 
 # Add a work directory
 WORKDIR /app
-#Copy app
-#COPY build/libs/gt-retail-0.0.1-SNAPSHOT.war .
+#Copy Certs
+COPY certs /app/certs
+
 COPY --from=builder /app/build/libs /app
 # Expose port
 EXPOSE 8090:8090

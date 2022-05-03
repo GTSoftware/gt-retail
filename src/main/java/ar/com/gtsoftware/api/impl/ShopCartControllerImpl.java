@@ -2,6 +2,7 @@ package ar.com.gtsoftware.api.impl;
 
 import ar.com.gtsoftware.api.PromotionCartItem;
 import ar.com.gtsoftware.api.ShopCartController;
+import ar.com.gtsoftware.api.exception.CustomerNotFoundException;
 import ar.com.gtsoftware.api.exception.ProductNotFoundException;
 import ar.com.gtsoftware.api.request.AddCartItemRequest;
 import ar.com.gtsoftware.api.request.SaleItem;
@@ -82,8 +83,11 @@ class ShopCartControllerImpl implements ShopCartController {
   @Override
   public CustomerResponse getDefaultCustomer() {
     Long idClienteDefecto = parametrosService.getLongParam(Parametros.ID_CLIENTE_DEFECTO);
-
-    return customerTransformer.transformCustomer(personasService.find(idClienteDefecto));
+    final PersonasDto defaultCustomer = personasService.find(idClienteDefecto);
+    if (Objects.isNull(defaultCustomer)) {
+      throw new CustomerNotFoundException("El cliente por defecto no está bien configurado");
+    }
+    return customerTransformer.transformCustomer(defaultCustomer);
   }
 
   @Override

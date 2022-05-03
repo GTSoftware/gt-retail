@@ -334,20 +334,20 @@ INSERT INTO public.parametros (nombre_parametro, valor_parametro, descripcion_pa
 INSERT INTO public.parametros (nombre_parametro, valor_parametro, descripcion_parametro, version) VALUES ('venta.pos.id_condicion.defecto', '1', 'El ID de la condición de venta por defecto para venta tipo POS', 0);
 INSERT INTO public.parametros (nombre_parametro, valor_parametro, descripcion_parametro, version) VALUES ('venta.pos.id_forma_pago.defecto', '1', 'El ID de la forma de pago por defecto para venta tipo POS', 0);
 INSERT INTO public.parametros (nombre_parametro, valor_parametro, descripcion_parametro, version) VALUES ('afip.wsaa.endpoint', 'https://wsaahomo.afip.gov.ar/ws/services/LoginCms', 'La URL para acceder al servicio de autorización para servicios web de AFIP', 0);
-INSERT INTO public.parametros (nombre_parametro, valor_parametro, descripcion_parametro, version) VALUES ('afip.wsaa.cert.path', '/home/rodrigo/certs/afip/alias.p12', 'La ruta al certificado en formato pkcs12', 0);
+INSERT INTO public.parametros (nombre_parametro, valor_parametro, descripcion_parametro, version) VALUES ('afip.wsaa.cert.path', '/app/certs/afip/alias.p12', 'La ruta al certificado en formato pkcs12', 0);
 INSERT INTO public.parametros (nombre_parametro, valor_parametro, descripcion_parametro, version) VALUES ('afip.wsaa.cert.password', 'soloio', 'La clave para descifrar el certificado', 0);
 INSERT INTO public.parametros (nombre_parametro, valor_parametro, descripcion_parametro, version) VALUES ('afip.wsaa.dn', 'cn=wsaahomo,o=afip,c=ar,serialNumber=CUIT 33693450239', 'El DN para acceder al servicio', 0);
 INSERT INTO public.parametros (nombre_parametro, valor_parametro, descripcion_parametro, version) VALUES ('afip.wsfe.endpoint', 'https://wswhomo.afip.gov.ar/wsfev1/service.asmx', 'El link para el servicio de web de factura electrónica', 0);
 INSERT INTO public.parametros (nombre_parametro, valor_parametro, descripcion_parametro, version) VALUES ('venta.pos.id_cliente.defecto', '227', 'El ID de cliente por defecto para ser utilizado en la venta tipo POS', 1);
-INSERT INTO public.parametros (nombre_parametro, valor_parametro, descripcion_parametro, version) VALUES ('empresa.nombre', 'Herrajes R.T.', 'Nombre de la empresa', 1);
+INSERT INTO public.parametros (nombre_parametro, valor_parametro, descripcion_parametro, version) VALUES ('empresa.nombre', 'Empresa de pruebas', 'Nombre de la empresa', 1);
 INSERT INTO public.parametros (nombre_parametro, valor_parametro, descripcion_parametro, version) VALUES ('empresa.cuit', '27133365619', 'CUIT de la empresa', 1);
-INSERT INTO public.parametros (nombre_parametro, valor_parametro, descripcion_parametro, version) VALUES ('empresa.direccion', 'H. Irigoyen 446', 'Dirección de la empresa', 1);
-INSERT INTO public.parametros (nombre_parametro, valor_parametro, descripcion_parametro, version) VALUES ('empresa.razon_social', 'Gladys B. Rothamel', 'Razón social de la empresa', 1);
-INSERT INTO public.parametros (nombre_parametro, valor_parametro, descripcion_parametro, version) VALUES ('empresa.nombre_fantasia', 'Herrajes R.T.', 'El nombre de fantasía de la empresa', 1);
-INSERT INTO public.parametros (nombre_parametro, valor_parametro, descripcion_parametro, version) VALUES ('empresa.telefono', '(03735) 421149', 'Teléfono fijo de la empresa', 1);
+INSERT INTO public.parametros (nombre_parametro, valor_parametro, descripcion_parametro, version) VALUES ('empresa.direccion', 'Av Siempre Viva 123', 'Dirección de la empresa', 1);
+INSERT INTO public.parametros (nombre_parametro, valor_parametro, descripcion_parametro, version) VALUES ('empresa.razon_social', 'Prueba SA', 'Razón social de la empresa', 1);
+INSERT INTO public.parametros (nombre_parametro, valor_parametro, descripcion_parametro, version) VALUES ('empresa.nombre_fantasia', 'Prueba', 'El nombre de fantasía de la empresa', 1);
+INSERT INTO public.parametros (nombre_parametro, valor_parametro, descripcion_parametro, version) VALUES ('empresa.telefono', '(03735) 123456', 'Teléfono fijo de la empresa', 1);
 INSERT INTO public.parametros (nombre_parametro, valor_parametro, descripcion_parametro, version) VALUES ('empresa.fechainicio', '01/02/1995', 'La fecha de inicio de actividades de la empresa', 1);
-INSERT INTO public.parametros (nombre_parametro, valor_parametro, descripcion_parametro, version) VALUES ('empresa.email', 'herrajesrt09@gmail.com', 'Email de la empresa', 1);
-INSERT INTO public.parametros (nombre_parametro, valor_parametro, descripcion_parametro, version) VALUES ('empresa.localidad', 'Villa Angela', 'Localidad de la empresa', 1);
+INSERT INTO public.parametros (nombre_parametro, valor_parametro, descripcion_parametro, version) VALUES ('empresa.email', 'un_mail@gmail.com', 'Email de la empresa', 1);
+INSERT INTO public.parametros (nombre_parametro, valor_parametro, descripcion_parametro, version) VALUES ('empresa.localidad', 'Prueba', 'Localidad de la empresa', 1);
 INSERT INTO public.parametros (nombre_parametro, valor_parametro, descripcion_parametro, version) VALUES ('venta.pos.redondeo.id_producto', '11418', 'El ID de producto a utilizar para el redondeo', 1);
 INSERT INTO public.parametros (nombre_parametro, valor_parametro, descripcion_parametro, version) VALUES ('producto.descuento-recargo.codigo', '11418', 'El ID del producto que representa un descuento o un recargo', 1);
 INSERT INTO public.parametros (nombre_parametro, valor_parametro, descripcion_parametro, version) VALUES ('presupuesto.impresion.mostrar_detalle_precios', '1', '0 = No mostrar sub totales ni precios unitarios en presupuesto. 1 = mostrar.', 0);
@@ -10848,6 +10848,103 @@ INSERT INTO public.usuarios_grupos (id_grupo, nombre_grupo, version) VALUES (9, 
 
 --Default group relationship for default user
 INSERT INTO public.usuarios_gruposx VALUES (1, 1);
+
+--Tipos de proveeduria
+INSERT INTO public.productos_tipos_proveeduria (id_tipo_proveeduria, nombre_tipo_proveeduria, puede_comprarse, puede_venderse,control_stock, cambiar_precio_venta)
+VALUES (1, 'BIENES DE CAMBIO', true, true, true, false);
+INSERT INTO public.productos_tipos_proveeduria (id_tipo_proveeduria, nombre_tipo_proveeduria, puede_comprarse, puede_venderse,control_stock, cambiar_precio_venta)
+VALUES (2, 'BIENES DE USO', true, false, true, false);
+INSERT INTO public.productos_tipos_proveeduria (id_tipo_proveeduria, nombre_tipo_proveeduria, puede_comprarse, puede_venderse,control_stock, cambiar_precio_venta)
+VALUES (3, 'SERVICIOS', true, true, false, false);
+INSERT INTO public.productos_tipos_proveeduria (id_tipo_proveeduria, nombre_tipo_proveeduria, puede_comprarse, puede_venderse,control_stock, cambiar_precio_venta)
+VALUES (4, 'DESCUENTOS ESPECIALES', false, true, false, true);
+
+INSERT INTO public.productos_tipos_unidades (id_tipo_unidad,
+                                             nombre_unidad,
+                                             cantidad_entera)
+                                             VALUES (1, 'UNIDAD', true);
+
+--Default clasification
+INSERT INTO public.productos_marcas (nombre_marca) VALUES ('SIN MARCA');
+INSERT INTO public.productos_rubros (nombre_rubro) VALUES ('SIN RUBRO');
+INSERT INTO public.productos_sub_rubros (id_rubro, nombre_sub_rubro) VALUES (1, 'SIN RUBRO');
+
+INSERT INTO public.productos_listas_precios (
+                                             id_lista_precio,
+                                             nombre_lista,
+                                             activa
+) VALUES (1, 'CONTADO', true);
+
+--Default product
+INSERT INTO public.productos (
+    codigo_propio,
+    descripcion,
+    fecha_alta,
+    activo,
+    id_tipo_proveeduria,
+    id_tipo_unidad_compra,
+    id_tipo_unidad_venta,
+    costo_adquisicion_neto,
+    id_alicuota_iva,
+    id_rubro,
+    id_sub_rubro,
+    annos_amortizacion,
+    id_proveedor_habitual,
+    version,
+    id_marca,
+    fecha_ultima_modificacion,
+    observaciones,
+    costo_final,
+    unidades_compra_unidades_venta ,
+    ubicacion,
+    stock_minimo,
+    codigo_fabricante
+) VALUES (
+          'TEST',
+          'PRODUCTO DE PRUEBA',
+          now(),
+          true,
+          1,
+          1,
+          1,
+          100,
+          1,
+          1,
+          1,
+          0,
+          null,
+          0,
+          1,
+          now(),
+          null,
+          150,
+          1,
+          'TEST',
+          1,
+          'TEST'
+         );
+
+INSERT INTO public.productos_precios (
+    id_producto,
+    id_lista_precio,
+    utilidad,
+    neto,
+    precio
+) VALUES (1, 1, 50, 100, 150);
+
+INSERT INTO public.comprobantes_estados (id_estado, nombre_estado) VALUES (1, 'DISEÑO');
+INSERT INTO public.comprobantes_estados (id_estado, nombre_estado) VALUES (2, 'ACEPTADA');
+INSERT INTO public.comprobantes_estados (id_estado, nombre_estado) VALUES (3, 'ANULADA');
+INSERT INTO public.comprobantes_estados (id_estado, nombre_estado) VALUES (4, 'ANULADA');
+
+INSERT INTO public.remitos_movimientos_tipos (id_tipo_movimiento, nombre_tipo) VALUES (1, 'RECEPCIÓN DE PROVEEDOR');
+INSERT INTO public.remitos_movimientos_tipos (id_tipo_movimiento, nombre_tipo) VALUES (2, 'VENTA');
+INSERT INTO public.remitos_movimientos_tipos (id_tipo_movimiento, nombre_tipo) VALUES (3, 'TRASLADO');
+INSERT INTO public.remitos_movimientos_tipos (id_tipo_movimiento, nombre_tipo) VALUES (4, 'AJUSTES');
+INSERT INTO public.remitos_movimientos_tipos (id_tipo_movimiento, nombre_tipo) VALUES (5, 'BAJA POR ROBO/PÉRDIDA');
+INSERT INTO public.remitos_movimientos_tipos (id_tipo_movimiento, nombre_tipo) VALUES (6, 'BAJA POR MAL ESTADO');
+
+
 --
 -- PostgreSQL database dump complete
 --

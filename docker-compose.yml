@@ -7,7 +7,8 @@ services:
     environment:
       APP_NAME: gt-retail
       JWT_SIGN_KEY: secret
-      DB_URL: jdbc:postgresql://192.168.2.5:5432/retail_rt
+      #DB_URL: jdbc:postgresql://192.168.2.5:5432/retail_rt
+      DB_URL: jdbc:postgresql://postgres:5432/retail
       DB_PASSWRD: postgres
       DB_USER: postgres
       PROFILE: local
