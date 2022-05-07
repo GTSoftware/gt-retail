@@ -126,7 +126,7 @@ new java.math.BigDecimal(100))),2,java.math.RoundingMode.HALF_UP)]]></variableEx
 				</textElement>
 				<textFieldExpression><![CDATA[$F{idProducto}.getIdTipoUnidadVenta().getNombreUnidad()]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="¤ #,##0.00">
+			<textField isStretchWithOverflow="true" pattern="$#,##0.00">
 				<reportElement x="416" y="0" width="69" height="24" uuid="e8f13670-d049-4398-943b-644ed58e24a5"/>
 				<box rightPadding="2"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
@@ -144,7 +144,7 @@ new java.math.BigDecimal(100))),2,java.math.RoundingMode.HALF_UP)]]></variableEx
 					<pen lineStyle="Dashed"/>
 				</graphicElement>
 			</line>
-			<textField isStretchWithOverflow="true" pattern="¤ #,##0.00">
+			<textField isStretchWithOverflow="true" pattern="$#,##0.00">
 				<reportElement x="485" y="0" width="70" height="24" uuid="769a6a0b-f7b8-43dc-a565-c5e08b2960e1"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$V{sub-total-neto-linea}]]></textFieldExpression>

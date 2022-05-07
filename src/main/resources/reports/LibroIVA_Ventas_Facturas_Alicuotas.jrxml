@@ -38,7 +38,7 @@
                 <reportElement x="0" y="0" width="100" height="20" uuid="f8764339-6674-4403-abd2-b1c1987505d4"/>
                 <textFieldExpression><![CDATA[""+$F{alicuota}.getNombreAlicuotaIva()]]></textFieldExpression>
             </textField>
-            <textField isStretchWithOverflow="true" pattern="¤ #,##0.00">
+            <textField isStretchWithOverflow="true" pattern="$#,##0.00">
                 <reportElement x="103" y="0" width="100" height="20" uuid="de1990d2-1af9-4eba-ba1a-e4bc3f5eba20"/>
                 <textElement textAlignment="Right"/>
                 <textFieldExpression><![CDATA[$F{importeIva}]]></textFieldExpression>

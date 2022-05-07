@@ -22,7 +22,7 @@
 	</field>
 	<pageHeader>
 		<band height="27">
-			<textField pattern="¤ #,##0.00">
+			<textField pattern="$#,##0.00">
 				<reportElement x="416" y="7" width="139" height="20" uuid="9e926177-09eb-4f89-baf1-9754bf9d3205"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{idRegistro}.getImporteNetoGravado()]]></textFieldExpression>
@@ -44,7 +44,7 @@
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{idAlicuotaIva}.getNombreAlicuotaIva()+":"]]></textFieldExpression>
 			</textField>
-			<textField pattern="¤ #,##0.00">
+			<textField pattern="$#,##0.00">
 				<reportElement x="416" y="0" width="139" height="20" uuid="32ee656f-922e-493f-8f70-6c1d8510599b"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{importeIva}]]></textFieldExpression>
@@ -58,12 +58,12 @@
 				<textElement textAlignment="Right"/>
 				<text><![CDATA[Neto No Gravado:]]></text>
 			</staticText>
-			<textField pattern="¤ #,##0.00">
+			<textField pattern="$#,##0.00">
 				<reportElement x="416" y="0" width="139" height="20" uuid="c9f3ed06-a38c-49ea-9efe-f1dea3311ab8"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{idRegistro}.getImporteNetoNoGravado()]]></textFieldExpression>
 			</textField>
-			<textField pattern="¤ #,##0.00">
+			<textField pattern="$#,##0.00">
 				<reportElement x="416" y="20" width="139" height="20" uuid="a160ddad-cd5e-46f5-ad0e-c3262e0b9f48"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{idRegistro}.getImporteTributos()]]></textFieldExpression>

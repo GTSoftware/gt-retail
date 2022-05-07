@@ -57,7 +57,7 @@
                 <reportElement x="0" y="0" width="139" height="20" uuid="fc093efe-2410-41a3-829b-3cbb26b83046"/>
                 <textFieldExpression><![CDATA[$F{idFormaPago}.getNombreFormaPago()]]></textFieldExpression>
             </textField>
-            <textField pattern="¤ #,##0.00">
+            <textField pattern="$#,##0.00">
                 <reportElement x="441" y="0" width="100" height="20" uuid="e08e9214-3c21-4341-b4d9-06fec343c6d7"/>
                 <textElement textAlignment="Right"/>
                 <textFieldExpression><![CDATA[$F{montoPagadoConSigno}]]></textFieldExpression>

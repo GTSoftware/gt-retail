@@ -63,22 +63,22 @@
                 <textFieldExpression>
                     <![CDATA[""+$F{responsabilidadIva}.getNombreResponsabildiad()]]></textFieldExpression>
             </textField>
-            <textField isStretchWithOverflow="true" pattern="¤ #,##0.00">
+            <textField isStretchWithOverflow="true" pattern="$#,##0.00">
                 <reportElement x="132" y="0" width="100" height="20" uuid="4d3e6aaf-667b-44f4-9839-f5c57df680d6"/>
                 <textElement textAlignment="Right"/>
                 <textFieldExpression><![CDATA[$F{netoGravadoTotal}]]></textFieldExpression>
             </textField>
-            <textField isStretchWithOverflow="true" pattern="¤ #,##0.00">
+            <textField isStretchWithOverflow="true" pattern="$#,##0.00">
                 <reportElement x="234" y="0" width="100" height="20" uuid="7163e1cc-4daa-4b8c-808a-43fdc962fe9d"/>
                 <textElement textAlignment="Right"/>
                 <textFieldExpression><![CDATA[$F{noGravadoTotal}]]></textFieldExpression>
             </textField>
-            <textField isStretchWithOverflow="true" pattern="¤ #,##0.00">
+            <textField isStretchWithOverflow="true" pattern="$#,##0.00">
                 <reportElement x="339" y="0" width="100" height="20" uuid="d45e9798-14ff-4f9e-979d-fd944c9a4553"/>
                 <textElement textAlignment="Right"/>
                 <textFieldExpression><![CDATA[$F{ivaTotal}]]></textFieldExpression>
             </textField>
-            <textField isStretchWithOverflow="true" pattern="¤ #,##0.00">
+            <textField isStretchWithOverflow="true" pattern="$#,##0.00">
                 <reportElement x="442" y="0" width="100" height="20" uuid="e6fdac5b-d097-41d6-a1be-67004f514d0b"/>
                 <textElement textAlignment="Right"/>
                 <textFieldExpression><![CDATA[$F{importeTotal}]]></textFieldExpression>

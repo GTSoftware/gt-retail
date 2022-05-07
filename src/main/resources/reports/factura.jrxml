@@ -251,10 +251,10 @@
 				</textElement>
 				<text><![CDATA[Responsable Inscripto]]></text>
 			</staticText>
-			<staticText>
+			<textField>
 				<reportElement x="5" y="158" width="55" height="20" uuid="99f97b5c-d9bc-4546-9306-ec8babda862f"/>
-				<text><![CDATA[CUIT:]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[java.lang.String.format("%s:", $F{idPersona}.getIdTipoDocumento().getNombreTipoDocumento())]]></textFieldExpression>
+			</textField>
 			<textField>
 				<reportElement x="60" y="157" width="202" height="20" uuid="be262e53-ed48-4e7c-b252-6909ccc1230a"/>
 				<textFieldExpression><![CDATA[$F{idPersona}.getDocumento()]]></textFieldExpression>
@@ -340,7 +340,7 @@
 				</textElement>
 				<text><![CDATA[TOTAL:]]></text>
 			</staticText>
-			<textField pattern="¤ #,##0.00">
+			<textField pattern="$#,##0.00">
 				<reportElement x="422" y="38" width="123" height="20" uuid="7a657764-a0be-42e4-8564-359db878af4c"/>
 				<textElement textAlignment="Right">
 					<font size="14" isBold="true"/>

@@ -216,7 +216,7 @@
 				</textElement>
 				<text><![CDATA[TOTAL:]]></text>
 			</staticText>
-			<textField pattern="¤ #,##0.00">
+			<textField pattern="$#,##0.00">
 				<reportElement x="438" y="0" width="117" height="20" uuid="13d022ca-0414-439a-b46f-e7252bc904f5"/>
 				<textElement textAlignment="Right">
 					<font size="14"/>

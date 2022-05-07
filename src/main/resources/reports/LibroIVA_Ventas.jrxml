@@ -97,12 +97,12 @@
     </pageFooter>
     <summary>
         <band height="189" splitType="Stretch">
-            <textField pattern="¤ #,##0.00">
+            <textField pattern="$#,##0.00">
                 <reportElement x="422" y="33" width="100" height="20" uuid="5e9a2538-9b9b-4ceb-b366-3ed30b836b2c"/>
                 <textElement textAlignment="Right"/>
                 <textFieldExpression><![CDATA[$F{importeTotalIVA}]]></textFieldExpression>
             </textField>
-            <textField pattern="¤ #,##0.00">
+            <textField pattern="$#,##0.00">
                 <reportElement x="422" y="13" width="100" height="20" uuid="8f24311a-5e6d-496f-9b54-6b16180c2410"/>
                 <textElement textAlignment="Right"/>
                 <textFieldExpression><![CDATA[$F{importeTotal}]]></textFieldExpression>

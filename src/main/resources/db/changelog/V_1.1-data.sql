@@ -300,6 +300,7 @@ INSERT INTO public.legal_generos (id_genero, nombre_genero, simbolo, id_tipo_per
 --
 
 INSERT INTO public.legal_tipos_documento (id_tipo_documento, nombre_tipo_documento, cantidad_caracteres_minimo, cantidad_caracteres_maximo, id_tipo_personeria, version, fiscal_codigo_tipo_documento) VALUES (1, 'DNI', 8, 8, 1, 0, 96);
+INSERT INTO public.legal_tipos_documento (id_tipo_documento, nombre_tipo_documento, cantidad_caracteres_minimo, cantidad_caracteres_maximo, id_tipo_personeria, version, fiscal_codigo_tipo_documento) VALUES (3, 'CUIT', 11, 11, 1, 0, 80);
 INSERT INTO public.legal_tipos_documento (id_tipo_documento, nombre_tipo_documento, cantidad_caracteres_minimo, cantidad_caracteres_maximo, id_tipo_personeria, version, fiscal_codigo_tipo_documento) VALUES (2, 'CUIT', 11, 11, 2, 0, 80);
 
 
@@ -350,7 +351,7 @@ INSERT INTO public.parametros (nombre_parametro, valor_parametro, descripcion_pa
 INSERT INTO public.parametros (nombre_parametro, valor_parametro, descripcion_parametro, version) VALUES ('empresa.localidad', 'Prueba', 'Localidad de la empresa', 1);
 INSERT INTO public.parametros (nombre_parametro, valor_parametro, descripcion_parametro, version) VALUES ('venta.pos.redondeo.id_producto', '11418', 'El ID de producto a utilizar para el redondeo', 1);
 INSERT INTO public.parametros (nombre_parametro, valor_parametro, descripcion_parametro, version) VALUES ('producto.descuento-recargo.codigo', '11418', 'El ID del producto que representa un descuento o un recargo', 1);
-INSERT INTO public.parametros (nombre_parametro, valor_parametro, descripcion_parametro, version) VALUES ('presupuesto.impresion.mostrar_detalle_precios', '1', '0 = No mostrar sub totales ni precios unitarios en presupuesto. 1 = mostrar.', 0);
+INSERT INTO public.parametros (nombre_parametro, valor_parametro, descripcion_parametro, version) VALUES ('presupuesto.impresion.mostrar_detalle_precios', 'true', 'false = No mostrar sub totales ni precios unitarios en presupuesto. true = mostrar.', 0);
 
 
 --
