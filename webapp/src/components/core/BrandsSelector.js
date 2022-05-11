@@ -1,59 +1,37 @@
-import React, { Component } from "react"
+import React, { useEffect, useState } from "react"
 import { Dropdown } from "primereact/dropdown"
-import PropTypes from "prop-types"
 import { BrandsService } from "../../service/BrandsService"
 
-export class BrandsSelector extends Component {
-  static propTypes = {
-    onBrandSelect: PropTypes.func.isRequired,
-    selectedBrand: PropTypes.object,
+export const BrandsSelector = ({ selectedBrand, onBrandSelect }) => {
+  const [currentBrand, setCurrentBrand] = useState(selectedBrand)
+  const [brands, setBrands] = useState([])
+  const service = new BrandsService()
+
+  useEffect(() => service.getBrands(handleGetBrands), [])
+  useEffect(() => setCurrentBrand(selectedBrand), [selectedBrand])
+
+  const handleGetBrands = (brands) => {
+    setBrands(brands)
   }
 
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      loadedBrands: false,
-      brands: [],
-      selectedBrand: props.selectedBrand || null,
-    }
-
-    this.service = new BrandsService()
-  }
-
-  componentDidMount() {
-    const { loadedBrands } = this.state
-
-    if (!loadedBrands) {
-      this.service.getBrands((brands) =>
-        this.setState({ brands: brands, loadedBrands: true })
-      )
+  const handleSelectionChange = (value) => {
+    setCurrentBrand(value)
+    if (onBrandSelect) {
+      onBrandSelect(value)
     }
   }
 
-  render() {
-    const { selectedBrand, brands } = this.state
-
-    return (
-      <Dropdown
-        id="brand"
-        placeholder={"Marca"}
-        filter={true}
-        dataKey="brandId"
-        options={brands}
-        showClear={true}
-        value={selectedBrand}
-        optionLabel="displayName"
-        onChange={(e) => this.handleSelectionChange(e.value)}
-      />
-    )
-  }
-
-  handleSelectionChange = (value) => {
-    this.setState({
-      selectedBrand: value,
-    })
-
-    this.props.onBrandSelect(value)
-  }
+  return (
+    <Dropdown
+      id="brand"
+      placeholder={"Marca"}
+      filter={true}
+      dataKey="brandId"
+      options={brands}
+      showClear={true}
+      value={currentBrand}
+      optionLabel="displayName"
+      onChange={(e) => handleSelectionChange(e.value)}
+    />
+  )
 }

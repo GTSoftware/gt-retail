@@ -1,5 +1,5 @@
 import _ from "lodash"
-import React, { Component } from "react"
+import React, { Component, useEffect, useState } from "react"
 import { ProductsService } from "../../service/ProductsService"
 import { SearchProductsFilter } from "../core/SearchProductsFilter"
 import { DataTable } from "primereact/datatable"
@@ -26,44 +26,27 @@ const productColumns = [
   },
 ]
 
-export class ProductsInventory extends Component {
-  constructor(props, context) {
-    super(props, context)
+export const ProductsInventory = () => {
+  const productsService = new ProductsService()
 
-    this.state = {
-      loading: false,
-      products: [],
-      rows: 20,
-      selectedIds: new Map(),
-    }
+  const [loading, setLoading] = useState(false)
+  const [rows, setRows] = useState(20)
+  const [first, setFirst] = useState(0)
+  const [totalRecords, setTotalRecords] = useState(0)
+  const [selectedIds, setSelectedIds] = useState(new Map())
+  const [products, setProducts] = useState([])
+  const [searchFilter, setSearchFilter] = useState(null)
 
-    this.productsService = new ProductsService()
-  }
-
-  componentDidMount() {}
-
-  render() {
-    return (
-      <div className="card card-w-title">
-        <h1>Mayor de productos</h1>
-        {this.renderFilterSection()}
-        {this.renderSearchResults()}
-      </div>
-    )
-  }
-
-  renderFilterSection = () => {
+  const renderFilterSection = () => {
     return (
       <SearchProductsFilter
-        searchProductsCallback={this.searchProducts}
-        loading={this.state.loading}
+        searchProductsCallback={searchProducts}
+        loading={loading}
       />
     )
   }
 
-  renderSearchResults = () => {
-    const { products, rows, totalRecords, first, loading } = this.state
-
+  const renderSearchResults = () => {
     return (
       <DataTable
         value={products}
@@ -73,25 +56,22 @@ export class ProductsInventory extends Component {
         totalRecords={totalRecords}
         lazy={true}
         first={first}
-        rowClassName={this.getRowClass}
-        onPage={this.onPageEvent}
+        rowClassName={getRowClass}
+        onPage={onPageEvent}
         loading={loading}
-        onSelectionChange={(e) => this.setState({ selectedProduct: e.value })}
         loadingIcon="fa fa-fw fa-spin fa-spinner"
         resizableColumns
       >
-        {this.renderColumns()}
+        {renderColumns()}
       </DataTable>
     )
   }
 
-  getRowClass = (product) => {
-    const { selectedIds } = this.state
-
+  const getRowClass = (product) => {
     return { "p-highlight": selectedIds.get(product.productId) }
   }
 
-  renderColumns = () => {
+  const renderColumns = () => {
     let columns = productColumns.map((col, i) => {
       return (
         <Column
@@ -99,19 +79,17 @@ export class ProductsInventory extends Component {
           field={col.field}
           header={col.header}
           style={col.style}
-          body={(rowData) => this.getColumnBody(col, rowData)}
+          body={(rowData) => getColumnBody(col, rowData)}
         />
       )
     })
 
-    columns.push(<Column body={this.getLinkActions} />)
+    columns.push(<Column body={getLinkActions} />)
 
     return columns
   }
 
-  searchProducts = (searchFilter) => {
-    const { loading, rows } = this.state
-
+  const searchProducts = (searchFilter) => {
     if (!loading) {
       let searchOptions = {
         firstResult: 0,
@@ -119,61 +97,43 @@ export class ProductsInventory extends Component {
         searchFilter: searchFilter,
       }
 
-      this.productsService.searchProducts(
-        searchOptions,
-        this.handleSuccess,
-        this.handleError
-      )
+      productsService.searchProducts(searchOptions, handleSuccess, handleError)
 
-      this.setState({
-        loading: true,
-        first: 0,
-        searchFilter: searchFilter,
-      })
+      setLoading(true)
+      setFirst(0)
+      setSearchFilter(searchFilter)
     }
   }
 
-  onPageEvent = (event) => {
-    const { rows, searchFilter } = this.state
-
+  const onPageEvent = (event) => {
     let searchOptions = {
       firstResult: event.first,
       maxResults: rows,
       searchFilter: searchFilter,
     }
 
-    this.productsService.searchProducts(
-      searchOptions,
-      this.handleSuccess,
-      this.handleError
-    )
+    productsService.searchProducts(searchOptions, handleSuccess, handleError)
 
-    this.setState({
-      loading: true,
-      first: event.first,
-    })
+    setLoading(true)
+    setFirst(event.first)
   }
 
-  handleSuccess = (data) => {
+  const handleSuccess = (data) => {
     const foundProducts = data.data
     const totalRows = data.totalResults
 
-    this.setState({
-      products: foundProducts,
-      totalRecords: totalRows,
-      loading: false,
-    })
+    setProducts(foundProducts)
+    setTotalRecords(totalRows)
+    setLoading(false)
   }
 
-  handleError = (errorData) => {
-    this.setState({
-      products: [],
-      totalRecords: 0,
-      loading: false,
-    })
+  const handleError = (errorData) => {
+    setProducts([])
+    setTotalRecords(0)
+    setLoading(false)
   }
 
-  getColumnBody = (col, rowData) => {
+  const getColumnBody = (col, rowData) => {
     const field = _.get(rowData, col.field)
 
     if (col.format) {
@@ -183,26 +143,39 @@ export class ProductsInventory extends Component {
     return field
   }
 
-  getLinkActions = (rowData) => {
+  const getLinkActions = (rowData) => {
     const { productId } = rowData
 
     return (
       <Button
         type="button"
         icon="fa fa-fw fa-edit"
-        onClick={() => this.handleEditProduct(productId)}
+        onClick={() => handleEditProduct(productId)}
       />
     )
   }
 
-  handleEditProduct = (productId) => {
-    const { selectedIds } = this.state
+  const handleEditProduct = (productId) => {
     let newSelectedIds = new Map(selectedIds)
 
     newSelectedIds.set(productId, true)
 
-    this.setState({ selectedIds: newSelectedIds })
+    setSelectedIds(newSelectedIds)
 
     window.open(`#/product/${productId}`, "_blank")
   }
+
+  return (
+    <div className="card card-w-title">
+      <h1>Mayor de productos</h1>
+      {renderFilterSection()}
+      <Button
+        type="button"
+        label={"Nuevo"}
+        icon="fa fa-fw fa-plus"
+        onClick={() => window.open(`#/product/`, "_blank")}
+      />
+      {renderSearchResults()}
+    </div>
+  )
 }

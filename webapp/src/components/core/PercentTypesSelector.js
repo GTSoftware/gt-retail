@@ -1,59 +1,38 @@
-import React, { Component } from "react"
+import React, { useEffect, useState } from "react"
 import { Dropdown } from "primereact/dropdown"
-import PropTypes from "prop-types"
 import { ProductsService } from "../../service/ProductsService"
 
-export class PercentTypesSelector extends Component {
-  static propTypes = {
-    onChange: PropTypes.func.isRequired,
-    selectedItem: PropTypes.object,
+export const PercentTypesSelector = ({ onChange, selectedItem }) => {
+  const [currentPercentType, setCurrentPercentType] = useState(selectedItem)
+  const [percentTypes, setPercentTypes] = useState([])
+  const service = new ProductsService()
+
+  useEffect(() => service.getPercentTypes(handlePercentTypes), [])
+  useEffect(() => setCurrentPercentType(selectedItem), [selectedItem])
+
+  const handlePercentTypes = (values) => {
+    setPercentTypes(values)
   }
 
-  constructor(props) {
-    super(props)
+  const handleSelectionChange = (value) => {
+    setCurrentPercentType(value)
 
-    this.state = {
-      loaded: false,
-      items: [],
-      selectedItem: props.selectedItem || null,
-    }
-
-    this.service = new ProductsService()
-  }
-
-  componentDidMount() {
-    const { loaded } = this.state
-
-    if (!loaded) {
-      this.service.getPercentTypes((items) =>
-        this.setState({ items: items, loaded: true })
-      )
+    if (onChange) {
+      onChange(value)
     }
   }
 
-  render() {
-    const { selectedItem, items } = this.state
-
-    return (
-      <Dropdown
-        id="percentType"
-        placeholder={"Tipo de porcentaje"}
-        filter={true}
-        dataKey="percentTypeId"
-        options={items}
-        showClear={true}
-        value={selectedItem}
-        optionLabel="displayName"
-        onChange={(e) => this.handleSelectionChange(e.value)}
-      />
-    )
-  }
-
-  handleSelectionChange = (value) => {
-    this.setState({
-      selectedItem: value,
-    })
-
-    this.props.onChange(value)
-  }
+  return (
+    <Dropdown
+      id="percentType"
+      placeholder={"Tipo de porcentaje"}
+      filter={true}
+      dataKey="percentTypeId"
+      options={percentTypes}
+      showClear={true}
+      value={currentPercentType}
+      optionLabel="displayName"
+      onChange={(e) => handleSelectionChange(e.value)}
+    />
+  )
 }

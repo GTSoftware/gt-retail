@@ -224,7 +224,7 @@ class App extends Component {
           label: "Clientes",
           icon: "fa fa-fw fa-users",
           command: () => {
-            window.location = "#/customerResponses"
+            window.location = "#/customers"
           },
         },
       ],
@@ -364,10 +364,8 @@ class App extends Component {
             <ProtectedRoute path="/fiscal-books" component={FiscalBooks} />
             <ProtectedRoute path="/products" component={ProductsInventory} />
             <ProtectedRoute path="/product/:productId" component={ProductDetails} />
-            <ProtectedRoute
-              path="/customerResponses"
-              component={CustomersInventory}
-            />
+            <ProtectedRoute path="/product/" component={ProductDetails} />
+            <ProtectedRoute path="/customers" component={CustomersInventory} />
             <ProtectedRoute
               path="/customer/:customerId"
               component={CustomerDetails}

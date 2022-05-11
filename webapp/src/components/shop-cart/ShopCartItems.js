@@ -72,28 +72,28 @@ export class ShopCartItems extends Component {
   renderAddProductSection = () => {
     return (
       <div className="p-card-body p-fluid p-grid">
-        <div className="p-col-12 p-lg-4">
+        <div className="p-col-12 p-lg-5">
+          <InputText
+            id="codigo"
+            autoFocus
+            onChange={(e) => {
+              this.updateProperty("productCode", e.target.value)
+            }}
+            value={this.state.productToSearch.productCode}
+            placeholder="Código"
+            className="p-col-1"
+            onKeyPress={this.handleEnterKeyPress}
+          />
+        </div>
+        <div className="p-col-12 p-lg-3">
           <InputText
             id="id"
-            autoFocus
             onChange={(e) => {
               this.updateProperty("productId", e.target.value)
             }}
             value={this.state.productToSearch.productId}
             keyfilter="int"
             placeholder="Id"
-            className="p-col-1"
-            onKeyPress={this.handleEnterKeyPress}
-          />
-        </div>
-        <div className="p-col-12 p-lg-4">
-          <InputText
-            id="codigo"
-            onChange={(e) => {
-              this.updateProperty("productCode", e.target.value)
-            }}
-            value={this.state.productToSearch.productCode}
-            placeholder="Código"
             className="p-col-1"
             onKeyPress={this.handleEnterKeyPress}
           />

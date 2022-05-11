@@ -1,5 +1,5 @@
 import _ from "lodash"
-import React, { Component } from "react"
+import React, { Component, useState } from "react"
 import { TabPanel, TabView } from "primereact/tabview"
 import { InputText } from "primereact/inputtext"
 import { Checkbox } from "primereact/checkbox"
@@ -11,84 +11,46 @@ import { CategoriesSelector } from "./CategoriesSelector"
 import { SubCategoriesSelector } from "./SubCategoriesSelector"
 import { AutocompleteSupplierFilter } from "./AutocompleteSupplierFilter"
 
-export class SearchProductsFilter extends Component {
-  static propTypes = {
-    searchProductsCallback: PropTypes.func.isRequired,
-    loading: PropTypes.bool.isRequired,
-  }
-
-  constructor(props, context) {
-    super(props, context)
-
-    this.state = {
-      activeSearchTab: 0,
-      searchFilter: {
-        activo: true,
-        txt: "",
-        conStock: true,
-        buscarEnTodosLados: false,
-        codigoPropio: null,
-        codigoFabrica: null,
-        idProducto: null,
-        idMarca: null,
-        idRubro: null,
-        idSubRubro: null,
-        sortFields: [
-          {
-            fieldName: "descripcion",
-            ascending: true,
-          },
-        ],
+export const SearchProductsFilter = ({ searchProductsCallback, loading }) => {
+  const [searchFilter, setSearchFilter] = useState({
+    activo: true,
+    txt: "",
+    conStock: true,
+    buscarEnTodosLados: false,
+    codigoPropio: null,
+    codigoFabrica: null,
+    idProducto: null,
+    idMarca: null,
+    idRubro: null,
+    idSubRubro: null,
+    sortFields: [
+      {
+        fieldName: "descripcion",
+        ascending: true,
       },
-    }
-  }
+    ],
+  })
+  const [activeSearchTab, setActiveSearchTab] = useState(0)
 
-  render() {
-    return (
-      <div>
-        <TabView
-          activeIndex={this.state.activeSearchTab}
-          onTabChange={(e) => this.setState({ activeSearchTab: e.index })}
-        >
-          <TabPanel header="Básico" leftIcon="fa fa-fw fa-search">
-            {this.renderBasicSearchOptions()}
-          </TabPanel>
-          <TabPanel header="Avanzado" leftIcon="fa fa-fw fa-cog">
-            {this.renderAdvancedSearchOptions()}
-          </TabPanel>
-        </TabView>
-        {this.renderSearchButton()}
-      </div>
-    )
-  }
-
-  renderBasicSearchOptions = () => {
-    const { searchFilter } = this.state
-
+  const renderBasicSearchOptions = () => {
     return (
       <div className="p-card-body p-fluid p-grid">
-        <div className="p-col-12 p-lg-3">{this.renderTextSearch(searchFilter)}</div>
-        <div className="p-col-12 p-lg-2">{this.renderCodeSearch(searchFilter)}</div>
-        <div className="p-col-12 p-lg-2">
-          {this.renderFactoryCodeSearch(searchFilter)}
-        </div>
-        <div className="p-col-12 p-lg-2">
-          {this.renderStockAvailableSearch(searchFilter)}
-        </div>
-        <div className="p-col-12 p-lg-2">
-          {this.renderSearchAllPlacesCheckbox(searchFilter)}
-        </div>
+        <div className="p-col-12 p-lg-3">{renderTextSearch()}</div>
+        <div className="p-col-12 p-lg-2">{renderCodeSearch()}</div>
+        <div className="p-col-12 p-lg-2">{renderFactoryCodeSearch()}</div>
+        <div className="p-col-12 p-lg-2">{renderStockAvailableSearch()}</div>
+        <div className="p-col-12 p-lg-2">{renderSearchAllPlacesCheckbox()}</div>
       </div>
     )
   }
 
-  renderSearchAllPlacesCheckbox = (searchFilter) => {
+  const renderSearchAllPlacesCheckbox = () => {
     return (
       <>
         <Checkbox
           id="buscarTodo"
           onChange={(e) => {
-            this.handleSearchFilterPropertyChange("buscarEnTodosLados", e.checked)
+            handleSearchFilterPropertyChange("buscarEnTodosLados", e.checked)
           }}
           checked={searchFilter.buscarEnTodosLados}
         />
@@ -99,13 +61,13 @@ export class SearchProductsFilter extends Component {
     )
   }
 
-  renderStockAvailableSearch = (searchFilter) => {
+  const renderStockAvailableSearch = () => {
     return (
       <>
         <Checkbox
           id="soloStock"
           onChange={(e) => {
-            this.handleSearchFilterPropertyChange("conStock", e.checked)
+            handleSearchFilterPropertyChange("conStock", e.checked)
           }}
           checked={searchFilter.conStock}
         />
@@ -116,68 +78,63 @@ export class SearchProductsFilter extends Component {
     )
   }
 
-  renderFactoryCodeSearch = (searchFilter) => {
+  const renderFactoryCodeSearch = () => {
     return (
       <InputText
         id="codigoFabricaInput"
         onChange={(e) => {
-          this.handleSearchFilterPropertyChange("codigoFabrica", e.target.value)
+          handleSearchFilterPropertyChange("codigoFabrica", e.target.value)
         }}
         value={searchFilter.codigoFabrica}
         placeholder="Código Fabricante"
-        onKeyPress={this.handleEnterKeyPress}
+        onKeyPress={handleEnterKeyPress}
       />
     )
   }
 
-  renderCodeSearch = (searchFilter) => {
+  const renderCodeSearch = () => {
     return (
       <InputText
         id="codigoInput"
         onChange={(e) => {
-          this.handleSearchFilterPropertyChange("codigoPropio", e.target.value)
+          handleSearchFilterPropertyChange("codigoPropio", e.target.value)
         }}
         value={searchFilter.codigoPropio}
         placeholder="Código propio"
-        onKeyPress={this.handleEnterKeyPress}
+        onKeyPress={handleEnterKeyPress}
       />
     )
   }
 
-  renderTextSearch = (searchFilter) => {
+  const renderTextSearch = () => {
     return (
       <InputText
         id="searchText"
         autoFocus
         onChange={(e) => {
-          this.handleSearchFilterPropertyChange("txt", e.target.value)
+          handleSearchFilterPropertyChange("txt", e.target.value)
         }}
         value={searchFilter.txt}
         placeholder="Términos de búsqueda"
-        onKeyPress={this.handleEnterKeyPress}
+        onKeyPress={handleEnterKeyPress}
       />
     )
   }
 
-  renderAdvancedSearchOptions = () => {
-    const { searchFilter } = this.state
-
+  const renderAdvancedSearchOptions = () => {
     return (
       <div className="p-card-body p-fluid p-grid">
         <div className="p-col-12 p-lg-2">
           <BrandsSelector
             onBrandSelect={(brand) => {
-              this.handleSearchFilterPropertyChange(
-                "idMarca",
-                _.get(brand, "brandId")
-              )
+              handleSearchFilterPropertyChange("idMarca", _.get(brand, "brandId"))
             }}
           />
         </div>
         <div className="p-col-12 p-lg-2">
           <CategoriesSelector
             onCategorySelect={(category) => {
-              this.handleSearchFilterPropertyChange(
+              handleSearchFilterPropertyChange(
                 "idRubro",
                 _.get(category, "categoryId")
               )
@@ -187,7 +144,7 @@ export class SearchProductsFilter extends Component {
         <div className="p-col-12 p-lg-2">
           <SubCategoriesSelector
             onSubCategorySelect={(subCategory) => {
-              this.handleSearchFilterPropertyChange(
+              handleSearchFilterPropertyChange(
                 "idSubRubro",
                 _.get(subCategory, "subCategoryId")
               )
@@ -195,22 +152,22 @@ export class SearchProductsFilter extends Component {
             categoryId={searchFilter.idRubro}
           />
         </div>
-        <div className="p-col-12 p-lg-1">{this.renderIdSearch(searchFilter)}</div>
+        <div className="p-col-12 p-lg-1">{renderIdSearch(searchFilter)}</div>
         <div className="p-col-12 p-lg-1">
-          {this.renderEnabledSearchCheckbox(searchFilter)}
+          {renderEnabledSearchCheckbox(searchFilter)}
         </div>
-        <div className="p-col-12 p-lg-6">{this.renderSupplierSearch()}</div>
+        <div className="p-col-12 p-lg-6">{renderSupplierSearch()}</div>
       </div>
     )
   }
 
-  renderEnabledSearchCheckbox = (searchFilter) => {
+  const renderEnabledSearchCheckbox = () => {
     return (
       <>
         <TriStateCheckbox
           id="activoCheck"
           onChange={(e) => {
-            this.handleSearchFilterPropertyChange("activo", e.value)
+            handleSearchFilterPropertyChange("activo", e.value)
           }}
           value={searchFilter.activo}
         />
@@ -221,23 +178,21 @@ export class SearchProductsFilter extends Component {
     )
   }
 
-  renderIdSearch = (searchFilter) => {
+  const renderIdSearch = () => {
     return (
       <InputText
         id="idInput"
         onChange={(e) => {
-          this.handleSearchFilterPropertyChange("idProducto", e.target.value)
+          handleSearchFilterPropertyChange("idProducto", e.target.value)
         }}
         value={searchFilter.idProducto}
         placeholder="Id del producto"
-        onKeyPress={this.handleEnterKeyPress}
+        onKeyPress={handleEnterKeyPress}
       />
     )
   }
 
-  renderSearchButton = () => {
-    const { loading, searchProductsCallback } = this.props
-
+  const renderSearchButton = () => {
     return (
       <div className="p-grid p-fluid">
         <div className="p-col-12 p-lg-12">
@@ -246,36 +201,36 @@ export class SearchProductsFilter extends Component {
             icon="fa fa-fw fa-filter"
             loading={loading}
             label={"Buscar"}
-            onClick={() => searchProductsCallback(this.state.searchFilter)}
+            onClick={() => searchProductsCallback(searchFilter)}
           />
         </div>
       </div>
     )
   }
 
-  handleSearchFilterPropertyChange = (property, value) => {
-    let searchFilter = Object.assign({}, this.state.searchFilter)
+  const handleSearchFilterPropertyChange = (property, value) => {
+    let newSearchFilter = Object.assign({}, searchFilter)
 
-    searchFilter[property] = value
+    newSearchFilter[property] = value
 
     if (property === "idRubro") {
-      searchFilter.idSubRubro = null
+      newSearchFilter.idSubRubro = null
     }
 
-    this.setState({ searchFilter })
+    setSearchFilter(newSearchFilter)
   }
 
-  handleEnterKeyPress = (event) => {
+  const handleEnterKeyPress = (event) => {
     if (event.key === "Enter") {
-      this.props.searchProductsCallback(this.state.searchFilter)
+      searchProductsCallback(searchFilter)
     }
   }
 
-  renderSupplierSearch = () => {
+  const renderSupplierSearch = () => {
     return (
       <AutocompleteSupplierFilter
         onSupplierSelect={(supplier) => {
-          this.handleSearchFilterPropertyChange(
+          handleSearchFilterPropertyChange(
             "idProveedorHabitual",
             _.get(supplier, "personId")
           )
@@ -283,4 +238,21 @@ export class SearchProductsFilter extends Component {
       />
     )
   }
+
+  return (
+    <div>
+      <TabView
+        activeIndex={activeSearchTab}
+        onTabChange={(e) => setActiveSearchTab(e.index)}
+      >
+        <TabPanel header="Básico" leftIcon="fa fa-fw fa-search">
+          {renderBasicSearchOptions()}
+        </TabPanel>
+        <TabPanel header="Avanzado" leftIcon="fa fa-fw fa-cog">
+          {renderAdvancedSearchOptions()}
+        </TabPanel>
+      </TabView>
+      {renderSearchButton()}
+    </div>
+  )
 }

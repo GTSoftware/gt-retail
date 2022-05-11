@@ -1,59 +1,37 @@
-import React, { Component } from "react"
+import React, { useEffect, useState } from "react"
 import { Dropdown } from "primereact/dropdown"
-import PropTypes from "prop-types"
 import { ProductsService } from "../../service/ProductsService"
 
-export class ProductUnitTypeSelector extends Component {
-  static propTypes = {
-    onSelectUnitType: PropTypes.func.isRequired,
-    selectedUnitType: PropTypes.object,
+export const ProductUnitTypeSelector = ({ onSelectUnitType, selectedUnitType }) => {
+  const [currentUnitType, setCurrentUnitType] = useState(selectedUnitType)
+  const [unitTypes, setUnitTypes] = useState([])
+  const service = new ProductsService()
+
+  useEffect(() => service.getUnitTypes(handleUnitTypes), [])
+  useEffect(() => setCurrentUnitType(selectedUnitType), [selectedUnitType])
+
+  const handleUnitTypes = (values) => {
+    setUnitTypes(values)
   }
 
-  constructor(props) {
-    super(props)
+  const handleSelectionChange = (value) => {
+    setCurrentUnitType(value)
 
-    this.state = {
-      loaded: false,
-      unitTypes: [],
-      selectedUnitType: props.selectedUnitType || null,
-    }
-
-    this.service = new ProductsService()
-  }
-
-  componentDidMount() {
-    const { loaded } = this.state
-
-    if (!loaded) {
-      this.service.getUnitTypes((unitTypes) =>
-        this.setState({ unitTypes: unitTypes, loaded: true })
-      )
+    if (onSelectUnitType) {
+      onSelectUnitType(value)
     }
   }
-
-  render() {
-    const { selectedUnitType, unitTypes } = this.state
-
-    return (
-      <Dropdown
-        id="unitType"
-        placeholder={""}
-        filter={true}
-        dataKey="unitTypeId"
-        options={unitTypes}
-        showClear={true}
-        value={selectedUnitType}
-        optionLabel="unitName"
-        onChange={(e) => this.handleSelectionChange(e.value)}
-      />
-    )
-  }
-
-  handleSelectionChange = (value) => {
-    this.setState({
-      selectedUnitType: value,
-    })
-
-    this.props.onSelectUnitType(value)
-  }
+  return (
+    <Dropdown
+      id="unitType"
+      placeholder={""}
+      filter={true}
+      dataKey="unitTypeId"
+      options={unitTypes}
+      showClear={true}
+      value={currentUnitType}
+      optionLabel="unitName"
+      onChange={(e) => handleSelectionChange(e.value)}
+    />
+  )
 }

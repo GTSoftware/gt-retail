@@ -1,54 +1,42 @@
-import React, { Component } from "react"
+import React, { useEffect, useState } from "react"
 import { AutoComplete } from "primereact/autocomplete"
-import PropTypes from "prop-types"
 import { SuppliersService } from "../../service/SuppliersService"
 
-export class AutocompleteSupplierFilter extends Component {
-  static propTypes = {
-    onSupplierSelect: PropTypes.func.isRequired,
-    selectedSupplier: PropTypes.object,
-  }
+export const AutocompleteSupplierFilter = ({
+  onSupplierSelect,
+  selectedSupplier,
+}) => {
+  const [currentSupplier, setCurrentSupplier] = useState(selectedSupplier)
+  const [filteredSuppliers, setFilteredSuppliers] = useState([])
+  const service = new SuppliersService()
 
-  constructor(props, context) {
-    super(props, context)
+  useEffect(() => setCurrentSupplier(selectedSupplier), [selectedSupplier])
 
-    this.state = {
-      filteredSuppliers: [],
-      selectedSupplier: props.selectedSupplier || null,
+  const handleSelectionChange = (value) => {
+    setCurrentSupplier(value)
+
+    if (onSupplierSelect) {
+      onSupplierSelect(value)
     }
-
-    this.service = new SuppliersService()
   }
 
-  render() {
-    const { selectedSupplier, filteredSuppliers } = this.state
-
-    return (
-      <AutoComplete
-        id="supplier"
-        minLength={2}
-        placeholder="Comience a escribir para buscar un proveedor"
-        delay={500}
-        completeMethod={(event) => this.filterSuppliers(event.query)}
-        suggestions={filteredSuppliers}
-        field="displayName"
-        onChange={(e) => this.handleSelectionChange(e.value)}
-        value={selectedSupplier || ""}
-      />
-    )
-  }
-
-  filterSuppliers = (query) => {
-    this.service.searchSuppliers(query, (suppliers) => {
-      this.setState({ filteredSuppliers: suppliers.data })
+  const filterSuppliers = (query) => {
+    service.searchSuppliers(query, (suppliers) => {
+      setFilteredSuppliers(suppliers.data)
     })
   }
 
-  handleSelectionChange = (value) => {
-    this.setState({
-      selectedSupplier: value,
-    })
-
-    this.props.onSupplierSelect(value)
-  }
+  return (
+    <AutoComplete
+      id="supplier"
+      minLength={2}
+      placeholder="Comience a escribir para buscar un proveedor"
+      delay={500}
+      completeMethod={(event) => filterSuppliers(event.query)}
+      suggestions={filteredSuppliers}
+      field="displayName"
+      onChange={(e) => handleSelectionChange(e.value)}
+      value={currentSupplier || ""}
+    />
+  )
 }

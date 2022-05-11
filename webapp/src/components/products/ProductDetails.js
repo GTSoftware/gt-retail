@@ -1,10 +1,9 @@
 import _ from "lodash"
-import React, { Component } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { ProductsService } from "../../service/ProductsService"
 import { DataTable } from "primereact/datatable"
 import { Column } from "primereact/column"
 import { Button } from "primereact/button"
-import PropTypes from "prop-types"
 import { Toast } from "primereact/toast"
 import { InputText } from "primereact/inputtext"
 import { Checkbox } from "primereact/checkbox"
@@ -72,7 +71,7 @@ const productSchema = {
   ],
 }
 
-const newProduct = {
+const NEW_PRODUCT = {
   productId: null,
   code: "",
   description: "",
@@ -92,185 +91,88 @@ const newProduct = {
   saleUnit: null,
   regularSupplier: null,
   minimumStock: 0,
+  activo: true,
 }
 
-export class ProductDetails extends Component {
-  static propTypes = {
-    match: PropTypes.shape({
-      params: PropTypes.shape({
-        productId: PropTypes.string.isRequired,
-      }),
-    }),
-  }
+export const ProductDetails = (props) => {
+  const productsService = new ProductsService()
 
-  constructor(props, context) {
-    super(props, context)
+  const [loading, setLoading] = useState(false)
+  const [productId, setProductId] = useState(props.match.params.productId)
+  const [editingProduct, setEditingProduct] = useState(null)
 
-    this.state = {
-      productId: props.match.params.productId,
-      product: null,
-      loading: true,
-      activeTab: 0,
-    }
+  const [formData, setFormData] = useState(NEW_PRODUCT)
 
-    this.productsService = new ProductsService()
-  }
+  const toast = useRef(null)
 
-  componentDidMount() {
-    const { product, productId } = this.state
-
-    if (!product) {
-      if (productId === "new") {
-        this.setState({ product: newProduct, loading: false, productId: null })
-      } else {
-        this.productsService.getProduct(
-          productId,
-          (productInfo) => this.handleGetProductInfo(productInfo),
-          this.handleGetProductError
-        )
-      }
-    }
-  }
-
-  render() {
-    const { product } = this.state
-
-    return (
-      <div className="card card-w-title">
-        <Toast ref={(el) => (this.toast = el)} />
-        <h1>{this.getTitle()}</h1>
-        {product && (
-          <Form
-            data={product}
-            onChange={(formData) => {
-              this.updatePrices(formData)
-              this.setState({ product: formData })
-            }}
-            schema={productSchema}
-            onSubmit={this.handleSubmit}
-            errorMessages={{
-              required: () => fieldRequiredDefaultMessage,
-              pattern: () => invalidPatternMessage,
-            }}
-          >
-            <div className="card ">
-              <h1 style={{ fontSize: "16px" }}>Identificación</h1>
-              {this.renderIdentificationSection()}
-            </div>
-
-            <div className="card ">
-              <h1 style={{ fontSize: "16px" }}>Precios</h1>
-              {this.renderPricingSection()}
-            </div>
-
-            <div className="card ">
-              <h1 style={{ fontSize: "16px" }}>Clasificación</h1>
-              {this.renderClassificationSection()}
-            </div>
-
-            <div className="card ">
-              <h1 style={{ fontSize: "16px" }}>Stock</h1>
-              {this.renderStockSection()}
-            </div>
-
-            <LoadingButton
-              type="submit"
-              label="Guardar"
-              loading={this.state.loading}
-              icon="fa fa-fw fa-save"
-            />
-            <Button
-              type="button"
-              label="Cerrar"
-              className="p-button-secondary"
-              icon="fa fa-fw fa-arrow-left"
-              onClick={() => {
-                window.close()
-              }}
-            />
-          </Form>
-        )}
-      </div>
-    )
-  }
-
-  handleSubmit = () => {
-    const { product } = this.state
-
-    this.setState({ loading: true })
-
-    if (product.productId) {
-      this.productsService.updateProduct(
-        product,
-        this.handleSuccess,
-        this.handleError
-      )
-    } else {
-      this.productsService.createProduct(
-        product,
-        this.handleCreationSuccess,
-        this.handleError
+  useEffect(() => {
+    if (productId) {
+      productsService.getProduct(
+        productId,
+        handleGetProductInfo,
+        handleGetProductError
       )
     }
-  }
+  }, [productId])
 
-  handleSuccess = () => {
-    const { productId } = this.state
-
-    this.toast.show({
-      severity: "info",
-      summary: `El producto ${productId} fue editado exitosamente`,
-    })
-
-    this.productsService.getProduct(
-      productId,
-      (productInfo) => this.handleGetProductInfo(productInfo),
-      this.handleGetProductError
-    )
-  }
-
-  handleCreationSuccess = (productInfo) => {
-    const { productId } = productInfo
-
-    this.toast.show({
-      severity: "info",
-      summary: `El producto ${productId} fue creado exitosamente`,
-    })
-
-    this.handleGetProductInfo(productInfo)
-  }
-
-  handleError = (error) => {
-    this.setState({ loading: false })
-
-    this.toast.show({
-      severity: "error",
-      summary: "Ocurrió un error al actualizar el producto",
-      detail: error.message,
-    })
-  }
-
-  getTitle = () => {
-    const { productId } = this.state
-
+  const getTitle = () => {
     if (productId) {
       return `Edición de producto: ${productId}`
     }
     return "Nuevo producto"
   }
 
-  handleGetProductError = (error) => {
-    this.toast.show({
+  const handleSubmit = () => {
+    setLoading(true)
+
+    if (productId) {
+      productsService.updateProduct(formData, handleSuccess, handleError)
+    } else {
+      productsService.createProduct(formData, handleCreationSuccess, handleError)
+    }
+  }
+
+  const handleSuccess = () => {
+    toast.current.show({
+      severity: "info",
+      summary: `El producto ${productId} fue editado exitosamente`,
+    })
+
+    productsService.getProduct(
+      productId,
+      (productInfo) => handleGetProductInfo(productInfo),
+      handleGetProductError
+    )
+  }
+
+  const handleCreationSuccess = (productInfo) => {
+    const { productId } = productInfo
+
+    toast.current.show({
+      severity: "info",
+      summary: `El producto ${productId} fue creado exitosamente`,
+    })
+
+    setProductId(productId)
+  }
+
+  const handleError = (error) => {
+    setLoading(false)
+    toast.current.show({
+      severity: "error",
+      summary: "Ocurrió un error al actualizar el producto",
+      detail: error.message,
+    })
+  }
+  const handleGetProductError = (error) => {
+    toast.current.show({
       severity: "error",
       summary: `No se ha podido encontrar el producto [${error.errorCode}]`,
       detail: _.get(error, "message", ""),
     })
   }
-
-  renderIdentificationSection = () => {
-    const { productId, description, code, factoryCode, observations, active } =
-      this.state.product
-
+  const renderIdentificationSection = () => {
+    const { description, code, factoryCode, observations, active } = formData
     return (
       <div className="p-card-body p-fluid p-grid">
         <label className="p-col-3 ">{"Id:"}</label>
@@ -282,7 +184,7 @@ export class ProductDetails extends Component {
             component={InputText}
             name="code"
             value={code}
-            onBlur={this.validateProductCode}
+            onBlur={validateProductCode}
           />
           <FieldError name="code" />
         </div>
@@ -325,9 +227,8 @@ export class ProductDetails extends Component {
     )
   }
 
-  renderPricingSection = () => {
-    const { grossCost, fiscalTaxRate, netCost } = this.state.product
-
+  const renderPricingSection = () => {
+    const { grossCost, fiscalTaxRate, netCost } = formData
     return (
       <div className="p-card-body p-fluid p-grid">
         <div className="p-col-3">{"Costo Bruto:"}</div>
@@ -345,27 +246,27 @@ export class ProductDetails extends Component {
           <FiscalTaxRateSelector
             selectedTaxRate={fiscalTaxRate}
             onTaxRateSelect={(taxRate) =>
-              this.handleProductPropertyChange("fiscalTaxRate", taxRate)
+              handleProductPropertyChange("fiscalTaxRate", taxRate)
             }
           />
           <FieldError name="fiscalTaxRate" />
         </div>
-        <div className="p-col-12">{this.renderPercentsTable()}</div>
+        <div className="p-col-12">{renderPercentsTable()}</div>
         <div className="p-col-6">
           <label className="p-col-3">{"Costo Neto:"}</label>
           <label className="p-col-3">{netCost}</label>
         </div>
-        <div className="p-col-12">{this.renderPricesTable()}</div>
+        <div className="p-col-12">{renderPricesTable()}</div>
       </div>
     )
   }
 
-  renderPercentsTable = () => {
-    const { percentages } = this.state.product
+  const renderPercentsTable = () => {
+    const { percentages } = formData
 
     return (
       <DataTable
-        header={this.renderPercentTableHeader()}
+        header={renderPercentTableHeader()}
         value={percentages}
         resizableColumns={true}
         responsive={true}
@@ -374,29 +275,29 @@ export class ProductDetails extends Component {
         <Column
           field="percentType.displayName"
           header="Tipo"
-          editor={(props) => this.getPercentTypeEditor(props)}
+          editor={(props) => getPercentTypeEditor(props)}
         />
         <Column
           field="rate"
           header="Valor"
-          editor={(props) => this.getPercentValueEditor(props)}
-          editorValidator={this.numberValidator}
+          editor={(props) => getPercentValueEditor(props)}
+          editorValidator={numberValidator}
         />
         <Column
           key="actions"
-          body={(rowData) => this.getPercentsTableActions(rowData)}
+          body={(rowData) => getPercentsTableActions(rowData)}
           style={{ textAlign: "center", width: "7em" }}
         />
       </DataTable>
     )
   }
 
-  renderPricesTable = () => {
-    const { salePrices } = this.state.product
+  const renderPricesTable = () => {
+    const { salePrices } = formData
 
     return (
       <DataTable
-        header={this.renderPriceTableHeader()}
+        header={renderPriceTableHeader()}
         value={salePrices}
         resizableColumns={true}
         responsive={true}
@@ -405,31 +306,31 @@ export class ProductDetails extends Component {
         <Column
           field="priceList.displayName"
           header="Lista"
-          editor={(props) => this.getPriceListEditor(props)}
+          editor={(props) => getPriceListEditor(props)}
         />
         <Column
           field="utility"
           header="Utilidad"
-          editor={(props) => this.getUtilityValueEditor(props)}
-          editorValidator={this.numberValidator}
+          editor={(props) => getUtilityValueEditor(props)}
+          editorValidator={numberValidator}
         />
         <Column field="netPrice" header="Precio Neto" />
         <Column
           field="finalPrice"
           header="Precio Final"
-          editor={(props) => this.getFinalPriceEditor(props)}
-          editorValidator={this.numberValidator}
+          editor={(props) => getFinalPriceEditor(props)}
+          editorValidator={numberValidator}
         />
         <Column
           key="actions"
-          body={(rowData) => this.getPriceTableActions(rowData)}
+          body={(rowData) => getPriceTableActions(rowData)}
           style={{ textAlign: "center", width: "7em" }}
         />
       </DataTable>
     )
   }
 
-  renderClassificationSection = () => {
+  const renderClassificationSection = () => {
     const {
       supplyType,
       category,
@@ -439,7 +340,7 @@ export class ProductDetails extends Component {
       purchaseUnit,
       purchaseUnitsToSaleUnitEquivalence,
       regularSupplier,
-    } = this.state.product
+    } = formData
 
     return (
       <div className="p-card-body p-fluid p-grid">
@@ -448,7 +349,7 @@ export class ProductDetails extends Component {
           <ProductSupplyTypeSelector
             selectedSupplyType={supplyType}
             onSupplyTypeSelect={(supplyType) =>
-              this.handleProductPropertyChange("supplyType", supplyType)
+              handleProductPropertyChange("supplyType", supplyType)
             }
           />
           <FieldError name="supplyType" />
@@ -459,7 +360,7 @@ export class ProductDetails extends Component {
           <AutocompleteSupplierFilter
             selectedSupplier={regularSupplier}
             onSupplierSelect={(supplier) =>
-              this.handleProductPropertyChange("regularSupplier", supplier)
+              handleProductPropertyChange("regularSupplier", supplier)
             }
           />
           <FieldError name="regularSupplier" />
@@ -470,7 +371,7 @@ export class ProductDetails extends Component {
           <CategoriesSelector
             selectedCategory={category}
             onCategorySelect={(category) =>
-              this.handleProductPropertyChange("category", category)
+              handleProductPropertyChange("category", category)
             }
           />
           <FieldError name="category" />
@@ -482,7 +383,7 @@ export class ProductDetails extends Component {
               categoryId={category.categoryId}
               selectedSubCategory={subCategory}
               onSubCategorySelect={(subCategory) =>
-                this.handleProductPropertyChange("subCategory", subCategory)
+                handleProductPropertyChange("subCategory", subCategory)
               }
             />
           )}
@@ -493,9 +394,7 @@ export class ProductDetails extends Component {
         <div className="p-col-9">
           <BrandsSelector
             selectedBrand={brand}
-            onBrandSelect={(brand) =>
-              this.handleProductPropertyChange("brand", brand)
-            }
+            onBrandSelect={(brand) => handleProductPropertyChange("brand", brand)}
           />
           <FieldError name="brand" />
         </div>
@@ -505,7 +404,7 @@ export class ProductDetails extends Component {
           <ProductUnitTypeSelector
             selectedUnitType={purchaseUnit}
             onSelectUnitType={(purchaseUnit) =>
-              this.handleProductPropertyChange("purchaseUnit", purchaseUnit)
+              handleProductPropertyChange("purchaseUnit", purchaseUnit)
             }
           />
           <FieldError name="purchaseUnit" />
@@ -516,7 +415,7 @@ export class ProductDetails extends Component {
           <ProductUnitTypeSelector
             selectedUnitType={saleUnit}
             onSelectUnitType={(saleUnit) =>
-              this.handleProductPropertyChange("saleUnit", saleUnit)
+              handleProductPropertyChange("saleUnit", saleUnit)
             }
           />
           <FieldError name="saleUnit" />
@@ -536,8 +435,8 @@ export class ProductDetails extends Component {
     )
   }
 
-  renderStockSection = () => {
-    const { minimumStock } = this.state.product
+  const renderStockSection = () => {
+    const { minimumStock } = formData
 
     return (
       <div className="p-card-body p-fluid p-grid">
@@ -555,74 +454,70 @@ export class ProductDetails extends Component {
     )
   }
 
-  getPercentTypeEditor = (props) => {
+  const getPercentTypeEditor = (props) => {
     const { rowData } = props
 
     return (
       <PercentTypesSelector
         selectedItem={rowData["percentType"]}
         onChange={(percentType) =>
-          this.handlePercentChange(rowData, "percentType", percentType)
+          handlePercentChange(rowData, "percentType", percentType)
         }
       />
     )
   }
 
-  getUtilityValueEditor = (props) => {
+  const getUtilityValueEditor = (props) => {
     const { rowData } = props
 
     return (
       <InputText
         value={rowData["utility"]}
-        onChange={(e) =>
-          this.handleSalePriceChange(rowData, "utility", e.target.value)
-        }
+        onChange={(e) => handleSalePriceChange(rowData, "utility", e.target.value)}
       />
     )
   }
 
-  getFinalPriceEditor = (props) => {
+  const getFinalPriceEditor = (props) => {
     const { rowData } = props
     const finalPrice = "finalPrice"
 
     return (
       <InputText
         value={rowData[finalPrice]}
-        onChange={(e) =>
-          this.handleSalePriceChange(rowData, finalPrice, e.target.value)
-        }
+        onChange={(e) => handleSalePriceChange(rowData, finalPrice, e.target.value)}
       />
     )
   }
 
-  getPercentValueEditor = (props) => {
+  const getPercentValueEditor = (props) => {
     const { rowData } = props
 
     return (
       <InputText
         value={rowData["rate"]}
-        onChange={(e) => this.handlePercentChange(rowData, "rate", e.target.value)}
+        onChange={(e) => handlePercentChange(rowData, "rate", e.target.value)}
       />
     )
   }
 
-  handlePercentChange = (percent, field, value) => {
-    let percentages = Object.assign([], this.state.product.percentages)
+  const handlePercentChange = (percent, field, value) => {
+    let percentages = Object.assign([], formData.percentages)
     const index = percentages.findIndex((item) => item.uid === percent.uid)
 
     percentages[index][field] = value
 
-    this.handleProductPropertyChange("percentages", percentages)
+    handleProductPropertyChange("percentages", percentages)
   }
 
-  numberValidator = (e) => {
+  const numberValidator = (e) => {
     const { rowData, field } = e.columnProps
     const value = String(rowData[field])
 
     return isNotEmpty(value) && value.match("^(-)?(?!0\\d)\\d*(\\.\\d{1,4})?$")
   }
 
-  getPercentsTableActions = (rowData) => {
+  const getPercentsTableActions = (rowData) => {
     return (
       <div className="p-grid p-fluid">
         <div className="p-col-6">
@@ -630,7 +525,7 @@ export class ProductDetails extends Component {
             type="button"
             icon="fa fa-fw fa-trash"
             className="p-button-danger"
-            onClick={() => this.removePercent(rowData)}
+            onClick={() => removePercent(rowData)}
             tooltip={"Quitar ítem"}
           />
         </div>
@@ -638,18 +533,18 @@ export class ProductDetails extends Component {
     )
   }
 
-  removePercent = (productPercent) => {
-    let percentages = Object.assign([], this.state.product.percentages)
+  const removePercent = (productPercent) => {
+    let percentages = Object.assign([], formData.percentages)
 
     _.remove(percentages, (item) => {
       return item.uid === productPercent.uid
     })
 
-    this.handleProductPropertyChange("percentages", percentages)
+    handleProductPropertyChange("percentages", percentages)
   }
 
-  addPercent = () => {
-    let percentages = Object.assign([], this.state.product.percentages)
+  const addPercent = () => {
+    let percentages = Object.assign([], formData.percentages)
     const newPercent = {
       uid: uuid(),
       rate: "",
@@ -658,10 +553,10 @@ export class ProductDetails extends Component {
 
     percentages.push(newPercent)
 
-    this.handleProductPropertyChange("percentages", percentages)
+    handleProductPropertyChange("percentages", percentages)
   }
 
-  getPriceListEditor = (props) => {
+  const getPriceListEditor = (props) => {
     const { rowData } = props
     const fieldName = "priceList"
 
@@ -669,42 +564,42 @@ export class ProductDetails extends Component {
       <PriceListSelector
         selectedItem={rowData[fieldName]}
         onChange={(percentType) =>
-          this.handleSalePriceChange(rowData, fieldName, percentType)
+          handleSalePriceChange(rowData, fieldName, percentType)
         }
       />
     )
   }
 
-  handleSalePriceChange = (salePrice, field, value) => {
-    let salePrices = Object.assign([], this.state.product.salePrices)
+  const handleSalePriceChange = (salePrice, field, value) => {
+    let salePrices = Object.assign([], formData.salePrices)
     const index = salePrices.findIndex((item) => item.uid === salePrice.uid)
 
     salePrices[index][field] = value
 
     if (field === "finalPrice") {
-      const taxRate = parseFloat(this.state.product.fiscalTaxRate.rate) / 100 + 1
-      const netCost = parseFloat(this.state.product.netCost)
+      const taxRate = parseFloat(formData.fiscalTaxRate.rate) / 100 + 1
+      const netCost = parseFloat(formData.netCost)
       const salePrice = parseFloat(value)
       const utility = ((salePrice / taxRate - netCost) / netCost) * 100
 
       salePrices[index].utility = utility.toFixed(4)
     }
 
-    this.handleProductPropertyChange("salePrices", salePrices)
+    handleProductPropertyChange("salePrices", salePrices)
   }
 
-  removePrice = (salePrice) => {
-    let prices = Object.assign([], this.state.product.salePrices)
+  const removePrice = (salePrice) => {
+    let prices = Object.assign([], formData.salePrices)
 
     _.remove(prices, (item) => {
       return item.uid === salePrice.uid
     })
 
-    this.handleProductPropertyChange("salePrices", prices)
+    handleProductPropertyChange("salePrices", prices)
   }
 
-  addSalePrice = () => {
-    let salePrices = Object.assign([], this.state.product.salePrices)
+  const addSalePrice = () => {
+    let salePrices = Object.assign([], formData.salePrices)
     const newSalePrice = {
       uid: uuid(),
       utility: "",
@@ -715,10 +610,10 @@ export class ProductDetails extends Component {
 
     salePrices.push(newSalePrice)
 
-    this.handleProductPropertyChange("salePrices", salePrices)
+    handleProductPropertyChange("salePrices", salePrices)
   }
 
-  getPriceTableActions = (rowData) => {
+  const getPriceTableActions = (rowData) => {
     return (
       <div className="p-grid p-fluid">
         <div className="p-col-6">
@@ -726,7 +621,7 @@ export class ProductDetails extends Component {
             type="button"
             icon="fa fa-fw fa-trash"
             className="p-button-danger"
-            onClick={() => this.removePrice(rowData)}
+            onClick={() => removePrice(rowData)}
             tooltip={"Quitar ítem"}
           />
         </div>
@@ -734,8 +629,8 @@ export class ProductDetails extends Component {
     )
   }
 
-  handleProductPropertyChange = (property, value) => {
-    let product = { ...this.state.product }
+  const handleProductPropertyChange = (property, value) => {
+    let product = { ...formData }
 
     product[property] = value
 
@@ -743,12 +638,13 @@ export class ProductDetails extends Component {
       product.subCategory = null
     }
 
-    this.updatePrices(product)
-    this.setState({ product })
+    handleChange(product)
   }
 
-  handleGetProductInfo = (productInfo) => {
-    let { percentages, salePrices, productId } = productInfo
+  const handleGetProductInfo = (productInfo) => {
+    setEditingProduct(productInfo)
+
+    let { percentages, salePrices } = productInfo
 
     percentages.forEach((percent) => {
       percent.uid = uuid()
@@ -757,10 +653,11 @@ export class ProductDetails extends Component {
       salePrice.uid = uuid()
     })
 
-    this.setState({ product: productInfo, loading: false, productId: productId })
+    setLoading(false)
+    setFormData({ ...formData, ...productInfo })
   }
 
-  renderPercentTableHeader = () => {
+  const renderPercentTableHeader = () => {
     return (
       <div className="p-fluid p-grid">
         <div className="p-col-8">
@@ -772,14 +669,14 @@ export class ProductDetails extends Component {
             icon="fa fa-fw fa-plus"
             className="p-button-success"
             type="button"
-            onClick={this.addPercent}
+            onClick={addPercent}
           />
         </div>
       </div>
     )
   }
 
-  renderPriceTableHeader = () => {
+  const renderPriceTableHeader = () => {
     return (
       <div className="p-fluid p-grid">
         <div className="p-col-8">
@@ -791,14 +688,14 @@ export class ProductDetails extends Component {
             icon="fa fa-fw fa-plus"
             className="p-button-success"
             type="button"
-            onClick={this.addSalePrice}
+            onClick={addSalePrice}
           />
         </div>
       </div>
     )
   }
 
-  updatePrices = (product) => {
+  const updatePrices = (product) => {
     const taxRate = parseFloat(_.get(product, "fiscalTaxRate.rate", "0")) / 100 + 1
     const percentages = product.percentages
     const salePrices = product.salePrices
@@ -821,25 +718,80 @@ export class ProductDetails extends Component {
       salePrice.netPrice = netPrice.toFixed(4)
       salePrice.finalPrice = (netPrice * taxRate).toFixed(4)
     })
-
-    this.setState({ product })
   }
 
-  validateProductCode = () => {
-    const { product } = this.state
-
-    if (product.code) {
-      this.productsService.validateProductCode(this.state.product, (error) =>
-        this.handleDuplicatedCodeError(error)
+  const validateProductCode = () => {
+    if (formData.code) {
+      productsService.validateProductCode(formData, (error) =>
+        handleDuplicatedCodeError(error)
       )
     }
   }
 
-  handleDuplicatedCodeError = (error) => {
-    this.toast.show({
+  const handleDuplicatedCodeError = (error) => {
+    toast.current.show({
       severity: "error",
       summary: `Código duplicado [${error.errorCode}]`,
       detail: error.message,
     })
   }
+
+  const handleChange = (newData) => {
+    updatePrices(newData)
+    setFormData(newData)
+  }
+
+  return (
+    <div className="card card-w-title">
+      <Toast ref={toast} />
+      <h1>{getTitle()}</h1>
+
+      <Form
+        data={formData}
+        onChange={handleChange}
+        schema={productSchema}
+        onSubmit={handleSubmit}
+        errorMessages={{
+          required: () => fieldRequiredDefaultMessage,
+          pattern: () => invalidPatternMessage,
+        }}
+      >
+        <div className="card ">
+          <h1 style={{ fontSize: "16px" }}>Identificación</h1>
+          {renderIdentificationSection()}
+        </div>
+
+        <div className="card ">
+          <h1 style={{ fontSize: "16px" }}>Precios</h1>
+          {renderPricingSection()}
+        </div>
+
+        <div className="card ">
+          <h1 style={{ fontSize: "16px" }}>Clasificación</h1>
+          {renderClassificationSection()}
+        </div>
+
+        <div className="card ">
+          <h1 style={{ fontSize: "16px" }}>Stock</h1>
+          {renderStockSection()}
+        </div>
+
+        <LoadingButton
+          type="submit"
+          label="Guardar"
+          loading={loading}
+          icon="fa fa-fw fa-save"
+        />
+        <Button
+          type="button"
+          label="Cerrar"
+          className="p-button-secondary"
+          icon="fa fa-fw fa-arrow-left"
+          onClick={() => {
+            window.close()
+          }}
+        />
+      </Form>
+    </div>
+  )
 }

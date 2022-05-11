@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react"
 import { Button } from "primereact/button"
-import PropTypes from "prop-types"
 import { CustomersService } from "../../service/CustomersService"
 import { SearchPersonsFilter } from "../core/SearchPersonsFilter"
 import { DataTable } from "primereact/datatable"

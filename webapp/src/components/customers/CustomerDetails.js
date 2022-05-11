@@ -464,7 +464,6 @@ export const CustomerDetails = (props) => {
 
               <Field
                 component={Dropdown}
-                //onChange={(newVal, handleFieldChange) => handleFieldChange('genero', newVal)}
                 options={genders}
                 optionLabel="nombreGenero"
                 dataKey="id"
@@ -480,7 +479,6 @@ export const CustomerDetails = (props) => {
 
               <Field
                 component={Dropdown}
-                //onChange={(newVal, handleFieldChange) => handleFieldChange('tipoDocumento', newVal)}
                 options={identificationTypes}
                 optionLabel="identificationTypeName"
                 name="tipoDocumento"

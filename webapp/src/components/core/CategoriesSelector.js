@@ -1,59 +1,38 @@
-import React, { Component } from "react"
+import React, { useEffect, useState } from "react"
 import { Dropdown } from "primereact/dropdown"
-import PropTypes from "prop-types"
 import { CategoriesService } from "../../service/CategoriesService"
 
-export class CategoriesSelector extends Component {
-  static propTypes = {
-    onCategorySelect: PropTypes.func.isRequired,
-    selectedCategory: PropTypes.object,
+export const CategoriesSelector = ({ onCategorySelect, selectedCategory }) => {
+  const [currentCategory, setCurrentCategory] = useState(selectedCategory)
+  const [categories, setCategories] = useState([])
+  const service = new CategoriesService()
+
+  useEffect(() => service.getCategories(handleCategories), [])
+  useEffect(() => setCurrentCategory(selectedCategory), [selectedCategory])
+
+  const handleCategories = (values) => {
+    setCategories(values)
   }
 
-  constructor(props) {
-    super(props)
+  const handleSelectionChange = (value) => {
+    setCurrentCategory(value)
 
-    this.state = {
-      loaded: false,
-      categories: [],
-      selectedCategory: props.selectedCategory || null,
-    }
-
-    this.service = new CategoriesService()
-  }
-
-  componentDidMount() {
-    const { loaded } = this.state
-
-    if (!loaded) {
-      this.service.getCategories((categories) =>
-        this.setState({ categories: categories, loaded: true })
-      )
+    if (onCategorySelect) {
+      onCategorySelect(value)
     }
   }
 
-  render() {
-    const { selectedCategory, categories } = this.state
-
-    return (
-      <Dropdown
-        id="category"
-        placeholder={"Rubro"}
-        filter={true}
-        dataKey="categoryId"
-        options={categories}
-        showClear={true}
-        value={selectedCategory}
-        optionLabel="displayName"
-        onChange={(e) => this.handleSelectionChange(e.value)}
-      />
-    )
-  }
-
-  handleSelectionChange = (value) => {
-    this.setState({
-      selectedCategory: value,
-    })
-
-    this.props.onCategorySelect(value)
-  }
+  return (
+    <Dropdown
+      id="category"
+      placeholder={"Rubro"}
+      filter={true}
+      dataKey="categoryId"
+      options={categories}
+      showClear={true}
+      value={currentCategory}
+      optionLabel="displayName"
+      onChange={(e) => handleSelectionChange(e.value)}
+    />
+  )
 }
