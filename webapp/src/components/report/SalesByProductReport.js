@@ -45,14 +45,14 @@ export const SalesByProductReport = () => {
           />
         </div>
         <div className="p-col-4">
-          <label htmlFor="fromDate">Fecha hasta:</label>
+          <label htmlFor="toDate">Fecha hasta:</label>
           <Calendar
-            id="fromDate"
+            id="toDate"
             showTime={false}
             showIcon={true}
             dateFormat="dd/mm/yy"
             value={toDate}
-            onChange={(e) => this.setState({ fromDate: e.value })}
+            onChange={(e) => setToDate(e.value)}
           />
         </div>
         <div className="p-col-12">
