@@ -94,11 +94,11 @@ const NEW_PRODUCT = {
   activo: true,
 }
 
-export const ProductDetails = (props) => {
+export const ProductDetails = (mainProps) => {
   const productsService = new ProductsService()
 
   const [loading, setLoading] = useState(false)
-  const [productId, setProductId] = useState(props.match.params.productId)
+  const [productId, setProductId] = useState(mainProps.match.params.productId)
   const [editingProduct, setEditingProduct] = useState(null)
 
   const [formData, setFormData] = useState(NEW_PRODUCT)

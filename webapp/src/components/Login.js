@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { InputText } from "primereact/inputtext"
 import { Password } from "primereact/password"
 import LoginService from "../service/LoginService.js"
@@ -18,20 +18,20 @@ export const Login = ({ onLoginSuccess }) => {
   const messages = useRef(null)
   const history = useHistory()
 
+  const handleLoginDisabled = () => {
+    if (username.length > 1 && password.length > 1) {
+      setLoginDisabled(false)
+    } else {
+      setLoginDisabled(true)
+    }
+  }
+
+  useEffect(handleLoginDisabled, [username, password])
+
   const handleEnterKeyPress = (event) => {
     if (event.key === "Enter" && !loginDisabled) {
       performLogin()
     }
-  }
-
-  const handleLoginButton = () => {
-    let loginDisabled = true
-
-    if (username.length > 1 && password.length > 1) {
-      loginDisabled = false
-    }
-
-    setLoginDisabled(loginDisabled)
   }
 
   const performLogin = () => {
@@ -70,7 +70,6 @@ export const Login = ({ onLoginSuccess }) => {
               value={username}
               onChange={(e) => {
                 setUsername(e.target.value)
-                handleLoginButton()
               }}
               autoFocus
               onKeyPress={handleEnterKeyPress}
@@ -87,7 +86,6 @@ export const Login = ({ onLoginSuccess }) => {
               value={password}
               onChange={(e) => {
                 setPassword(e.target.value)
-                handleLoginButton()
               }}
               onKeyPress={handleEnterKeyPress}
             />

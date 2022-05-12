@@ -1,7 +1,6 @@
-import React, { Component } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { Toast } from "primereact/toast"
 import { SalesService } from "../../service/SalesService"
-import PropTypes from "prop-types"
 import _ from "lodash"
 import { DataTable } from "primereact/datatable"
 import { Column } from "primereact/column"
@@ -10,60 +9,27 @@ import { Button } from "primereact/button"
 import { InvoiceDialog } from "./InvoiceDialog"
 import FileOutputsService from "../../service/FileOutputsService"
 
-export class ViewSale extends Component {
-  static propTypes = {
-    match: PropTypes.shape({
-      params: PropTypes.shape({
-        saleId: PropTypes.string.isRequired,
-      }),
-    }),
+export const ViewSale = (props) => {
+  const salesService = new SalesService()
+
+  const [saleId] = useState(props.match.params.saleId)
+  const [sale, setSale] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [showInvoiceDialog, setShowInvoiceDialog] = useState(false)
+
+  const toast = useRef(null)
+
+  useEffect(
+    () => salesService.getSale(saleId, handleGetSale, handleGetSaleError),
+    [saleId]
+  )
+
+  const handleGetSale = (saleInfo) => {
+    setSale(saleInfo)
+    setLoading(false)
   }
 
-  constructor(props, context) {
-    super(props, context)
-
-    this.state = {
-      saleId: props.match.params.saleId,
-      sale: null,
-      loading: true,
-      showInvoiceDialog: false,
-    }
-
-    this.salesService = new SalesService()
-  }
-
-  componentDidMount() {
-    const { sale, saleId } = this.state
-    if (!sale) {
-      this.salesService.getSale(
-        saleId,
-        (saleInfo) => this.setState({ sale: saleInfo, loading: false }),
-        this.handleGetSaleError
-      )
-    }
-  }
-
-  render() {
-    const { saleId, loading } = this.state
-
-    return (
-      <div className="card card-w-title">
-        <Toast ref={(el) => (this.toast = el)} />
-        <h1>Vista de comprobante: {saleId}</h1>
-        <div className="p-grid p-fluid">
-          {loading && this.getPlaceholder()}
-          {!loading && this.renderSaleInformation()}
-
-          {!loading && this.renderActions()}
-          {!loading && this.renderInvoiceDialog()}
-        </div>
-      </div>
-    )
-  }
-
-  renderSaleInformation = () => {
-    const { sale } = this.state
-
+  const renderSaleInformation = () => {
     return (
       <>
         <div className="p-col-12 p-lg-4">
@@ -97,7 +63,7 @@ export class ViewSale extends Component {
           <label style={{ fontWeight: "bold" }}>{sale.invoiceNumber}</label>
         </div>
 
-        <div className="p-col-12">{this.renderSaleItems()}</div>
+        <div className="p-col-12">{renderSaleItems()}</div>
 
         <div className="p-col-12 p-lg-6">
           <label>Total:</label>
@@ -128,9 +94,7 @@ export class ViewSale extends Component {
     )
   }
 
-  renderSaleItems = () => {
-    const { sale } = this.state
-
+  const renderSaleItems = () => {
     return (
       <DataTable value={sale.details} rows={8} paginator={true}>
         <Column field="productCode" header="Código" />
@@ -142,8 +106,7 @@ export class ViewSale extends Component {
     )
   }
 
-  renderActions = () => {
-    const { sale } = this.state
+  const renderActions = () => {
     let buttonToRender
 
     if (sale.invoiceNumber) {
@@ -163,7 +126,7 @@ export class ViewSale extends Component {
           icon="fa fa-fw fa-print"
           label={"Facturar"}
           className="p-button-success"
-          onClick={() => this.setState({ showInvoiceDialog: true })}
+          onClick={() => setShowInvoiceDialog(true)}
           tooltip={"Abre el cuadro de diálogo para facturar el comprobante actual"}
         />
       )
@@ -172,50 +135,59 @@ export class ViewSale extends Component {
     return buttonToRender
   }
 
-  renderInvoiceDialog = () => {
-    const { showInvoiceDialog, sale } = this.state
-
+  const renderInvoiceDialog = () => {
     return (
       <InvoiceDialog
         visible={showInvoiceDialog}
-        sale={sale}
-        successCallback={this.handleInvoice}
-        onHide={() => this.setState({ showInvoiceDialog: false })}
+        currentSale={sale}
+        successCallback={handleInvoice}
+        onHide={() => setShowInvoiceDialog(false)}
       />
     )
   }
 
-  getPlaceholder = () => {
+  const getPlaceholder = () => {
     return <span className="fa fa-spinner fa-spin fa-3x" />
   }
 
-  handleGetSaleError = (error) => {
-    this.toast.show({
+  const handleGetSaleError = (error) => {
+    toast.current.show({
       severity: "error",
       summary: "No se pudo encontrar el comprobante",
       detail: _.get(error, "response.data.message", ""),
     })
   }
 
-  handleInvoice = (createdInvoice) => {
-    const { saleId } = this.state
-
-    this.toast.show({
+  const handleInvoice = (createdInvoice) => {
+    toast.current.show({
       severity: "info",
       summary: `Factura ${createdInvoice.invoiceNumber} generada exitosamente`,
     })
 
-    this.setState({ loading: true })
+    setLoading(true)
 
-    this.salesService.getSale(
+    salesService.getSale(
       saleId,
-      (saleInfo) =>
-        this.setState({
-          sale: saleInfo,
-          loading: false,
-          showInvoiceDialog: false,
-        }),
-      this.handleGetSaleError
+      (saleInfo) => {
+        setSale(saleInfo)
+        setLoading(false)
+        setShowInvoiceDialog(false)
+      },
+      handleGetSaleError
     )
   }
+
+  return (
+    <div className="card card-w-title">
+      <Toast ref={toast} />
+      <h1>Vista de comprobante: {saleId}</h1>
+      <div className="p-grid p-fluid">
+        {loading && getPlaceholder()}
+        {!loading && renderSaleInformation()}
+
+        {!loading && renderActions()}
+        {!loading && renderInvoiceDialog()}
+      </div>
+    </div>
+  )
 }

@@ -1,51 +1,66 @@
-import React, { Component } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { Dialog } from "primereact/dialog"
-import PropTypes from "prop-types"
 import { SalesService } from "../../service/SalesService"
 import { Dropdown } from "primereact/dropdown"
 import { LoadingButton } from "../core/LoadingButton"
 import _ from "lodash"
 import { Toast } from "primereact/toast"
 
-export class InvoiceDialog extends Component {
-  static propTypes = {
-    sale: PropTypes.object.isRequired,
-    successCallback: PropTypes.func.isRequired,
-  }
+export const InvoiceDialog = (props) => {
+  const salesService = new SalesService()
 
-  constructor(props, context) {
-    super(props, context)
+  const [sale] = useState(props?.currentSale)
+  const [loading, setLoading] = useState(false)
+  const [pointsOfSale, setPointsOfSale] = useState([])
+  const [selectedPointOfSale, setSelectedPointOfSale] = useState(null)
 
-    this.salesService = new SalesService()
+  useEffect(() => salesService.getPointsOfSale(handlePointsOfSale), [])
+  const toast = useRef(null)
 
-    this.state = {
-      sale: this.props.sale,
-      loading: false,
-      pointsOfSale: [],
-      pointOfSale: null,
+  const getDialogProps = () => {
+    let defaultProps = {
+      header: "Facturar comprobante",
+      modal: true,
     }
+
+    return { ...defaultProps, ...props }
   }
 
-  componentDidMount() {
-    const { pointsOfSale } = this.state
+  const handlePointsOfSale = (pointsOfSale) => {
+    const defaultPos = pointsOfSale.find((pos) => pos.byDefault === true)
 
-    if (pointsOfSale.length === 0) {
-      this.salesService.getPointsOfSale((pos) => this.handlePointsOfSale(pos))
+    setPointsOfSale(pointsOfSale)
+    setSelectedPointOfSale(defaultPos)
+  }
+
+  const handleRegisterInvoice = () => {
+    setLoading(true)
+
+    const invoiceToRegister = {
+      saleId: sale.saleId,
+      pointOfSale: selectedPointOfSale.posNumber,
+      invoiceDate: null,
+      invoiceNumber: null,
     }
+
+    salesService.registerInvoice(invoiceToRegister, handleSuccess, handleError)
   }
 
-  render() {
-    return (
-      <Dialog {...this.getDialogProps()}>
-        <Toast ref={(el) => (this.toast = el)} />
-        {this.renderContent()}
-      </Dialog>
-    )
+  const handleSuccess = (createdInvoice) => {
+    props.successCallback(createdInvoice)
   }
 
-  renderContent = () => {
-    const { pointsOfSale, pointOfSale, loading, sale } = this.state
+  const handleError = (error) => {
+    setLoading(false)
 
+    toast.current.show({
+      severity: "error",
+      summary: "No se pudo facturar el comprobante",
+      detail: _.get(error, "message", ""),
+    })
+  }
+
+  const renderContent = () => {
     return (
       <div>
         <div className="p-grid p-fluid">
@@ -59,19 +74,19 @@ export class InvoiceDialog extends Component {
             <label htmlFor="pointOfSale">Punto de venta:</label>
             <Dropdown
               id="pointOfSale"
-              value={pointOfSale}
+              value={selectedPointOfSale}
               options={pointsOfSale}
               optionLabel="displayName"
-              onChange={(event) => this.setState({ pointOfSale: event.value })}
+              onChange={(event) => setSelectedPointOfSale(event.value)}
             />
           </div>
 
           <LoadingButton
             loading={loading}
             label="Facturar"
-            disabled={pointOfSale === null}
+            disabled={selectedPointOfSale === null}
             type="button"
-            onClick={this.handleRegisterInvoice}
+            onClick={handleRegisterInvoice}
             icon="fa fa-fw fa-print"
           />
         </div>
@@ -79,53 +94,10 @@ export class InvoiceDialog extends Component {
     )
   }
 
-  getDialogProps = () => {
-    let props = this.props
-    let defaultProps = {
-      header: "Facturar comprobante",
-      modal: true,
-    }
-
-    return { ...defaultProps, ...props }
-  }
-
-  handlePointsOfSale = (pointsOfSale) => {
-    let defaultPos = pointsOfSale.find((pos) => pos.byDefault === true)
-
-    this.setState({
-      pointsOfSale: pointsOfSale,
-      pointOfSale: defaultPos,
-    })
-  }
-
-  handleRegisterInvoice = () => {
-    const { sale, pointOfSale } = this.state
-    let invoiceToRegister = {
-      saleId: sale.saleId,
-      pointOfSale: pointOfSale.posNumber,
-      invoiceDate: null,
-      invoiceNumber: null,
-    }
-    this.setState({ loading: true })
-
-    this.salesService.registerInvoice(
-      invoiceToRegister,
-      this.handleSuccess,
-      this.handleError
-    )
-  }
-
-  handleSuccess = (createdInvoice) => {
-    this.props.successCallback(createdInvoice)
-  }
-
-  handleError = (error) => {
-    this.setState({ loading: false })
-
-    this.toast.show({
-      severity: "error",
-      summary: "No se pudo facturar el comprobante",
-      detail: _.get(error, "message", ""),
-    })
-  }
+  return (
+    <Dialog {...getDialogProps()}>
+      <Toast ref={toast} />
+      {renderContent()}
+    </Dialog>
+  )
 }
