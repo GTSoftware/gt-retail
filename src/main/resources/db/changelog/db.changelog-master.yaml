@@ -30,4 +30,19 @@ databaseChangeLog:
         - sqlCheck:
             expectedResult: 0
             sql: SELECT COUNT(1) FROM public.usuarios
+  - changeSet:
+      id: 3
+      author: Rodrigo
+      changes:
+        - sqlFile:
+            dbms: postgresql
+            encoding: utf8
+            stripComments: true
+            path: V_1.2-parameters.sql
+            relativeToChangelogFile: true
+      preConditions:
+        - onFail: MARK_RAN
+        - sqlCheck:
+            expectedResult: 0
+            sql: SELECT COUNT(*) FROM public.parametros WHERE nombre_parametro = 'impresion.formato'
 

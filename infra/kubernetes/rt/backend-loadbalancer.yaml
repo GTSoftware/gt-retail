@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-loadbalancer-rt
+spec:
+  selector:
+    app: gt-retail-backend-rt
+  ports:
+    - protocol: 'TCP'
+      port: 8090
+      targetPort: 8090
+  type: ClusterIP

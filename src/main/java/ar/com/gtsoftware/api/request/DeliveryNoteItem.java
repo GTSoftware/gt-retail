@@ -14,6 +14,4 @@ public class DeliveryNoteItem {
   @NotNull
   @DecimalMin("0.01")
   private final BigDecimal quantity;
-
-  private final int itemNumber;
 }

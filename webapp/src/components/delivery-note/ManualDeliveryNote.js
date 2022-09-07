@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { SelectButton } from "primereact/selectbutton"
 import { Dropdown } from "primereact/dropdown"
 import { AutoComplete } from "primereact/autocomplete"
@@ -7,7 +7,6 @@ import { Button } from "primereact/button"
 import { Panel } from "primereact/panel"
 import { InputText } from "primereact/inputtext"
 import { LoadingButton } from "../core/LoadingButton"
-import { ProductsService } from "../../service/ProductsService"
 import { Checkbox } from "primereact/checkbox"
 import { Toast } from "primereact/toast"
 import { DataTable } from "primereact/datatable"
@@ -17,6 +16,7 @@ import _ from "lodash"
 import { InputTextarea } from "primereact/inputtextarea"
 import FileOutputsService from "../../service/FileOutputsService"
 import { SearchProductsDialog } from "../core/SearchProductsDialog"
+import { v4 as uuid } from "uuid"
 
 const DELIVERY_DIRECTION = {
   INTERNAL: "Interno",
@@ -28,85 +28,46 @@ const DELIVERY_DIRECTIONS = [
   DELIVERY_DIRECTION.EXTERNAL,
 ]
 
-export class ManualDeliveryNote extends Component {
-  constructor(props, context) {
-    super(props, context)
+export const ManualDeliveryNote = () => {
+  const deliveryNotesService = new DeliveryNotesService()
 
-    this.state = {
-      originDirection: DELIVERY_DIRECTION.EXTERNAL,
-      destinationDirection: DELIVERY_DIRECTION.INTERNAL,
-      deliveryItems: [],
-      deliveryTypes: [],
-      warehouses: [],
-      filteredPersons: [],
-      origin: null,
-      deliveryType: null,
-      destination: null,
-      firstStepDone: false,
-      panelCollapsed: false,
-      productToSearch: {
-        productId: "",
-        productCode: "",
-        supplierCode: "",
-        quantity: 1,
-        usePurchaseUnits: false,
-      },
-      loadingAddProduct: false,
-      itemNumber: 1,
-      observations: "",
-      savingDeliveryNote: false,
-      savedDeliveryNoteId: null,
-    }
+  const [originDirection, setOriginDirection] = useState(DELIVERY_DIRECTION.EXTERNAL)
+  const [destinationDirection, setDestinationDirection] = useState(
+    DELIVERY_DIRECTION.INTERNAL
+  )
+  const [deliveryItems, setDeliveryItems] = useState([])
+  const [deliveryTypes, setDeliveryTypes] = useState([])
+  const [warehouses, setWarehouses] = useState([])
+  const [filteredPersons, setFilteredPersons] = useState([])
+  const [origin, setOrigin] = useState(null)
+  const [deliveryType, setDeliveryType] = useState(null)
+  const [destination, setDestination] = useState(null)
+  const [firstStepDone, setFirstStepDone] = useState(false)
+  const [panelCollapsed, setPanelCollapsed] = useState(false)
+  const [productToSearch, setProductToSearch] = useState({
+    productId: "",
+    productCode: "",
+    supplierCode: "",
+    quantity: 1,
+    usePurchaseUnits: false,
+  })
+  const [loadingAddProduct, setLoadingAddProduct] = useState(false)
+  const [observations, setObservations] = useState("")
+  const [savingDeliveryNote, setSavingDeliveryNote] = useState(false)
+  const [savedDeliveryNoteId, setSavedDeliveryNoteId] = useState(null)
+  const [showSearchProductsDialog, setShowSearchProductsDialog] = useState(false)
+  const [onlyForSupplier, setOnlyForSupplier] = useState(true)
 
-    this.deliveryNotesService = new DeliveryNotesService()
-    this.productsService = new ProductsService()
-  }
-
-  componentDidMount() {
-    const { deliveryTypes, warehouses } = this.state
-
-    if (deliveryTypes.length === 0) {
-      this.deliveryNotesService.getDeliveryTypes(this.handleDeliveryTypes)
-    }
-    if (warehouses.length === 0) {
-      this.deliveryNotesService.getWarehouses(this.handleWarehouses)
-    }
-  }
-
-  render() {
-    const { firstStepDone } = this.state
-
-    return (
-      <div className="card card-w-title">
-        <Toast ref={(el) => (this.toast = el)} />
-        {this.renderSearchProductsDialog()}
-        <h1>Nuevo remito manual</h1>
-        <Panel
-          header={this.getPanelHeader()}
-          toggleable={true}
-          collapsed={this.state.panelCollapsed}
-          onToggle={(e) => this.setState({ panelCollapsed: e.value })}
-        >
-          <div className="p-grid p-fluid">
-            {this.renderOriginSection()}
-            {this.renderDestinationSection()}
-            {this.renderDeliveryTypeSection()}
-          </div>
-        </Panel>
-        {this.renderConfirmFirstStepButton()}
-
-        {firstStepDone && <div className="SeparatorFull" />}
-        {firstStepDone && this.renderAddItemsSection()}
-        {firstStepDone && this.renderDeliveryItemsSection()}
-
-        {firstStepDone && <div className="SeparatorFull" />}
-        {firstStepDone && this.renderFooterSection()}
-      </div>
+  useEffect(() => {
+    deliveryNotesService.getDeliveryTypes((deliveryTypes) =>
+      setDeliveryTypes(deliveryTypes)
     )
-  }
+    deliveryNotesService.getWarehouses((warehouses) => setWarehouses(warehouses))
+  }, [])
 
-  getPanelHeader = () => {
-    const { firstStepDone, origin, destination, deliveryType } = this.state
+  const toast = useRef(null)
+
+  const getPanelHeader = () => {
     let header = "Origen y destino"
 
     if (firstStepDone) {
@@ -116,25 +77,22 @@ export class ManualDeliveryNote extends Component {
     return header
   }
 
-  renderOriginSection = () => {
-    const { originDirection } = this.state
-
+  const renderOriginSection = () => {
     return (
       <div className="p-col-6">
         <h3>Origen:</h3>
         <SelectButton
-          disabled={this.state.firstStepDone}
+          disabled={firstStepDone}
           value={originDirection}
           options={DELIVERY_DIRECTIONS}
-          onChange={(e) => this.handleDeliveryDirectionChange("origin", e.value)}
+          onChange={(e) => handleDeliveryDirectionChange("origin", e.value)}
         />
-        {this.renderOriginSelector()}
+        {renderOriginSelector()}
       </div>
     )
   }
 
-  renderOriginSelector = () => {
-    const { originDirection, warehouses, origin } = this.state
+  const renderOriginSelector = () => {
     let originSelector = (
       <Dropdown
         id="internalOrigin"
@@ -142,8 +100,8 @@ export class ManualDeliveryNote extends Component {
         placeholder="Seleccione un depósito"
         options={warehouses}
         value={origin}
-        disabled={this.state.firstStepDone}
-        onChange={(e) => this.setState({ origin: e.value })}
+        disabled={firstStepDone}
+        onChange={(e) => setOrigin(e.value)}
       />
     )
     if (DELIVERY_DIRECTION.EXTERNAL === originDirection) {
@@ -153,12 +111,12 @@ export class ManualDeliveryNote extends Component {
           placeholder="Comience a escribir para buscar una persona"
           delay={500}
           id="originPersonField"
-          completeMethod={(event) => this.filterPersons(event.query)}
-          suggestions={this.state.filteredPersons}
+          completeMethod={(event) => filterPersons(event.query)}
+          suggestions={filteredPersons}
           field="displayName"
           required={true}
-          disabled={this.state.firstStepDone}
-          onChange={(e) => this.setState({ origin: e.value })}
+          disabled={firstStepDone}
+          onChange={(e) => setOrigin(e.value)}
           value={origin || ""}
         />
       )
@@ -167,36 +125,31 @@ export class ManualDeliveryNote extends Component {
     return originSelector
   }
 
-  renderDestinationSection = () => {
-    const { destinationDirection } = this.state
-
+  const renderDestinationSection = () => {
     return (
       <div className="p-col-6">
         <h3>Destino:</h3>
         <SelectButton
-          disabled={this.state.firstStepDone}
+          disabled={firstStepDone}
           value={destinationDirection}
           options={DELIVERY_DIRECTIONS}
-          onChange={(e) =>
-            this.handleDeliveryDirectionChange("destination", e.value)
-          }
+          onChange={(e) => handleDeliveryDirectionChange("destination", e.value)}
         />
-        {this.renderDestinationSelector()}
+        {renderDestinationSelector()}
       </div>
     )
   }
 
-  renderDestinationSelector = () => {
-    const { destinationDirection, warehouses, destination } = this.state
+  const renderDestinationSelector = () => {
     let destinationSelector = (
       <Dropdown
         id="internalDestination"
-        disabled={this.state.firstStepDone}
+        disabled={firstStepDone}
         optionLabel="displayName"
         placeholder="Seleccione un depósito"
         options={warehouses}
         value={destination}
-        onChange={(e) => this.setState({ destination: e.value })}
+        onChange={(e) => setDestination(e.value)}
       />
     )
     if (DELIVERY_DIRECTION.EXTERNAL === destinationDirection) {
@@ -205,13 +158,13 @@ export class ManualDeliveryNote extends Component {
           minLength={2}
           placeholder="Comience a escribir para buscar una persona"
           delay={500}
-          disabled={this.state.firstStepDone}
+          disabled={firstStepDone}
           id="destinationPersonField"
-          completeMethod={(event) => this.filterPersons(event.query)}
-          suggestions={this.state.filteredPersons}
+          completeMethod={(event) => filterPersons(event.query)}
+          suggestions={filteredPersons}
           field="displayName"
           required={true}
-          onChange={(e) => this.setState({ destination: e.value })}
+          onChange={(e) => setDestination(e.value)}
           value={destination || ""}
         />
       )
@@ -220,9 +173,7 @@ export class ManualDeliveryNote extends Component {
     return destinationSelector
   }
 
-  renderDeliveryTypeSection = () => {
-    const { deliveryTypes, deliveryType } = this.state
-
+  const renderDeliveryTypeSection = () => {
     return (
       <div className="p-col-12">
         <h3>Tipo de movimiento:</h3>
@@ -232,22 +183,14 @@ export class ManualDeliveryNote extends Component {
           placeholder="Seleccione el tipo de movimiento"
           options={deliveryTypes}
           value={deliveryType}
-          disabled={this.state.firstStepDone}
-          onChange={(e) => this.setState({ deliveryType: e.value })}
+          disabled={firstStepDone}
+          onChange={(e) => setDeliveryType(e.value)}
         />
       </div>
     )
   }
 
-  renderConfirmFirstStepButton = () => {
-    const {
-      firstStepDone,
-      origin,
-      destination,
-      deliveryType,
-      originDirection,
-      destinationDirection,
-    } = this.state
+  const renderConfirmFirstStepButton = () => {
     let nextStepButton = null
 
     if (
@@ -264,12 +207,10 @@ export class ManualDeliveryNote extends Component {
         <Button
           label="Confirmar"
           className="p-button-success"
-          onClick={() =>
-            this.setState({
-              firstStepDone: true,
-              panelCollapsed: true,
-            })
-          }
+          onClick={() => {
+            setFirstStepDone(true)
+            setPanelCollapsed(true)
+          }}
           icon="fa fa-fw fa-arrow-down"
         />
       )
@@ -278,9 +219,7 @@ export class ManualDeliveryNote extends Component {
     return nextStepButton
   }
 
-  renderAddItemsSection = () => {
-    const { productToSearch } = this.state
-
+  const renderAddItemsSection = () => {
     return (
       <div className="p-card-body p-fluid p-grid">
         <div className="p-col-1 p-lg-1">
@@ -288,34 +227,34 @@ export class ManualDeliveryNote extends Component {
             id="id"
             autoFocus
             onChange={(e) => {
-              this.handleSearchProductPropertyChange("productId", e.target.value)
+              handleSearchProductPropertyChange("productId", e.target.value)
             }}
             value={productToSearch.productId}
             keyfilter="int"
             placeholder="Id"
-            onKeyPress={this.handleEnterKeyPress}
+            onKeyPress={handleEnterKeyPress}
           />
         </div>
         <div className="p-col-2 p-lg-2">
           <InputText
             id="supplierCode"
             onChange={(e) => {
-              this.handleSearchProductPropertyChange("supplierCode", e.target.value)
+              handleSearchProductPropertyChange("supplierCode", e.target.value)
             }}
             value={productToSearch.supplierCode}
             placeholder="Código de fábrica"
-            onKeyPress={this.handleEnterKeyPress}
+            onKeyPress={handleEnterKeyPress}
           />
         </div>
         <div className="p-col-2 p-lg-2">
           <InputText
             id="codigo"
             onChange={(e) => {
-              this.handleSearchProductPropertyChange("productCode", e.target.value)
+              handleSearchProductPropertyChange("productCode", e.target.value)
             }}
             value={productToSearch.productCode}
             placeholder="Código propio"
-            onKeyPress={this.handleEnterKeyPress}
+            onKeyPress={handleEnterKeyPress}
           />
         </div>
         <div className="p-col-2 p-lg-2">
@@ -324,10 +263,7 @@ export class ManualDeliveryNote extends Component {
               <Checkbox
                 id="usePurchaseUnits"
                 onChange={(e) => {
-                  this.handleSearchProductPropertyChange(
-                    "usePurchaseUnits",
-                    e.checked
-                  )
+                  handleSearchProductPropertyChange("usePurchaseUnits", e.checked)
                 }}
                 tooltip={"Usar unidades de compra"}
                 checked={productToSearch.usePurchaseUnits}
@@ -337,13 +273,22 @@ export class ManualDeliveryNote extends Component {
               id="cantidad"
               keyfilter="num"
               onChange={(e) => {
-                this.handleSearchProductPropertyChange("quantity", e.target.value)
+                handleSearchProductPropertyChange("quantity", e.target.value)
               }}
               value={productToSearch.quantity}
               placeholder="Cantidad"
-              onKeyPress={this.handleEnterKeyPress}
+              onKeyPress={handleEnterKeyPress}
             />
           </div>
+        </div>
+
+        <div className="p-col-2 p-lg-2">
+          <label htmlFor="limitToSupplier">Limitar al proveedor:</label>
+          <Checkbox
+            id="limitToSupplier"
+            onChange={(e) => setOnlyForSupplier(e.checked)}
+            checked={onlyForSupplier}
+          />
         </div>
 
         <div className="p-col-2 p-lg-2">
@@ -351,8 +296,8 @@ export class ManualDeliveryNote extends Component {
             type="button"
             icon="fa fa-fw fa-plus"
             className="p-button-success shop-cart--add-product-button"
-            onClick={this.tryAddProduct}
-            loading={this.state.loadingAddProduct}
+            onClick={tryAddProduct}
+            loading={loadingAddProduct}
             tooltip={"Agregar producto"}
           />
 
@@ -361,20 +306,19 @@ export class ManualDeliveryNote extends Component {
             className="shop-cart--search-product-button"
             icon="fa fa-fw fa-search"
             tooltip={"Buscar productos"}
-            onClick={() => this.setState({ showSearchProductsDialog: true })}
+            onClick={() => setShowSearchProductsDialog(true)}
           />
         </div>
       </div>
     )
   }
 
-  renderDeliveryItemsSection = () => {
-    const internalOrigin = DELIVERY_DIRECTION.INTERNAL === this.state.originDirection
-    const internalDestination =
-      DELIVERY_DIRECTION.INTERNAL === this.state.destinationDirection
+  const renderDeliveryItemsSection = () => {
+    const internalOrigin = DELIVERY_DIRECTION.INTERNAL === originDirection
+    const internalDestination = DELIVERY_DIRECTION.INTERNAL === destinationDirection
 
     return (
-      <DataTable {...this.getItemsTableProps()}>
+      <DataTable {...getItemsTableProps()}>
         <Column
           key="productId"
           field="productId"
@@ -422,34 +366,32 @@ export class ManualDeliveryNote extends Component {
         <Column key="saleUnits" field="saleUnits" header="Un. Compra" />
         <Column
           key="actions"
-          body={this.getTableActions}
+          body={getTableActions}
           style={{ textAlign: "center", width: "7em" }}
         />
       </DataTable>
     )
   }
 
-  renderFooterSection = () => {
-    const { savedDeliveryNoteId } = this.state
-
+  const renderFooterSection = () => {
     return (
       <div className="p-fluid p-grid">
         <div className="p-col-12">
           <label htmlFor="observaciones">Observaciones:</label>
           <InputTextarea
-            value={this.state.observations}
-            onChange={(e) => this.setState({ observations: e.target.value })}
+            value={observations}
+            onChange={(e) => setObservations(e.target.value)}
           />
         </div>
         <div className="p-col-6">
           {!savedDeliveryNoteId && (
             <LoadingButton
-              loading={this.state.savingDeliveryNote}
+              loading={savingDeliveryNote}
               className="p-button-success"
               icon="fa fa-fw fa-save"
               label="Guardar"
-              disabled={this.state.deliveryItems.length === 0}
-              onClick={this.saveDeliveryNote}
+              disabled={deliveryItems.length === 0}
+              onClick={saveDeliveryNote}
             />
           )}
           {savedDeliveryNoteId && (
@@ -466,29 +408,29 @@ export class ManualDeliveryNote extends Component {
     )
   }
 
-  renderSearchProductsDialog = () => {
+  const renderSearchProductsDialog = () => {
     return (
       <SearchProductsDialog
-        visible={this.state.showSearchProductsDialog}
+        visible={showSearchProductsDialog}
         modal={true}
-        acceptCallback={this.handleSelectedProduct}
-        onHide={() => this.setState({ showSearchProductsDialog: false })}
+        acceptCallback={handleSelectedProduct}
+        onHide={() => setShowSearchProductsDialog(false)}
       />
     )
   }
 
-  getItemsTableProps() {
+  const getItemsTableProps = () => {
     let header = <div className="p-clearfix">Productos</div>
     let footer = (
       <div className="p-clearfix">
-        <label>Renglones: {this.state.deliveryItems.length}</label>
+        <label>Renglones: {deliveryItems.length}</label>
       </div>
     )
 
     return {
       ...DEFAULT_DATA_TABLE_PROPS,
       ...{
-        value: this.state.deliveryItems,
+        value: deliveryItems,
         header: header,
         footer: footer,
         resizableColumns: true,
@@ -497,78 +439,67 @@ export class ManualDeliveryNote extends Component {
     }
   }
 
-  getTableActions = (rowData) => {
+  const getTableActions = (rowData) => {
     return (
       <Button
         type="button"
         icon="fa fa-fw fa-trash"
         className="p-button-danger"
-        onClick={() => this.removeItem(rowData)}
+        onClick={() => removeItem(rowData)}
         tooltip={"Quitar ítem"}
       />
     )
   }
 
-  handleDeliveryDirectionChange = (direction, value) => {
+  const handleDeliveryDirectionChange = (direction, value) => {
     if (value) {
       if (direction === "origin") {
-        this.setState({
-          originDirection: value,
-          origin: null,
-        })
+        setOriginDirection(value)
+        setOrigin(null)
       } else {
-        this.setState({
-          destinationDirection: value,
-          destination: null,
-        })
+        setDestinationDirection(value)
+        setDestination(null)
       }
     }
   }
 
-  handleWarehouses = (warehouses) => {
-    this.setState({ warehouses: warehouses })
-  }
-
-  handleDeliveryTypes = (deliveryTypes) => {
-    this.setState({ deliveryTypes: deliveryTypes })
-  }
-
-  filterPersons = (query) => {
-    this.deliveryNotesService.searchPersons(query, (data) =>
-      this.setState({ filteredPersons: data.data })
+  const filterPersons = (query) => {
+    deliveryNotesService.searchPersons(query, (data) =>
+      setFilteredPersons(data.data)
     )
   }
 
-  handleSearchProductPropertyChange = (property, value) => {
-    let { productToSearch } = this.state
-    productToSearch[property] = value
+  const handleSearchProductPropertyChange = (property, value) => {
+    let searchFields = { ...productToSearch }
 
-    this.setState({ productToSearch: productToSearch })
+    searchFields[property] = value
+
+    setProductToSearch(searchFields)
   }
 
-  tryAddProduct = () => {
-    let searchCriteria = { ...this.state.productToSearch }
+  const tryAddProduct = () => {
+    let searchCriteria = { ...productToSearch }
 
-    if (this.shouldSearch(searchCriteria)) {
-      this.setState({ loadingAddProduct: true })
+    if (shouldSearch(searchCriteria)) {
+      setLoadingAddProduct(true)
 
-      if (DELIVERY_DIRECTION.INTERNAL === this.state.originDirection) {
-        searchCriteria.originWarehouseId = this.state.origin.warehouseId
+      if (DELIVERY_DIRECTION.INTERNAL === originDirection) {
+        searchCriteria.originWarehouseId = origin.warehouseId
       }
 
-      if (DELIVERY_DIRECTION.INTERNAL === this.state.destinationDirection) {
-        searchCriteria.destinationWarehouseId = this.state.destination.warehouseId
+      if (DELIVERY_DIRECTION.INTERNAL === destinationDirection) {
+        searchCriteria.destinationWarehouseId = destination.warehouseId
       }
 
-      this.deliveryNotesService.addProduct(
-        searchCriteria,
-        this.handleAddItem,
-        this.handleError
-      )
+      if (onlyForSupplier && DELIVERY_DIRECTION.EXTERNAL === originDirection) {
+        searchCriteria.supplierId = origin.personId
+      }
+
+      deliveryNotesService.addProduct(searchCriteria, handleAddItem, handleError)
     }
   }
 
-  shouldSearch = (searchCriteria) => {
+  const shouldSearch = (searchCriteria) => {
     return (
       searchCriteria.supplierCode ||
       searchCriteria.productCode ||
@@ -576,76 +507,62 @@ export class ManualDeliveryNote extends Component {
     )
   }
 
-  handleAddItem = (deliveryItem) => {
-    let { deliveryItems, itemNumber } = this.state
+  const handleAddItem = (deliveryItem) => {
+    deliveryItem.itemNumber = uuid()
+    setLoadingAddProduct(false)
 
-    deliveryItem.itemNumber = itemNumber + 1
-    this.setState({
-      loadingAddProduct: false,
-      itemNumber: itemNumber + 1,
-    })
+    const newDeliveryItems = [...deliveryItems]
 
-    deliveryItems.splice(0, 0, deliveryItem)
-    this.clearProductSearch()
+    newDeliveryItems.splice(0, 0, deliveryItem)
+
+    setDeliveryItems(newDeliveryItems)
+    clearProductSearch()
   }
 
-  handleError = (error) => {
-    this.setState({ loadingAddProduct: false })
+  const handleError = (error) => {
+    setLoadingAddProduct(false)
 
-    this.toast.show({
+    toast.current.show({
       severity: "error",
-      summary: "No se pudo encontrar el producto",
+      summary: "El producto no existe o no corresponde con el proveedor",
       detail: error.message,
     })
   }
 
-  handleSaveError = (error) => {
-    this.setState({ savingDeliveryNote: false })
+  const handleSaveError = (error) => {
+    setSavingDeliveryNote(false)
 
-    this.toast.show({
+    toast.current.show({
       severity: "error",
       summary: "No se pudo guardar el remito",
       detail: _.get(error, "response.data.message", ""),
     })
   }
 
-  clearProductSearch = () => {
-    let { productToSearch } = this.state
-
+  const clearProductSearch = () => {
     productToSearch.quantity = 1
     productToSearch.productId = ""
     productToSearch.productCode = ""
     productToSearch.supplierCode = ""
 
-    this.setState({ productToSearch: productToSearch })
+    setProductToSearch(productToSearch)
   }
 
-  removeItem = (rowData) => {
-    let { deliveryItems } = this.state
-
+  const removeItem = (rowData) => {
     _.remove(deliveryItems, (item) => {
       return item.itemNumber === rowData.itemNumber
     })
 
-    this.setState({ deliveryItems: deliveryItems })
+    setDeliveryItems(deliveryItems)
   }
 
-  handleEnterKeyPress = (event) => {
-    if (event.key === "Enter" && !this.state.loadingAddProduct) {
-      this.tryAddProduct()
+  const handleEnterKeyPress = (event) => {
+    if (event.key === "Enter" && !loadingAddProduct) {
+      tryAddProduct()
     }
   }
 
-  saveDeliveryNote = () => {
-    const {
-      originDirection,
-      destinationDirection,
-      origin,
-      destination,
-      deliveryItems,
-      observations,
-      deliveryType,
-    } = this.state
+  const saveDeliveryNote = () => {
     let deliveryNote = {
       originDirection: originDirection,
       destinationDirection: destinationDirection,
@@ -656,34 +573,66 @@ export class ManualDeliveryNote extends Component {
       deliveryType: deliveryType,
     }
 
-    this.setState({ savingDeliveryNote: true })
+    setSavingDeliveryNote(true)
 
-    this.deliveryNotesService.saveDeliveryNote(
+    deliveryNotesService.saveDeliveryNote(
       deliveryNote,
-      this.handleSaveSuccess,
-      this.handleSaveError
+      handleSaveSuccess,
+      handleSaveError
     )
   }
 
-  handleSaveSuccess = (savedDeliveryNoteId) => {
-    this.setState({
-      savingDeliveryNote: false,
-      savedDeliveryNoteId: savedDeliveryNoteId,
-    })
+  const handleSaveSuccess = (savedDeliveryNoteId) => {
+    setSavingDeliveryNote(false)
+    setSavedDeliveryNoteId(savedDeliveryNoteId)
 
-    this.toast.show({
+    toast.current.show({
       severity: "info",
       summary: "Remito generado exitosamente",
       detail: `Número: ${savedDeliveryNoteId}`,
     })
   }
 
-  handleSelectedProduct = (searchProduct) => {
-    let { productToSearch } = this.state
-
+  const handleSelectedProduct = (searchProduct) => {
     productToSearch.productId = searchProduct.productId
 
-    this.setState({ productToSearch: productToSearch })
-    this.tryAddProduct()
+    setProductToSearch(productToSearch)
+    tryAddProduct()
   }
+
+  const renderSecondStep = () => {
+    return (
+      <>
+        <div className="SeparatorFull" />
+        {renderAddItemsSection()}
+        {renderDeliveryItemsSection()}
+        <div className="SeparatorFull" />
+        {renderFooterSection()}
+      </>
+    )
+  }
+
+  return (
+    <div className="card card-w-title">
+      <Toast ref={toast} />
+
+      {renderSearchProductsDialog()}
+      <h1>Nuevo remito manual</h1>
+      <Panel
+        header={getPanelHeader()}
+        toggleable={true}
+        collapsed={panelCollapsed}
+        onToggle={(e) => setPanelCollapsed(e.value)}
+      >
+        <div className="p-grid p-fluid">
+          {renderOriginSection()}
+          {renderDestinationSection()}
+          {renderDeliveryTypeSection()}
+        </div>
+      </Panel>
+      {renderConfirmFirstStepButton()}
+
+      {firstStepDone && renderSecondStep()}
+    </div>
+  )
 }

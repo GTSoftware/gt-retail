@@ -10,9 +10,11 @@ import static ar.com.gtsoftware.enums.Parametros.EMPRESA_NOMBRE_FANTASIA;
 import static ar.com.gtsoftware.enums.Parametros.EMPRESA_PROVINCIA;
 import static ar.com.gtsoftware.enums.Parametros.EMPRESA_RAZON_SOCIAL;
 import static ar.com.gtsoftware.enums.Parametros.EMPRESA_TELEFONO;
+import static ar.com.gtsoftware.enums.Parametros.FORMATO_IMPRESION;
 import static ar.com.gtsoftware.enums.Parametros.PRESUPUESTO_MOSTRAR_DETALLE_PRECIOS;
 
 import ar.com.gtsoftware.api.PrintController;
+import ar.com.gtsoftware.api.PrintFormat;
 import ar.com.gtsoftware.api.exception.FileGenerationException;
 import ar.com.gtsoftware.api.exception.FileNotFoundException;
 import ar.com.gtsoftware.dto.domain.ComprobantesDto;
@@ -21,11 +23,11 @@ import ar.com.gtsoftware.service.ParametrosService;
 import ar.com.gtsoftware.service.RemitoService;
 import ar.com.gtsoftware.service.VentasService;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
@@ -63,7 +65,7 @@ public class PrintControllerImpl implements PrintController {
     if (Objects.isNull(comprobante)) {
       handleEntityNotFound("saleId", saleId);
     }
-    List<ComprobantesDto> ventas = Collections.singletonList(comprobante);
+    List<ComprobantesDto> ventas = List.of(comprobante);
     boolean mostrarDetallePrecios =
         parametrosService.getBooleanParam(PRESUPUESTO_MOSTRAR_DETALLE_PRECIOS);
 
@@ -78,13 +80,13 @@ public class PrintControllerImpl implements PrintController {
   }
 
   @Override
-  public void getInvoice(Long saleId) {
+  public void getInvoice(Long saleId, PrintFormat format) {
     ComprobantesDto comprobante = ventasService.obtenerComprobante(saleId);
     if (comprobante == null) {
       handleEntityNotFound("saleId", saleId);
       return;
     }
-    List<ComprobantesDto> ventas = Collections.singletonList(comprobante);
+    List<ComprobantesDto> ventas = List.of(comprobante);
 
     JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(ventas);
     JRBeanCollectionDataSource beanCollectionDataSource1 = new JRBeanCollectionDataSource(ventas);
@@ -94,20 +96,35 @@ public class PrintControllerImpl implements PrintController {
 
     parameters.put("logoAfip", "classpath:images/afip.png");
     parameters.put("codigobarras", comprobante.getCodigoBarrasFactura());
-    parameters.put("facturaReport", REPORTS_MAP.get("factura"));
-    parameters.put("alicuotasSubReport", REPORTS_MAP.get("vistaVentas_alicuotas"));
+    parameters.put("facturaReport", REPORTS_MAP.get(getReportName("factura", format)));
+    parameters.put(
+        "alicuotasSubReport", REPORTS_MAP.get(getReportName("vistaVentas_alicuotas", format)));
 
     if (comprobante.getIdRegistro().getLetraFactura().equals("A")) {
-      parameters.put("subreport", REPORTS_MAP.get("vistaVentas_lineasNeto"));
+      parameters.put("subreport", REPORTS_MAP.get(getReportName("vistaVentas_lineasNeto", format)));
     } else {
-      parameters.put("subreport", REPORTS_MAP.get("vistaVentas_lineas"));
+      parameters.put("subreport", REPORTS_MAP.get(getReportName("vistaVentas_lineas", format)));
     }
     parameters.put("subDataSource", beanCollectionDataSource1);
     parameters.put("subDataSource2", beanCollectionDataSource2);
 
     String fileName = String.format("factura-%d", saleId);
 
-    handlePDFExport(fileName, beanCollectionDataSource, "facturaConDuplicado", parameters);
+    handlePDFExport(
+        fileName, beanCollectionDataSource, getReportName("factura", format), parameters);
+  }
+
+  private String getReportName(String baseReportName, PrintFormat desiredFormat) {
+    final String ticketToken = "_ticket";
+    PrintFormat format =
+        Optional.ofNullable(desiredFormat)
+            .orElse(PrintFormat.valueOf(parametrosService.getStringParam(FORMATO_IMPRESION)));
+
+    if (PrintFormat.TICKET.equals(format)) {
+      return baseReportName + ticketToken;
+    }
+
+    return baseReportName;
   }
 
   @Override
@@ -116,7 +133,7 @@ public class PrintControllerImpl implements PrintController {
     if (remito == null) {
       handleEntityNotFound("deliveryNoteId", deliveryNoteId);
     }
-    List<RemitoDto> remitos = Collections.singletonList(remito);
+    List<RemitoDto> remitos = List.of(remito);
 
     JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(remitos);
 
@@ -196,7 +213,7 @@ public class PrintControllerImpl implements PrintController {
     final List<String> reports =
         List.of(
             "classpath:reports/factura.jrxml",
-            "classpath:reports/facturaConDuplicado.jrxml",
+            "classpath:reports/factura_ticket.jrxml",
             "classpath:reports/presupuesto.jrxml",
             "classpath:reports/productoEtiqueta.jrxml",
             "classpath:reports/recibo.jrxml",
@@ -204,8 +221,11 @@ public class PrintControllerImpl implements PrintController {
             "classpath:reports/remito.jrxml",
             "classpath:reports/remito_lineas.jrxml",
             "classpath:reports/vistaVentas_alicuotas.jrxml",
+            "classpath:reports/vistaVentas_alicuotas_ticket.jrxml",
             "classpath:reports/vistaVentas_lineas.jrxml",
-            "classpath:reports/vistaVentas_lineasNeto.jrxml");
+            "classpath:reports/vistaVentas_lineas_ticket.jrxml",
+            "classpath:reports/vistaVentas_lineasNeto.jrxml",
+            "classpath:reports/vistaVentas_lineasNeto_ticket.jrxml");
     try {
       for (String reportFilePath : reports) {
         log.debug("Compiling report:" + reportFilePath);

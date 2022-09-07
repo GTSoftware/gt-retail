@@ -92,6 +92,7 @@ public class DeliveryNotesControllerImpl implements DeliveryNotesController {
     ProductosSearchFilter psf =
         ProductosSearchFilter.builder()
             .activo(true)
+            .idProveedorHabitual(addDeliveryItemRequest.getSupplierId())
             .llevaControlStock(true)
             .codigoPropio(addDeliveryItemRequest.getProductCode())
             .idProducto(addDeliveryItemRequest.getProductId())

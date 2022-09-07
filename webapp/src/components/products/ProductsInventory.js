@@ -1,5 +1,5 @@
 import _ from "lodash"
-import React, { Component, useEffect, useState } from "react"
+import React, { useState } from "react"
 import { ProductsService } from "../../service/ProductsService"
 import { SearchProductsFilter } from "../core/SearchProductsFilter"
 import { DataTable } from "primereact/datatable"

@@ -30,8 +30,10 @@ public enum Parametros {
   EMPRESA_NOMBRE_FANTASIA("empresa.nombre_fantasia", String.class),
   EMPRESA_PROVINCIA("empresa.provincia", String.class),
   EMPRESA_RAZON_SOCIAL("empresa.razon_social", String.class),
-  EMPRESA_TELEFONO("empresa.telefono", String.class);
+  EMPRESA_TELEFONO("empresa.telefono", String.class),
 
-  private String nombreParametro;
-  private Class tipoParametro;
+  FORMATO_IMPRESION("impresion.formato", String.class);
+
+  private final String nombreParametro;
+  private final Class<?> tipoParametro;
 }

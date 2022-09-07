@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="facturaA_alicuotas_ticket" pageWidth="218" pageHeight="802" columnWidth="206" leftMargin="6" rightMargin="6" topMargin="0" bottomMargin="0" uuid="8ee54347-3d25-4c73-9f92-449488104ca3">
+	<property name="ireport.zoom" value="1.9487171000000019"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="importeIva" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[importeIva]]></fieldDescription>
+	</field>
+	<field name="idAlicuotaIva" class="ar.com.gtsoftware.dto.domain.FiscalAlicuotasIvaDto">
+		<fieldDescription><![CDATA[idAlicuotaIva]]></fieldDescription>
+	</field>
+	<field name="idRegistro" class="ar.com.gtsoftware.dto.domain.FiscalLibroIvaVentasDto">
+		<fieldDescription><![CDATA[idRegistro]]></fieldDescription>
+	</field>
+	<pageHeader>
+		<band height="27">
+			<textField pattern="$#,##0.00">
+				<reportElement positionType="FixRelativeToBottom" x="99" y="3" width="101" height="20" uuid="9e926177-09eb-4f89-baf1-9754bf9d3205"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{idRegistro}.getImporteNetoGravado()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="3" width="99" height="20" uuid="5cac20c2-50d6-43de-ae9a-c42073b20af3"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Importe Neto Gravado:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="3" width="200" height="1" uuid="cd433479-3dbb-485e-ab4f-38d18fb8ddb4"/>
+			</line>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="98" height="20" uuid="026be1c2-eeb7-4bb8-bc2e-bfc0845a029d"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{idAlicuotaIva}.getNombreAlicuotaIva()+":"]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00">
+				<reportElement x="99" y="0" width="101" height="20" uuid="32ee656f-922e-493f-8f70-6c1d8510599b"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{importeIva}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="41">
+			<staticText>
+				<reportElement x="0" y="1" width="98" height="20" uuid="184a2052-fd36-46bc-81f3-58c69e73b40d"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Neto No Gravado:]]></text>
+			</staticText>
+			<textField pattern="$#,##0.00">
+				<reportElement x="99" y="0" width="101" height="20" uuid="c9f3ed06-a38c-49ea-9efe-f1dea3311ab8"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{idRegistro}.getImporteNetoNoGravado()]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00">
+				<reportElement x="98" y="21" width="102" height="20" uuid="a160ddad-cd5e-46f5-ad0e-c3262e0b9f48"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{idRegistro}.getImporteTributos()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="21" width="98" height="20" uuid="8666a122-0735-4f51-9688-6e20f1a73865"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Importe Otros Tributos:]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

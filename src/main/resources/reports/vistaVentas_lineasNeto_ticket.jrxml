@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="facturaA_lineasNeto_ticket" pageWidth="218" pageHeight="802" columnWidth="210" leftMargin="4" rightMargin="4" topMargin="0" bottomMargin="0" uuid="8ee54347-3d25-4c73-9f92-449488104ca3">
+	<property name="ireport.zoom" value="1.9487171000000019"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="mm"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="mm"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="presupuesto.impresion.mostrar_detalle_precios" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="cantidad" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[cantidad]]></fieldDescription>
+	</field>
+	<field name="idProducto" class="ar.com.gtsoftware.dto.domain.ProductosDto">
+		<fieldDescription><![CDATA[idProducto]]></fieldDescription>
+	</field>
+	<field name="precioUnitario" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[precioUnitario]]></fieldDescription>
+	</field>
+	<field name="subTotal" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[subTotal]]></fieldDescription>
+	</field>
+	<field name="idComprobante" class="ar.com.gtsoftware.dto.domain.ComprobantesDto">
+		<fieldDescription><![CDATA[idComprobante]]></fieldDescription>
+	</field>
+	<field name="descripcion" class="java.lang.String"/>
+	<field name="item" class="java.lang.Integer">
+		<fieldDescription><![CDATA[item]]></fieldDescription>
+	</field>
+	<sortField name="item"/>
+	<variable name="sub-total-neto-linea" class="java.math.BigDecimal" resetType="None">
+		<variableExpression><![CDATA[$F{subTotal}.divide(java.math.BigDecimal.ONE.add(
+$F{idProducto}.getIdAlicuotaIva().getValorAlicuota().divide(
+new java.math.BigDecimal(100))),2,java.math.RoundingMode.HALF_UP)]]></variableExpression>
+	</variable>
+	<variable name="sub-total" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$V{sub-total-neto-linea}]]></variableExpression>
+	</variable>
+	<variable name="precio-neto" class="java.math.BigDecimal" resetType="None">
+		<variableExpression><![CDATA[$F{precioUnitario}.divide(java.math.BigDecimal.ONE.add(
+$F{idProducto}.getIdAlicuotaIva().getValorAlicuota().divide(
+new java.math.BigDecimal(100))),2,java.math.RoundingMode.HALF_UP)]]></variableExpression>
+	</variable>
+	<columnHeader>
+		<band height="21">
+			<staticText>
+				<reportElement positionType="Float" x="0" y="0" width="120" height="10" uuid="22eace7b-014b-4559-8473-2b7b06b9d192"/>
+				<box leftPadding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font size="8" isBold="true" isUnderline="false"/>
+					<paragraph lineSpacing="Fixed" lineSpacingSize="1.0"/>
+				</textElement>
+				<text><![CDATA[Cantidad/Precio unit.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="120" y="0" width="35" height="20" uuid="9c93e26e-35f7-4df5-a236-facce76fbafb">
+					<printWhenExpression><![CDATA[$P{presupuesto.impresion.mostrar_detalle_precios}]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[(% IVA)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="155" y="0" width="55" height="20" uuid="0b1a3cd6-a345-4b55-a615-6e4dc796aaca">
+					<printWhenExpression><![CDATA[$P{presupuesto.impresion.mostrar_detalle_precios}]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="8" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Importe]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="10" width="120" height="10" uuid="36d62cbf-c474-4c32-81c7-0d22f0515be8"/>
+				<box leftPadding="0">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font size="8" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Descripción]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="35" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="0" width="50" height="10" uuid="685291bc-c0d0-42ca-acf1-fa4c720826cc"/>
+				<box leftPadding="2"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="10" width="155" height="24" uuid="28435475-9b51-4ff1-b6f1-957423fb2291"/>
+				<textElement>
+					<font size="8"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA["["+$F{idProducto}.getCodigoPropio()+"] "+$F{descripcion}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="$#,##0.00">
+				<reportElement x="58" y="0" width="62" height="10" uuid="e8f13670-d049-4398-943b-644ed58e24a5"/>
+				<box rightPadding="2"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{precio-neto}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="">
+				<reportElement x="120" y="0" width="35" height="10" uuid="f7d41e1f-9fa7-41bd-9a97-762275e9fac1"/>
+				<box leftPadding="2"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[java.lang.String.format("(%s)",$F{idProducto}.getIdAlicuotaIva().getValorAlicuota())]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="$#,##0.00">
+				<reportElement x="155" y="0" width="55" height="34" uuid="769a6a0b-f7b8-43dc-a565-c5e08b2960e1"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sub-total-neto-linea}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="15">
+			<staticText>
+				<reportElement x="20" y="0" width="78" height="10" uuid="156629ee-5325-4125-a3f7-c07607651199"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true" isUnderline="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Sub-Total:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="98" y="0" width="112" height="10" uuid="9ceecdec-2ecf-46da-919a-3734271bbca4"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sub-total}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="0" width="210" height="1" uuid="1fca64aa-fb6d-4d56-9add-9b5fd3a3e5a9"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+</jasperReport>

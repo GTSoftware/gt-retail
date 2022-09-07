@@ -19,5 +19,6 @@ public class AddDeliveryItemRequest {
 
   private final Long originWarehouseId;
   private final Long destinationWarehouseId;
+  private final Long supplierId;
   private final boolean usePurchaseUnits;
 }
