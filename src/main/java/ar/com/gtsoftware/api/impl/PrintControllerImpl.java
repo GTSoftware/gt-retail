@@ -60,7 +60,7 @@ public class PrintControllerImpl implements PrintController {
   private final transient Map<String, JasperReport> REPORTS_MAP = new HashMap<>();
 
   @Override
-  public void getSaleBudget(Long saleId) {
+  public void getSaleBudget(Long saleId, PrintFormat format) {
     ComprobantesDto comprobante = ventasService.obtenerComprobante(saleId);
     if (Objects.isNull(comprobante)) {
       handleEntityNotFound("saleId", saleId);
@@ -73,10 +73,11 @@ public class PrintControllerImpl implements PrintController {
 
     Map<String, Object> parameters = loadCompanyParameters();
     parameters.put(PRESUPUESTO_MOSTRAR_DETALLE_PRECIOS.getNombreParametro(), mostrarDetallePrecios);
-    parameters.put("subreport", REPORTS_MAP.get("vistaVentas_lineas"));
+    parameters.put("subreport", REPORTS_MAP.get(getReportName("vistaVentas_lineas", format)));
     String fileName = String.format("venta-%d", saleId);
 
-    handlePDFExport(fileName, beanCollectionDataSource, "presupuesto", parameters);
+    handlePDFExport(
+        fileName, beanCollectionDataSource, getReportName("presupuesto", format), parameters);
   }
 
   @Override
@@ -130,7 +131,7 @@ public class PrintControllerImpl implements PrintController {
   @Override
   public void getDeliveryNote(Long deliveryNoteId) {
     RemitoDto remito = remitoService.find(deliveryNoteId);
-    if (remito == null) {
+    if (Objects.isNull(remito)) {
       handleEntityNotFound("deliveryNoteId", deliveryNoteId);
     }
     List<RemitoDto> remitos = List.of(remito);
@@ -215,6 +216,7 @@ public class PrintControllerImpl implements PrintController {
             "classpath:reports/factura.jrxml",
             "classpath:reports/factura_ticket.jrxml",
             "classpath:reports/presupuesto.jrxml",
+            "classpath:reports/presupuesto_ticket.jrxml",
             "classpath:reports/productoEtiqueta.jrxml",
             "classpath:reports/recibo.jrxml",
             "classpath:reports/reciboDetalle.jrxml",

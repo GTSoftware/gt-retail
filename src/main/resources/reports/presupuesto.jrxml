@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
-			  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-			  xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
-			  name="presupuesto" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20"
-			  topMargin="20" bottomMargin="20" uuid="0d3f5d5d-e82d-4fe9-af74-98902561a71d">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="presupuesto" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0d3f5d5d-e82d-4fe9-af74-98902561a71d">
 	<property name="ireport.zoom" value="1.6105100000000019"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="274"/>
@@ -32,27 +28,27 @@
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
-    <field name="id" class="java.lang.Long"/>
-    <field name="total" class="java.math.BigDecimal">
-        <fieldDescription><![CDATA[total]]></fieldDescription>
-    </field>
-    <field name="idCondicionComprobante" class="ar.com.gtsoftware.dto.domain.NegocioCondicionesOperacionesDto">
-        <fieldDescription><![CDATA[idCondicionComprobante]]></fieldDescription>
-    </field>
-    <field name="idSucursal" class="ar.com.gtsoftware.dto.domain.SucursalesDto">
-        <fieldDescription><![CDATA[idSucursal]]></fieldDescription>
-    </field>
-    <field name="fechaComprobante" class="java.time.LocalDateTime">
-        <fieldDescription><![CDATA[fechaComprobante]]></fieldDescription>
-    </field>
-    <field name="idPersona" class="ar.com.gtsoftware.dto.domain.PersonasDto">
-        <fieldDescription><![CDATA[idPersona]]></fieldDescription>
-    </field>
-    <field name="saldo" class="java.math.BigDecimal">
-        <fieldDescription><![CDATA[saldo]]></fieldDescription>
-    </field>
-    <field name="id_1" class="java.lang.Integer">
-        <fieldDescription><![CDATA[id]]></fieldDescription>
+	<field name="id" class="java.lang.Long"/>
+	<field name="total" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[total]]></fieldDescription>
+	</field>
+	<field name="idCondicionComprobante" class="ar.com.gtsoftware.dto.domain.NegocioCondicionesOperacionesDto">
+		<fieldDescription><![CDATA[idCondicionComprobante]]></fieldDescription>
+	</field>
+	<field name="idSucursal" class="ar.com.gtsoftware.dto.domain.SucursalesDto">
+		<fieldDescription><![CDATA[idSucursal]]></fieldDescription>
+	</field>
+	<field name="fechaComprobante" class="java.time.LocalDateTime">
+		<fieldDescription><![CDATA[fechaComprobante]]></fieldDescription>
+	</field>
+	<field name="idPersona" class="ar.com.gtsoftware.dto.domain.PersonasDto">
+		<fieldDescription><![CDATA[idPersona]]></fieldDescription>
+	</field>
+	<field name="saldo" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[saldo]]></fieldDescription>
+	</field>
+	<field name="id_1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[id]]></fieldDescription>
 	</field>
 	<field name="comprobantesLineasList" class="java.util.List">
 		<fieldDescription><![CDATA[comprobantesLineasList]]></fieldDescription>
@@ -83,8 +79,7 @@
 				<reportElement x="1" y="0" width="554" height="22" uuid="9ebcd5e4-59d5-4757-81f8-de0734549380"/>
 			</rectangle>
 			<rectangle radius="5">
-				<reportElement mode="Transparent" x="1" y="22" width="554" height="220"
-							   uuid="28e5fafc-45cb-4bf5-9a81-b0c76d03119f"/>
+				<reportElement mode="Transparent" x="1" y="22" width="554" height="220" uuid="28e5fafc-45cb-4bf5-9a81-b0c76d03119f"/>
 			</rectangle>
 			<staticText>
 				<reportElement x="5" y="178" width="55" height="20" uuid="7e7f1f5f-5755-4278-97a1-59ccbd864c0e"/>
@@ -92,12 +87,10 @@
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="60" y="178" width="495" height="20" uuid="ce42804b-3822-4c27-847d-4072f15c4578"/>
-				<textFieldExpression>
-					<![CDATA[java.lang.String.format("[%d] %s - \"%s\"",$F{idPersona}.getId(),$F{idPersona}.getRazonSocial(),$F{idPersona}.getNombreFantasia())]]></textFieldExpression>
+				<textFieldExpression><![CDATA[java.lang.String.format("[%d] %s - \"%s\"",$F{idPersona}.getId(),$F{idPersona}.getRazonSocial(),$F{idPersona}.getNombreFantasia())]]></textFieldExpression>
 			</textField>
 			<rectangle radius="5">
-				<reportElement mode="Transparent" x="249" y="22" width="57" height="59"
-							   uuid="a4a400f8-8806-48cf-8371-ed45313d1300"/>
+				<reportElement mode="Transparent" x="249" y="22" width="57" height="59" uuid="a4a400f8-8806-48cf-8371-ed45313d1300"/>
 			</rectangle>
 			<line>
 				<reportElement x="1" y="158" width="554" height="1" uuid="f8d88cd1-11a5-4ed7-8632-535fe81c62bd"/>
@@ -107,8 +100,7 @@
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression>
-					<![CDATA["Domicilio: "+$P{empresa.direccion}+"\n"+$P{empresa.localidad}+" - "+$P{empresa.provincia}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Domicilio: "+$P{empresa.direccion}+"\n"+$P{empresa.localidad}+" - "+$P{empresa.provincia}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="5" y="101" width="123" height="20" uuid="716ab30a-8fed-494a-9894-a535481045bf"/>
@@ -130,8 +122,7 @@
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="307" y="158" width="184" height="20" uuid="c787a72f-ea3a-43b5-bb54-c50b682cab1a"/>
-				<textFieldExpression>
-					<![CDATA[$F{idPersona}.getIdResponsabilidadIva().getNombreResponsabildiad()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{idPersona}.getIdResponsabilidadIva().getNombreResponsabildiad()]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="277" y="81" width="1" height="78" uuid="3bf5b3a5-4a6d-45ed-a054-40147fb54dd3"/>
@@ -152,8 +143,7 @@
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="60" y="197" width="495" height="20" uuid="bea8e7f0-5751-4acf-a526-828ed35c9eec"/>
-				<textFieldExpression>
-					<![CDATA[String.format("%s %s - %s - %s",$F{idPersona}.getCalle(),$F{idPersona}.getAltura(),$F{idPersona}.getIdLocalidad().getNombreLocalidad(),$F{idPersona}.getIdProvincia().getNombreProvincia())]]></textFieldExpression>
+				<textFieldExpression><![CDATA[String.format("%s %s - %s - %s",$F{idPersona}.getCalle(),$F{idPersona}.getAltura(),$F{idPersona}.getIdLocalidad().getNombreLocalidad(),$F{idPersona}.getIdProvincia().getNombreProvincia())]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="5" y="197" width="55" height="20" uuid="7b8e4140-bfd4-4faf-9bc0-1451abf7cdea"/>
@@ -176,10 +166,10 @@
 				<textElement textAlignment="Right"/>
 				<text><![CDATA[Fecha de emisión:]]></text>
 			</staticText>
-			<textField pattern="dd/MM/yyyy HH:mm a" isBlankWhenNull="true">
+			<textField isBlankWhenNull="true">
 				<reportElement x="433" y="62" width="112" height="20" uuid="eb4786f3-f335-4897-b730-7cbd52541a3c"/>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA[$F{fechaComprobante}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{fechaComprobante}.format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"))]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="5" y="217" width="66" height="20" uuid="fb7fdaff-a69f-442d-88a6-fe7167422048"/>
@@ -287,12 +277,10 @@
 			<subreport>
 				<reportElement x="0" y="0" width="555" height="167" uuid="55ff1480-407e-487c-926f-34e77effe1cc"/>
 				<subreportParameter name="presupuesto.impresion.mostrar_detalle_precios">
-					<subreportParameterExpression>
-						<![CDATA[$P{presupuesto.impresion.mostrar_detalle_precios}]]></subreportParameterExpression>
+					<subreportParameterExpression><![CDATA[$P{presupuesto.impresion.mostrar_detalle_precios}]]></subreportParameterExpression>
 				</subreportParameter>
-				<dataSourceExpression>
-					<![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{comprobantesLineasList})]]></dataSourceExpression>
-				<subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{subreport}]]></subreportExpression>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{comprobantesLineasList})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{subreport}]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>

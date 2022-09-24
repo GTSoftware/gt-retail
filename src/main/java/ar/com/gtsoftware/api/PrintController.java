@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface PrintController {
 
   @GetMapping(path = "/downloads/budget")
-  void getSaleBudget(@RequestParam Long saleId);
+  void getSaleBudget(@RequestParam Long saleId, @RequestParam(required = false) PrintFormat format);
 
   @GetMapping(path = "/downloads/invoice")
   void getInvoice(

@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: gt-retail-frontend
-          image: us-east4-docker.pkg.dev/gt-retail-324419/gtsoftware-repo/gtretail-frontend-app:14
+          image: us-east4-docker.pkg.dev/gt-retail-324419/gtsoftware-repo/gtretail-frontend-app:16
           imagePullPolicy: Always
           livenessProbe:
             httpGet:

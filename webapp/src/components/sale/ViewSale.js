@@ -8,6 +8,8 @@ import { formatDate } from "../../utils/DateUtils"
 import { Button } from "primereact/button"
 import { InvoiceDialog } from "./InvoiceDialog"
 import FileOutputsService from "../../service/FileOutputsService"
+import { InvoicePrintSplitButton } from "../core/InvoicePrintSplitButton"
+import {BudgetPrintSplitButton} from "../core/BudgetPrintSplitButton";
 
 export const ViewSale = (props) => {
   const salesService = new SalesService()
@@ -111,13 +113,7 @@ export const ViewSale = (props) => {
 
     if (sale.invoiceNumber) {
       buttonToRender = (
-        <Button
-          type="button"
-          icon="fa fa-fw fa-print"
-          label={"Imprimir factura"}
-          tooltip={"Imprimir factura"}
-          onClick={() => FileOutputsService.getInvoice(sale.saleId)}
-        />
+        <InvoicePrintSplitButton saleId={sale.saleId} />
       )
     } else {
       buttonToRender = (

@@ -22,6 +22,8 @@ import { AutoComplete } from "primereact/autocomplete"
 import { TriStateCheckbox } from "primereact/tristatecheckbox"
 import LoginService from "../../service/LoginService"
 import { exportToExcel } from "./ExportSalesUtils"
+import { InvoicePrintSplitButton } from "../core/InvoicePrintSplitButton"
+import {BudgetPrintSplitButton} from "../core/BudgetPrintSplitButton";
 
 export class SearchSales extends Component {
   constructor(props, context) {
@@ -264,24 +266,12 @@ export class SearchSales extends Component {
       />
     )
     let buttonToRender = (
-      <Button
-        type="button"
-        icon="fa fa-fw fa-print"
-        label={`${rowData.saleId}`}
-        tooltip={"Imprimir presupuesto"}
-        onClick={() => FileOutputsService.getSaleBudget(rowData.saleId)}
-      />
+      <BudgetPrintSplitButton saleId={rowData.saleId} />
     )
 
     if (rowData.invoiceNumber) {
       buttonToRender = (
-        <Button
-          type="button"
-          icon="fa fa-fw fa-print"
-          label={rowData.saleId}
-          tooltip={"Imprimir factura"}
-          onClick={() => FileOutputsService.getInvoice(rowData.saleId)}
-        />
+        <InvoicePrintSplitButton saleId={rowData.saleId} />
       )
     }
 
