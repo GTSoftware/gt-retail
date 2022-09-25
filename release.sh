@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #This scripts builds the docker container and publish them to the remote image repository
-VERSION=16
+VERSION=18
 REGISTRY_URL=us-east4-docker.pkg.dev/gt-retail-324419/gtsoftware-repo
 
 #Build and publish backend image

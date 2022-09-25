@@ -71,7 +71,7 @@
 				<text><![CDATA[(% IVA)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="155" y="0" width="49" height="20" uuid="c36e2831-9097-46ac-99f3-213b13a9bcba">
+				<reportElement x="155" y="0" width="44" height="20" uuid="c36e2831-9097-46ac-99f3-213b13a9bcba">
 					<printWhenExpression><![CDATA[$P{presupuesto.impresion.mostrar_detalle_precios}]]></printWhenExpression>
 				</reportElement>
 				<box>
@@ -140,7 +140,7 @@
 				<textFieldExpression><![CDATA[java.lang.String.format("(%s)",$F{idProducto}.getIdAlicuotaIva().getValorAlicuota())]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="$#,##0.00">
-				<reportElement x="155" y="0" width="49" height="34" uuid="662c956e-f7e4-4c4a-b4bb-d316677c2f91">
+				<reportElement x="155" y="0" width="44" height="34" uuid="662c956e-f7e4-4c4a-b4bb-d316677c2f91">
 					<printWhenExpression><![CDATA[$P{presupuesto.impresion.mostrar_detalle_precios}]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Top">

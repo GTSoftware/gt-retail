@@ -60,7 +60,7 @@ new java.math.BigDecimal(100))),2,java.math.RoundingMode.HALF_UP)]]></variableEx
 				<text><![CDATA[Cantidad/Precio unit.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="120" y="0" width="40" height="20" uuid="9c93e26e-35f7-4df5-a236-facce76fbafb">
+				<reportElement x="120" y="0" width="35" height="20" uuid="9c93e26e-35f7-4df5-a236-facce76fbafb">
 					<printWhenExpression><![CDATA[$P{presupuesto.impresion.mostrar_detalle_precios}]]></printWhenExpression>
 				</reportElement>
 				<box>
@@ -75,7 +75,7 @@ new java.math.BigDecimal(100))),2,java.math.RoundingMode.HALF_UP)]]></variableEx
 				<text><![CDATA[(% IVA)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="160" y="0" width="44" height="20" uuid="0b1a3cd6-a345-4b55-a615-6e4dc796aaca">
+				<reportElement x="155" y="0" width="44" height="20" uuid="0b1a3cd6-a345-4b55-a615-6e4dc796aaca">
 					<printWhenExpression><![CDATA[$P{presupuesto.impresion.mostrar_detalle_precios}]]></printWhenExpression>
 				</reportElement>
 				<box>
@@ -116,7 +116,7 @@ new java.math.BigDecimal(100))),2,java.math.RoundingMode.HALF_UP)]]></variableEx
 				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement x="0" y="10" width="160" height="24" uuid="28435475-9b51-4ff1-b6f1-957423fb2291"/>
+				<reportElement x="0" y="10" width="155" height="24" uuid="28435475-9b51-4ff1-b6f1-957423fb2291"/>
 				<textElement>
 					<font size="8"/>
 					<paragraph leftIndent="2"/>
@@ -132,7 +132,7 @@ new java.math.BigDecimal(100))),2,java.math.RoundingMode.HALF_UP)]]></variableEx
 				<textFieldExpression><![CDATA[$V{precio-neto}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="">
-				<reportElement x="120" y="0" width="40" height="10" uuid="f7d41e1f-9fa7-41bd-9a97-762275e9fac1"/>
+				<reportElement x="120" y="0" width="35" height="10" uuid="f7d41e1f-9fa7-41bd-9a97-762275e9fac1"/>
 				<box leftPadding="2"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8"/>
@@ -140,7 +140,7 @@ new java.math.BigDecimal(100))),2,java.math.RoundingMode.HALF_UP)]]></variableEx
 				<textFieldExpression><![CDATA[java.lang.String.format("(%s)",$F{idProducto}.getIdAlicuotaIva().getValorAlicuota())]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="$#,##0.00">
-				<reportElement x="160" y="0" width="44" height="34" uuid="769a6a0b-f7b8-43dc-a565-c5e08b2960e1"/>
+				<reportElement x="155" y="0" width="44" height="34" uuid="769a6a0b-f7b8-43dc-a565-c5e08b2960e1"/>
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font size="8"/>
 				</textElement>
@@ -159,14 +159,14 @@ new java.math.BigDecimal(100))),2,java.math.RoundingMode.HALF_UP)]]></variableEx
 				<text><![CDATA[Sub-Total:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="98" y="0" width="106" height="10" uuid="9ceecdec-2ecf-46da-919a-3734271bbca4"/>
+				<reportElement x="98" y="0" width="101" height="10" uuid="9ceecdec-2ecf-46da-919a-3734271bbca4"/>
 				<textElement textAlignment="Right">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{sub-total}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="0" y="0" width="194" height="1" uuid="1fca64aa-fb6d-4d56-9add-9b5fd3a3e5a9"/>
+				<reportElement x="0" y="0" width="199" height="1" uuid="1fca64aa-fb6d-4d56-9add-9b5fd3a3e5a9"/>
 				<graphicElement>
 					<pen lineStyle="Dashed"/>
 				</graphicElement>
