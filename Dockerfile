@@ -1,11 +1,11 @@
-FROM gradle:7-jdk11 AS builder
+FROM gradle:7-jdk17 AS builder
 
 WORKDIR /app
 COPY . ./
 
 RUN gradle build --no-daemon
 
-FROM openjdk:11-jre AS production
+FROM azul/zulu-openjdk:17-jre AS production
 
 # Add a work directory
 WORKDIR /app

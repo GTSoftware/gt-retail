@@ -28,20 +28,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import javax.annotation.PostConstruct;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RestController;
@@ -55,9 +51,8 @@ public class PrintControllerImpl implements PrintController {
   private final ParametrosService parametrosService;
   private final RemitoService remitoService;
   private final HttpServletResponse response;
-  private final ResourceLoader resourceLoader;
 
-  private final transient Map<String, JasperReport> REPORTS_MAP = new HashMap<>();
+  private final Map<String, JasperReport> compiledReports;
 
   @Override
   public void getSaleBudget(Long saleId, PrintFormat format) {
@@ -73,7 +68,7 @@ public class PrintControllerImpl implements PrintController {
 
     Map<String, Object> parameters = loadCompanyParameters();
     parameters.put(PRESUPUESTO_MOSTRAR_DETALLE_PRECIOS.getNombreParametro(), mostrarDetallePrecios);
-    parameters.put("subreport", REPORTS_MAP.get(getReportName("vistaVentas_lineas", format)));
+    parameters.put("subreport", compiledReports.get(getReportName("vistaVentas_lineas", format)));
     String fileName = String.format("venta-%d", saleId);
 
     handlePDFExport(
@@ -97,14 +92,14 @@ public class PrintControllerImpl implements PrintController {
 
     parameters.put("logoAfip", "classpath:images/afip.png");
     parameters.put("codigobarras", comprobante.getCodigoBarrasFactura());
-    parameters.put("facturaReport", REPORTS_MAP.get(getReportName("factura", format)));
+    parameters.put("facturaReport", compiledReports.get(getReportName("factura", format)));
     parameters.put(
-        "alicuotasSubReport", REPORTS_MAP.get(getReportName("vistaVentas_alicuotas", format)));
+        "alicuotasSubReport", compiledReports.get(getReportName("vistaVentas_alicuotas", format)));
 
     if (comprobante.getIdRegistro().getLetraFactura().equals("A")) {
-      parameters.put("subreport", REPORTS_MAP.get(getReportName("vistaVentas_lineasNeto", format)));
+      parameters.put("subreport", compiledReports.get(getReportName("vistaVentas_lineasNeto", format)));
     } else {
-      parameters.put("subreport", REPORTS_MAP.get(getReportName("vistaVentas_lineas", format)));
+      parameters.put("subreport", compiledReports.get(getReportName("vistaVentas_lineas", format)));
     }
     parameters.put("subDataSource", beanCollectionDataSource1);
     parameters.put("subDataSource2", beanCollectionDataSource2);
@@ -139,7 +134,7 @@ public class PrintControllerImpl implements PrintController {
     JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(remitos);
 
     Map<String, Object> parameters = loadCompanyParameters();
-    parameters.put("subreportParameter", REPORTS_MAP.get("remito_lineas"));
+    parameters.put("subreportParameter", compiledReports.get("remito_lineas"));
 
     String fileName = String.format("remito-%d", deliveryNoteId);
 
@@ -156,7 +151,7 @@ public class PrintControllerImpl implements PrintController {
 
       JasperPrint jasperPrint =
           JasperFillManager.fillReport(
-              REPORTS_MAP.get(reportName), parameters, beanCollectionDataSource);
+              compiledReports.get(reportName), parameters, beanCollectionDataSource);
 
       response.addHeader(
           HttpHeaders.CONTENT_DISPOSITION, String.format("attachment; filename=%s.pdf", fileName));
@@ -208,38 +203,4 @@ public class PrintControllerImpl implements PrintController {
     return parametros;
   }
 
-  @PostConstruct
-  private void compileReports() {
-
-    final List<String> reports =
-        List.of(
-            "classpath:reports/factura.jrxml",
-            "classpath:reports/factura_ticket.jrxml",
-            "classpath:reports/presupuesto.jrxml",
-            "classpath:reports/presupuesto_ticket.jrxml",
-            "classpath:reports/productoEtiqueta.jrxml",
-            "classpath:reports/recibo.jrxml",
-            "classpath:reports/reciboDetalle.jrxml",
-            "classpath:reports/remito.jrxml",
-            "classpath:reports/remito_lineas.jrxml",
-            "classpath:reports/vistaVentas_alicuotas.jrxml",
-            "classpath:reports/vistaVentas_alicuotas_ticket.jrxml",
-            "classpath:reports/vistaVentas_lineas.jrxml",
-            "classpath:reports/vistaVentas_lineas_ticket.jrxml",
-            "classpath:reports/vistaVentas_lineasNeto.jrxml",
-            "classpath:reports/vistaVentas_lineasNeto_ticket.jrxml");
-    try {
-      for (String reportFilePath : reports) {
-        log.debug("Compiling report:" + reportFilePath);
-
-        final Resource reportResource = resourceLoader.getResource(reportFilePath);
-        JasperReport compiledReport =
-            JasperCompileManager.compileReport(reportResource.getInputStream());
-        REPORTS_MAP.put(reportResource.getFilename().replace(".jrxml", ""), compiledReport);
-      }
-
-    } catch (IOException | JRException ex) {
-      log.error("Error compiling reports", ex);
-    }
-  }
 }
