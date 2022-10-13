@@ -21,7 +21,9 @@ import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
-/** @author Rodrigo M. Tato Rothamel <rotatomel@gmail.com> */
+/**
+ * @author Rodrigo M. Tato Rothamel <rotatomel@gmail.com>
+ */
 @Entity
 @Table(name = "productos_listas_precios")
 @Getter

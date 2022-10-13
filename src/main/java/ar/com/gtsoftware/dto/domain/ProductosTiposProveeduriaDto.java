@@ -19,7 +19,9 @@ package ar.com.gtsoftware.dto.domain;
 import javax.validation.constraints.Size;
 import lombok.*;
 
-/** @author rodrigo */
+/**
+ * @author rodrigo
+ */
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor

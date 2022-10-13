@@ -17,7 +17,9 @@ package ar.com.gtsoftware.service;
 
 import ar.com.gtsoftware.dto.domain.PersonasDto;
 
-/** @author Rodrigo M. Tato Rothamel <rotatomel@gmail.com> */
+/**
+ * @author Rodrigo M. Tato Rothamel <rotatomel@gmail.com>
+ */
 public interface ClientesService {
 
   PersonasDto guardarCliente(PersonasDto cliente);

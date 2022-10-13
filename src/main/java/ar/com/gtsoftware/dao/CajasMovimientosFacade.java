@@ -26,7 +26,9 @@ import javax.persistence.criteria.Root;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 
-/** @author Rodrigo Tato <rotatomel@gmail.com> */
+/**
+ * @author Rodrigo Tato <rotatomel@gmail.com>
+ */
 @Repository
 public class CajasMovimientosFacade
     extends AbstractFacade<CajasMovimientos, CajasMovimientosSearchFilter> {

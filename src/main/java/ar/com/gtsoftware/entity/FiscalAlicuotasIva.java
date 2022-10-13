@@ -23,7 +23,9 @@ import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
-/** @author Rodrigo M. Tato Rothamel <rotatomel@gmail.com> */
+/**
+ * @author Rodrigo M. Tato Rothamel <rotatomel@gmail.com>
+ */
 @Entity
 @Table(name = "fiscal_alicuotas_iva")
 @Getter

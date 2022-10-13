@@ -20,7 +20,9 @@ import static java.util.Objects.nonNull;
 import java.time.LocalDateTime;
 import lombok.*;
 
-/** @author Rodrigo M. Tato Rothamel mailto:rotatomel@gmail.com */
+/**
+ * @author Rodrigo M. Tato Rothamel mailto:rotatomel@gmail.com
+ */
 @Getter
 @Setter
 @NoArgsConstructor

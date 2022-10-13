@@ -22,7 +22,9 @@ import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
-/** @author rodrigo */
+/**
+ * @author rodrigo
+ */
 @Entity
 @Table(name = "personas_imagenes")
 @Getter

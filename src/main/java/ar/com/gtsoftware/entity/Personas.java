@@ -24,7 +24,9 @@ import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
-/** @author Rodrigo Tato <rotatomel@gmail.com> */
+/**
+ * @author Rodrigo Tato <rotatomel@gmail.com>
+ */
 @Entity
 @Table(name = "personas")
 @Getter

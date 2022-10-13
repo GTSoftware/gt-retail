@@ -21,7 +21,9 @@ import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
-/** @author Rodrigo Tato mailto:rotatomel@gmail.com */
+/**
+ * @author Rodrigo Tato mailto:rotatomel@gmail.com
+ */
 @Entity
 @Table(name = "negocio_condiciones_operaciones")
 @Getter

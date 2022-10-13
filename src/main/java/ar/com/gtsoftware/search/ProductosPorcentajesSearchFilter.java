@@ -17,7 +17,9 @@ package ar.com.gtsoftware.search;
 
 import lombok.*;
 
-/** @author Rodrigo Tato <rotatomel@gmail.com> */
+/**
+ * @author Rodrigo Tato <rotatomel@gmail.com>
+ */
 @Getter
 @Setter
 @NoArgsConstructor

@@ -24,7 +24,9 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.springframework.stereotype.Repository;
 
-/** @author Rodrigo M. Tato Rothamel <rotatomel@gmail.com> */
+/**
+ * @author Rodrigo M. Tato Rothamel <rotatomel@gmail.com>
+ */
 @Repository
 public class UsuariosFacade extends AbstractFacade<Usuarios, UsuariosSearchFilter> {
 

@@ -15,7 +15,9 @@
  */
 package ar.com.gtsoftware.entity;
 
-/** @author Rodrigo Tato <rotatomel@gmail.com> */
+/**
+ * @author Rodrigo Tato <rotatomel@gmail.com>
+ */
 public abstract class BaseEntity extends GTEntity<Long> {
 
   @Override

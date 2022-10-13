@@ -20,7 +20,9 @@ import java.math.BigDecimal;
 import javax.validation.constraints.NotNull;
 import lombok.*;
 
-/** @author rodrigo */
+/**
+ * @author rodrigo
+ */
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor

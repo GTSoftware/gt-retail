@@ -19,7 +19,9 @@ package ar.com.gtsoftware.search;
 import java.util.Date;
 import lombok.*;
 
-/** @author rodrigo */
+/**
+ * @author rodrigo
+ */
 @Getter
 @Setter
 @NoArgsConstructor

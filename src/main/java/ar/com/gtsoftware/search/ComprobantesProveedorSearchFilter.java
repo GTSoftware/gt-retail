@@ -21,7 +21,9 @@ import lombok.*;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
-/** @author Rodrigo Tato <rotatomel@gmail.com> */
+/**
+ * @author Rodrigo Tato <rotatomel@gmail.com>
+ */
 @Getter
 @Setter
 @NoArgsConstructor

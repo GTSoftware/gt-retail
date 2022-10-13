@@ -83,3 +83,8 @@ test {
     maxParallelForks = Runtime.runtime.availableProcessors() / 2 ?: 1
 }
 
+spotless {
+    java {
+        googleJavaFormat()
+    }
+}

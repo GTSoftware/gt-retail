@@ -18,7 +18,9 @@ package ar.com.gtsoftware.search;
 import java.util.Date;
 import lombok.*;
 
-/** @author Rodrigo Tato mailto:rotatomel@gmail.com */
+/**
+ * @author Rodrigo Tato mailto:rotatomel@gmail.com
+ */
 @Getter
 @Setter
 @NoArgsConstructor

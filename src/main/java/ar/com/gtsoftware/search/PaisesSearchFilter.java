@@ -17,7 +17,9 @@ package ar.com.gtsoftware.search;
 
 import org.apache.commons.lang3.StringUtils;
 
-/** @author Rodrigo Tato <rotatomel@gmail.com> */
+/**
+ * @author Rodrigo Tato <rotatomel@gmail.com>
+ */
 public class PaisesSearchFilter extends AbstractSearchFilter {
 
   /** */

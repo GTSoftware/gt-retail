@@ -17,7 +17,9 @@ package ar.com.gtsoftware.search;
 
 import org.apache.commons.lang3.StringUtils;
 
-/** @author Rodrigo Tato mailto:rotatomel@gmail.com */
+/**
+ * @author Rodrigo Tato mailto:rotatomel@gmail.com
+ */
 public class BancosSearchFilter extends AbstractSearchFilter {
 
   private static final long serialVersionUID = 1L;

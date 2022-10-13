@@ -18,7 +18,9 @@ package ar.com.gtsoftware.dto.domain;
 
 import lombok.*;
 
-/** @author Rodrigo M. Tato Rothamel <rotatomel@gmail.com> */
+/**
+ * @author Rodrigo M. Tato Rothamel <rotatomel@gmail.com>
+ */
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor

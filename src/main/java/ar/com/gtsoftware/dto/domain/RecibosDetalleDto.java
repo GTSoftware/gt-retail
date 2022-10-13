@@ -21,7 +21,9 @@ import java.math.BigDecimal;
 import javax.validation.constraints.NotNull;
 import lombok.*;
 
-/** @author Rodrigo M. Tato Rothamel mailto:rotatomel@gmail.com */
+/**
+ * @author Rodrigo M. Tato Rothamel mailto:rotatomel@gmail.com
+ */
 @Getter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @AllArgsConstructor

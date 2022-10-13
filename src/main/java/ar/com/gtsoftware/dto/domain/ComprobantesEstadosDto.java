@@ -19,7 +19,9 @@ package ar.com.gtsoftware.dto.domain;
 import java.io.Serializable;
 import lombok.*;
 
-/** @author Rodrigo Tato <rotatomel@gmail.com> */
+/**
+ * @author Rodrigo Tato <rotatomel@gmail.com>
+ */
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor

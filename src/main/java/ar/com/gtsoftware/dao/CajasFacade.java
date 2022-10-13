@@ -24,7 +24,9 @@ import javax.persistence.criteria.*;
 import javax.validation.constraints.NotNull;
 import org.springframework.stereotype.Repository;
 
-/** @author Rodrigo Tato <rotatomel@gmail.com> */
+/**
+ * @author Rodrigo Tato <rotatomel@gmail.com>
+ */
 @Repository
 public class CajasFacade extends AbstractFacade<Cajas, CajasSearchFilter> {
 

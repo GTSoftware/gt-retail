@@ -19,7 +19,9 @@ package ar.com.gtsoftware.dto.domain;
 import java.time.LocalDateTime;
 import lombok.*;
 
-/** @author rodrigo */
+/**
+ * @author rodrigo
+ */
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor

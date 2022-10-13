@@ -17,7 +17,9 @@ package ar.com.gtsoftware.search;
 
 import lombok.*;
 
-/** @author fede */
+/**
+ * @author fede
+ */
 @Getter
 @Setter
 @NoArgsConstructor

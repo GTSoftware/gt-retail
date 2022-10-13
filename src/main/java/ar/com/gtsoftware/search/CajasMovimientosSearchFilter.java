@@ -19,7 +19,9 @@ import java.util.Date;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 
-/** @author rodrigo */
+/**
+ * @author rodrigo
+ */
 @Getter
 @Setter
 @NoArgsConstructor

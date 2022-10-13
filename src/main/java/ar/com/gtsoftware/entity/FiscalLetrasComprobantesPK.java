@@ -23,7 +23,9 @@ import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-/** @author rodrigo */
+/**
+ * @author rodrigo
+ */
 @Embeddable
 @Getter
 @Setter

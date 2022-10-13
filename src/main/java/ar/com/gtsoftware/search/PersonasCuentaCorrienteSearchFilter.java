@@ -17,7 +17,9 @@ package ar.com.gtsoftware.search;
 
 import lombok.*;
 
-/** @author rodrigo */
+/**
+ * @author rodrigo
+ */
 @Getter
 @Setter
 @NoArgsConstructor

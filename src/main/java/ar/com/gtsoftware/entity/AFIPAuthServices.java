@@ -22,7 +22,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/** @author Rodrigo M. Tato Rothamel mailto:rotatomel@gmail.com */
+/**
+ * @author Rodrigo M. Tato Rothamel mailto:rotatomel@gmail.com
+ */
 @Entity
 @Table(name = "afip_auth_services")
 @XmlRootElement

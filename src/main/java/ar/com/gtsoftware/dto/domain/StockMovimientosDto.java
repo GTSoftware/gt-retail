@@ -23,7 +23,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import lombok.*;
 
-/** @author rodrigo */
+/**
+ * @author rodrigo
+ */
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor

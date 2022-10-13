@@ -19,7 +19,9 @@ import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-/** @author fede */
+/**
+ * @author fede
+ */
 @Entity
 @Table(name = "remitos_movimientos_tipos")
 @Getter

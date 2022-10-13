@@ -19,7 +19,9 @@ import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 import lombok.*;
 
-/** @author Rodrigo Tato mailto:rotatomel@gmail.com */
+/**
+ * @author Rodrigo Tato mailto:rotatomel@gmail.com
+ */
 @Getter
 @Setter
 @NoArgsConstructor

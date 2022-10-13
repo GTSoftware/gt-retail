@@ -97,7 +97,8 @@ public class PrintControllerImpl implements PrintController {
         "alicuotasSubReport", compiledReports.get(getReportName("vistaVentas_alicuotas", format)));
 
     if (comprobante.getIdRegistro().getLetraFactura().equals("A")) {
-      parameters.put("subreport", compiledReports.get(getReportName("vistaVentas_lineasNeto", format)));
+      parameters.put(
+          "subreport", compiledReports.get(getReportName("vistaVentas_lineasNeto", format)));
     } else {
       parameters.put("subreport", compiledReports.get(getReportName("vistaVentas_lineas", format)));
     }
@@ -202,5 +203,4 @@ public class PrintControllerImpl implements PrintController {
 
     return parametros;
   }
-
 }

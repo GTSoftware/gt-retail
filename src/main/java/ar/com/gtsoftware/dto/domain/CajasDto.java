@@ -20,7 +20,9 @@ import java.math.BigDecimal;
 import java.util.Date;
 import lombok.*;
 
-/** @author Rodrigo M. Tato Rothamel mailto:rotatomel@gmail.com */
+/**
+ * @author Rodrigo M. Tato Rothamel mailto:rotatomel@gmail.com
+ */
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor

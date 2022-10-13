@@ -22,7 +22,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import lombok.*;
 
-/** @author Rodrigo Tato <rotatomel@gmail.com> */
+/**
+ * @author Rodrigo Tato <rotatomel@gmail.com>
+ */
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor

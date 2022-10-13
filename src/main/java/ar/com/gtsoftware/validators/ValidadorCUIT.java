@@ -15,7 +15,9 @@
  */
 package ar.com.gtsoftware.validators;
 
-/** @author Rodrigo Tato <rotatomel@gmail.com> */
+/**
+ * @author Rodrigo Tato <rotatomel@gmail.com>
+ */
 public abstract class ValidadorCUIT {
 
   private static final String coef = "5432765432"; // coeficiente

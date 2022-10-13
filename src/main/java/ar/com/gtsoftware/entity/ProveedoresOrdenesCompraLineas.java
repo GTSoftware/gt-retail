@@ -21,7 +21,9 @@ import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-/** @author rodrigo */
+/**
+ * @author rodrigo
+ */
 @Entity
 @Table(name = "proveedores_ordenes_compra_lineas")
 @Getter
