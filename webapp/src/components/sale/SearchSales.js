@@ -23,7 +23,7 @@ import { TriStateCheckbox } from "primereact/tristatecheckbox"
 import LoginService from "../../service/LoginService"
 import { exportToExcel } from "./ExportSalesUtils"
 import { InvoicePrintSplitButton } from "../core/InvoicePrintSplitButton"
-import {BudgetPrintSplitButton} from "../core/BudgetPrintSplitButton";
+import { BudgetPrintSplitButton } from "../core/BudgetPrintSplitButton"
 
 export class SearchSales extends Component {
   constructor(props, context) {
@@ -265,14 +265,10 @@ export class SearchSales extends Component {
         onClick={() => (window.location = `#/sale/${rowData.saleId}`)}
       />
     )
-    let buttonToRender = (
-      <BudgetPrintSplitButton saleId={rowData.saleId} />
-    )
+    let buttonToRender = <BudgetPrintSplitButton saleId={rowData.saleId} />
 
     if (rowData.invoiceNumber) {
-      buttonToRender = (
-        <InvoicePrintSplitButton saleId={rowData.saleId} />
-      )
+      buttonToRender = <InvoicePrintSplitButton saleId={rowData.saleId} />
     }
 
     return (

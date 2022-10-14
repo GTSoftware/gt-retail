@@ -1,7 +1,6 @@
-import React, { Component } from "react"
+import React, { useState } from "react"
 import { Dialog } from "primereact/dialog"
 import { Button } from "primereact/button"
-import PropTypes from "prop-types"
 import { RadioButton } from "primereact/radiobutton"
 import { InputText } from "primereact/inputtext"
 import { PercentTypesSelector } from "../core/PercentTypesSelector"
@@ -27,40 +26,22 @@ const validationSchema = {
   required: ["action", "value", "percentType"],
 }
 
-export class AddPercentDialog extends Component {
-  static propTypes = {
-    acceptCallback: PropTypes.func.isRequired,
-  }
+export const AddPercentDialog = (props) => {
+  const [percent, setPercent] = useState({
+    action: ACTION_TYPE.ADD,
+    percentType: null,
+    value: "",
+  })
 
-  constructor(props, context) {
-    super(props, context)
-
-    this.state = {
-      percent: {
-        action: ACTION_TYPE.ADD,
-        percentType: null,
-        value: "",
-      },
-    }
-  }
-
-  render() {
-    return <Dialog {...this.getDialogProps()}>{this.renderContent()}</Dialog>
-  }
-
-  renderContent = () => {
-    const { percent } = this.state
-
+  const renderContent = () => {
     return (
       <div>
         <div className="p-grid p-fluid">
           <Form
             data={percent}
-            onChange={(percent) => {
-              this.setState({ percent })
-            }}
+            onChange={(newPercent) => setPercent(newPercent)}
             schema={validationSchema}
-            onSubmit={this.handleAcceptButton}
+            onSubmit={handleAcceptButton}
             errorMessages={{
               required: () => fieldRequiredDefaultMessage,
               pattern: () => invalidPatternMessage,
@@ -98,7 +79,7 @@ export class AddPercentDialog extends Component {
               <PercentTypesSelector
                 selectedItem={percent.percentType}
                 onChange={(percentType) =>
-                  this.handlePropertyChange("percentType", percentType)
+                  handlePropertyChange("percentType", percentType)
                 }
               />
               <FieldError name="percentType" />
@@ -116,14 +97,14 @@ export class AddPercentDialog extends Component {
               <FieldError name="value" />
             </div>
 
-            {this.renderFooter()}
+            {renderFooter()}
           </Form>
         </div>
       </div>
     )
   }
 
-  renderFooter = () => {
+  const renderFooter = () => {
     return (
       <div className="p-col-6">
         <Button
@@ -136,8 +117,7 @@ export class AddPercentDialog extends Component {
     )
   }
 
-  getDialogProps = () => {
-    let props = this.props
+  const getDialogProps = () => {
     let defaultProps = {
       header: "Agregar porcentaje",
       style: { width: "50%" },
@@ -146,19 +126,21 @@ export class AddPercentDialog extends Component {
     return { ...defaultProps, ...props }
   }
 
-  handleAcceptButton = () => {
-    this.props.onHide()
+  const handleAcceptButton = () => {
+    props.onHide()
 
-    if (this.props.acceptCallback) {
-      this.props.acceptCallback({ ...this.state.percent })
+    if (props.acceptCallback) {
+      props.acceptCallback({ ...percent })
     }
   }
 
-  handlePropertyChange = (property, value) => {
-    let percent = { ...this.state.percent }
+  const handlePropertyChange = (property, value) => {
+    let newPercent = { ...percent }
 
-    percent[property] = value
+    newPercent[property] = value
 
-    this.setState({ percent })
+    setPercent(newPercent)
   }
+
+  return <Dialog {...getDialogProps()}>{renderContent()}</Dialog>
 }

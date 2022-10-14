@@ -9,7 +9,7 @@ import { Button } from "primereact/button"
 import { InvoiceDialog } from "./InvoiceDialog"
 import FileOutputsService from "../../service/FileOutputsService"
 import { InvoicePrintSplitButton } from "../core/InvoicePrintSplitButton"
-import {BudgetPrintSplitButton} from "../core/BudgetPrintSplitButton";
+import { BudgetPrintSplitButton } from "../core/BudgetPrintSplitButton"
 
 export const ViewSale = (props) => {
   const salesService = new SalesService()
@@ -112,9 +112,7 @@ export const ViewSale = (props) => {
     let buttonToRender
 
     if (sale.invoiceNumber) {
-      buttonToRender = (
-        <InvoicePrintSplitButton saleId={sale.saleId} />
-      )
+      buttonToRender = <InvoicePrintSplitButton saleId={sale.saleId} />
     } else {
       buttonToRender = (
         <Button

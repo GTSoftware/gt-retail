@@ -60,10 +60,6 @@ spec:
                   key: DB_USER
           resources:
             limits:
-              cpu: 400m
-              memory: 1.4Gi
-            requests:
-              cpu: 200m
-              memory: 800Mi
+              memory: 2Gi
       nodeSelector:
         cloud.google.com/gke-spot: "true"

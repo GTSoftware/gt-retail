@@ -1,5 +1,5 @@
 import _ from "lodash"
-import React, { Component } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { ProductsService } from "../../service/ProductsService"
 import { Toast } from "primereact/toast"
 import { Dropdown } from "primereact/dropdown"
@@ -18,72 +18,36 @@ import { CategoriesSelector } from "../core/CategoriesSelector"
 import { SubCategoriesSelector } from "../core/SubCategoriesSelector"
 import { v4 as uuid } from "uuid"
 
-export class BatchPricing extends Component {
-  constructor(props, context) {
-    super(props, context)
+export const BatchPricing = () => {
+  const [supplyTypes, setSupplyTypes] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [productsSearchOptions, setProductsSearchOptions] = useState({
+    supplyType: null,
+    category: null,
+    subCategory: null,
+    brand: null,
+    supplier: null,
+    containsText: "",
+  })
+  const [filteredProducts, setFilteredProducts] = useState([])
+  const [totalResults, setTotalResults] = useState(0)
+  const [updateOptions, setUpdateOptions] = useState({
+    updateCost: false,
+    costPercent: 0,
+    updatePercents: false,
+    percentsToAdd: [],
+    percentsToDelete: [],
+  })
+  const [updatingPrices, setUpdatingPrices] = useState(false)
+  const [showAddPercentDialog, setShowAddPercentDialog] = useState(false)
+  const productsService = new ProductsService()
+  const toast = useRef(null)
 
-    this.state = {
-      supplyTypes: [],
-      percentTypes: [],
-      productsSearchOptions: {
-        supplyType: null,
-        category: null,
-        subCategory: null,
-        brand: null,
-        supplier: null,
-        containsText: "",
-      },
-      loading: false,
-      filteredProducts: [],
-      totalResults: 0,
-      filteredSuppliers: [],
-      updateOptions: {
-        updateCost: false,
-        costPercent: 0,
-        updatePercents: false,
-        percentsToAdd: [],
-        percentsToDelete: [],
-      },
-      updatingPrices: false,
-    }
+  useEffect(() => {
+    productsService.getSupplyTypes((supplyTypes) => setSupplyTypes(supplyTypes))
+  }, [])
 
-    this.productsService = new ProductsService()
-  }
-
-  componentDidMount() {
-    const { supplyTypes, percentTypes } = this.state
-
-    if (supplyTypes.length === 0) {
-      this.productsService.getSupplyTypes((supplyTypes) =>
-        this.setState({ supplyTypes: supplyTypes })
-      )
-    }
-
-    if (percentTypes.length === 0) {
-      this.productsService.getPercentTypes((percentTypes) =>
-        this.setState({ percentTypes: percentTypes })
-      )
-    }
-  }
-
-  render() {
-    return (
-      <div className="card card-w-title">
-        <h1>Actualización masiva de precios</h1>
-        <Toast ref={(el) => (this.toast = el)} />
-        {this.renderFilterSection()}
-        {this.renderProductsPreview()}
-        <h3>Productos a modificar: {this.state.totalResults}</h3>
-
-        <div className="SeparatorFull" />
-        {this.state.totalResults > 0 && this.renderUpdateParametersSection()}
-      </div>
-    )
-  }
-
-  renderFilterSection = () => {
-    const { supplyTypes, productsSearchOptions } = this.state
-
+  const renderFilterSection = () => {
     return (
       <div className="p-grid p-fluid">
         <div className="p-col-12">
@@ -96,7 +60,7 @@ export class BatchPricing extends Component {
             value={productsSearchOptions.supplyType}
             optionLabel="displayName"
             onChange={(e) =>
-              this.handleProductsSearchOptionsChange("supplyType", e.value)
+              handleProductsSearchOptionsChange("supplyType", e.value)
             }
           />
         </div>
@@ -105,7 +69,7 @@ export class BatchPricing extends Component {
           <label htmlFor="supplier">{"Proveedor:"}</label>
           <AutocompleteSupplierFilter
             onSupplierSelect={(supplier) =>
-              this.handleProductsSearchOptionsChange("supplier", supplier)
+              handleProductsSearchOptionsChange("supplier", supplier)
             }
           />
         </div>
@@ -114,7 +78,7 @@ export class BatchPricing extends Component {
           <label htmlFor="brand">Marca:</label>
           <BrandsSelector
             onBrandSelect={(brand) =>
-              this.handleProductsSearchOptionsChange("brand", brand)
+              handleProductsSearchOptionsChange("brand", brand)
             }
           />
         </div>
@@ -123,7 +87,7 @@ export class BatchPricing extends Component {
           <label htmlFor="category">{"Rubro:"}</label>
           <CategoriesSelector
             onCategorySelect={(category) => {
-              this.handleProductsSearchOptionsChange("category", category)
+              handleProductsSearchOptionsChange("category", category)
             }}
           />
         </div>
@@ -131,7 +95,7 @@ export class BatchPricing extends Component {
           <label htmlFor="subCategory">Sub-Rubro:</label>
           <SubCategoriesSelector
             onSubCategorySelect={(subCat) =>
-              this.handleProductsSearchOptionsChange("subCategory", subCat)
+              handleProductsSearchOptionsChange("subCategory", subCat)
             }
             categoryId={_.get(productsSearchOptions, "category.categoryId")}
           />
@@ -142,7 +106,7 @@ export class BatchPricing extends Component {
             placeholder="La descripción contiene"
             id="containsText"
             onChange={(e) =>
-              this.handleProductsSearchOptionsChange("containsText", e.target.value)
+              handleProductsSearchOptionsChange("containsText", e.target.value)
             }
             value={productsSearchOptions.containsText || ""}
           />
@@ -152,33 +116,33 @@ export class BatchPricing extends Component {
           <LoadingButton
             label="Aplicar filtros"
             icon="fa fa-fw fa-check"
-            loading={this.state.loading}
-            onClick={this.handleApplyFilters}
+            loading={loading}
+            onClick={handleApplyFilters}
           />
         </div>
       </div>
     )
   }
 
-  renderProductsPreview = () => {
+  const renderProductsPreview = () => {
     return (
       <SearchProductsTable
-        onPageEvent={this.handlePageChange}
+        onPageEvent={handlePageChange}
         emptyMessage="Aplique filtros para visualizar los productos"
         rows={5}
-        totalRecords={this.state.totalResults}
-        products={this.state.filteredProducts}
+        totalRecords={totalResults}
+        products={filteredProducts}
         showAdditionalColumns={true}
       />
     )
   }
 
-  renderUpdateParametersSection = () => {
-    const { updateCost, costPercent, updatePercents } = this.state.updateOptions
+  const renderUpdateParametersSection = () => {
+    const { updateCost, costPercent, updatePercents } = updateOptions
 
     return (
       <div className="p-grid p-fluid">
-        {this.state.showAddPercentDialog && this.renderAddPercentDialog()}
+        {showAddPercentDialog && renderAddPercentDialog()}
         <div className="p-col-6">
           <label htmlFor="updateCostField">{"Actualizar costo:"}</label>
           <div className="p-inputgroup">
@@ -186,7 +150,7 @@ export class BatchPricing extends Component {
               <Checkbox
                 id="updateCost"
                 onChange={(e) => {
-                  this.handleUpdateOptionsChange("updateCost", e.checked)
+                  handleUpdateOptionsChange("updateCost", e.checked)
                 }}
                 tooltip={"Habilita la actualización del costo"}
                 checked={updateCost}
@@ -203,7 +167,7 @@ export class BatchPricing extends Component {
               disabled={!updateCost}
               value={costPercent}
               onChange={(e) => {
-                this.handleUpdateOptionsChange("costPercent", e.value)
+                handleUpdateOptionsChange("costPercent", e.value)
               }}
             />
           </div>
@@ -216,7 +180,7 @@ export class BatchPricing extends Component {
           <Checkbox
             id="updatePercent"
             onChange={(e) => {
-              this.handleUpdateOptionsChange("updatePercents", e.checked)
+              handleUpdateOptionsChange("updatePercents", e.checked)
             }}
             tooltip={"Habilita la actualización de porcentajes"}
             checked={updatePercents}
@@ -228,14 +192,14 @@ export class BatchPricing extends Component {
             label="Agregar porcentaje"
             icon="fa fa-fw fa-plus"
             disabled={!updatePercents}
-            onClick={() => this.setState({ showAddPercentDialog: true })}
+            onClick={() => setShowAddPercentDialog(true)}
           />
         </div>
         <div className="p-col-6">
-          {this.renderPercentsTable("Para agregar", "percentsToAdd")}
+          {renderPercentsTable("Para agregar", "percentsToAdd")}
         </div>
         <div className="p-col-6">
-          {this.renderPercentsTable("Para borrar", "percentsToDelete")}
+          {renderPercentsTable("Para borrar", "percentsToDelete")}
         </div>
 
         <div className="p-col-6">
@@ -244,28 +208,27 @@ export class BatchPricing extends Component {
             icon="fa fa-fw fa-calculator"
             className="p-button-success"
             disabled={!(updateCost || updatePercents)}
-            loading={this.state.updatingPrices}
-            onClick={this.handleApplyChanges}
+            loading={updatingPrices}
+            onClick={handleApplyChanges}
           />
         </div>
       </div>
     )
   }
 
-  renderAddPercentDialog = () => {
+  const renderAddPercentDialog = () => {
     return (
       <AddPercentDialog
-        visible={this.state.showAddPercentDialog}
+        visible={showAddPercentDialog}
         modal={true}
-        acceptCallback={this.handleAddPercent}
-        onHide={() => this.setState({ showAddPercentDialog: false })}
+        acceptCallback={handleAddPercent}
+        onHide={() => setShowAddPercentDialog(false)}
       />
     )
   }
 
-  handleAddPercent = (percent) => {
+  const handleAddPercent = (percent) => {
     let percentItem = { ...percent }
-    let { updateOptions } = this.state
 
     percentItem.item = uuid()
     if (percentItem.action === "add") {
@@ -274,70 +237,55 @@ export class BatchPricing extends Component {
       updateOptions.percentsToDelete.splice(0, 0, percentItem)
     }
 
-    this.setState({
-      updateOptions: updateOptions,
-    })
+    setUpdateOptions(updateOptions)
   }
 
-  handleProductsSearchOptionsChange = (property, value) => {
-    let { productsSearchOptions } = this.state
-
+  const handleProductsSearchOptionsChange = (property, value) => {
     productsSearchOptions[property] = value
 
     if (property === "category") {
       productsSearchOptions.subCategory = null
     }
 
-    this.setState({ productsSearchOptions: productsSearchOptions })
+    setProductsSearchOptions(productsSearchOptions)
   }
 
-  handleUpdateOptionsChange = (property, value) => {
-    let { updateOptions } = this.state
-
+  const handleUpdateOptionsChange = (property, value) => {
     updateOptions[property] = value
 
-    this.setState({ updateOptions: updateOptions })
+    setUpdateOptions(updateOptions)
   }
 
-  handleApplyFilters = () => {
+  const handleApplyFilters = () => {
     let searchOptions = {
       firstResult: 0,
       maxResults: 5,
-      searchFilter: this.getSearchFilter(),
+      searchFilter: getSearchFilter(),
     }
 
-    this.productsService.searchProducts(searchOptions, (response) =>
-      this.setState({
-        filteredProducts: response.data,
-        totalResults: response.totalResults,
-        loading: false,
-      })
-    )
-
-    this.setState({
-      loading: true,
-      first: 0,
+    productsService.searchProducts(searchOptions, (response) => {
+      setFilteredProducts(response.data)
+      setTotalResults(response.totalResults)
+      setLoading(false)
     })
+
+    setLoading(false)
   }
 
-  handlePageChange = (pageOptions) => {
+  const handlePageChange = (pageOptions) => {
     let searchOptions = {
       firstResult: pageOptions.firstResult,
       maxResults: 5,
-      searchFilter: this.getSearchFilter(),
+      searchFilter: getSearchFilter(),
     }
 
-    this.productsService.searchProducts(searchOptions, (response) =>
-      this.setState({
-        filteredProducts: response.data,
-        totalResults: response.totalResults,
-      })
-    )
+    productsService.searchProducts(searchOptions, (response) => {
+      setFilteredProducts(response.data)
+      setTotalResults(response.totalResults)
+    })
   }
 
-  getSearchFilter = () => {
-    const { productsSearchOptions } = this.state
-
+  const getSearchFilter = () => {
     return {
       activo: true,
       idTipoProveeduria: _.get(
@@ -359,41 +307,40 @@ export class BatchPricing extends Component {
     }
   }
 
-  handleApplyChanges = () => {
-    let { updateOptions } = this.state
-    this.setState({ updatingPrices: true })
+  const handleApplyChanges = () => {
+    setUpdatingPrices(true)
 
-    updateOptions.searchFilter = this.getSearchFilter()
+    updateOptions.searchFilter = getSearchFilter()
 
-    this.productsService.updateProductsPricing(
-      updateOptions,
-      this.handleSuccess,
-      this.handleError
-    )
+    productsService.updateProductsPricing(updateOptions, handleSuccess, handleError)
   }
 
-  handleSuccess = () => {
-    this.setState({ updatingPrices: false })
+  const handleSuccess = () => {
+    setUpdatingPrices(false)
+    let newUdateOptions = { ...updateOptions }
+    newUdateOptions.updatePercents = false
+    newUdateOptions.updateCost = false
+    setUpdateOptions(newUdateOptions)
 
-    this.toast.show({
+    toast.current.show({
       severity: "info",
-      summary: "Precios actualizados exitosamente",
+      summary: "Los precios serán actualizados en segundo plano.",
       detail: "",
     })
   }
 
-  handleError = (error) => {
-    this.setState({ updatingPrices: false })
+  const handleError = (error) => {
+    setUpdatingPrices(false)
 
-    this.toast.show({
+    toast.current.show({
       severity: "error",
       summary: "No se pudieron actualizar los precios",
       detail: _.get(error, "response.data.message", ""),
     })
   }
 
-  renderPercentsTable = (header, percentsProperty) => {
-    const percents = this.state.updateOptions[percentsProperty]
+  const renderPercentsTable = (header, percentsProperty) => {
+    const percents = updateOptions[percentsProperty]
 
     return (
       <DataTable
@@ -406,33 +353,44 @@ export class BatchPricing extends Component {
         <Column field="value" header="Valor" />
         <Column
           key="actions"
-          body={(rowData) => this.getRemoveAction(rowData, percentsProperty)}
+          body={(rowData) => getRemoveAction(rowData, percentsProperty)}
           style={{ textAlign: "center", width: "7em" }}
         />
       </DataTable>
     )
   }
 
-  getRemoveAction = (rowData, percentsProperty) => {
+  const getRemoveAction = (rowData, percentsProperty) => {
     return (
       <Button
         type="button"
         icon="fa fa-fw fa-trash"
         className="p-button-danger"
-        onClick={() => this.removePercent(rowData, percentsProperty)}
+        onClick={() => removePercent(rowData, percentsProperty)}
         tooltip={"Quitar ítem"}
       />
     )
   }
 
-  removePercent = (rowData, percentsProperty) => {
-    const { updateOptions } = this.state
+  const removePercent = (rowData, percentsProperty) => {
     let percents = updateOptions[percentsProperty]
 
     _.remove(percents, (item) => {
       return item.item === rowData.item
     })
-
-    this.setState({ updateOptions: updateOptions })
+    setUpdateOptions(updateOptions)
   }
+
+  return (
+    <div className="card card-w-title">
+      <h1>Actualización masiva de precios</h1>
+      <Toast ref={toast} />
+      {renderFilterSection()}
+      {renderProductsPreview()}
+      <h3>Productos a modificar: {totalResults}</h3>
+
+      <div className="SeparatorFull" />
+      {totalResults > 0 && renderUpdateParametersSection()}
+    </div>
+  )
 }

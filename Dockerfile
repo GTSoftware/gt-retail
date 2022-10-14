@@ -18,6 +18,7 @@ EXPOSE 8090:8090
 # Start app
 
 ENTRYPOINT java -Duser.timezone=America/Argentina/Buenos_Aires \
+    -Xmx2048m \
     -jar gt-retail-0.0.1-SNAPSHOT.war \
     --server.port=8090 \
     --jwt.signing.key.secret=$JWT_SIGN_KEY \

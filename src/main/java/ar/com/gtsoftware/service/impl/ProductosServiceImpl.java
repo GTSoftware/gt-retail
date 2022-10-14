@@ -18,11 +18,9 @@
 package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.api.request.BatchPricingUpdateRequest;
-import ar.com.gtsoftware.api.request.ProductPercent;
 import ar.com.gtsoftware.dao.ProductoXDepositoFacade;
 import ar.com.gtsoftware.dao.ProductosFacade;
 import ar.com.gtsoftware.dao.ProductosPreciosFacade;
-import ar.com.gtsoftware.dao.ProductosTiposPorcentajesFacade;
 import ar.com.gtsoftware.dto.domain.ProductosDto;
 import ar.com.gtsoftware.entity.FiscalAlicuotasIva;
 import ar.com.gtsoftware.entity.Personas;
@@ -43,18 +41,17 @@ import ar.com.gtsoftware.search.ProductosSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;
 import ar.com.gtsoftware.service.ProductosService;
 import ar.com.gtsoftware.service.exceptions.ServiceException;
+import ar.com.gtsoftware.service.prices.UpdateProductPriceDto;
 import ar.com.gtsoftware.utils.BusinessDateUtils;
+import ar.com.gtsoftware.utils.SecurityUtils;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.EntityManager;
 import javax.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -62,14 +59,16 @@ public class ProductosServiceImpl
     extends BaseEntityService<ProductosDto, ProductosSearchFilter, Productos>
     implements ProductosService {
 
-  private static final BigDecimal CIEN = new BigDecimal(100);
   private final EntityManager em;
   private final ProductosFacade facade;
   private final ProductosPreciosFacade preciosFacade;
-  private final ProductosTiposPorcentajesFacade tiposPorcentajesFacade;
   private final ProductoXDepositoFacade stockFacade;
   private final ProductosMapper mapper;
   private final BusinessDateUtils dateUtils;
+
+  private final JmsTemplate jmsTemplate;
+
+  private final SecurityUtils securityUtils;
 
   @Override
   protected ProductosFacade getFacade() {
@@ -127,72 +126,25 @@ public class ProductosServiceImpl
   }
 
   @Override
-  @Transactional
   public void updatePrices(BatchPricingUpdateRequest batchUpdateRequest) {
     final List<Productos> productos =
-        facade.findAllBySearchFilter(batchUpdateRequest.getSearchFilter());
+        facade.findAllBySearchFilter(batchUpdateRequest.searchFilter());
 
-    final LocalDateTime today = dateUtils.getCurrentDateTime();
-
-    for (Productos producto : productos) {
-      if (batchUpdateRequest.getCostUpdatePercent() != null) {
-        BigDecimal costoAdquisicionNeto = producto.getCostoAdquisicionNeto();
-        costoAdquisicionNeto =
-            costoAdquisicionNeto.add(
-                costoAdquisicionNeto.multiply(
-                    batchUpdateRequest.getCostUpdatePercent().divide(CIEN)));
-        producto.setCostoAdquisicionNeto(costoAdquisicionNeto);
-      }
-      final List<ProductosPorcentajes> porcentajes = producto.getPorcentajes();
-      if (CollectionUtils.isNotEmpty(batchUpdateRequest.getPercentsToDelete())) {
-        for (ProductPercent toRemove : batchUpdateRequest.getPercentsToDelete()) {
-          porcentajes.removeIf(
-              p ->
-                  p.getIdTipoPorcentaje().getId().equals(toRemove.getPercentTypeId())
-                      && p.getValor().compareTo(toRemove.getPercentValue()) == 0);
-        }
-      }
-      if (CollectionUtils.isNotEmpty(batchUpdateRequest.getPercentsToAdd())) {
-        for (ProductPercent toAdd : batchUpdateRequest.getPercentsToAdd()) {
-          ProductosPorcentajes pp = new ProductosPorcentajes();
-          pp.setIdProducto(producto);
-          pp.setIdTipoPorcentaje(tiposPorcentajesFacade.find(toAdd.getPercentTypeId()));
-          pp.setValor(toAdd.getPercentValue());
-          pp.setFechaModificacion(today);
-          porcentajes.add(pp);
-          facade.edit(producto);
-        }
-      }
-
-      updateSalePrices(producto, today);
-      producto.setFechaUltimaModificacion(today);
-
-      facade.edit(producto);
-    }
+    productos.stream()
+        .map((prod) -> getUpdateProductMessage(prod, batchUpdateRequest))
+        .forEach(msg -> jmsTemplate.convertAndSend("updatePriceQueue", msg));
   }
 
-  private void updateSalePrices(Productos producto, LocalDateTime today) {
-    BigDecimal costoAdquisicionNeto = producto.getCostoAdquisicionNeto();
-    List<ProductosPorcentajes> porcentajes = producto.getPorcentajes();
-    BigDecimal costoFinal = costoAdquisicionNeto;
-    for (ProductosPorcentajes pp : porcentajes) {
-      if (pp.getIdTipoPorcentaje().isPorcentaje()) {
-        costoFinal = costoFinal.add(costoFinal.multiply(pp.getValor().divide(CIEN)));
-      } else {
-        costoFinal = costoFinal.add(pp.getValor());
-      }
-    }
-    producto.setCostoFinal(costoFinal);
-    if (producto.getPrecios() != null) {
-      BigDecimal coeficienteIVA =
-          producto.getIdAlicuotaIva().getValorAlicuota().divide(CIEN).add(BigDecimal.ONE);
-      for (ProductosPrecios pp : producto.getPrecios()) {
-        BigDecimal utilidad = pp.getUtilidad().divide(CIEN);
-        pp.setNeto(costoFinal.add(costoFinal.multiply(utilidad)));
-        pp.setFechaModificacion(today);
-        pp.setPrecio(pp.getNeto().multiply(coeficienteIVA).setScale(2, RoundingMode.HALF_UP));
-      }
-    }
+  private UpdateProductPriceDto getUpdateProductMessage(
+      Productos producto, BatchPricingUpdateRequest batchUpdateRequest) {
+
+    return UpdateProductPriceDto.builder()
+        .productId(producto.getId())
+        .costUpdatePercent(batchUpdateRequest.costUpdatePercent())
+        .percentsToDelete(batchUpdateRequest.percentsToDelete())
+        .percentsToAdd(batchUpdateRequest.percentsToAdd())
+        .user(securityUtils.getUserDetails().getLoginName())
+        .build();
   }
 
   @Override

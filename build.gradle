@@ -12,7 +12,7 @@ war {
 
 group = 'ar.com.gtsoftware'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+sourceCompatibility = "16"
 
 configurations {
     developmentOnly
@@ -40,6 +40,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-cache'
     implementation 'org.springframework.boot:spring-boot-starter-logging'
+    implementation 'org.springframework.boot:spring-boot-starter-activemq'
     implementation 'org.springframework.ws:spring-ws-security'
     implementation 'org.springframework.ws:spring-ws-core'
     testImplementation 'org.springframework.ws:spring-ws-test'
@@ -88,3 +89,4 @@ spotless {
         googleJavaFormat()
     }
 }
+targetCompatibility = JavaVersion.VERSION_16
