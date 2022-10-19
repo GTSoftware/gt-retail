@@ -60,10 +60,18 @@ spec:
                   key: DB_USER
           resources:
             limits:
-              cpu: 400m
-              memory: 1.4Gi
+              memory: 2Gi
             requests:
-              cpu: 200m
-              memory: 800Mi
+              memory: 1Gi
       nodeSelector:
         cloud.google.com/gke-spot: "true"
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              preference:
+                matchExpressions:
+                  - key: node
+                    operator: In
+                    values:
+                      - backend
