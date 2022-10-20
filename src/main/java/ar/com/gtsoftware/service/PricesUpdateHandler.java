@@ -62,8 +62,8 @@ public class PricesUpdateHandler {
       for (ProductPercent toAdd : updateProductPriceDto.percentsToAdd()) {
         ProductosPorcentajes pp = new ProductosPorcentajes();
         pp.setIdProducto(producto);
-        pp.setIdTipoPorcentaje(tiposPorcentajesFacade.find(toAdd.getPercentTypeId()));
-        pp.setValor(toAdd.getPercentValue());
+        pp.setIdTipoPorcentaje(tiposPorcentajesFacade.find(toAdd.percentTypeId()));
+        pp.setValor(toAdd.percentValue());
         pp.setFechaModificacion(today);
         porcentajes.add(pp);
         productosFacade.edit(producto);
@@ -77,8 +77,8 @@ public class PricesUpdateHandler {
       for (ProductPercent toRemove : updateProductPriceDto.percentsToDelete()) {
         porcentajes.removeIf(
             p ->
-                p.getIdTipoPorcentaje().getId().equals(toRemove.getPercentTypeId())
-                    && p.getValor().compareTo(toRemove.getPercentValue()) == 0);
+                p.getIdTipoPorcentaje().getId().equals(toRemove.percentTypeId())
+                    && p.getValor().compareTo(toRemove.percentValue()) == 0);
       }
     }
   }

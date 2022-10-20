@@ -241,19 +241,23 @@ export const BatchPricing = () => {
   }
 
   const handleProductsSearchOptionsChange = (property, value) => {
-    productsSearchOptions[property] = value
+    let newProductsSearchOptions = { ...productsSearchOptions }
+
+    newProductsSearchOptions[property] = value
 
     if (property === "category") {
-      productsSearchOptions.subCategory = null
+      newProductsSearchOptions.subCategory = null
     }
 
-    setProductsSearchOptions(productsSearchOptions)
+    setProductsSearchOptions(newProductsSearchOptions)
   }
 
   const handleUpdateOptionsChange = (property, value) => {
-    updateOptions[property] = value
+    let newUpdateOptions = { ...updateOptions }
 
-    setUpdateOptions(updateOptions)
+    newUpdateOptions[property] = value
+
+    setUpdateOptions(newUpdateOptions)
   }
 
   const handleApplyFilters = () => {
@@ -373,12 +377,13 @@ export const BatchPricing = () => {
   }
 
   const removePercent = (rowData, percentsProperty) => {
-    let percents = updateOptions[percentsProperty]
+    let newUpdateOptions = { ...updateOptions }
+    let percents = newUpdateOptions[percentsProperty]
 
     _.remove(percents, (item) => {
       return item.item === rowData.item
     })
-    setUpdateOptions(updateOptions)
+    setUpdateOptions(newUpdateOptions)
   }
 
   return (

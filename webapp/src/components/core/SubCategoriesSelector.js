@@ -12,8 +12,10 @@ export const SubCategoriesSelector = ({
   const service = new CategoriesService()
 
   useEffect(() => {
-    service.getSubCategories(categoryId, handleSubCategories)
-    setCurrentSubCategory(null)
+    if (categoryId) {
+      service.getSubCategories(categoryId, handleSubCategories)
+      setCurrentSubCategory(null)
+    }
   }, [categoryId])
   useEffect(() => setCurrentSubCategory(selectedSubCategory), [selectedSubCategory])
 
