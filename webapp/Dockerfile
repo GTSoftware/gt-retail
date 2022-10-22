@@ -1,4 +1,4 @@
-FROM node:14-alpine AS builder
+FROM node:16-alpine AS builder
 ENV NODE_ENV production
 # Add a work directory
 WORKDIR /app
@@ -12,7 +12,7 @@ COPY . .
 RUN npm run build
 
 # Bundle static assets with nginx
-FROM nginx:1.21.0-alpine as production
+FROM nginx:1.23.2-alpine as production
 ENV NODE_ENV production
 # Copy built assets from builder
 COPY --from=builder /app/build /usr/share/nginx/html

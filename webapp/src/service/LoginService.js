@@ -50,6 +50,16 @@ class LoginService {
   }
 
   performLogout() {
+    post(
+      "/logoff",
+      null,
+      (response) => {
+        //Ignore
+      },
+      (errorCallback) => {
+        //Ignore
+      }
+    )
     sessionStorage.removeItem(USER_TOKEN_STORE)
     delete this.userDetails
   }

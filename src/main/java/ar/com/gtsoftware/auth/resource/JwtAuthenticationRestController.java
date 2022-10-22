@@ -5,9 +5,10 @@ import java.util.Objects;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -20,48 +21,44 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 @RequiredArgsConstructor
+@Slf4j
 public class JwtAuthenticationRestController {
 
   private final AuthenticationManager authenticationManager;
   private final JwtTokenUtil jwtTokenUtil;
-  private final UserDetailsService jwtInMemoryUserDetailsService;
-  private final Logger logger = LoggerFactory.getLogger(this.getClass());
+  private final UserDetailsService userDetailsService;
 
   @Value("${jwt.http.request.header}")
   private String tokenHeader;
 
+  private final CacheManager cacheManager;
+
   @RequestMapping(value = "${jwt.get.token.uri}", method = RequestMethod.POST)
-  public ResponseEntity createAuthenticationToken(
+  public ResponseEntity<JwtTokenResponse> createAuthenticationToken(
       @RequestBody @Valid JwtTokenRequest authenticationRequest) {
 
     final String username = authenticationRequest.getUsername();
-    logger.info("Trying to authenticate username: {}", username);
+    log.info("Trying to authenticate username: {}", username);
 
     authenticate(username, authenticationRequest.getPassword());
 
-    logger.info("User {} authentication successful", username);
+    log.info("User {} authentication successful", username);
 
-    final UserDetails userDetails = jwtInMemoryUserDetailsService.loadUserByUsername(username);
+    final UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
     final String token = jwtTokenUtil.generateToken(userDetails);
+
+    getCache().put(token, userDetails);
 
     return ResponseEntity.ok(new JwtTokenResponse(token));
   }
 
-  @RequestMapping(value = "${jwt.refresh.token.uri}", method = RequestMethod.GET)
-  public ResponseEntity refreshAndGetAuthenticationToken(HttpServletRequest request) {
+  @RequestMapping(value = "/logoff", method = RequestMethod.POST)
+  public void logoff(HttpServletRequest request) {
     String authToken = request.getHeader(tokenHeader);
     final String token = authToken.substring(7);
-    // String username = jwtTokenUtil.getUsernameFromToken(token);
-    // JwtUserDetails user = (JwtUserDetails)
-    // jwtInMemoryUserDetailsService.loadUserByUsername(username);
 
-    if (jwtTokenUtil.canTokenBeRefreshed(token)) {
-      String refreshedToken = jwtTokenUtil.refreshToken(token);
-      return ResponseEntity.ok(new JwtTokenResponse(refreshedToken));
-    } else {
-      return ResponseEntity.badRequest().body(null);
-    }
+    getCache().evict(token);
   }
 
   private void authenticate(String username, String password) {
@@ -76,5 +73,10 @@ public class JwtAuthenticationRestController {
     } catch (BadCredentialsException e) {
       throw new AuthenticationException("INVALID_CREDENTIALS", e);
     }
+  }
+
+  private Cache getCache() {
+    return Objects.requireNonNull(
+        cacheManager.getCache("sessions"), "Sessions cache should not be null");
   }
 }
