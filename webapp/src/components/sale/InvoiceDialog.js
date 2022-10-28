@@ -5,6 +5,7 @@ import { Dropdown } from "primereact/dropdown"
 import { LoadingButton } from "../core/LoadingButton"
 import _ from "lodash"
 import { Toast } from "primereact/toast"
+import { v4 as uuid } from "uuid"
 
 export const InvoiceDialog = (props) => {
   const salesService = new SalesService()
@@ -13,6 +14,7 @@ export const InvoiceDialog = (props) => {
   const [loading, setLoading] = useState(false)
   const [pointsOfSale, setPointsOfSale] = useState([])
   const [selectedPointOfSale, setSelectedPointOfSale] = useState(null)
+  const invoiceRequestId = uuid()
 
   useEffect(() => salesService.getPointsOfSale(handlePointsOfSale), [])
   const toast = useRef(null)
@@ -41,6 +43,7 @@ export const InvoiceDialog = (props) => {
       pointOfSale: selectedPointOfSale.posNumber,
       invoiceDate: null,
       invoiceNumber: null,
+      invoiceRequestId: invoiceRequestId
     }
 
     salesService.registerInvoice(invoiceToRegister, handleSuccess, handleError)

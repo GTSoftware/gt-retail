@@ -17,4 +17,6 @@ public class InvoiceRequest {
   @Past private LocalDateTime invoiceDate;
 
   private Long invoiceNumber;
+
+  @NotNull private String invoiceRequestId;
 }

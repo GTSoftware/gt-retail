@@ -32,6 +32,8 @@ public class InvoiceControllerImpl implements InvoiceController {
   private final ComprobantesService comprobantesService;
   private final FacturacionVentasService facturacionService;
 
+  private final IdempotenceHandler idempotenceHandler;
+
   @Override
   public List<PointOfSale> getPointsOfSale() {
     FiscalPuntosVentaSearchFilter sf =
@@ -69,6 +71,8 @@ public class InvoiceControllerImpl implements InvoiceController {
 
   @Override
   public InvoiceResponse invoiceSale(@Valid InvoiceRequest request) {
+    idempotenceHandler.verifyIdempotence(request.getInvoiceRequestId());
+
     final ComprobantesDto comprobantesDto = comprobantesService.find(request.getSaleId());
     final FiscalPuntosVentaDto puntosVentaDto = puntosVentaService.find(request.getPointOfSale());
 
@@ -87,6 +91,8 @@ public class InvoiceControllerImpl implements InvoiceController {
 
     final ComprobantesDto comprobanteFacturado = comprobantesService.find(request.getSaleId());
     final FiscalLibroIvaVentasDto idRegistro = comprobanteFacturado.getIdRegistro();
+
+    idempotenceHandler.setNonce(request.getInvoiceRequestId(), comprobanteFacturado.getId().toString());
 
     return InvoiceResponse.builder()
         .invoiceNumber(
