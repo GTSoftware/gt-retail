@@ -1,5 +1,7 @@
 package ar.com.gtsoftware.configuration;
 
+import ar.com.gtsoftware.enums.Caches;
+import java.util.List;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
@@ -12,6 +14,9 @@ public class CacheConfiguration {
 
   @Bean
   public CacheManager cacheManager() {
-    return new ConcurrentMapCacheManager("offers", "sessions");
+    final List<String> names = Caches.getNames();
+    final String[] cacheNames = names.toArray(new String[0]);
+
+    return new ConcurrentMapCacheManager(cacheNames);
   }
 }

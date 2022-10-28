@@ -50,6 +50,7 @@ function transformToSaleRequest(shopCart) {
     remitente: shopCart.remitente,
     products: shopCart.products,
     payments: transformPayments(shopCart.payments),
+    shopCartId: shopCart.shopCartId,
   }
 }
 

@@ -4,10 +4,10 @@ import ar.com.gtsoftware.api.PromotionCartItem;
 import ar.com.gtsoftware.api.ShopCartController;
 import ar.com.gtsoftware.api.exception.CustomerNotFoundException;
 import ar.com.gtsoftware.api.exception.ProductNotFoundException;
-import ar.com.gtsoftware.api.request.AddCartItemRequest;
-import ar.com.gtsoftware.api.request.SaleItem;
-import ar.com.gtsoftware.api.request.SalePayment;
-import ar.com.gtsoftware.api.request.SaleRequest;
+import ar.com.gtsoftware.api.request.sales.AddCartItemRequest;
+import ar.com.gtsoftware.api.request.sales.SaleItem;
+import ar.com.gtsoftware.api.request.sales.SalePayment;
+import ar.com.gtsoftware.api.request.sales.SaleRequest;
 import ar.com.gtsoftware.api.response.CartItemResponse;
 import ar.com.gtsoftware.api.response.CreatedSaleResponse;
 import ar.com.gtsoftware.api.response.CustomerResponse;
@@ -27,13 +27,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 class ShopCartControllerImpl implements ShopCartController {
 
   private static final BigDecimal CIEN = new BigDecimal(100);
@@ -49,7 +49,8 @@ class ShopCartControllerImpl implements ShopCartController {
   private final VentasService ventasService;
   private final OfertasHelper ofertasHelper;
   private final CustomerTransformer customerTransformer;
-  private final Logger logger = LoggerFactory.getLogger(ShopCartControllerImpl.class);
+
+  private final IdempotenceHandler idempotenceHandler;
 
   @Override
   public CartItemResponse addProduct(AddCartItemRequest addCartItemRequest) {
@@ -163,6 +164,8 @@ class ShopCartControllerImpl implements ShopCartController {
 
   @Override
   public CreatedSaleResponse saveSale(SaleRequest saleRequest) {
+    idempotenceHandler.verifyIdempotence(saleRequest.getShopCartId());
+
     JwtUserDetails userDetails = securityUtils.getUserDetails();
 
     ComprobantesDto comprobante =
@@ -184,6 +187,9 @@ class ShopCartControllerImpl implements ShopCartController {
             .build();
 
     RegistroVentaDto registroVentaDto = ventasService.guardarVenta(comprobante, true);
+
+    idempotenceHandler.setNonce(
+        saleRequest.getShopCartId(), String.valueOf(registroVentaDto.getIdComprobante()));
 
     return CreatedSaleResponse.builder()
         .deliveryNoteId(registroVentaDto.getIdRemito())

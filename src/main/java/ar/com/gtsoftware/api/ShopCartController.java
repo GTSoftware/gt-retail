@@ -1,7 +1,7 @@
 package ar.com.gtsoftware.api;
 
-import ar.com.gtsoftware.api.request.AddCartItemRequest;
-import ar.com.gtsoftware.api.request.SaleRequest;
+import ar.com.gtsoftware.api.request.sales.AddCartItemRequest;
+import ar.com.gtsoftware.api.request.sales.SaleRequest;
 import ar.com.gtsoftware.api.response.CartItemResponse;
 import ar.com.gtsoftware.api.response.CreatedSaleResponse;
 import ar.com.gtsoftware.api.response.CustomerResponse;

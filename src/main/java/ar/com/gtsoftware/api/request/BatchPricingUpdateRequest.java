@@ -9,4 +9,5 @@ public record BatchPricingUpdateRequest(
     @NotNull ProductosSearchFilter searchFilter,
     BigDecimal costUpdatePercent,
     List<ProductPercent> percentsToDelete,
-    List<ProductPercent> percentsToAdd) {}
+    List<ProductPercent> percentsToAdd,
+    String batchId) {}

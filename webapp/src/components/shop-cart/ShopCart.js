@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React, { useState } from "react"
 import { Steps } from "primereact/steps"
 import { ShopCartStore } from "../../stores/ShopCartStore"
 import { ShopCartItems } from "./ShopCartItems"
@@ -14,93 +14,74 @@ const saleSteps = [
   { number: 4, label: "Confirmación" },
 ]
 
-export class ShopCart extends Component {
-  constructor() {
-    super()
+export const ShopCart = () => {
+  const shopCartStore = new ShopCartStore()
+  const [saleStep, setSaleStep] = useState(shopCartStore.getSaleStep() || 0)
 
-    this.shopCartStore = new ShopCartStore()
-
-    this.state = {
-      saleStep: this.shopCartStore.getSaleStep() || 0,
-    }
-
-    this.renderSaleStepComponent = this.renderSaleStepComponent.bind(this)
-    this.renderShopCartItems = this.renderShopCartItems.bind(this)
-    this.renderShopCartClient = this.renderShopCartClient.bind(this)
-    this.renderShopCartPayment = this.renderShopCartPayment.bind(this)
-    this.renderSaleConfirmation = this.renderSaleConfirmation.bind(this)
-    this.goBack = this.goBack.bind(this)
-    this.goNext = this.goNext.bind(this)
-    this.getChildProps = this.getChildProps.bind(this)
-    this.startNewSale = this.startNewSale.bind(this)
-  }
-
-  render() {
-    return (
-      <div className="card card-w-title">
-        <Steps model={saleSteps} activeIndex={this.state.saleStep} />
-        {this.renderSaleStepComponent()}
-      </div>
-    )
-  }
-
-  renderSaleStepComponent() {
-    switch (this.state.saleStep) {
+  const renderSaleStepComponent = () => {
+    switch (saleStep) {
       case 0:
-        return this.renderShopCartItems()
+        return renderShopCartItems()
       case 1:
-        return this.renderShopCartClient()
+        return renderShopCartClient()
       case 2:
-        return this.renderShopCartPayment()
+        return renderShopCartPayment()
       case 3:
-        return this.renderSaleConfirmation()
+        return renderSaleConfirmation()
       default:
-        return this.renderShopCartItems()
+        return renderShopCartItems()
     }
   }
 
-  renderShopCartItems() {
-    return <ShopCartItems {...this.getChildProps()} />
+  const renderShopCartItems = () => {
+    return <ShopCartItems {...getChildProps()} />
   }
 
-  renderShopCartClient() {
-    return <ShopCartCustomer {...this.getChildProps()} />
+  const renderShopCartClient = () => {
+    return <ShopCartCustomer {...getChildProps()} />
   }
 
-  renderShopCartPayment() {
-    return <ShopCartPayment {...this.getChildProps()} />
+  const renderShopCartPayment = () => {
+    return <ShopCartPayment {...getChildProps()} />
   }
 
-  renderSaleConfirmation() {
-    return <ShopCartConfirmation {...this.getChildProps()} />
+  const renderSaleConfirmation = () => {
+    return <ShopCartConfirmation {...getChildProps()} />
   }
 
-  getChildProps() {
+  const getChildProps = () => {
     return {
-      goNextCallback: this.goNext,
-      goBackCallback: this.goBack,
-      startNewSaleCallback: this.startNewSale,
+      goNextCallback: goNext,
+      goBackCallback: goBack,
+      startNewSaleCallback: startNewSale,
     }
   }
 
-  goNext() {
-    let saleStep = this.state.saleStep
+  const goNext = () => {
     if (saleStep < 3) {
-      this.setState({ saleStep: saleStep + 1 })
-      this.shopCartStore.setSaleStep(saleStep + 1)
+      const nextStep = saleStep + 1
+      setSaleStep(nextStep)
+      shopCartStore.setSaleStep(nextStep)
     }
   }
 
-  goBack() {
-    let saleStep = this.state.saleStep
+  const goBack = () => {
     if (saleStep > 0) {
-      this.setState({ saleStep: saleStep - 1 })
-      this.shopCartStore.setSaleStep(saleStep - 1)
+      const previousStep = saleStep - 1
+      setSaleStep(previousStep)
+      shopCartStore.setSaleStep(previousStep)
     }
   }
 
-  startNewSale() {
-    this.shopCartStore.clearStore()
-    this.setState({ saleStep: 0 })
+  const startNewSale = () => {
+    shopCartStore.clearStore()
+    setSaleStep(0)
   }
+
+  return (
+    <div className="card card-w-title">
+      <Steps model={saleSteps} activeIndex={saleStep} />
+      {renderSaleStepComponent()}
+    </div>
+  )
 }

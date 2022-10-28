@@ -38,6 +38,7 @@ public class ProductsControllerImpl implements ProductsController {
   private final ProductResponseTransformer productResponseTransformer;
   private final ProductoDtoTransformer productoDtoTransformer;
   private final SecurityUtils securityUtils;
+  private final IdempotenceHandler idempotenceHandler;
 
   @Override
   public PaginatedResponse<ProductSearchResult> findBySearchFilter(
@@ -63,8 +64,10 @@ public class ProductsControllerImpl implements ProductsController {
 
   @Override
   public void batchUpdatePrices(@Valid BatchPricingUpdateRequest batchUpdateRequest) {
+    idempotenceHandler.verifyIdempotence(batchUpdateRequest.batchId());
     if (securityUtils.userHasRole(Roles.ADMINISTRADORES)) {
       productosService.updatePrices(batchUpdateRequest);
+      idempotenceHandler.setNonce(batchUpdateRequest.batchId(), batchUpdateRequest.batchId());
     } else {
       throw new UserNotAllowedException();
     }

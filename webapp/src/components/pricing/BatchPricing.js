@@ -37,6 +37,7 @@ export const BatchPricing = () => {
     updatePercents: false,
     percentsToAdd: [],
     percentsToDelete: [],
+    batchId: uuid(),
   })
   const [updatingPrices, setUpdatingPrices] = useState(false)
   const [showAddPercentDialog, setShowAddPercentDialog] = useState(false)
@@ -324,6 +325,7 @@ export const BatchPricing = () => {
     let newUdateOptions = { ...updateOptions }
     newUdateOptions.updatePercents = false
     newUdateOptions.updateCost = false
+    newUdateOptions.batchId = uuid()
     setUpdateOptions(newUdateOptions)
 
     toast.current.show({

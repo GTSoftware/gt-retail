@@ -1,4 +1,4 @@
-package ar.com.gtsoftware.api.request;
+package ar.com.gtsoftware.api.request.sales;
 
 import java.math.BigDecimal;
 import javax.validation.constraints.NotNull;

@@ -113,6 +113,7 @@ function transformUpdatePrices(updateOptions) {
     percentsToAdd: updateOptions.updatePercents
       ? transformPercents(updateOptions.percentsToAdd)
       : null,
+    batchId: updateOptions.batchId,
   }
 }
 

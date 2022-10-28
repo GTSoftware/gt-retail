@@ -1,5 +1,6 @@
 import { SessionStore } from "./SessionStore"
 import _ from "lodash"
+import { v4 as uuid } from "uuid"
 
 export class ShopCartStore extends SessionStore {
   getStoreName() {
@@ -17,6 +18,7 @@ export class ShopCartStore extends SessionStore {
       observaciones: null,
       remitente: null,
       remito: null,
+      shopCartId: uuid(),
     }
   }
 

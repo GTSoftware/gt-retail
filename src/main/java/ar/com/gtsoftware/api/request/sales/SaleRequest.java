@@ -1,4 +1,4 @@
-package ar.com.gtsoftware.api.request;
+package ar.com.gtsoftware.api.request.sales;
 
 import java.util.List;
 import javax.validation.Valid;
@@ -26,4 +26,6 @@ public class SaleRequest {
 
   @Size(max = 100)
   private String remitente;
+
+  @NotNull private String shopCartId;
 }
