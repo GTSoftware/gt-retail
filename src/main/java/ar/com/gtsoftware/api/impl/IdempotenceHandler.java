@@ -1,6 +1,7 @@
 package ar.com.gtsoftware.api.impl;
 
 import ar.com.gtsoftware.api.exception.IdempotenceException;
+import ar.com.gtsoftware.enums.Caches;
 import java.util.Objects;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Component
 public class IdempotenceHandler {
-  private static final String NONCE = "nonce";
+  private static final String NONCE = Caches.NONCE.getCacheName();
   private final CacheManager cacheManager;
 
   /**
