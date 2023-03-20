@@ -13,19 +13,16 @@ public class PaginatedResponseBuilder {
   public <R, S extends AbstractSearchFilter> PaginatedResponse<R> build(
       EntityService<R, S> service, PaginatedSearchRequest<S> searchRequest) {
     final S searchFilter = searchRequest.getSearchFilter();
-    final PaginatedResponse<R> response =
-        PaginatedResponse.<R>builder()
-            .totalResults(service.countBySearchFilter(searchFilter))
-            .build();
+    final int totalResults = service.countBySearchFilter(searchFilter);
 
-    if (response.getTotalResults() > 0) {
+    if (totalResults > 0) {
       final List<R> results =
           service.findBySearchFilter(
               searchFilter, searchRequest.getFirstResult(), searchRequest.getMaxResults());
-      response.setData(results);
+      return PaginatedResponse.<R>builder().data(results).totalResults(totalResults).build();
     }
 
-    return response;
+    return PaginatedResponse.<R>builder().totalResults(0).build();
   }
 
   public <R, T, S extends AbstractSearchFilter> PaginatedResponse<R> build(
@@ -33,19 +30,18 @@ public class PaginatedResponseBuilder {
       PaginatedSearchRequest<S> searchRequest,
       Transformer<T, R> transformer) {
     final S searchFilter = searchRequest.getSearchFilter();
-    final PaginatedResponse<R> response =
-        PaginatedResponse.<R>builder()
-            .totalResults(service.countBySearchFilter(searchFilter))
-            .build();
+    final int totalResults = service.countBySearchFilter(searchFilter);
 
-    if (response.getTotalResults() > 0) {
+    if (totalResults > 0) {
       final List<T> results =
           service.findBySearchFilter(
               searchFilter, searchRequest.getFirstResult(), searchRequest.getMaxResults());
-
-      response.setData(transformer.transform(results));
+      return PaginatedResponse.<R>builder()
+          .data(transformer.transform(results))
+          .totalResults(totalResults)
+          .build();
     }
 
-    return response;
+    return PaginatedResponse.<R>builder().totalResults(0).build();
   }
 }

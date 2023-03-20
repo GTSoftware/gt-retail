@@ -4,10 +4,12 @@ import ar.com.gtsoftware.api.ProductsController;
 import ar.com.gtsoftware.api.exception.DuplicatedProductCodeException;
 import ar.com.gtsoftware.api.exception.ProductNotFoundException;
 import ar.com.gtsoftware.api.exception.UserNotAllowedException;
+import ar.com.gtsoftware.api.idempotence.IdempotenceHandler;
 import ar.com.gtsoftware.api.request.BatchPricingUpdateRequest;
 import ar.com.gtsoftware.api.request.PaginatedSearchRequest;
 import ar.com.gtsoftware.api.request.products.CreateOrUpdateProductRequest;
 import ar.com.gtsoftware.api.response.PaginatedResponse;
+import ar.com.gtsoftware.api.response.PaginatedResponseBuilder;
 import ar.com.gtsoftware.api.response.ProductResponse;
 import ar.com.gtsoftware.api.response.ProductSearchResult;
 import ar.com.gtsoftware.api.transformer.fromDomain.ProductResponseTransformer;
@@ -21,7 +23,6 @@ import ar.com.gtsoftware.service.ParametrosService;
 import ar.com.gtsoftware.service.ProductosService;
 import ar.com.gtsoftware.service.exceptions.ServiceException;
 import ar.com.gtsoftware.utils.SecurityUtils;
-import java.util.List;
 import java.util.Objects;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +40,7 @@ public class ProductsControllerImpl implements ProductsController {
   private final ProductoDtoTransformer productoDtoTransformer;
   private final SecurityUtils securityUtils;
   private final IdempotenceHandler idempotenceHandler;
+  private final PaginatedResponseBuilder responseBuilder;
 
   @Override
   public PaginatedResponse<ProductSearchResult> findBySearchFilter(
@@ -48,18 +50,7 @@ public class ProductsControllerImpl implements ProductsController {
       searchFilter.setIdListaPrecio(parametrosService.getLongParam(Parametros.ID_LISTA_VENTA));
     }
 
-    final int count = productosService.countBySearchFilter(searchFilter);
-    final PaginatedResponse<ProductSearchResult> response =
-        PaginatedResponse.<ProductSearchResult>builder().totalResults(count).build();
-
-    if (count > 0) {
-      final List<ProductosDto> productos =
-          productosService.findBySearchFilter(
-              searchFilter, searchRequest.getFirstResult(), searchRequest.getMaxResults());
-      response.setData(productSearchResultTransformer.transformProducts(productos));
-    }
-
-    return response;
+    return responseBuilder.build(productosService, searchRequest, productSearchResultTransformer);
   }
 
   @Override

@@ -43,7 +43,7 @@ export const InvoiceDialog = (props) => {
       pointOfSale: selectedPointOfSale.posNumber,
       invoiceDate: null,
       invoiceNumber: null,
-      invoiceRequestId: invoiceRequestId
+      invoiceRequestId: invoiceRequestId,
     }
 
     salesService.registerInvoice(invoiceToRegister, handleSuccess, handleError)

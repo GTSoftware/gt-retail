@@ -3,6 +3,7 @@ package ar.com.gtsoftware.api.impl;
 import ar.com.gtsoftware.api.InvoiceController;
 import ar.com.gtsoftware.api.exception.PointOfSaleNotFoundException;
 import ar.com.gtsoftware.api.exception.SaleNotFoundException;
+import ar.com.gtsoftware.api.idempotence.IdempotenceHandler;
 import ar.com.gtsoftware.api.request.InvoiceRequest;
 import ar.com.gtsoftware.api.response.InvoiceResponse;
 import ar.com.gtsoftware.api.response.PointOfSale;
@@ -16,9 +17,10 @@ import ar.com.gtsoftware.service.FacturacionVentasService;
 import ar.com.gtsoftware.service.FiscalPuntosVentaService;
 import ar.com.gtsoftware.service.exceptions.ServiceException;
 import ar.com.gtsoftware.utils.SecurityUtils;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
@@ -49,24 +51,21 @@ public class InvoiceControllerImpl implements InvoiceController {
   }
 
   private List<PointOfSale> transformPointsOfSale(List<FiscalPuntosVentaDto> puntosVenta) {
-    List<PointOfSale> pointsOfSale = new ArrayList<>(puntosVenta.size());
+    return puntosVenta.stream().map(this::buildPointOfSale).collect(Collectors.toList());
+  }
 
-    for (FiscalPuntosVentaDto fiscalPuntosVentaDto : puntosVenta) {
-      pointsOfSale.add(
-          PointOfSale.builder()
-              .posNumber(fiscalPuntosVentaDto.getNroPuntoVenta())
-              .posType(fiscalPuntosVentaDto.getTipo().name())
-              .byDefault(TiposPuntosVenta.ELECTRONICO == fiscalPuntosVentaDto.getTipo())
-              .displayName(
-                  String.format(
-                      "[%s-%s] %s",
-                      fiscalPuntosVentaDto.getNroPuntoVenta(),
-                      fiscalPuntosVentaDto.getTipo().name(),
-                      fiscalPuntosVentaDto.getDescripcion()))
-              .build());
-    }
-
-    return pointsOfSale;
+  private PointOfSale buildPointOfSale(FiscalPuntosVentaDto fiscalPuntosVentaDto) {
+    return PointOfSale.builder()
+        .posNumber(fiscalPuntosVentaDto.getNroPuntoVenta())
+        .posType(fiscalPuntosVentaDto.getTipo().name())
+        .byDefault(TiposPuntosVenta.ELECTRONICO == fiscalPuntosVentaDto.getTipo())
+        .displayName(
+            String.format(
+                "[%s-%s] %s",
+                fiscalPuntosVentaDto.getNroPuntoVenta(),
+                fiscalPuntosVentaDto.getTipo().name(),
+                fiscalPuntosVentaDto.getDescripcion()))
+        .build();
   }
 
   @Override
@@ -76,10 +75,10 @@ public class InvoiceControllerImpl implements InvoiceController {
     final ComprobantesDto comprobantesDto = comprobantesService.find(request.getSaleId());
     final FiscalPuntosVentaDto puntosVentaDto = puntosVentaService.find(request.getPointOfSale());
 
-    if (comprobantesDto == null) {
+    if (Objects.isNull(comprobantesDto)) {
       throw new SaleNotFoundException();
     }
-    if (puntosVentaDto == null) {
+    if (Objects.isNull(puntosVentaDto)) {
       throw new PointOfSaleNotFoundException();
     }
 
@@ -92,7 +91,8 @@ public class InvoiceControllerImpl implements InvoiceController {
     final ComprobantesDto comprobanteFacturado = comprobantesService.find(request.getSaleId());
     final FiscalLibroIvaVentasDto idRegistro = comprobanteFacturado.getIdRegistro();
 
-    idempotenceHandler.setNonce(request.getInvoiceRequestId(), comprobanteFacturado.getId().toString());
+    idempotenceHandler.setNonce(
+        request.getInvoiceRequestId(), comprobanteFacturado.getId().toString());
 
     return InvoiceResponse.builder()
         .invoiceNumber(

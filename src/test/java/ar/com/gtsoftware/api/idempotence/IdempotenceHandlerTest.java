@@ -1,4 +1,4 @@
-package ar.com.gtsoftware.api.impl;
+package ar.com.gtsoftware.api.idempotence;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;

@@ -8,6 +8,7 @@ import static org.mockito.Mockito.*;
 
 import ar.com.gtsoftware.api.exception.PointOfSaleNotFoundException;
 import ar.com.gtsoftware.api.exception.SaleNotFoundException;
+import ar.com.gtsoftware.api.idempotence.IdempotenceHandler;
 import ar.com.gtsoftware.api.request.InvoiceRequest;
 import ar.com.gtsoftware.api.response.InvoiceResponse;
 import ar.com.gtsoftware.api.response.PointOfSale;
@@ -44,6 +45,7 @@ class InvoiceControllerImplTest {
   @Mock private FiscalPuntosVentaService puntosVentaService;
   @Mock private ComprobantesService comprobantesService;
   @Mock private FacturacionVentasService facturacionService;
+  @Mock private IdempotenceHandler idempotenceHandler;
 
   @Captor private ArgumentCaptor<FiscalPuntosVentaSearchFilter> captor;
 
@@ -53,11 +55,15 @@ class InvoiceControllerImplTest {
   void setUp() {
     controller =
         new InvoiceControllerImpl(
-            securityUtils, puntosVentaService, comprobantesService, facturacionService);
+            securityUtils,
+            puntosVentaService,
+            comprobantesService,
+            facturacionService,
+            idempotenceHandler);
   }
 
   @Test
-  public void shouldGetPointsOfSale() {
+  void shouldGetPointsOfSale() {
     when(userDetails.getSucursalId()).thenReturn(1L);
     when(securityUtils.getUserDetails()).thenReturn(userDetails);
     when(puntosVentaService.findAllBySearchFilter(any(FiscalPuntosVentaSearchFilter.class)))
@@ -102,7 +108,7 @@ class InvoiceControllerImplTest {
   }
 
   @Test
-  public void shouldInvoice() throws ServiceException {
+  void shouldInvoiceSale() throws ServiceException {
     final FiscalPuntosVentaDto puntoVentaDummy =
         FiscalPuntosVentaDto.builder().nroPuntoVenta(1).build();
     when(comprobantesService.find(1L))
@@ -132,7 +138,7 @@ class InvoiceControllerImplTest {
   }
 
   @Test
-  public void shouldThrowSaleNotFoundWhenInvoiceWithInvalidSaleId() {
+  void shouldThrowSaleNotFoundWhenInvoiceWithInvalidSaleId() {
     final FiscalPuntosVentaDto puntoVentaDummy =
         FiscalPuntosVentaDto.builder().nroPuntoVenta(1).build();
     when(comprobantesService.find(1L)).thenReturn(null);
@@ -149,7 +155,7 @@ class InvoiceControllerImplTest {
   }
 
   @Test
-  public void shouldThrowPointOfSaleNotFoundWhenInvoiceWithInvalidPointOfSale() {
+  void shouldThrowPointOfSaleNotFoundWhenInvoiceWithInvalidPointOfSale() {
     when(comprobantesService.find(1L)).thenReturn(ComprobantesDto.builder().id(1L).build());
     when(puntosVentaService.find(1)).thenReturn(null);
 

@@ -35,6 +35,7 @@ public class PaymentPendingSalesControllerImpl implements PaymentPendingSalesCon
   private final PaymentPendingSaleTransformer pendingSaleTransformer;
   private final BancosService bancosService;
   private final NoExtraCostPaymentMethodsService noExtraCostPaymentMethodsService;
+  private final PaginatedResponseBuilder responseBuilder;
 
   @Override
   public PaginatedResponse<PaymentPendingSale> findBySearchFilter(
@@ -46,18 +47,7 @@ public class PaymentPendingSalesControllerImpl implements PaymentPendingSalesCon
       searchFilter.setIdSucursal(securityUtils.getUserDetails().getSucursalId());
     }
 
-    final int count = comprobantesService.countBySearchFilter(searchFilter);
-    final PaginatedResponse<PaymentPendingSale> response =
-        PaginatedResponse.<PaymentPendingSale>builder().totalResults(count).build();
-
-    if (count > 0) {
-      final List<ComprobantesDto> comprobantes =
-          comprobantesService.findBySearchFilter(
-              searchFilter, request.getFirstResult(), request.getMaxResults());
-      response.setData(pendingSaleTransformer.transform(comprobantes));
-    }
-
-    return response;
+    return responseBuilder.build(comprobantesService, request, pendingSaleTransformer);
   }
 
   @Override

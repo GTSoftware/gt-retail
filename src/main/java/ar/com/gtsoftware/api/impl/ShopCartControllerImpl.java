@@ -4,6 +4,7 @@ import ar.com.gtsoftware.api.PromotionCartItem;
 import ar.com.gtsoftware.api.ShopCartController;
 import ar.com.gtsoftware.api.exception.CustomerNotFoundException;
 import ar.com.gtsoftware.api.exception.ProductNotFoundException;
+import ar.com.gtsoftware.api.idempotence.IdempotenceHandler;
 import ar.com.gtsoftware.api.request.sales.AddCartItemRequest;
 import ar.com.gtsoftware.api.request.sales.SaleItem;
 import ar.com.gtsoftware.api.request.sales.SalePayment;
@@ -330,21 +331,15 @@ class ShopCartControllerImpl implements ShopCartController {
   }
 
   private BigDecimal calculateDiscountAmount(PromotionCartItem promotionCartItem) {
-    BigDecimal discountAmount = BigDecimal.ZERO;
-
-    switch (promotionCartItem.getTipoAccion()) {
-      case DESCUENTO_MONTO_FIJO:
-        discountAmount = promotionCartItem.getDescuento();
-        break;
-      case DESCUENTO_PORCENTAJE:
-        discountAmount =
-            promotionCartItem
-                .getLinea()
-                .getSubTotal()
-                .multiply(promotionCartItem.getDescuento().divide(CIEN))
-                .setScale(2, RoundingMode.HALF_UP);
-        break;
-    }
+    BigDecimal discountAmount =
+        switch (promotionCartItem.getTipoAccion()) {
+          case DESCUENTO_MONTO_FIJO -> promotionCartItem.getDescuento();
+          case DESCUENTO_PORCENTAJE -> promotionCartItem
+              .getLinea()
+              .getSubTotal()
+              .multiply(promotionCartItem.getDescuento().divide(CIEN))
+              .setScale(2, RoundingMode.HALF_UP);
+        };
 
     return discountAmount.negate();
   }

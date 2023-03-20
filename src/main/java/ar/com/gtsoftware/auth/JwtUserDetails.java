@@ -1,7 +1,6 @@
 package ar.com.gtsoftware.auth;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -19,7 +18,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Getter
 public class JwtUserDetails implements UserDetails {
 
-  private static final long serialVersionUID = 5155720064139820502L;
+  private static final long serialVersionUID = 5116803780192438148L;
 
   private Long id;
   private String loginName;
@@ -64,12 +63,10 @@ public class JwtUserDetails implements UserDetails {
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    List<SimpleGrantedAuthority> authorities =
-        new ArrayList<SimpleGrantedAuthority>(userRoles.size());
-    for (String role : userRoles) {
-      authorities.add(new SimpleGrantedAuthority(role));
+    if (isEnabled()) {
+      return userRoles.stream().map(SimpleGrantedAuthority::new).toList();
     }
-    return authorities;
+    return List.of();
   }
 
   @Override

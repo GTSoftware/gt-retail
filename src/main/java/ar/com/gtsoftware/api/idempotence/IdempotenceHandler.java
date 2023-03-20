@@ -1,4 +1,4 @@
-package ar.com.gtsoftware.api.impl;
+package ar.com.gtsoftware.api.idempotence;
 
 import ar.com.gtsoftware.api.exception.IdempotenceException;
 import ar.com.gtsoftware.enums.Caches;
@@ -17,8 +17,8 @@ public class IdempotenceHandler {
   private final CacheManager cacheManager;
 
   /**
-   * Will verify if the nonce has been used. Will throw <code>IdempotenceException</code> if it has
-   * been used.
+   * Will verify if the nonce has been used. Will throw {@code IdempotenceException} if it has been
+   * used.
    *
    * @param nonce
    */
@@ -26,7 +26,8 @@ public class IdempotenceHandler {
     final Cache nonceCache = getNonceCache();
     final Optional<String> usedNonce = Optional.ofNullable(nonceCache.get(nonce, String.class));
     if (usedNonce.isPresent()) {
-      throw new IdempotenceException("Evento ya registrado con Id: " + usedNonce.get());
+      throw new IdempotenceException(
+          "Event already registered with ID: %s".formatted(usedNonce.get()));
     }
   }
 

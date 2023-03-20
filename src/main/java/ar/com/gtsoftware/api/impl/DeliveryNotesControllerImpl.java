@@ -194,17 +194,18 @@ public class DeliveryNotesControllerImpl implements DeliveryNotesController {
     searchFilter.addSortField("fechaAlta", false);
 
     final int count = remitoService.countBySearchFilter(searchFilter);
-    final PaginatedResponse<DeliveryNoteSearchResult> response =
-        PaginatedResponse.<DeliveryNoteSearchResult>builder().totalResults(count).build();
 
     if (count > 0) {
       final List<RemitoDto> remitos =
           remitoService.findBySearchFilter(
               searchFilter, searchRequest.getFirstResult(), searchRequest.getMaxResults());
-      response.setData(deliveryNoteSearchResultTransformer.transformDeliveryNotes(remitos));
+      return PaginatedResponse.<DeliveryNoteSearchResult>builder()
+          .totalResults(count)
+          .data(deliveryNoteSearchResultTransformer.transformDeliveryNotes(remitos))
+          .build();
     }
 
-    return response;
+    return PaginatedResponse.<DeliveryNoteSearchResult>builder().totalResults(0).build();
   }
 
   @Override

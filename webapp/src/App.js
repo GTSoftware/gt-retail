@@ -34,6 +34,7 @@ import { ProductsInventory } from "./components/products/ProductsInventory"
 import { ProductDetails } from "./components/products/ProductDetails"
 import { CustomersInventory } from "./components/customers/CustomersInventory"
 import { CustomerDetails } from "./components/customers/CustomerDetails"
+import { SearchSupplierInvoices } from "./components/suppliers/SearchSupplierInvoices"
 
 const ProtectedRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -231,6 +232,36 @@ class App extends Component {
     }
   }
 
+  getSuppliersMenuItem = () => {
+    return {
+      label: "Proveedores",
+      icon: "fa fa-fw fa-truck",
+      items: [
+        {
+          label: "Mayor de proveedores",
+          icon: "fa fa-fw fa-truck",
+          command: () => {
+            window.location = "#/suppliers"
+          },
+        },
+        {
+          label: "Comprobantes",
+          icon: "fa fa-fw fa-list",
+          command: () => {
+            window.location = "#/suppliers/invoices"
+          },
+        },
+        {
+          label: "Nuevo Comprobante",
+          icon: "fa fa-fw fa-plus",
+          command: () => {
+            window.location = "#/suppliers/invoice"
+          },
+        },
+      ],
+    }
+  }
+
   getReportsMenuItem = () => {
     return {
       label: "Reportes",
@@ -355,6 +386,10 @@ class App extends Component {
             <ProtectedRoute path="/product-history" component={ProductHistory} />
             <ProtectedRoute path="/delivery-notes" component={SearchDeliveryNotes} />
             <ProtectedRoute path="/sales" component={SearchSales} />
+            <ProtectedRoute
+              path="/suppliers/invoices"
+              component={SearchSupplierInvoices}
+            />
             <ProtectedRoute exact path="/sale/:saleId" component={ViewSale} />
             <ProtectedRoute path="/sales-product" component={SalesByProductReport} />
             <ProtectedRoute
@@ -413,6 +448,7 @@ class App extends Component {
         .concat(this.getProductsMenuItem())
         .concat(this.getReportsMenuItem())
         .concat(this.getFiscalMenuItem())
+        .concat(this.getSuppliersMenuItem())
     }
 
     if (adminUser || cashierUser) {

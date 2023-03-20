@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { DashboardService } from "../../service/DashboardService"
 import LoginService from "../../service/LoginService"
 import { Chart } from "primereact/chart"
@@ -6,65 +6,38 @@ import { DataTable } from "primereact/datatable"
 import { Column } from "primereact/column"
 import { Button } from "primereact/button"
 
-export class GTDashboard extends Component {
-  constructor(props, context) {
-    super(props, context)
+export const GTDashboard = () => {
+  const [loadingSalesQuantity, setLoadingSalesQuantity] = useState(true)
+  const [salesQuantity, setSalesQuantity] = useState(null)
+  const [loadingNewCustomersQuantity, setLoadingNewCustomersQuantity] =
+    useState(true)
+  const [newCustomers, setNewCustomers] = useState(null)
+  const [loadingYearSalesReport, setLoadingYearSalesReport] = useState(true)
+  const [yearSalesReportData, setYearSalesReportData] = useState(null)
+  const [loadingStockBreakReport, setLoadingStockBreakReport] = useState(true)
+  const [productsWithBreaks, setProductsWithBreaks] = useState([])
+  const isUserAdmin = LoginService.hasUserRole("ADMINISTRADORES")
+  const dashboardService = new DashboardService()
+  const stockBreakTable = useRef(null)
 
-    this.state = {
-      loadingSalesQuantity: true,
-      loadingNewCustomersQuantity: true,
-      loadingYearSalesReport: true,
-      loadingStockBreakReport: true,
-      yearSalesReportData: null,
-    }
-    this.isUserAdmin = LoginService.hasUserRole("ADMINISTRADORES")
-    this.dashboardService = new DashboardService()
-  }
-
-  componentDidMount() {
-    const {
-      loadingSalesQuantity,
-      loadingNewCustomersQuantity,
-      loadingYearSalesReport,
-      loadingStockBreakReport,
-    } = this.state
-
-    if (loadingSalesQuantity) {
-      this.dashboardService.getSalesQuantity(this.handleSalesQuantity)
-    }
-    if (loadingNewCustomersQuantity) {
-      this.dashboardService.getNewCustomersQuantity(this.handleNewCustomersQuantity)
-    }
-    if (this.isUserAdmin && loadingYearSalesReport) {
-      this.dashboardService.getYearSalesReport(this.handleYearSalesReport)
-    }
-    if (this.isUserAdmin && loadingStockBreakReport) {
-      this.dashboardService.getStockBreakReport(this.handleStockBreakReport)
+  const loadDashboard = () => {
+    dashboardService.getSalesQuantity(handleSalesQuantity)
+    dashboardService.getNewCustomersQuantity(handleNewCustomersQuantity)
+    if (isUserAdmin) {
+      dashboardService.getYearSalesReport(handleYearSalesReport)
+      dashboardService.getStockBreakReport(handleStockBreakReport)
     }
   }
 
-  render() {
-    return (
-      <div className="p-grid p-fluid dashboard">
-        {this.renderSalesQuantitySection()}
-        {this.renderNewCustomersSection()}
+  useEffect(loadDashboard, [])
 
-        {this.renderYearSalesReportSection()}
-        {this.renderStockBreakReport()}
-      </div>
-    )
+  const handleSalesQuantity = (salesQuantity) => {
+    setLoadingSalesQuantity(false)
+    setSalesQuantity(salesQuantity)
   }
 
-  handleSalesQuantity = (salesQuantity) => {
-    this.setState({
-      loadingSalesQuantity: false,
-      salesQuantity: salesQuantity,
-    })
-  }
-
-  renderSalesQuantitySection = () => {
-    const { salesQuantity, loadingSalesQuantity } = this.state
-    let salesQuantitySection = this.getPlaceholder()
+  const renderSalesQuantitySection = () => {
+    let salesQuantitySection = getPlaceholder()
 
     if (!loadingSalesQuantity) {
       salesQuantitySection = salesQuantity
@@ -81,9 +54,8 @@ export class GTDashboard extends Component {
     )
   }
 
-  renderNewCustomersSection = () => {
-    const { newCustomers, loadingNewCustomersQuantity } = this.state
-    let customersQuantity = this.getPlaceholder()
+  const renderNewCustomersSection = () => {
+    let customersQuantity = getPlaceholder()
 
     if (!loadingNewCustomersQuantity) {
       customersQuantity = newCustomers
@@ -100,9 +72,8 @@ export class GTDashboard extends Component {
     )
   }
 
-  renderStockBreakReport = () => {
+  const renderStockBreakReport = () => {
     let reportSection = null
-    const { loadingStockBreakReport, productsWithBreaks } = this.state
     const header = (
       <div style={{ textAlign: "left" }}>
         <Button
@@ -110,12 +81,12 @@ export class GTDashboard extends Component {
           icon="fa fa-fw fa-download"
           iconPos="left"
           label="CSV"
-          onClick={this.exportStockBreak}
+          onClick={exportStockBreak}
         />
       </div>
     )
 
-    if (this.isUserAdmin) {
+    if (isUserAdmin) {
       reportSection = (
         <div className="p-col-12 p-lg-6">
           <div className="card">
@@ -129,9 +100,7 @@ export class GTDashboard extends Component {
               paginator={true}
               header={header}
               emptyMessage={"Genial! No hay productos sin stock éste mes."}
-              ref={(el) => {
-                this.stockBreakTable = el
-              }}
+              ref={stockBreakTable}
             >
               <Column field="productCode" header="Código" sortable={true} />
               <Column
@@ -152,16 +121,15 @@ export class GTDashboard extends Component {
     return reportSection
   }
 
-  renderYearSalesReportSection = () => {
+  const renderYearSalesReportSection = () => {
     let reportSection = null
-    const { loadingYearSalesReport, yearSalesReportData } = this.state
 
-    if (this.isUserAdmin) {
+    if (isUserAdmin) {
       reportSection = (
         <div className="p-col-12 p-lg-6">
           <div className="card">
             {loadingYearSalesReport ? (
-              this.getPlaceholder()
+              getPlaceholder()
             ) : (
               <Chart type="line" data={yearSalesReportData} />
             )}
@@ -173,22 +141,20 @@ export class GTDashboard extends Component {
     return reportSection
   }
 
-  exportStockBreak = () => {
-    this.stockBreakTable.exportCSV()
+  const exportStockBreak = () => {
+    stockBreakTable.current.exportCSV({ selectionOnly: false })
   }
 
-  handleNewCustomersQuantity = (newCustomers) => {
-    this.setState({
-      loadingNewCustomersQuantity: false,
-      newCustomers: newCustomers,
-    })
+  const handleNewCustomersQuantity = (newCustomers) => {
+    setLoadingNewCustomersQuantity(false)
+    setNewCustomers(newCustomers)
   }
 
-  getPlaceholder = () => {
+  const getPlaceholder = () => {
     return <span className="fa fa-spinner fa-spin" />
   }
 
-  handleYearSalesReport = (yearSales) => {
+  const handleYearSalesReport = (yearSales) => {
     let monthlySalesLineData = {
       labels: yearSales.map((period) => {
         return period.period
@@ -205,16 +171,22 @@ export class GTDashboard extends Component {
       ],
     }
 
-    this.setState({
-      loadingYearSalesReport: false,
-      yearSalesReportData: monthlySalesLineData,
-    })
+    setLoadingYearSalesReport(false)
+    setYearSalesReportData(monthlySalesLineData)
   }
 
-  handleStockBreakReport = (productsWithBreaks) => {
-    this.setState({
-      loadingStockBreakReport: false,
-      productsWithBreaks: productsWithBreaks,
-    })
+  const handleStockBreakReport = (productsWithBreaks) => {
+    setLoadingStockBreakReport(false)
+    setProductsWithBreaks(productsWithBreaks)
   }
+
+  return (
+    <div className="p-grid p-fluid dashboard">
+      {renderSalesQuantitySection()}
+      {renderNewCustomersSection()}
+
+      {renderYearSalesReportSection()}
+      {renderStockBreakReport()}
+    </div>
+  )
 }

@@ -1,19 +1,19 @@
 import { get } from "../utils/HTTPService"
 
 export class DashboardService {
-  getSalesQuantity(successCallback) {
+  async getSalesQuantity(successCallback) {
     get(`/dashboard/sales-quantity`, successCallback)
   }
 
-  getNewCustomersQuantity(successCallback) {
+  async getNewCustomersQuantity(successCallback) {
     get(`/dashboard/new-customers`, successCallback)
   }
 
-  getYearSalesReport(successCallback) {
+  async getYearSalesReport(successCallback) {
     get(`/dashboard/monthly-sales`, successCallback)
   }
 
-  getStockBreakReport(successCallback) {
+  async getStockBreakReport(successCallback) {
     get(`/dashboard/stock-break`, successCallback)
   }
 }

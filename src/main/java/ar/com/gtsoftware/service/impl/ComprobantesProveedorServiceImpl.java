@@ -33,6 +33,7 @@ import ar.com.gtsoftware.service.BaseEntityService;
 import ar.com.gtsoftware.service.ComprobantesProveedorService;
 import ar.com.gtsoftware.service.exceptions.ServiceException;
 import java.math.BigDecimal;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -80,7 +81,7 @@ public class ComprobantesProveedorServiceImpl
             .build();
     FiscalTiposComprobante tipoCompFiscal = tiposComprobanteFacade.findFirstBySearchFilter(ftcsf);
 
-    if (tipoCompFiscal == null) {
+    if (Objects.isNull(tipoCompFiscal)) {
       throw new ServiceException("Este tipo de comprobante no puede ser fiscalizado");
     }
     ProveedoresComprobantes comprobante =

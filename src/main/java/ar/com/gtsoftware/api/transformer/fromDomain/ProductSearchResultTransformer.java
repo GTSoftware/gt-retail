@@ -1,8 +1,8 @@
 package ar.com.gtsoftware.api.transformer.fromDomain;
 
 import ar.com.gtsoftware.api.response.ProductSearchResult;
+import ar.com.gtsoftware.api.transformer.Transformer;
 import ar.com.gtsoftware.dto.domain.ProductosDto;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
@@ -10,26 +10,16 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class ProductSearchResultTransformer {
+public class ProductSearchResultTransformer
+    implements Transformer<ProductosDto, ProductSearchResult> {
 
   private final BrandsTransformer brandsTransformer;
   private final CategoriesTransformer categoriesTransformer;
   private final SupplyTypesTransformer supplyTypesTransformer;
   private final SubCategoriesTransformer subCategoriesTransformer;
 
-  public List<ProductSearchResult> transformProducts(List<ProductosDto> productos) {
-    Objects.requireNonNull(productos);
-
-    List<ProductSearchResult> productSearchResults = new LinkedList<>();
-
-    for (ProductosDto dto : productos) {
-      productSearchResults.add(transformProduct(dto));
-    }
-
-    return productSearchResults;
-  }
-
-  public ProductSearchResult transformProduct(ProductosDto dto) {
+  @Override
+  public ProductSearchResult transform(ProductosDto dto) {
     Objects.requireNonNull(dto);
 
     return ProductSearchResult.builder()
@@ -51,5 +41,12 @@ public class ProductSearchResultTransformer {
         .costoFinal(dto.getCostoFinal())
         .costoAdquisicion(dto.getCostoAdquisicionNeto())
         .build();
+  }
+
+  @Override
+  public List<ProductSearchResult> transform(List<ProductosDto> from) {
+    Objects.requireNonNull(from);
+
+    return from.stream().map(this::transform).toList();
   }
 }

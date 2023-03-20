@@ -78,7 +78,7 @@ class ProductSearchResultTransformerTest {
 
   @Test
   void shouldTransformProduct() {
-    final ProductSearchResult productSearchResult = transformer.transformProduct(productoDto);
+    final ProductSearchResult productSearchResult = transformer.transform(productoDto);
 
     assertThat(productSearchResult).isNotNull();
     productSearchResultAssertions(productSearchResult);
@@ -89,7 +89,7 @@ class ProductSearchResultTransformerTest {
   @Test
   void shouldTransformProducts() {
     final List<ProductSearchResult> productSearchResults =
-        transformer.transformProducts(List.of(productoDto));
+        transformer.transform(List.of(productoDto));
 
     assertThat(productSearchResults).isNotEmpty();
     assertThat(productSearchResults).hasSize(1);

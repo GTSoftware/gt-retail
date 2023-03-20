@@ -4,7 +4,6 @@ import ar.com.gtsoftware.api.request.SaleSearchResult;
 import ar.com.gtsoftware.api.transformer.Transformer;
 import ar.com.gtsoftware.dto.domain.ComprobantesDto;
 import ar.com.gtsoftware.dto.domain.FiscalLibroIvaVentasDto;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import org.springframework.stereotype.Component;
@@ -14,11 +13,7 @@ public class SaleSearchResultTransformer implements Transformer<ComprobantesDto,
 
   @Override
   public List<SaleSearchResult> transform(List<ComprobantesDto> comprobantesDtos) {
-    List<SaleSearchResult> results = new ArrayList<>(comprobantesDtos.size());
-    for (ComprobantesDto comprobantesDto : comprobantesDtos) {
-      results.add(transform(comprobantesDto));
-    }
-    return results;
+    return comprobantesDtos.stream().map(this::transform).toList();
   }
 
   @Override
