@@ -17,7 +17,7 @@
 package ar.com.gtsoftware.dto.domain;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.*;
 
@@ -36,7 +36,7 @@ public class FiscalLibroIvaComprasDto {
   private static final long serialVersionUID = 1L;
 
   @EqualsAndHashCode.Include private Long id;
-  private Date fechaFactura;
+  private LocalDateTime fechaFactura;
   private String documento;
   private String letraFactura;
   private String puntoVentaFactura;
@@ -52,7 +52,7 @@ public class FiscalLibroIvaComprasDto {
   private FiscalPeriodosFiscalesDto idPeriodoFiscal;
 
   private Long cae;
-  private Date fechaVencimientoCae;
+  private LocalDateTime fechaVencimientoCae;
 
   private BigDecimal importeNetoNoGravado;
   private BigDecimal importeExento;

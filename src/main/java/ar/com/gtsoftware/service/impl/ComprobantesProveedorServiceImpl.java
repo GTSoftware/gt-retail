@@ -18,12 +18,20 @@
 package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.dao.ComprobantesProveedorFacade;
+import ar.com.gtsoftware.dao.FiscalAlicuotasIvaFacade;
 import ar.com.gtsoftware.dao.FiscalLibroIvaComprasFacade;
+import ar.com.gtsoftware.dao.FiscalPeriodosFiscalesFacade;
 import ar.com.gtsoftware.dao.FiscalTiposComprobanteFacade;
+import ar.com.gtsoftware.dao.NegocioTiposComprobanteFacade;
+import ar.com.gtsoftware.dao.PersonasFacade;
 import ar.com.gtsoftware.dto.domain.ProveedoresComprobantesDto;
+import ar.com.gtsoftware.entity.FiscalAlicuotasIva;
 import ar.com.gtsoftware.entity.FiscalLibroIvaCompras;
 import ar.com.gtsoftware.entity.FiscalLibroIvaComprasLineas;
+import ar.com.gtsoftware.entity.FiscalPeriodosFiscales;
 import ar.com.gtsoftware.entity.FiscalTiposComprobante;
+import ar.com.gtsoftware.entity.NegocioTiposComprobante;
+import ar.com.gtsoftware.entity.Personas;
 import ar.com.gtsoftware.entity.ProveedoresComprobantes;
 import ar.com.gtsoftware.mappers.ProveedoresComprobantesMapper;
 import ar.com.gtsoftware.mappers.helper.CycleAvoidingMappingContext;
@@ -33,9 +41,8 @@ import ar.com.gtsoftware.service.BaseEntityService;
 import ar.com.gtsoftware.service.ComprobantesProveedorService;
 import ar.com.gtsoftware.service.exceptions.ServiceException;
 import java.math.BigDecimal;
-import java.util.Objects;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -49,6 +56,10 @@ public class ComprobantesProveedorServiceImpl
   private final ComprobantesProveedorFacade facade;
   private final FiscalTiposComprobanteFacade tiposComprobanteFacade;
   private final FiscalLibroIvaComprasFacade ivaComprasFacade;
+  private final FiscalPeriodosFiscalesFacade periodosFiscalesFacade;
+  private final FiscalAlicuotasIvaFacade alicuotasIvaFacade;
+  private final PersonasFacade personasFacade;
+  private final NegocioTiposComprobanteFacade negocioTiposComprobanteFacade;
 
   private final ProveedoresComprobantesMapper mapper;
 
@@ -65,74 +76,77 @@ public class ComprobantesProveedorServiceImpl
   @Override
   public ProveedoresComprobantesDto guardarYFiscalizar(ProveedoresComprobantesDto comprobanteDto)
       throws ServiceException {
-    // TODO hacer las validaciones con annotations
 
-    if (CollectionUtils.isEmpty(
-        comprobanteDto.getIdRegistro().getFiscalLibroIvaComprasLineasList())) {
-      throw new ServiceException("Falta agregar aglún alicuota al comprobante");
-    }
-    if (comprobanteDto.getIdRegistro().getIdPeriodoFiscal() == null) {
-      throw new ServiceException("Se debe establacer un perìodo fiscal");
-    }
     FiscalTiposComprobanteSearchFilter ftcsf =
         FiscalTiposComprobanteSearchFilter.builder()
             .letra(comprobanteDto.getLetra())
             .idTipoComprobante(comprobanteDto.getTipoComprobante().getId())
             .build();
-    FiscalTiposComprobante tipoCompFiscal = tiposComprobanteFacade.findFirstBySearchFilter(ftcsf);
+    FiscalTiposComprobante tipoCompFiscal =
+        Optional.ofNullable(tiposComprobanteFacade.findFirstBySearchFilter(ftcsf))
+            .orElseThrow(
+                () -> new ServiceException("Este tipo de comprobante no puede ser fiscalizado"));
 
-    if (Objects.isNull(tipoCompFiscal)) {
-      throw new ServiceException("Este tipo de comprobante no puede ser fiscalizado");
-    }
+    FiscalPeriodosFiscales periodoFiscal =
+        Optional.ofNullable(
+                periodosFiscalesFacade.find(comprobanteDto.getIdRegistro().getIdPeriodoFiscal()))
+            .orElseThrow(() -> new ServiceException("El periodo fiscal no existe"));
+
+    Personas proveedor =
+        Optional.ofNullable(personasFacade.find(comprobanteDto.getIdProveedor().getId()))
+            .orElseThrow(() -> new ServiceException("El proveedor no existe"));
+
+    NegocioTiposComprobante negocioTiposComprobante =
+        Optional.ofNullable(
+                negocioTiposComprobanteFacade.find(comprobanteDto.getTipoComprobante().getId()))
+            .orElseThrow(() -> new ServiceException("El tipo de comprobante no existe"));
+
     ProveedoresComprobantes comprobante =
         mapper.dtoToEntity(comprobanteDto, new CycleAvoidingMappingContext());
 
+    comprobante.setIdProveedor(proveedor);
+    comprobante.setTipoComprobante(negocioTiposComprobante);
+
     FiscalLibroIvaCompras registro = comprobante.getIdRegistro();
+    registro.setCodigoTipoComprobante(tipoCompFiscal);
+    registro.setIdPeriodoFiscal(periodoFiscal);
     registro.setFechaFactura(comprobante.getFechaComprobante());
     registro.setDocumento(comprobante.getIdProveedor().getDocumento());
     registro.setLetraFactura(comprobante.getLetra());
-    registro.setTotalFactura(comprobante.getTotal());
+
     registro.setIdPersona(comprobante.getIdProveedor());
     registro.setIdResponsabilidadIva(comprobante.getIdProveedor().getIdResponsabilidadIva());
     registro.setPuntoVentaFactura(StringUtils.leftPad(registro.getPuntoVentaFactura(), 4, "0"));
     registro.setNumeroFactura(StringUtils.leftPad(registro.getNumeroFactura(), 8, "0"));
 
-    BigDecimal signo = comprobante.getTipoComprobante().getSigno();
+    BigDecimal signo = negocioTiposComprobante.getSigno();
     registro.setImportePercepcionIva(registro.getImportePercepcionIva().multiply(signo));
     registro.setImportePercepcionIngresosBrutos(
         registro.getImportePercepcionIngresosBrutos().multiply(signo));
 
     calcularTotalesLibro(registro, signo);
+    comprobante.setTotal(registro.getTotalFactura().abs());
+    comprobante.setTotalConSigno(registro.getTotalFactura());
 
-    registro.setCodigoTipoComprobante(tipoCompFiscal);
     ivaComprasFacade.createOrEdit(registro);
     ProveedoresComprobantes compEditado = facade.createOrEdit(comprobante);
 
     return mapper.entityToDto(compEditado, new CycleAvoidingMappingContext());
   }
 
-  @Override
-  public void eliminarComprobante(ProveedoresComprobantesDto comprobante) throws ServiceException {
-    boolean shouldDeleteFiscalRecord = false;
-    ProveedoresComprobantes comprobanteEntity = facade.find(comprobante.getId());
-    if (comprobanteEntity.getIdRegistro() != null) {
-      if (comprobanteEntity.getIdRegistro().getIdPeriodoFiscal().isPeriodoCerrado()) {
-        throw new ServiceException("No se puede eliminar un comprobante de un periodo cerrado");
-      }
-      shouldDeleteFiscalRecord = true;
-    }
-    facade.remove(comprobanteEntity);
-    if (shouldDeleteFiscalRecord) {
-      ivaComprasFacade.remove(comprobanteEntity.getIdRegistro());
-    }
-  }
-
-  private void calcularTotalesLibro(FiscalLibroIvaCompras registro, BigDecimal signo) {
+  private void calcularTotalesLibro(FiscalLibroIvaCompras registro, BigDecimal signo)
+      throws ServiceException {
     // TODO ver el tema de los exentos
     BigDecimal totalIVA = BigDecimal.ZERO;
     BigDecimal totalNG = BigDecimal.ZERO;
     BigDecimal totalNoGravado = BigDecimal.ZERO;
     for (FiscalLibroIvaComprasLineas linea : registro.getFiscalLibroIvaComprasLineasList()) {
+      final FiscalAlicuotasIva alicuotasIva =
+          Optional.ofNullable(alicuotasIvaFacade.find(linea.getIdAlicuotaIva().getId()))
+              .orElseThrow(() -> new ServiceException("Alícuota de IVA inexistente"));
+
+      linea.setIdAlicuotaIva(alicuotasIva);
+
       linea.setNoGravado(linea.getNoGravado().multiply(signo));
       linea.setNetoGravado(linea.getNetoGravado().multiply(signo));
       linea.setImporteIva(linea.getImporteIva().multiply(signo));
@@ -151,5 +165,21 @@ public class ComprobantesProveedorServiceImpl
     totalComprobante = totalComprobante.add(registro.getImportePercepcionIngresosBrutos());
     totalComprobante = totalComprobante.add(registro.getImportePercepcionIva());
     registro.setTotalFactura(totalComprobante);
+  }
+
+  @Override
+  public void eliminarComprobante(ProveedoresComprobantesDto comprobante) throws ServiceException {
+    boolean shouldDeleteFiscalRecord = false;
+    ProveedoresComprobantes comprobanteEntity = facade.find(comprobante.getId());
+    if (comprobanteEntity.getIdRegistro() != null) {
+      if (comprobanteEntity.getIdRegistro().getIdPeriodoFiscal().isPeriodoCerrado()) {
+        throw new ServiceException("No se puede eliminar un comprobante de un periodo cerrado");
+      }
+      shouldDeleteFiscalRecord = true;
+    }
+    facade.remove(comprobanteEntity);
+    if (shouldDeleteFiscalRecord) {
+      ivaComprasFacade.remove(comprobanteEntity.getIdRegistro());
+    }
   }
 }

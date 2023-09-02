@@ -35,6 +35,7 @@ import { ProductDetails } from "./components/products/ProductDetails"
 import { CustomersInventory } from "./components/customers/CustomersInventory"
 import { CustomerDetails } from "./components/customers/CustomerDetails"
 import { SearchSupplierInvoices } from "./components/suppliers/SearchSupplierInvoices"
+import { NewSupplierInvoice } from "./components/suppliers/NewSupplierInvoice"
 
 const ProtectedRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -389,6 +390,10 @@ class App extends Component {
             <ProtectedRoute
               path="/suppliers/invoices"
               component={SearchSupplierInvoices}
+            />
+            <ProtectedRoute
+              path="/suppliers/invoice"
+              component={NewSupplierInvoice}
             />
             <ProtectedRoute exact path="/sale/:saleId" component={ViewSale} />
             <ProtectedRoute path="/sales-product" component={SalesByProductReport} />
