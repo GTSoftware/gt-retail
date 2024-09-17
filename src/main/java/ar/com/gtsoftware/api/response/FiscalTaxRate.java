@@ -13,4 +13,5 @@ public class FiscalTaxRate {
   private BigDecimal rate;
   private String displayName;
   private String taxRateName;
+  private boolean taxable;
 }

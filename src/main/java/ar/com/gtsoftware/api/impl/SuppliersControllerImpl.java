@@ -10,6 +10,7 @@ import ar.com.gtsoftware.api.response.PaginatedResponse;
 import ar.com.gtsoftware.api.response.PaginatedResponseBuilder;
 import ar.com.gtsoftware.api.response.suppliers.SupplierInvoiceResponse;
 import ar.com.gtsoftware.api.transformer.fromDomain.SupplierInvoiceSearchResultTransformer;
+import ar.com.gtsoftware.auth.JwtUserDetails;
 import ar.com.gtsoftware.dto.domain.FiscalAlicuotasIvaDto;
 import ar.com.gtsoftware.dto.domain.FiscalLibroIvaComprasDto;
 import ar.com.gtsoftware.dto.domain.FiscalLibroIvaComprasLineasDto;
@@ -80,14 +81,15 @@ public class SuppliersControllerImpl implements SuppliersController {
 
   private ProveedoresComprobantesDto mapRequest(NewSupplierInvoiceRequest invoiceRequest) {
     ProveedoresComprobantesDto nuevoComprobante = new ProveedoresComprobantesDto();
+    final JwtUserDetails userDetails = securityUtils.getUserDetails();
     nuevoComprobante.setFechaComprobante(invoiceRequest.invoiceDate());
     nuevoComprobante.setAnulada(false);
     nuevoComprobante.setLetra(StringUtils.upperCase(invoiceRequest.letter()));
     nuevoComprobante.setObservaciones(invoiceRequest.notes());
     nuevoComprobante.setIdUsuario(
-        UsuariosDto.builder().id(securityUtils.getUserDetails().getId()).build());
+        UsuariosDto.builder().id(userDetails.getId()).build());
     nuevoComprobante.setIdSucursal(
-        SucursalesDto.builder().id(securityUtils.getUserDetails().getSucursalId()).build());
+        SucursalesDto.builder().id(userDetails.getSucursalId()).build());
     nuevoComprobante.setIdRegistro(mapRegistro(invoiceRequest));
     nuevoComprobante.setIdProveedor(personasService.find(invoiceRequest.supplierId()));
     nuevoComprobante.setTipoComprobante(

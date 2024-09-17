@@ -41,6 +41,7 @@ import ar.com.gtsoftware.service.BaseEntityService;
 import ar.com.gtsoftware.service.ComprobantesProveedorService;
 import ar.com.gtsoftware.service.exceptions.ServiceException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -52,6 +53,8 @@ public class ComprobantesProveedorServiceImpl
     extends BaseEntityService<
         ProveedoresComprobantesDto, ComprobantesProveedorSearchFilter, ProveedoresComprobantes>
     implements ComprobantesProveedorService {
+
+  private static final BigDecimal CIEN = new BigDecimal(100);
 
   private final ComprobantesProveedorFacade facade;
   private final FiscalTiposComprobanteFacade tiposComprobanteFacade;
@@ -91,6 +94,9 @@ public class ComprobantesProveedorServiceImpl
         Optional.ofNullable(
                 periodosFiscalesFacade.find(comprobanteDto.getIdRegistro().getIdPeriodoFiscal()))
             .orElseThrow(() -> new ServiceException("El periodo fiscal no existe"));
+    if (periodoFiscal.isPeriodoCerrado()){
+      throw new ServiceException("El periodo fiscal esta cerrado");
+    }
 
     Personas proveedor =
         Optional.ofNullable(personasFacade.find(comprobanteDto.getIdProveedor().getId()))
