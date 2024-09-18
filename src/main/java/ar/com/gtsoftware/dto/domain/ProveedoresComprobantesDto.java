@@ -61,7 +61,7 @@ public class ProveedoresComprobantesDto {
   private Integer version;
 
   public BigDecimal getTotalConSigno() {
-    if (totalConSigno == null) {
+    if (totalConSigno == null && total != null) {
       totalConSigno = total.multiply(tipoComprobante.getSigno());
     }
     return totalConSigno;

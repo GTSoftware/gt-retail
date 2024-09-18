@@ -11,14 +11,14 @@ import javax.validation.constraints.Size;
 
 public record NewSupplierInvoiceRequest(
     @NotNull LocalDateTime invoiceDate,
-    String notes,
-    @Size(max = 1) @Pattern(regexp = "^[ABCMabcm]+$") String letter,
-    Integer pointOfSale,
-    Integer invoiceNumber,
-    Long invoiceTypeId,
-    Long supplierId,
-    Long fiscalPeriodId,
+    @Size(max = 1024) String notes,
+    @NotNull @NotEmpty @Size(max = 1) @Pattern(regexp = "^[ABCMabcm]+$") String letter,
+    @NotNull Integer pointOfSale,
+    @NotNull Integer invoiceNumber,
+    @NotNull Long invoiceTypeId,
+    @NotNull Long supplierId,
+    @NotNull Long fiscalPeriodId,
     @NotEmpty List<SupplierInvoiceDetail> invoiceDetails,
-    BigDecimal grossIncomePerceptionAmount,
-    BigDecimal taxPerceptionAmount)
+    @NotNull BigDecimal grossIncomePerceptionAmount,
+    @NotNull BigDecimal taxPerceptionAmount)
     implements Serializable {}

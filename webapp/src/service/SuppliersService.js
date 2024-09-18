@@ -25,6 +25,7 @@ function transformInvoiceData(invoiceData) {
   return {
     invoiceDate: serializeDate(invoiceData.invoiceDate),
     notes: invoiceData.notes,
+    letter: invoiceData.letter,
     pointOfSale: invoiceData.pointOfSale,
     invoiceNumber: invoiceData.invoiceNumber,
     invoiceTypeId: invoiceData.invoiceType.id,

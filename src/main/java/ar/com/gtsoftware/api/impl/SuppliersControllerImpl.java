@@ -68,7 +68,7 @@ public class SuppliersControllerImpl implements SuppliersController {
   }
 
   @Override
-  public SupplierInvoiceResponse createInvoice(NewSupplierInvoiceRequest invoiceRequest) {
+  public SupplierInvoiceResponse createInvoice(@Valid NewSupplierInvoiceRequest invoiceRequest) {
     ProveedoresComprobantesDto nuevoComprobante = mapRequest(invoiceRequest);
     try {
       return saleSearchResultTransformer.transform(

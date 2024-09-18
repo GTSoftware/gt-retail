@@ -24,6 +24,8 @@ import ar.com.gtsoftware.dao.FiscalPeriodosFiscalesFacade;
 import ar.com.gtsoftware.dao.FiscalTiposComprobanteFacade;
 import ar.com.gtsoftware.dao.NegocioTiposComprobanteFacade;
 import ar.com.gtsoftware.dao.PersonasFacade;
+import ar.com.gtsoftware.dao.SucursalesFacade;
+import ar.com.gtsoftware.dao.UsuariosFacade;
 import ar.com.gtsoftware.dto.domain.ProveedoresComprobantesDto;
 import ar.com.gtsoftware.entity.FiscalAlicuotasIva;
 import ar.com.gtsoftware.entity.FiscalLibroIvaCompras;
@@ -46,6 +48,7 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -63,6 +66,8 @@ public class ComprobantesProveedorServiceImpl
   private final FiscalAlicuotasIvaFacade alicuotasIvaFacade;
   private final PersonasFacade personasFacade;
   private final NegocioTiposComprobanteFacade negocioTiposComprobanteFacade;
+  private final SucursalesFacade sucursalesFacade;
+  private final UsuariosFacade usuariosFacade;
 
   private final ProveedoresComprobantesMapper mapper;
 
@@ -77,6 +82,7 @@ public class ComprobantesProveedorServiceImpl
   }
 
   @Override
+  @Transactional
   public ProveedoresComprobantesDto guardarYFiscalizar(ProveedoresComprobantesDto comprobanteDto)
       throws ServiceException {
 
@@ -92,7 +98,7 @@ public class ComprobantesProveedorServiceImpl
 
     FiscalPeriodosFiscales periodoFiscal =
         Optional.ofNullable(
-                periodosFiscalesFacade.find(comprobanteDto.getIdRegistro().getIdPeriodoFiscal()))
+                periodosFiscalesFacade.find(comprobanteDto.getIdRegistro().getIdPeriodoFiscal().getId()))
             .orElseThrow(() -> new ServiceException("El periodo fiscal no existe"));
     if (periodoFiscal.isPeriodoCerrado()){
       throw new ServiceException("El periodo fiscal esta cerrado");
@@ -111,6 +117,13 @@ public class ComprobantesProveedorServiceImpl
         mapper.dtoToEntity(comprobanteDto, new CycleAvoidingMappingContext());
 
     comprobante.setIdProveedor(proveedor);
+    comprobante.setIdSucursal(Optional.ofNullable(
+                    sucursalesFacade.find(comprobanteDto.getIdSucursal().getId()))
+            .orElseThrow(() -> new ServiceException("Sucursal inexistente")));
+    comprobante.setIdUsuario(Optional.ofNullable(
+                    usuariosFacade.find(comprobanteDto.getIdUsuario().getId()))
+            .orElseThrow(() -> new ServiceException("Usuario inexistente")));
+
     comprobante.setTipoComprobante(negocioTiposComprobante);
 
     FiscalLibroIvaCompras registro = comprobante.getIdRegistro();
@@ -134,7 +147,8 @@ public class ComprobantesProveedorServiceImpl
     comprobante.setTotal(registro.getTotalFactura().abs());
     comprobante.setTotalConSigno(registro.getTotalFactura());
 
-    ivaComprasFacade.createOrEdit(registro);
+    ivaComprasFacade.create(registro);
+    comprobante.setIdRegistro(registro);
     ProveedoresComprobantes compEditado = facade.createOrEdit(comprobante);
 
     return mapper.entityToDto(compEditado, new CycleAvoidingMappingContext());
