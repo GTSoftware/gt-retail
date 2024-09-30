@@ -86,10 +86,8 @@ public class SuppliersControllerImpl implements SuppliersController {
     nuevoComprobante.setAnulada(false);
     nuevoComprobante.setLetra(StringUtils.upperCase(invoiceRequest.letter()));
     nuevoComprobante.setObservaciones(invoiceRequest.notes());
-    nuevoComprobante.setIdUsuario(
-        UsuariosDto.builder().id(userDetails.getId()).build());
-    nuevoComprobante.setIdSucursal(
-        SucursalesDto.builder().id(userDetails.getSucursalId()).build());
+    nuevoComprobante.setIdUsuario(UsuariosDto.builder().id(userDetails.getId()).build());
+    nuevoComprobante.setIdSucursal(SucursalesDto.builder().id(userDetails.getSucursalId()).build());
     nuevoComprobante.setIdRegistro(mapRegistro(invoiceRequest));
     nuevoComprobante.setIdProveedor(personasService.find(invoiceRequest.supplierId()));
     nuevoComprobante.setTipoComprobante(

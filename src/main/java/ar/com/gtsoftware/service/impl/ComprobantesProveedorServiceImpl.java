@@ -43,7 +43,6 @@ import ar.com.gtsoftware.service.BaseEntityService;
 import ar.com.gtsoftware.service.ComprobantesProveedorService;
 import ar.com.gtsoftware.service.exceptions.ServiceException;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -98,9 +97,10 @@ public class ComprobantesProveedorServiceImpl
 
     FiscalPeriodosFiscales periodoFiscal =
         Optional.ofNullable(
-                periodosFiscalesFacade.find(comprobanteDto.getIdRegistro().getIdPeriodoFiscal().getId()))
+                periodosFiscalesFacade.find(
+                    comprobanteDto.getIdRegistro().getIdPeriodoFiscal().getId()))
             .orElseThrow(() -> new ServiceException("El periodo fiscal no existe"));
-    if (periodoFiscal.isPeriodoCerrado()){
+    if (periodoFiscal.isPeriodoCerrado()) {
       throw new ServiceException("El periodo fiscal esta cerrado");
     }
 
@@ -117,11 +117,11 @@ public class ComprobantesProveedorServiceImpl
         mapper.dtoToEntity(comprobanteDto, new CycleAvoidingMappingContext());
 
     comprobante.setIdProveedor(proveedor);
-    comprobante.setIdSucursal(Optional.ofNullable(
-                    sucursalesFacade.find(comprobanteDto.getIdSucursal().getId()))
+    comprobante.setIdSucursal(
+        Optional.ofNullable(sucursalesFacade.find(comprobanteDto.getIdSucursal().getId()))
             .orElseThrow(() -> new ServiceException("Sucursal inexistente")));
-    comprobante.setIdUsuario(Optional.ofNullable(
-                    usuariosFacade.find(comprobanteDto.getIdUsuario().getId()))
+    comprobante.setIdUsuario(
+        Optional.ofNullable(usuariosFacade.find(comprobanteDto.getIdUsuario().getId()))
             .orElseThrow(() -> new ServiceException("Usuario inexistente")));
 
     comprobante.setTipoComprobante(negocioTiposComprobante);

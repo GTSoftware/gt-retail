@@ -21,7 +21,7 @@ public class FiscalTaxRateTransformer implements Transformer<FiscalAlicuotasIvaD
         .taxRateName(alicuota.getNombreAlicuotaIva())
         .displayName(
             String.format(DISPLAY_NAME_FMT, alicuota.getId(), alicuota.getNombreAlicuotaIva()))
-            .taxable(alicuota.isGravarIva())
+        .taxable(alicuota.isGravarIva())
         .build();
   }
 
