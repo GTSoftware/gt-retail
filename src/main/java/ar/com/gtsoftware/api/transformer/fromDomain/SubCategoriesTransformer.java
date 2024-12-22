@@ -3,9 +3,7 @@ package ar.com.gtsoftware.api.transformer.fromDomain;
 import ar.com.gtsoftware.api.response.ProductSubCategory;
 import ar.com.gtsoftware.api.transformer.Transformer;
 import ar.com.gtsoftware.dto.domain.ProductosSubRubrosDto;
-
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import org.springframework.stereotype.Component;
@@ -37,7 +35,7 @@ public class SubCategoriesTransformer
         .subCategoryId(subRubroDto.getId())
         .displayName(
             String.format(DISPLAY_NAME_FMT, subRubroDto.getId(), subRubroDto.getNombreSubRubro()))
-            .version(subRubroDto.getVersion())
+        .version(subRubroDto.getVersion())
         .build();
   }
 }

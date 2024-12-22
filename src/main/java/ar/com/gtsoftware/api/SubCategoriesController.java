@@ -1,9 +1,7 @@
 package ar.com.gtsoftware.api;
 
-import ar.com.gtsoftware.api.response.ProductCategory;
 import ar.com.gtsoftware.api.response.ProductSubCategory;
 import java.util.List;
-
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,13 +13,16 @@ public interface SubCategoriesController {
   @GetMapping(path = "/products/category/{categoryId}/sub-categories")
   List<ProductSubCategory> getProductSubCategories(@PathVariable Long categoryId);
 
-
-  @PutMapping(path = "/products/categories/{categoryId}/sub-category/{subCategoryId}")
-  ProductSubCategory updateSubCategory(@PathVariable Long categoryId, @PathVariable Long subCategoryId, @RequestBody ProductSubCategory productSubCategory);
+  @PutMapping(path = "/products/category/{categoryId}/sub-category/{subCategoryId}")
+  ProductSubCategory updateSubCategory(
+      @PathVariable Long categoryId,
+      @PathVariable Long subCategoryId,
+      @RequestBody ProductSubCategory productSubCategory);
 
   @PostMapping(path = "/products/category/{categoryId}/sub-categories")
-  ProductSubCategory createSubCategory(@PathVariable Long categoryId,  @RequestBody ProductSubCategory productCategory);
+  ProductSubCategory createSubCategory(
+      @PathVariable Long categoryId, @RequestBody ProductSubCategory productCategory);
 
-  @DeleteMapping(path = "/products/categories/{categoryId}/sub-category/{subCategoryId}")
+  @DeleteMapping(path = "/products/category/{categoryId}/sub-category/{subCategoryId}")
   void deleteSubCategory(@PathVariable Long categoryId, @PathVariable Long subCategoryId);
 }

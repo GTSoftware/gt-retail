@@ -7,15 +7,12 @@ import ar.com.gtsoftware.api.transformer.fromDomain.CategoriesTransformer;
 import ar.com.gtsoftware.dto.domain.ProductosRubrosDto;
 import ar.com.gtsoftware.search.RubrosSearchFilter;
 import ar.com.gtsoftware.service.ProductosRubrosService;
-
-import java.util.List;
-
 import ar.com.gtsoftware.utils.TextUtils;
+import java.util.List;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,11 +22,22 @@ public class CategoriesControllerImpl implements CategoriesController {
   private final CategoriesTransformer transformer;
 
   @Override
+  @Transactional(readOnly = true)
   public List<ProductCategory> getProductCategories() {
     final RubrosSearchFilter sf = new RubrosSearchFilter();
     sf.addSortField("nombreRubro", true);
 
     return transformer.transform(rubrosService.findAllBySearchFilter(sf));
+  }
+
+  @Override
+  @Transactional(readOnly = true)
+  public ProductCategory getProductCategory(Long categoryId) {
+    ProductosRubrosDto rubroDto = rubrosService.find(categoryId);
+    if (rubroDto == null) {
+      throw new CategoryNotFoundException();
+    }
+    return transformer.transform(rubroDto);
   }
 
   @Override
@@ -47,7 +55,6 @@ public class CategoriesControllerImpl implements CategoriesController {
 
     return transformer.transform(updatedRubroDto);
   }
-
 
   @Override
   @Transactional

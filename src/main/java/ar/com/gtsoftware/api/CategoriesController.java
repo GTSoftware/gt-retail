@@ -2,7 +2,6 @@ package ar.com.gtsoftware.api;
 
 import ar.com.gtsoftware.api.response.ProductCategory;
 import java.util.List;
-
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,8 +13,12 @@ public interface CategoriesController {
   @GetMapping(path = "/products/categories")
   List<ProductCategory> getProductCategories();
 
+  @GetMapping(path = "/products/category/{categoryId}")
+  ProductCategory getProductCategory(@PathVariable Long categoryId);
+
   @PutMapping(path = "/products/category/{categoryId}")
-  ProductCategory updateCategory(@PathVariable Long categoryId, @RequestBody ProductCategory productCategory);
+  ProductCategory updateCategory(
+      @PathVariable Long categoryId, @RequestBody ProductCategory productCategory);
 
   @PostMapping(path = "/products/categories")
   ProductCategory createCategory(@RequestBody ProductCategory productCategory);

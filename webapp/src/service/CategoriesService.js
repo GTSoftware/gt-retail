@@ -6,6 +6,10 @@ export class CategoriesService {
     get(`/products/categories`, successCallback)
   }
 
+  getCategory(categoryId, successCallback) {
+    get(`/products/category/${categoryId}`, successCallback)
+  }
+
   createCategory(categoryData, successCallback, errorCallback) {
     post(
       `/products/categories`,
@@ -27,12 +31,40 @@ export class CategoriesService {
   getSubCategories(categoryId, successCallback) {
     get(`/products/category/${categoryId}/sub-categories`, successCallback)
   }
+
+  createSubCategory(categoryId, subCategoryData, successCallback, errorCallback) {
+    post(
+      `/products/category/${categoryId}/sub-categories`,
+      transformSubCategory(subCategoryData),
+      successCallback,
+      errorCallback
+    )
+  }
+
+  updateSubCategory(subCategoryData, successCallback, errorCallback) {
+    put(
+      `/products/category/${subCategoryData.categoryId}/sub-category/${subCategoryData.subCategoryId}`,
+      transformSubCategory(subCategoryData),
+      successCallback,
+      errorCallback
+    )
+  }
 }
 
 const transformCategory = (categoryData) => {
   let result = {}
   result.categoryName = toUpperCaseTrim(categoryData.categoryName)
   result.version = categoryData.version
+
+  return result
+}
+
+const transformSubCategory = (subCategoryData) => {
+  let result = {}
+  result.subCategoryName = toUpperCaseTrim(subCategoryData.subCategoryName)
+  result.version = subCategoryData.version
+  result.categoryId = subCategoryData.categoryId
+  result.subCategoryId = subCategoryData.subCategoryId
 
   return result
 }

@@ -10,20 +10,16 @@ import ar.com.gtsoftware.dto.domain.ProductosSubRubrosDto;
 import ar.com.gtsoftware.search.SubRubroSearchFilter;
 import ar.com.gtsoftware.service.ProductosRubrosService;
 import ar.com.gtsoftware.service.ProductosSubRubrosService;
-
-import java.util.List;
-
 import ar.com.gtsoftware.utils.TextUtils;
+import java.util.List;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-
 @RestController
 @RequiredArgsConstructor
 public class SubCategoriesControllerImpl implements SubCategoriesController {
-
 
   private final ProductosSubRubrosService subRubrosService;
   private final ProductosRubrosService rubrosService;
@@ -32,7 +28,7 @@ public class SubCategoriesControllerImpl implements SubCategoriesController {
   @Override
   public List<ProductSubCategory> getProductSubCategories(Long categoryId) {
     final SubRubroSearchFilter sf =
-            SubRubroSearchFilter.builder().idProductosRubros(categoryId).build();
+        SubRubroSearchFilter.builder().idProductosRubros(categoryId).build();
     sf.addSortField("nombreSubRubro", true);
 
     return subCategoriesTransformer.transform(subRubrosService.findAllBySearchFilter(sf));
@@ -40,14 +36,16 @@ public class SubCategoriesControllerImpl implements SubCategoriesController {
 
   @Override
   @Transactional
-  public ProductSubCategory updateSubCategory(Long categoryId, Long subCategoryId, ProductSubCategory productSubCategory) {
+  public ProductSubCategory updateSubCategory(
+      Long categoryId, Long subCategoryId, ProductSubCategory productSubCategory) {
     ProductosSubRubrosDto existingSubCategory = subRubrosService.find(subCategoryId);
 
     if (existingSubCategory == null) {
       throw new SubCategoryNotFoundException();
     }
 
-    existingSubCategory.setNombreSubRubro(TextUtils.upperCaseTrim(productSubCategory.getSubCategoryName()));
+    existingSubCategory.setNombreSubRubro(
+        TextUtils.upperCaseTrim(productSubCategory.getSubCategoryName()));
     existingSubCategory = subRubrosService.createOrEdit(existingSubCategory);
 
     return subCategoriesTransformer.transform(existingSubCategory);
@@ -55,10 +53,11 @@ public class SubCategoriesControllerImpl implements SubCategoriesController {
 
   @Override
   @Transactional
-  public ProductSubCategory createSubCategory(Long categoryId,@Valid ProductSubCategory productSubCategory) {
+  public ProductSubCategory createSubCategory(
+      Long categoryId, @Valid ProductSubCategory productSubCategory) {
     ProductosRubrosDto productosRubrosDto = rubrosService.find(categoryId);
 
-    if(productosRubrosDto==null) {
+    if (productosRubrosDto == null) {
       throw new CategoryNotFoundException();
     }
 

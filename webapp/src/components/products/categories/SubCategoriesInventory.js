@@ -7,28 +7,31 @@ import { formatDate } from "../../../utils/DateUtils"
 import { Button } from "primereact/button"
 import { LoadingButton } from "../../core/LoadingButton"
 import { AddTaxDialog } from "../../suppliers/AddTaxDialog"
-import { AddEditCategoryDialog } from "./AddEditCategoryDialog"
 import { Toast } from "primereact/toast"
+import { AddEditSubCategoryDialog } from "./AddEditSubCategoryDialog"
 
 const categoriesColumns = [
   // Modify with your category property schema
-  { field: "categoryId", header: "Id" },
-  { field: "categoryName", header: "Nombre" },
+  { field: "subCategoryId", header: "Id" },
+  { field: "subCategoryName", header: "Nombre" },
 ]
 
-export const CategoriesInventory = () => {
+export const SubCategoriesInventory = (props) => {
   const categoriesService = new CategoriesService()
 
   const [loading, setLoading] = useState(false)
-  const [categories, setCategories] = useState([])
-  const [selectedCategory, setSelectedCategory] = useState(null)
-  const [showEditCategory, setShowEditCategory] = useState(false)
+  const categoryId = props.match.params.categoryId
+  const [category, setCategory] = useState({})
+  const [subCategories, setSubCategories] = useState([])
+  const [selectedSubCategory, setSelectedSubCategory] = useState(null)
+  const [showEditCategory, setShowEditSubCategory] = useState(false)
   const [showAddCategory, setShowAddCategory] = useState(false)
   const toast = useRef(null)
 
   useEffect(() => {
-    searchCategories()
-  }, [])
+    categoriesService.getCategory(categoryId, (cate) => setCategory(cate))
+    categoriesService.getSubCategories(categoryId, (cate) => setSubCategories(cate))
+  }, [categoryId])
 
   const getColumnBody = (col, rowData) => {
     const field = _.get(rowData, col.field)
@@ -41,26 +44,18 @@ export const CategoriesInventory = () => {
   }
 
   const getLinkActions = (rowData) => {
-    const { categoryId } = rowData
+    const { subCategoryId } = rowData
 
     return (
       <div>
         <Button
           type="button"
           icon="fa fa-fw fa-edit"
-          tooltip={"Editar rubro"}
+          tooltip={"Editar sub-rubro"}
           onClick={() => {
-            setSelectedCategory(rowData)
-            setShowEditCategory(true)
+            setSelectedSubCategory(rowData)
+            setShowEditSubCategory(true)
           }}
-        />
-        <Button
-          type="button"
-          icon="fa fa-fw fa-briefcase"
-          tooltip={"Ver sub rubros"}
-          onClick={() =>
-            (window.location = `#/sub-categories/${rowData.categoryId}`)
-          }
         />
       </div>
     )
@@ -84,23 +79,11 @@ export const CategoriesInventory = () => {
     return columns
   }
 
-  const searchCategories = () => {
-    if (!loading) {
-      setLoading(true)
-
-      categoriesService.getCategories((categories) => {
-        setCategories(categories)
-      })
-
-      setLoading(false)
-    }
-  }
-
   const renderSearchResults = () => {
     return (
       <DataTable
-        value={categories}
-        dataKey={"categoryId"}
+        value={subCategories}
+        dataKey={"subCategoryId"}
         loading={loading}
         loadingIcon="fa fa-fw fa-spin fa-spinner"
         resizableColumns
@@ -113,22 +96,13 @@ export const CategoriesInventory = () => {
   const renderSearchButton = () => {
     return (
       <div className="p-grid p-fluid">
-        <div className="p-col-6 p-lg-6">
-          <LoadingButton
-            type="button"
-            icon="fa fa-fw fa-filter"
-            loading={loading}
-            label={"Buscar"}
-            onClick={() => searchCategories()}
-          />
-        </div>
-        <div className="p-col-6 p-lg-6">
+        <div className="p-col-12 p-lg-12">
           <Button
             type="button"
             className="p-button-success"
             icon="fa fa-fw fa-plus"
             loading={loading}
-            label={"Crear rubro"}
+            label={"Crear sub-rubro"}
             onClick={() => setShowAddCategory(true)}
           />
         </div>
@@ -136,69 +110,73 @@ export const CategoriesInventory = () => {
     )
   }
 
-  const handleEditCategory = (category) => {
+  const handleEditSubCategory = (category) => {
     setLoading(true)
-    categoriesService.updateCategory(
-      category.categoryId,
+    categoriesService.updateSubCategory(
       category,
       () => {
         toast.current.show({
           severity: "success",
-          summary: `Rubro edidado con éxito: ${category.categoryId}`,
+          summary: `Sub-Rubro edidado con éxito: ${category.subCategoryId}`,
         })
+        categoriesService.getSubCategories(categoryId, (cate) =>
+          setSubCategories(cate)
+        )
         setLoading(false)
-        searchCategories()
       },
       () => {
         toast.current.show({
           severity: "error",
-          summary: `Error al editar el rubro: ${category.categoryId}`,
+          summary: `Error al editar el sub-rubro: ${category.subCategoryId}`,
         })
         setLoading(false)
       }
     )
   }
 
-  const renderShowEditCategoryDialog = () => {
+  const renderShowEditSubCategoryDialog = () => {
     return (
-      <AddEditCategoryDialog
+      <AddEditSubCategoryDialog
         visible={showEditCategory}
-        category={selectedCategory}
+        subCategory={selectedSubCategory}
         modal={true}
-        acceptCallback={handleEditCategory}
-        onHide={() => setShowEditCategory(false)}
+        acceptCallback={handleEditSubCategory}
+        onHide={() => setShowEditSubCategory(false)}
       />
     )
   }
 
-  const handleAddCategory = (category) => {
+  const handleAddSubCategory = (subCategory) => {
     setLoading(true)
-    categoriesService.createCategory(
-      category,
+    categoriesService.createSubCategory(
+      categoryId,
+      subCategory,
       (newCategory) => {
         toast.current.show({
           severity: "success",
-          summary: `Rubro creado con éxito: ${newCategory.categoryId}`,
+          summary: `Sub-Rubro creado con éxito: ${newCategory.subCategoryId}`,
         })
+        categoriesService.getSubCategories(categoryId, (cate) =>
+          setSubCategories(cate)
+        )
         setLoading(false)
-        searchCategories()
       },
       () => {
         toast.current.show({
           severity: "error",
-          summary: `Error al crear el rubro: ${category.categoryId}`,
+          summary: `Error al crear el sub-rubro: ${subCategory.subCategoryId}`,
         })
         setLoading(false)
       }
     )
   }
 
-  const renderShowAddCategoryDialog = () => {
+  const renderShowAddSubCategoryDialog = () => {
     return (
-      <AddEditCategoryDialog
+      <AddEditSubCategoryDialog
         visible={showAddCategory}
         modal={true}
-        acceptCallback={handleAddCategory}
+        acceptCallback={handleAddSubCategory}
         onHide={() => setShowAddCategory(false)}
       />
     )
@@ -207,9 +185,9 @@ export const CategoriesInventory = () => {
   return (
     <div className="card card-w-title">
       <Toast ref={toast} />
-      <h1>Mayor de Rubros</h1>
-      {showEditCategory && renderShowEditCategoryDialog()}
-      {showAddCategory && renderShowAddCategoryDialog()}
+      <h1>Sub-rubros del rubro: {category.displayName}</h1>
+      {showEditCategory && renderShowEditSubCategoryDialog()}
+      {showAddCategory && renderShowAddSubCategoryDialog()}
       {renderSearchButton()}
       {renderSearchResults()}
     </div>

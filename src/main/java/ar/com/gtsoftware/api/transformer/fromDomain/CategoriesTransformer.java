@@ -3,9 +3,7 @@ package ar.com.gtsoftware.api.transformer.fromDomain;
 import ar.com.gtsoftware.api.response.ProductCategory;
 import ar.com.gtsoftware.api.transformer.Transformer;
 import ar.com.gtsoftware.dto.domain.ProductosRubrosDto;
-
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import org.springframework.stereotype.Component;
