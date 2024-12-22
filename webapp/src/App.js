@@ -31,6 +31,7 @@ import { SearchPendingSales } from "./components/payment/SearchPendingSales"
 import Helmet from "react-helmet"
 import { FiscalBooks } from "./components/fiscal/FiscalBooks"
 import { ProductsInventory } from "./components/products/ProductsInventory"
+import { CategoriesInventory } from "./components/products/categories/CategoriesInventory"
 import { ProductDetails } from "./components/products/ProductDetails"
 import { CustomersInventory } from "./components/customers/CustomersInventory"
 import { CustomerDetails } from "./components/customers/CustomerDetails"
@@ -174,6 +175,13 @@ class App extends Component {
           icon: "fa fa-fw fa-boxes",
           command: () => {
             window.location = "#/products"
+          },
+        },
+        {
+          label: "Rubros y sub-rubros",
+          icon: "fa fa-fw fa-briefcase",
+          command: () => {
+            window.location = "#/categories"
           },
         },
         {
@@ -403,6 +411,7 @@ class App extends Component {
             />
             <ProtectedRoute path="/fiscal-books" component={FiscalBooks} />
             <ProtectedRoute path="/products" component={ProductsInventory} />
+            <ProtectedRoute path="/categories" component={CategoriesInventory} />
             <ProtectedRoute path="/product/:productId" component={ProductDetails} />
             <ProtectedRoute path="/product/" component={ProductDetails} />
             <ProtectedRoute path="/customers" component={CustomersInventory} />

@@ -3,6 +3,8 @@ package ar.com.gtsoftware.api.transformer.fromDomain;
 import ar.com.gtsoftware.api.response.ProductSubCategory;
 import ar.com.gtsoftware.api.transformer.Transformer;
 import ar.com.gtsoftware.dto.domain.ProductosSubRubrosDto;
+
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -16,7 +18,7 @@ public class SubCategoriesTransformer
   public List<ProductSubCategory> transform(List<ProductosSubRubrosDto> subRubrosDtos) {
     Objects.requireNonNull(subRubrosDtos);
 
-    List<ProductSubCategory> subCategories = new LinkedList<>();
+    List<ProductSubCategory> subCategories = new ArrayList<>(subRubrosDtos.size());
 
     for (ProductosSubRubrosDto subRubroDto : subRubrosDtos) {
       subCategories.add(transform(subRubroDto));
@@ -35,6 +37,7 @@ public class SubCategoriesTransformer
         .subCategoryId(subRubroDto.getId())
         .displayName(
             String.format(DISPLAY_NAME_FMT, subRubroDto.getId(), subRubroDto.getNombreSubRubro()))
+            .version(subRubroDto.getVersion())
         .build();
   }
 }
