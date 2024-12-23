@@ -1,17 +1,15 @@
 import { get, put } from "../utils/HTTPService"
 
-class UsersService {
+export class UsersService {
   retrieveUsers(cb) {
-    get("users", cb)
+    get("/users", cb)
   }
 
   retrieveUser(userId, cb) {
-    get(`users/${userId}`, cb)
+    get(`/users/${userId}`, cb)
   }
 
-  resetUserPassword(user, cb) {
-    put(`users/${user.id}/reset-password`, cb)
+  resetUserPassword(passwordData, cb) {
+    put(`/users/${user.id}/reset-password`, passwordData, cb)
   }
 }
-
-export default new UsersService()

@@ -1,68 +1,55 @@
-import React, { Component } from "react"
-import classNames from "classnames"
+import React, { useState } from "react"
 import LoginService from "./service/LoginService.js"
-import PropTypes from "prop-types"
+import classNames from "classnames"
 
-export class AppProfile extends Component {
-  static propTypes = {
-    onLogout: PropTypes.func,
-  }
+export const AppProfile = ({ onLogout }) => {
+  const [expanded, setExpanded] = useState(false)
 
-  constructor() {
-    super()
-    this.state = {
-      expanded: false,
+  const handleLogout = () => {
+    LoginService.performLogout()
+    if (onLogout) {
+      onLogout()
     }
-    this.onClick = this.onClick.bind(this)
   }
 
-  onClick(event) {
-    this.setState({ expanded: !this.state.expanded })
+  const handleClick = (event) => {
+    setExpanded((prevExpanded) => !prevExpanded)
     event.preventDefault()
   }
 
-  render() {
-    return (
-      <div className="layout-profile">
-        <div>
-          {/*<img src="assets/layout/images/profile.png" alt=""/>*/}
-          <i className="fa fa-user-circle fa-5x" />
-        </div>
-        <button className="p-link layout-profile-link" onClick={this.onClick}>
-          <span className="username">
-            {LoginService.getUserDetails().completeUserName}
-          </span>
-          <i className="fas fa-fw fa-cog " />
-        </button>
-        <ul
-          className={classNames({ "layout-profile-expanded": this.state.expanded })}
-        >
-          <li>
-            <button className="p-link">
-              <i className="fas fa-fw fa-user" />
-              <span>Cuenta</span>
-            </button>
-          </li>
-          {/*<li>*/}
-          {/*    <button className="p-link"><i className="pi pi-fw pi-inbox"/><span>Notifications</span><span*/}
-          {/*        className="menuitem-badge">2</span></button>*/}
-          {/*</li>*/}
-          <li>
-            <button className="p-link" onClick={this.handleLogOut}>
-              <i className="fas fa-fw fa-power-off" />
-              <span>Salir</span>
-            </button>
-          </li>
-        </ul>
+  return (
+    <div className="layout-profile">
+      <div>
+        {/* <img src="assets/layout/images/profile.png" alt=""/> */}
+        <i className="fa fa-user-circle fa-5x" />
       </div>
-    )
-  }
-
-  handleLogOut = () => {
-    LoginService.performLogout()
-
-    if (this.props.onLogout) {
-      this.props.onLogout()
-    }
-  }
+      <button className="p-link layout-profile-link" onClick={handleClick}>
+        <span className="username">
+          {LoginService.getUserDetails().completeUserName}
+        </span>
+        <i className="fas fa-fw fa-cog " />
+      </button>
+      <ul className={classNames({ "layout-profile-expanded": expanded })}>
+        <li>
+          <button className="p-link">
+            <i className="fas fa-fw fa-user" />
+            <span>Cuenta</span>
+          </button>
+        </li>
+        {/* <li>
+          <button className="p-link">
+            <i className="pi pi-fw pi-inbox"/>
+            <span>Notifications</span>
+            <span className="menuitem-badge">2</span>
+          </button>
+        </li> */}
+        <li>
+          <button className="p-link" onClick={handleLogout}>
+            <i className="fas fa-fw fa-power-off" />
+            <span>Salir</span>
+          </button>
+        </li>
+      </ul>
+    </div>
+  )
 }

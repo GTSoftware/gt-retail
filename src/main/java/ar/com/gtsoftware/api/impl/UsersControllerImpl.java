@@ -11,8 +11,7 @@ import java.util.List;
 import java.util.Objects;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -28,12 +27,13 @@ class UsersControllerImpl implements UsersController {
   }
 
   @Override
-  public UsuariosDto retrieveUser(@PathVariable Long userId) {
+  public UsuariosDto retrieveUser(Long userId) {
     return usuariosService.find(userId);
   }
 
   @Override
-  public ChangePasswordRequest resetPassword(@PathVariable Long userId) {
+  @Transactional
+  public ChangePasswordRequest resetPassword( Long userId) {
     if (ableToChangePassword(userId)) {
       String defaultPassword = usuariosService.resetPassword(userId);
       return new ChangePasswordRequest(defaultPassword);
@@ -43,8 +43,9 @@ class UsersControllerImpl implements UsersController {
   }
 
   @Override
+  @Transactional
   public void changePassword(
-      @PathVariable Long userId, @RequestBody @Valid ChangePasswordRequest newPassword) {
+      Long userId, @Valid ChangePasswordRequest newPassword) {
     if (ableToChangePassword(userId)) {
       usuariosService.changePassword(userId, newPassword.getNewPassword());
     } else {

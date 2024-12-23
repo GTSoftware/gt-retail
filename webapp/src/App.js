@@ -16,7 +16,6 @@ import "./layout/layout.scss"
 import "./App.scss"
 import { Login } from "./components/Login"
 import LoginService from "./service/LoginService.js"
-import { UsersList } from "./components/UsersList"
 import { ShopCart } from "./components/shop-cart/ShopCart"
 import { PageNotFound } from "./components/PageNotFound"
 import { GTDashboard } from "./components/dashboard/GTDashboard"
@@ -389,7 +388,6 @@ class App extends Component {
               )}
             />
             <ProtectedRoute path="/" exact component={GTDashboard} />
-            <ProtectedRoute path="/users" component={UsersList} />
             <ProtectedRoute path="/shop-cart" component={ShopCart} />
             <ProtectedRoute path="/delivery-note" component={ManualDeliveryNote} />
             <ProtectedRoute path="/batch-pricing" component={BatchPricing} />
