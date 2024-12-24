@@ -37,6 +37,21 @@ public class SecurityUtils {
     }
   }
 
+  public void checkUserHasAnyRole(Roles... roleList) {
+    boolean hasAnyRole = false;
+    for (Roles role : roleList) {
+      if (userHasRole(role)) {
+        hasAnyRole = true;
+        break;
+      }
+    }
+    if (!hasAnyRole) {
+      log.error("Unauthorized access to a resource. User does not have any of the given roles");
+
+      throw new AccessDeniedException("User does not have access to this resource");
+    }
+  }
+
   public JwtUserDetails getUserDetails() {
     return (JwtUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
   }
