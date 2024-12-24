@@ -37,6 +37,9 @@ import { CustomerDetails } from "./components/customers/CustomerDetails"
 import { SearchSupplierInvoices } from "./components/suppliers/SearchSupplierInvoices"
 import { NewSupplierInvoice } from "./components/suppliers/NewSupplierInvoice"
 import { SubCategoriesInventory } from "./components/products/categories/SubCategoriesInventory"
+import { MyAccount } from "./components/account/MyAccount"
+import { SuppliersInventory } from "./components/suppliers/SuppliersInventory"
+import { SupplierDetails } from "./components/suppliers/SupplierDetails"
 
 const ProtectedRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -388,12 +391,18 @@ class App extends Component {
               )}
             />
             <ProtectedRoute path="/" exact component={GTDashboard} />
+            <ProtectedRoute path="/my-account" component={MyAccount} />
             <ProtectedRoute path="/shop-cart" component={ShopCart} />
             <ProtectedRoute path="/delivery-note" component={ManualDeliveryNote} />
             <ProtectedRoute path="/batch-pricing" component={BatchPricing} />
             <ProtectedRoute path="/product-history" component={ProductHistory} />
             <ProtectedRoute path="/delivery-notes" component={SearchDeliveryNotes} />
             <ProtectedRoute path="/sales" component={SearchSales} />
+            <ProtectedRoute path="/suppliers" component={SuppliersInventory} />
+            <ProtectedRoute
+              path="/supplier/:supplierId"
+              component={SupplierDetails}
+            />
             <ProtectedRoute
               path="/suppliers/invoices"
               component={SearchSupplierInvoices}

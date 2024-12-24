@@ -18,6 +18,7 @@ import { Toast } from "primereact/toast"
 import { DataTable } from "primereact/datatable"
 import { Column } from "primereact/column"
 import { Button } from "primereact/button"
+import { LocationService } from "../../service/LocationService"
 
 const newCustomerSchema = {
   type: "object",
@@ -92,6 +93,7 @@ export class AddNewCustomerDialog extends Component {
     super(props, context)
 
     this.customersService = new CustomersService()
+    this.locationService = new LocationService()
 
     this.state = {
       formData: {
@@ -136,7 +138,7 @@ export class AddNewCustomerDialog extends Component {
       this.customersService.getResponsabilidadesIva(this.handleResponsabilidadesIva)
     }
     if (countries.length === 0) {
-      this.customersService.getCountries(this.handleCountries)
+      this.locationService.getCountries(this.handleCountries)
     }
   }
 
@@ -617,7 +619,7 @@ export class AddNewCustomerDialog extends Component {
     const { provincia } = this.state.formData
 
     if (query && provincia) {
-      this.customersService.getTowns(provincia.id, query, this.handleTowns)
+      this.locationService.getTowns(provincia.id, query, this.handleTowns)
     }
   }
 
@@ -723,7 +725,7 @@ export class AddNewCustomerDialog extends Component {
 
     newFormData.pais = countries[0]
 
-    this.customersService.getProvinces(newFormData.pais.id, this.handleProvinces)
+    this.locationService.getProvinces(newFormData.pais.id, this.handleProvinces)
 
     this.setState({
       countries: countries,

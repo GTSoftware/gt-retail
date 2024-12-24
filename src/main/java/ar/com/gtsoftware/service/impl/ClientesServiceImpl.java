@@ -24,15 +24,16 @@ import ar.com.gtsoftware.mappers.PersonasMapper;
 import ar.com.gtsoftware.mappers.helper.CycleAvoidingMappingContext;
 import ar.com.gtsoftware.search.PersonasSearchFilter;
 import ar.com.gtsoftware.service.ClientesService;
+import ar.com.gtsoftware.service.ProveedoresService;
+import ar.com.gtsoftware.utils.BusinessDateUtils;
 import ar.com.gtsoftware.validators.ValidadorCUIT;
-import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class ClientesServiceImpl implements ClientesService {
+public class ClientesServiceImpl implements ClientesService, ProveedoresService {
 
   private final PersonasFacade personasFacade;
   private final PersonasTelefonosFacade telefonosFacade;
@@ -42,6 +43,7 @@ public class ClientesServiceImpl implements ClientesService {
   private final FiscalResponsabilidadesIvaFacade fiscalResponsabilidadesIvaFacade;
   private final SucursalesFacade sucursalesFacade;
   private final LegalTiposDocumentoFacade legalTiposDocumentoFacade;
+  private final BusinessDateUtils dateUtils;
 
   @Override
   @Transactional
@@ -54,7 +56,7 @@ public class ClientesServiceImpl implements ClientesService {
     formatDatosCliente(cliente);
     if (cliente.isNew()) {
 
-      cliente.setFechaAlta(LocalDateTime.now());
+      cliente.setFechaAlta(dateUtils.getCurrentDateTime());
       cliente.setActivo(true);
       cliente.setCliente(true);
     }
@@ -135,6 +137,26 @@ public class ClientesServiceImpl implements ClientesService {
     } else if (personasFacade.existePersonaRepetida(cliente)) {
       throw new CustomerValidationException("Ya existe un cliente con ese número de documento!");
     }
+  }
+
+  @Override
+  public PersonasDto guardarProveedor(PersonasDto proveedorDto) {
+    Personas proveedor =
+        personasMapper.dtoToEntity(proveedorDto, new CycleAvoidingMappingContext());
+
+    completeCustomer(proveedor);
+    validarCliente(proveedor);
+    formatDatosCliente(proveedor);
+    if (proveedor.isNew()) {
+
+      proveedor.setFechaAlta(dateUtils.getCurrentDateTime());
+      proveedor.setActivo(true);
+      proveedor.setProveedor(true);
+    }
+    personasFacade.createOrEdit(proveedor);
+
+    return personasMapper.entityToDto(
+        personasFacade.find(proveedor.getId()), new CycleAvoidingMappingContext());
   }
 
   @Override

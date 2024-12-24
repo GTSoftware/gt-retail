@@ -3,11 +3,14 @@ package ar.com.gtsoftware.utils;
 import ar.com.gtsoftware.auth.JwtUserDetails;
 import ar.com.gtsoftware.auth.Roles;
 import java.util.Collection;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 @Component
+@Slf4j
 public class SecurityUtils {
 
   public boolean userHasRole(Roles role) {
@@ -22,6 +25,16 @@ public class SecurityUtils {
       }
     }
     return hasRole;
+  }
+
+  public void checkUserRole(Roles... roleList) {
+    for (Roles role : roleList) {
+      if (!userHasRole(role)) {
+        log.error("Unauthorized access to a resource. Required role: {} is required", role);
+
+        throw new AccessDeniedException("User does not have access to this resource");
+      }
+    }
   }
 
   public JwtUserDetails getUserDetails() {

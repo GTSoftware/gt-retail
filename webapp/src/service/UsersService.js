@@ -9,7 +9,11 @@ export class UsersService {
     get(`/users/${userId}`, cb)
   }
 
-  resetUserPassword(passwordData, cb) {
-    put(`/users/${user.id}/reset-password`, passwordData, cb)
+  resetUserPassword(userId, cb, ec) {
+    put(`/users/${userId}/reset-password`, null, cb, ec)
+  }
+
+  changePassword(userId, newPassword, cb, ec) {
+    put(`/users/${userId}/change-password`, { newPassword }, cb, ec)
   }
 }

@@ -31,7 +31,12 @@ export const AppProfile = ({ onLogout }) => {
       </button>
       <ul className={classNames({ "layout-profile-expanded": expanded })}>
         <li>
-          <button className="p-link">
+          <button
+            className="p-link"
+            onClick={() => {
+              window.location = `#/my-account`
+            }}
+          >
             <i className="fas fa-fw fa-user" />
             <span>Cuenta</span>
           </button>

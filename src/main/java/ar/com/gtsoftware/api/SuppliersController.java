@@ -1,26 +1,32 @@
 package ar.com.gtsoftware.api;
 
-import ar.com.gtsoftware.api.request.PaginatedSearchRequest;
-import ar.com.gtsoftware.api.request.suppliers.NewSupplierInvoiceRequest;
-import ar.com.gtsoftware.api.response.PaginatedResponse;
-import ar.com.gtsoftware.api.response.suppliers.SupplierInvoiceResponse;
-import ar.com.gtsoftware.search.ComprobantesProveedorSearchFilter;
-import javax.validation.Valid;
-import javax.websocket.server.PathParam;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import ar.com.gtsoftware.api.request.CreateOrUpdateCustomerRequest;
+import ar.com.gtsoftware.api.response.CustomerResponse;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 public interface SuppliersController {
 
-  @PostMapping(path = "/supplier-invoices/search")
-  PaginatedResponse<SupplierInvoiceResponse> findInvoicesBySearchFilter(
-      @Valid @RequestBody PaginatedSearchRequest<ComprobantesProveedorSearchFilter> searchRequest);
+  @PostMapping(path = "/suppliers")
+  CustomerResponse addNewSupplier(
+      @RequestBody CreateOrUpdateCustomerRequest createOrUpdateCustomerRequest);
 
-  @DeleteMapping(path = "/supplier-invoices/{invoiceId}")
-  void deleteInvoiceById(@PathParam("invoiceId") Long invoiceId);
+  @GetMapping(path = "/suppliers/supplier")
+  CustomerResponse getSupplier(
+      @RequestParam Long identificationTypeId, @RequestParam Long identificationNumber);
 
-  @PostMapping(path = "/supplier-invoice/")
-  SupplierInvoiceResponse createInvoice(
-      @Valid @RequestBody NewSupplierInvoiceRequest invoiceRequest);
+  @GetMapping(path = "/suppliers/{supplierId}")
+  CustomerResponse getSupplierById(@PathVariable Long supplierId);
+
+  @PatchMapping(path = "/suppliers/{supplierId}")
+  @ResponseStatus(code = HttpStatus.NO_CONTENT)
+  void updateSupplier(
+      @PathVariable Long supplierId,
+      @RequestBody CreateOrUpdateCustomerRequest updateCustomerRequest);
 }

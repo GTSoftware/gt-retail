@@ -60,6 +60,20 @@ const post = (url, data, cb, errorCb) => {
     })
 }
 
+const postV2 = async (url, data) => {
+  try {
+    const response = await axios.post(getUrl(url), data, getRequestHeaders())
+    if (!response) {
+      log.error("No response from server", url)
+      return null
+    } else {
+      return response.data
+    }
+  } catch (error) {
+    throw getErrorData(error)
+  }
+}
+
 const postWithFileDownload = (url, data, cb, errorCb) => {
   const config = getRequestHeaders()
   config["responseType"] = "blob"
@@ -102,6 +116,20 @@ const put = (url, data, cb, errorCb) => {
     })
 }
 
+const putV2 = async (url, data) => {
+  try {
+    const response = await axios.put(getUrl(url), data, getRequestHeaders())
+    if (!response) {
+      log.error("No response from server", url)
+      return null
+    } else {
+      return response.data
+    }
+  } catch (error) {
+    throw getErrorData(error)
+  }
+}
+
 const patch = (url, data, cb, errorCb) => {
   axios
     .patch(getUrl(url), data, getRequestHeaders())
@@ -122,6 +150,20 @@ const patch = (url, data, cb, errorCb) => {
     })
 }
 
+const patchV2 = async (url, data) => {
+  try {
+    const response = await axios.patch(getUrl(url), data, getRequestHeaders())
+    if (!response) {
+      log.error("No response from server", url)
+      return null
+    } else {
+      return response.data
+    }
+  } catch (error) {
+    throw getErrorData(error)
+  }
+}
+
 const get = (url, cb, errorCb) => {
   axios
     .get(getUrl(url), getRequestHeaders())
@@ -140,6 +182,20 @@ const get = (url, cb, errorCb) => {
         errorCb(errorResponseData)
       }
     })
+}
+
+const getV2 = async (url) => {
+  try {
+    const response = await axios.get(getUrl(url), getRequestHeaders())
+    if (!response) {
+      log.error("No response from server", url)
+      return null
+    } else {
+      return response.data
+    }
+  } catch (error) {
+    throw getErrorData(error)
+  }
 }
 
 const getWithFileDownload = (url, cb, errorCb) => {
@@ -164,4 +220,15 @@ const getWithFileDownload = (url, cb, errorCb) => {
     })
 }
 
-export { get, post, put, patch, postWithFileDownload, getWithFileDownload }
+export {
+  get,
+  getV2,
+  post,
+  postV2,
+  put,
+  putV2,
+  patch,
+  patchV2,
+  postWithFileDownload,
+  getWithFileDownload,
+}

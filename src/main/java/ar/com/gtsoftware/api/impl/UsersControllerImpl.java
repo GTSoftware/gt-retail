@@ -33,7 +33,7 @@ class UsersControllerImpl implements UsersController {
 
   @Override
   @Transactional
-  public ChangePasswordRequest resetPassword( Long userId) {
+  public ChangePasswordRequest resetPassword(Long userId) {
     if (ableToChangePassword(userId)) {
       String defaultPassword = usuariosService.resetPassword(userId);
       return new ChangePasswordRequest(defaultPassword);
@@ -44,8 +44,7 @@ class UsersControllerImpl implements UsersController {
 
   @Override
   @Transactional
-  public void changePassword(
-      Long userId, @Valid ChangePasswordRequest newPassword) {
+  public void changePassword(Long userId, @Valid ChangePasswordRequest newPassword) {
     if (ableToChangePassword(userId)) {
       usuariosService.changePassword(userId, newPassword.getNewPassword());
     } else {

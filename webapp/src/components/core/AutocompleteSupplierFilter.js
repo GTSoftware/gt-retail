@@ -21,7 +21,7 @@ export const AutocompleteSupplierFilter = ({
   }
 
   const filterSuppliers = (query) => {
-    service.searchSuppliers(query, (suppliers) => {
+    service.searchSuppliers(query).then((suppliers) => {
       setFilteredSuppliers(suppliers.data)
     })
   }

@@ -37,6 +37,7 @@ export class CustomersService {
     )
   }
 
+  //Legal and unrelated stuff, refactor away
   getLegalStatusTypes(successCallback) {
     get(`/legal/status-types`, successCallback)
   }
@@ -54,19 +55,6 @@ export class CustomersService {
 
   getResponsabilidadesIva(successCallback) {
     get(`/fiscal/responsabilidades-iva`, successCallback)
-  }
-
-  //TODO these location-related methods should be moved to a proper service.
-  getCountries(successCallback) {
-    get(`/locations/countries`, successCallback)
-  }
-
-  getProvinces(countryId, successCallback) {
-    get(`/locations/provinces?countryId=${countryId}`, successCallback)
-  }
-
-  getTowns(provinceId, query, successCallback) {
-    get(`/locations/towns?provinceId=${provinceId}&query=${query}`, successCallback)
   }
 }
 

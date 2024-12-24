@@ -16,6 +16,7 @@ import { Toast } from "primereact/toast"
 import { Checkbox } from "primereact/checkbox"
 import { DataTable } from "primereact/datatable"
 import { Column } from "primereact/column"
+import { SuppliersService } from "../../service/SuppliersService"
 import { LocationService } from "../../service/LocationService"
 
 const newCustomerSchema = {
@@ -83,8 +84,9 @@ const newCustomerSchema = {
   ],
 }
 
-export const CustomerDetails = (props) => {
-  const customersService = new CustomersService()
+export const SupplierDetails = (props) => {
+  const suppliersService = new SuppliersService()
+  const customersService = new CustomersService() //Only for legal stuff, refactor
   const locationService = new LocationService()
 
   const [loading, setLoading] = useState(false)
@@ -120,7 +122,7 @@ export const CustomerDetails = (props) => {
     telefonos: [],
   })
 
-  const [customerId, setCustomerId] = useState(props.match.params.customerId)
+  const [customerId, setCustomerId] = useState(props.match.params.supplierId)
   const [editingCustomer, setEditingCustomer] = useState(null)
 
   const toast = useRef(null)
@@ -134,7 +136,7 @@ export const CustomerDetails = (props) => {
   }, [])
 
   useEffect(() => {
-    customersService.getCustomer(customerId, loadCustomer)
+    suppliersService.getSupplier(customerId).then(loadSupplier)
   }, [customerId])
 
   useEffect(() => {
@@ -168,7 +170,7 @@ export const CustomerDetails = (props) => {
     }
   }, [formData?.provincia])
 
-  const loadCustomer = (customer) => {
+  const loadSupplier = (customer) => {
     setEditingCustomer(customer)
 
     const customerData = {
@@ -288,10 +290,10 @@ export const CustomerDetails = (props) => {
   }
 
   const handleExistingCustomer = (customer) => {
-    if (customer.customerId != customerId) {
+    if (customer.customerId !== customerId) {
       toast.current.show({
         severity: "error",
-        summary: "Ya existe un cliente con estos datos",
+        summary: "Ya existe un proveedor con estos datos",
         detail: `${customer.businessName} ${customer.identification}`,
       })
 
@@ -313,11 +315,10 @@ export const CustomerDetails = (props) => {
         idTipoDocumento: tipoDocumento.id,
         documento: documento,
       }
-      customersService.retrieveCustomer(
-        searchData,
-        handleExistingCustomer,
-        handleNotExistentCustomer
-      )
+      suppliersService
+        .retrieveSupplier(searchData)
+        .then(handleExistingCustomer)
+        .catch(handleNotExistentCustomer)
     } else {
       setSaveDisabled(true)
     }
@@ -334,9 +335,15 @@ export const CustomerDetails = (props) => {
           version: editingCustomer.version,
         },
       }
-      customersService.updateCustomer(customerToEdit, handleSuccess, handleError)
+      suppliersService
+        .updateSupplier(customerToEdit)
+        .then(handleSuccess)
+        .catch(handleError)
     } else {
-      customersService.addNewCustomer(formData, handleSuccess, handleError)
+      suppliersService
+        .addNewSupplier(formData)
+        .then(handleSuccess)
+        .catch(handleError)
     }
   }
 
@@ -345,11 +352,11 @@ export const CustomerDetails = (props) => {
     if (createdCustomer) {
       setCustomerId(createdCustomer.customerId)
     } else {
-      customersService.getCustomer(customerId, loadCustomer)
+      suppliersService.getSupplier(customerId).then(loadSupplier)
     }
     toast.current.show({
       severity: "success",
-      summary: "Cliente guardado con éxito",
+      summary: "Proveedor guardado con éxito",
     })
   }
 
@@ -369,7 +376,7 @@ export const CustomerDetails = (props) => {
 
     toast.current.show({
       severity: "error",
-      summary: "No se pudo guardar el cliente",
+      summary: "No se pudo guardar el proveedor",
       detail: detail,
       sticky: true,
     })
@@ -377,9 +384,9 @@ export const CustomerDetails = (props) => {
 
   const getTitle = () => {
     if (customerId) {
-      return `Edición de cliente: ${customerId}`
+      return `Edición de proveedor: ${customerId}`
     }
-    return "Nuevo cliente"
+    return "Nuevo proveedor"
   }
 
   const getTelefonosTableHeader = () => {
