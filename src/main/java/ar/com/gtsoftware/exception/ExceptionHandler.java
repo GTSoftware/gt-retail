@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -39,6 +40,9 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
   }
 
   private String getErrorCode(Exception ex) {
+    if (ex instanceof AccessDeniedException) {
+      return String.valueOf(HttpStatus.FORBIDDEN.value());
+    }
     String errorCode = ExceptionErrorCode.DEFAULT_ERROR_CODE;
     Class<?> clazz = ex.getClass();
     if (clazz.isAnnotationPresent(ExceptionErrorCode.class)) {
