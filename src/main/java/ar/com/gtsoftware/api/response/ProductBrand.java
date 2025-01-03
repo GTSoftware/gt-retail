@@ -11,4 +11,5 @@ public class ProductBrand {
   private Long brandId;
   private String brandName;
   private String displayName;
+  private Integer version;
 }
