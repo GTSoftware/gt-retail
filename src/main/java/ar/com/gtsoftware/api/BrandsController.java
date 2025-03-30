@@ -19,7 +19,7 @@ public interface BrandsController {
   @PutMapping(path = "/products/brand/{brandId}")
   ProductBrand updateBrand(@PathVariable Long brandId, @RequestBody ProductBrand productBrand);
 
-  @PostMapping(path = "/products/categories")
+  @PostMapping(path = "/products/brands")
   ProductBrand createBrand(@RequestBody ProductBrand productBrand);
 
   @DeleteMapping(path = "/products/brand/{brandId}")

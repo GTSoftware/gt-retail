@@ -284,11 +284,10 @@
 			</subreport>
 		</band>
 		<band height="43">
-			<printWhenExpression><![CDATA[$F{idRegistro}.getLetraFactura().equals("A")]]></printWhenExpression>
 			<subreport>
 				<reportElement x="0" y="0" width="555" height="39" uuid="10711ce8-702b-409f-8b53-d843a6d96eba"/>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{idRegistro}.getFiscalLibroIvaVentasLineasList())]]></dataSourceExpression>
-				<subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{alicuotasSubReport}]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{alicuotasSubReport}]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>

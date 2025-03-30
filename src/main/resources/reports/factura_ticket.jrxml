@@ -259,7 +259,6 @@
 			</subreport>
 		</band>
 		<band height="43" splitType="Stretch">
-			<printWhenExpression><![CDATA[$F{idRegistro}.getLetraFactura().equals("A")]]></printWhenExpression>
 			<subreport>
 				<reportElement x="0" y="0" width="198" height="39" uuid="10711ce8-702b-409f-8b53-d843a6d96eba"/>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{idRegistro}.getFiscalLibroIvaVentasLineasList())]]></dataSourceExpression>
