@@ -127,7 +127,7 @@ function transformSuppliersSearchData(query) {
     firstResult: 0,
     maxResults: 15,
     searchFilter: {
-      txt: query | "%",
+      txt: query,
       activo: true,
       proveedor: true,
     },
