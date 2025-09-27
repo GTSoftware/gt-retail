@@ -34,8 +34,7 @@ public class SupplyTypesTransformer
         .supplyTypeId(tipoProveeduria.getId())
         .supplyTypeName(tipoProveeduria.getNombreTipoProveeduria())
         .displayName(
-            String.format(
-                DISPLAY_NAME_FMT,
+            DISPLAY_NAME_FMT.formatted(
                 tipoProveeduria.getId(),
                 tipoProveeduria.getNombreTipoProveeduria()))
         .build();

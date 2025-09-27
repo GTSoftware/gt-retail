@@ -35,13 +35,11 @@ public class CustomerTransformer {
         .email(personasDto.getEmail())
         .fantasyName(personasDto.getNombreFantasia())
         .identification(
-            String.format(
-                IDENTIFICATION_FORMAT,
+            IDENTIFICATION_FORMAT.formatted(
                 personasDto.getIdTipoDocumento().getNombreTipoDocumento(),
                 personasDto.getDocumento()))
         .address(
-            String.format(
-                ADDRESS_FORMAT,
+            ADDRESS_FORMAT.formatted(
                 personasDto.getCalle(),
                 personasDto.getAltura(),
                 personasDto.getPiso(),

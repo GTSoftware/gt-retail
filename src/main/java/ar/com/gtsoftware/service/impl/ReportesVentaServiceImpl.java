@@ -24,8 +24,8 @@ import ar.com.gtsoftware.service.ReportesVentaService;
 import ar.com.gtsoftware.utils.BusinessDateUtils;
 import java.math.BigInteger;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -38,8 +38,7 @@ public class ReportesVentaServiceImpl implements ReportesVentaService {
 
   @Override
   public VentaPorProductoReport obtenerReporte(ReporteVentasSearchFilter filter) {
-    TypedQuery<BigInteger> qCount =
-        (TypedQuery<BigInteger>) em.createNamedQuery("ReporteVentasQueryCount");
+    TypedQuery<Long> qCount = em.createNamedQuery("ReporteVentasQueryCount", Long.class);
     if (!filter.hasFechasFilter()) {
       setDefaultDates(filter);
     }

@@ -16,6 +16,7 @@
 package ar.com.gtsoftware.search;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
@@ -31,6 +32,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 public abstract class AbstractSearchFilter implements Serializable {
 
+  @Serial
   private static final long serialVersionUID = 1L;
 
   private List<SortField> sortFields;

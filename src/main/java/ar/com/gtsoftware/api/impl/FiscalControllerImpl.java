@@ -14,7 +14,7 @@ import ar.com.gtsoftware.service.FiscalAlicuotasIvaService;
 import ar.com.gtsoftware.service.FiscalPeriodosFiscalesService;
 import ar.com.gtsoftware.service.FiscalResponsabilidadesIvaService;
 import java.util.List;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 

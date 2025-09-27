@@ -19,10 +19,10 @@ import ar.com.gtsoftware.entity.LegalTiposDocumento_;
 import ar.com.gtsoftware.entity.Personas;
 import ar.com.gtsoftware.entity.Personas_;
 import ar.com.gtsoftware.search.PersonasSearchFilter;
-import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 
@@ -53,11 +53,11 @@ public class PersonasFacade extends AbstractFacade<Personas, PersonasSearchFilte
     }
     if (StringUtils.isNotEmpty(psf.getTxt())) {
       String s = psf.getTxt().toUpperCase();
-      Predicate p1 = cb.like(persona.get(Personas_.razonSocial), String.format(LIKE_FORMAT, s));
-      Predicate p2 = cb.like(persona.get(Personas_.apellidos), String.format(LIKE_FORMAT, s));
-      Predicate p3 = cb.like(persona.get(Personas_.nombres), String.format(LIKE_FORMAT, s));
-      Predicate p4 = cb.like(persona.get(Personas_.nombreFantasia), String.format(LIKE_FORMAT, s));
-      Predicate p5 = cb.like(persona.get(Personas_.documento), String.format(LIKE_FORMAT, s));
+      Predicate p1 = cb.like(persona.get(Personas_.razonSocial), LIKE_FORMAT.formatted(s));
+      Predicate p2 = cb.like(persona.get(Personas_.apellidos), LIKE_FORMAT.formatted(s));
+      Predicate p3 = cb.like(persona.get(Personas_.nombres), LIKE_FORMAT.formatted(s));
+      Predicate p4 = cb.like(persona.get(Personas_.nombreFantasia), LIKE_FORMAT.formatted(s));
+      Predicate p5 = cb.like(persona.get(Personas_.documento), LIKE_FORMAT.formatted(s));
 
       if (p == null) {
         p = cb.or(p1, p2, p3, p4, p5);
@@ -67,7 +67,7 @@ public class PersonasFacade extends AbstractFacade<Personas, PersonasSearchFilte
     }
     if (psf.getDocumento() != null && psf.getIdTipoDocumento() != null) {
       Predicate p1 =
-          cb.like(persona.get(Personas_.documento), String.format(LIKE_FORMAT, psf.getDocumento()));
+          cb.like(persona.get(Personas_.documento), LIKE_FORMAT.formatted(psf.getDocumento()));
       p = appendAndPredicate(cb, p, p1);
       p1 =
           cb.equal(
@@ -106,8 +106,8 @@ public class PersonasFacade extends AbstractFacade<Personas, PersonasSearchFilte
    */
   public boolean existePersonaRepetida(Personas persona) {
     CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
-    javax.persistence.criteria.CriteriaQuery cq = cb.createQuery();
-    javax.persistence.criteria.Root<Personas> rt = cq.from(Personas.class);
+    jakarta.persistence.criteria.CriteriaQuery cq = cb.createQuery();
+    jakarta.persistence.criteria.Root<Personas> rt = cq.from(Personas.class);
     cq.select(getEntityManager().getCriteriaBuilder().count(rt));
     Predicate p = cb.notEqual(rt.get(Personas_.id), persona.getId());
     p =
@@ -115,7 +115,7 @@ public class PersonasFacade extends AbstractFacade<Personas, PersonasSearchFilte
             cb, p, cb.equal(rt.get(Personas_.idTipoDocumento), persona.getIdTipoDocumento()));
     p = appendAndPredicate(cb, p, cb.equal(rt.get(Personas_.documento), persona.getDocumento()));
     cq.where(p);
-    javax.persistence.Query q = getEntityManager().createQuery(cq);
+    jakarta.persistence.Query q = getEntityManager().createQuery(cq);
     return ((Long) q.getSingleResult()) > 0L;
   }
 }

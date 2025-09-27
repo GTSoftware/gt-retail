@@ -35,8 +35,7 @@ public class SaleSearchResultTransformer implements Transformer<ComprobantesDto,
   private String transformInvoiceNumber(ComprobantesDto comprobantesDto) {
     final FiscalLibroIvaVentasDto regFiscal = comprobantesDto.getIdRegistro();
     if (Objects.nonNull(regFiscal)) {
-      return String.format(
-          "%s %s-%s",
+      return "%s %s-%s".formatted(
           comprobantesDto.getLetra(),
           regFiscal.getPuntoVentaFactura(),
           regFiscal.getNumeroFactura());

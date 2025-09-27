@@ -1,8 +1,8 @@
 package ar.com.gtsoftware.api.request.products;
 
 import java.math.BigDecimal;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

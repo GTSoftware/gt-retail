@@ -4,7 +4,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
 
 import ar.com.gtsoftware.dto.ImportesAlicuotasIVA;
 import ar.com.gtsoftware.dto.LibroIVADTO;
@@ -22,21 +21,28 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.apache.commons.collections4.CollectionUtils;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 class RegimenInformativoServiceImplTest {
 
+  private AutoCloseable mocks;
+
   private RegimenInformativoService service;
 
-  @Mock private LibroIVAVentasServiceImpl libroIVAVentasServiceMock;
-  @Mock private LibroIVAComprasServiceImpl libroIVAComprasServiceMock;
-  @Mock private ParametrosService parametrosServiceMock;
+  @Mock
+  private LibroIVAVentasServiceImpl libroIVAVentasServiceMock;
+  @Mock
+  private LibroIVAComprasServiceImpl libroIVAComprasServiceMock;
+  @Mock
+  private ParametrosService parametrosServiceMock;
 
   @BeforeEach
   void setUp() {
-    initMocks(this);
+    mocks = MockitoAnnotations.openMocks(this);
     service =
         new RegimenInformativoServiceImpl(
             libroIVAVentasServiceMock, libroIVAComprasServiceMock, parametrosServiceMock);
@@ -116,5 +122,10 @@ class RegimenInformativoServiceImplTest {
                                 .build()))
                     .build()))
         .build();
+  }
+
+  @AfterEach
+  void tearDown() throws Exception {
+    mocks.close();
   }
 }

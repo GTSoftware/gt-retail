@@ -32,7 +32,7 @@ import ar.com.gtsoftware.service.BaseEntityService;
 import ar.com.gtsoftware.service.UsuariosService;
 import java.util.ArrayList;
 import java.util.List;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

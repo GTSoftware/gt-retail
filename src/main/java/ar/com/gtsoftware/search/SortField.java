@@ -15,8 +15,9 @@
  */
 package ar.com.gtsoftware.search;
 
+import java.io.Serial;
 import java.io.Serializable;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 /**
  * Clase para mantener la información del tipo de orden de cada campo
@@ -25,6 +26,7 @@ import javax.validation.constraints.NotNull;
  */
 public class SortField implements Serializable {
 
+  @Serial
   private static final long serialVersionUID = 1L;
   @NotNull private String fieldName;
   private boolean ascending;

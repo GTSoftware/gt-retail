@@ -15,6 +15,8 @@
  */
 package ar.com.gtsoftware.service.exceptions;
 
+import java.io.Serial;
+
 /**
  * Exepción arrojada en la capa de servicio de la aplicación
  *
@@ -23,6 +25,7 @@ package ar.com.gtsoftware.service.exceptions;
 public class ServiceException extends Exception {
 
   /** */
+  @Serial
   private static final long serialVersionUID = 1L;
 
   public ServiceException() {}

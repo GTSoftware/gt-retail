@@ -18,10 +18,10 @@ package ar.com.gtsoftware.dao;
 import ar.com.gtsoftware.entity.ProductosTiposUnidades;
 import ar.com.gtsoftware.entity.ProductosTiposUnidades_;
 import ar.com.gtsoftware.search.UnidadesSearchFilter;
-import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -47,7 +47,7 @@ public class ProductosTiposUnidadesFacade
 
     if (usf.getNombreUnidad() != null) {
       String s = usf.getNombreUnidad().toUpperCase();
-      p = cb.like(root.get(ProductosTiposUnidades_.nombreUnidad), String.format("%%%s%%", s));
+      p = cb.like(root.get(ProductosTiposUnidades_.nombreUnidad), "%%%s%%".formatted(s));
     }
     return p;
   }

@@ -20,7 +20,7 @@ public class ProductPercentTypeTransformer
         .percent(from.isPorcentaje())
         .percentName(from.getNombreTipo())
         .percentTypeId(from.getId())
-        .displayName(String.format(DISPLAY_NAME_FMT, from.getId(), from.getNombreTipo()))
+        .displayName(DISPLAY_NAME_FMT.formatted(from.getId(), from.getNombreTipo()))
         .build();
   }
 

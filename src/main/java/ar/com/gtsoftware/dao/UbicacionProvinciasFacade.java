@@ -19,10 +19,10 @@ import ar.com.gtsoftware.entity.UbicacionPaises_;
 import ar.com.gtsoftware.entity.UbicacionProvincias;
 import ar.com.gtsoftware.entity.UbicacionProvincias_;
 import ar.com.gtsoftware.search.ProvinciasSearchFilter;
-import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -52,7 +52,7 @@ public class UbicacionProvinciasFacade
       Predicate p1 =
           cb.like(
               root.get(UbicacionProvincias_.nombreProvincia),
-              String.format("%%%s%%", psf.getNombreProvincia().toUpperCase()));
+              "%%%s%%".formatted(psf.getNombreProvincia().toUpperCase()));
       p = appendOrPredicate(cb, p, p1);
     }
     if (psf.getIdPais() != null) {

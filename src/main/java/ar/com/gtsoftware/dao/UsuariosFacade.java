@@ -18,10 +18,10 @@ package ar.com.gtsoftware.dao;
 import ar.com.gtsoftware.entity.Usuarios;
 import ar.com.gtsoftware.entity.Usuarios_;
 import ar.com.gtsoftware.search.UsuariosSearchFilter;
-import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -53,7 +53,7 @@ public class UsuariosFacade extends AbstractFacade<Usuarios, UsuariosSearchFilte
       Predicate p1 =
           cb.like(
               root.get(Usuarios_.nombreUsuario),
-              String.format("%%%s%%", usf.getNombreUsuario().toLowerCase()));
+              "%%%s%%".formatted(usf.getNombreUsuario().toLowerCase()));
       p = appendOrPredicate(cb, p, p1);
     }
     if (usf.getLogin() != null) {
@@ -67,9 +67,9 @@ public class UsuariosFacade extends AbstractFacade<Usuarios, UsuariosSearchFilte
     if (usf.hasTextFilter()) {
       for (String s : usf.getText().toUpperCase().split(" ")) {
 
-        Predicate p1 = cb.like(cb.upper(root.get(Usuarios_.login)), String.format("%%%s%%", s));
+        Predicate p1 = cb.like(cb.upper(root.get(Usuarios_.login)), "%%%s%%".formatted(s));
         Predicate p2 =
-            cb.like(cb.upper(root.get(Usuarios_.nombreUsuario)), String.format("%%%s%%", s));
+            cb.like(cb.upper(root.get(Usuarios_.nombreUsuario)), "%%%s%%".formatted(s));
 
         p = appendOrPredicate(cb, p, p1);
         p = appendOrPredicate(cb, p, p2);

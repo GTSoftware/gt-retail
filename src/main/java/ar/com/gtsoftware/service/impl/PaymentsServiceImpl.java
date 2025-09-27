@@ -193,8 +193,7 @@ public class PaymentsServiceImpl implements PaymentsService {
         sales.stream().filter(s -> s.getSaldo().signum() == 0).findAny();
     if (saleWithNoRemainingAmount.isPresent()) {
       throw new RuntimeException(
-          String.format(
-              "The sale with Id: %d should have remaining amount",
+          "The sale with Id: %d should have remaining amount".formatted(
               saleWithNoRemainingAmount.get().getId()));
     }
   }
@@ -267,8 +266,7 @@ public class PaymentsServiceImpl implements PaymentsService {
     CajasMovimientos movimiento = new CajasMovimientos();
     movimiento.setFechaMovimiento(fecha);
     String descMovimiento =
-        String.format(
-            "Cobro de comprobantes del cliente %s - Recibo: %d",
+        "Cobro de comprobantes del cliente %s - Recibo: %d".formatted(
             comprobante.getIdPersona().getBusinessString(), idRecibo);
     movimiento.setDescripcion(descMovimiento);
     movimiento.setIdCaja(caja);

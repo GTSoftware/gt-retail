@@ -3,7 +3,6 @@ package ar.com.gtsoftware.api.impl;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
 import static org.hamcrest.core.Is.is;
-import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 import ar.com.gtsoftware.api.exception.PointOfSaleNotFoundException;

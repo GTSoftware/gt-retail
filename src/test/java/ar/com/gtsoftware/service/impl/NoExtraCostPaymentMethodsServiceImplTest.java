@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
 
 import ar.com.gtsoftware.api.response.PaymentMethod;
 import ar.com.gtsoftware.api.response.PaymentPlan;
@@ -24,23 +23,31 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 class NoExtraCostPaymentMethodsServiceImplTest {
 
+  private AutoCloseable mocks;
+
   private NoExtraCostPaymentMethodsServiceImpl service;
-  @Mock private NegocioFormasPagoService mockFormasPagoService;
-  @Mock private NegocioPlanesPagoService mockPlanesPagoService;
-  @Captor private ArgumentCaptor<FormasPagoSearchFilter> formasPagoSearchFilterArgumentCaptor;
-  @Captor private ArgumentCaptor<PlanesPagoSearchFilter> planesPagoSearchFilterArgumentCaptor;
+  @Mock
+  private NegocioFormasPagoService mockFormasPagoService;
+  @Mock
+  private NegocioPlanesPagoService mockPlanesPagoService;
+  @Captor
+  private ArgumentCaptor<FormasPagoSearchFilter> formasPagoSearchFilterArgumentCaptor;
+  @Captor
+  private ArgumentCaptor<PlanesPagoSearchFilter> planesPagoSearchFilterArgumentCaptor;
 
   @BeforeEach
   void setUp() {
-    initMocks(this);
+    mocks = MockitoAnnotations.openMocks(this);
     service =
         new NoExtraCostPaymentMethodsServiceImpl(mockFormasPagoService, mockPlanesPagoService);
 
@@ -151,5 +158,10 @@ class NoExtraCostPaymentMethodsServiceImplTest {
     }
 
     return formasPagoDtos;
+  }
+
+  @AfterEach
+  void tearDown() throws Exception {
+    mocks.close();
   }
 }

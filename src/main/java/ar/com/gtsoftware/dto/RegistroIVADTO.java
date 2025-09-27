@@ -15,6 +15,7 @@
  */
 package ar.com.gtsoftware.dto;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -36,6 +37,7 @@ import lombok.*;
 @Builder
 public class RegistroIVADTO implements Serializable {
 
+  @Serial
   private static final long serialVersionUID = 3L;
 
   private Long idFactura;

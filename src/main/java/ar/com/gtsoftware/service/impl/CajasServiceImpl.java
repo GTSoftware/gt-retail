@@ -30,7 +30,7 @@ import ar.com.gtsoftware.service.BaseEntityService;
 import ar.com.gtsoftware.service.CajasService;
 import java.math.BigDecimal;
 import java.util.Date;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -62,8 +62,7 @@ public class CajasServiceImpl extends BaseEntityService<CajasDto, CajasSearchFil
     if (cantCajasAbiertas > 1) {
       // This should never happen
       throw new RuntimeException(
-          String.format(
-              "El usuario %s tiene más de una caja abierta en la sucursal %d!",
+          "El usuario %s tiene más de una caja abierta en la sucursal %d!".formatted(
               usuario.getNombreUsuario(), usuario.getIdSucursal().getId()));
     }
     Cajas caja = facade.findFirstBySearchFilter(cajasFilter);

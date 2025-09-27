@@ -4,7 +4,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
 
 import ar.com.gtsoftware.dao.*;
 import ar.com.gtsoftware.dto.ProductoMovimiento;
@@ -19,28 +18,43 @@ import ar.com.gtsoftware.utils.BusinessDateUtils;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 class RemitoServiceImplTest {
 
-  @Mock private RemitoFacade remitoFacadeMock;
-  @Mock private RemitoDetalleFacade remitoDetalleFacadeMock;
-  @Mock private RemitoMapper remitoMapperMock;
-  @Mock private UsuariosFacade usuariosFacadeMock;
-  @Mock private RemitoTipoMovimientoFacade tipoMovimientoFacadeMock;
-  @Mock private DepositosFacade depositosFacadeMock;
-  @Mock private BusinessDateUtils dateUtilsMock;
-  @Mock private ProductosFacade productosFacadeMock;
-  @Mock private PersonasFacade personasFacadeMock;
-  @Mock private ProductosMapper productosMapperMock;
-  @Mock private ProductoXDepositoFacade stockFacadeMock;
+  private AutoCloseable mocks;
+
+  @Mock
+  private RemitoFacade remitoFacadeMock;
+  @Mock
+  private RemitoDetalleFacade remitoDetalleFacadeMock;
+  @Mock
+  private RemitoMapper remitoMapperMock;
+  @Mock
+  private UsuariosFacade usuariosFacadeMock;
+  @Mock
+  private RemitoTipoMovimientoFacade tipoMovimientoFacadeMock;
+  @Mock
+  private DepositosFacade depositosFacadeMock;
+  @Mock
+  private BusinessDateUtils dateUtilsMock;
+  @Mock
+  private ProductosFacade productosFacadeMock;
+  @Mock
+  private PersonasFacade personasFacadeMock;
+  @Mock
+  private ProductosMapper productosMapperMock;
+  @Mock
+  private ProductoXDepositoFacade stockFacadeMock;
   private RemitoServiceImpl service;
 
   @BeforeEach
   void setUp() {
-    initMocks(this);
+    mocks = MockitoAnnotations.openMocks(this);
     service =
         new RemitoServiceImpl(
             remitoFacadeMock,
@@ -177,5 +191,10 @@ class RemitoServiceImplTest {
     remito.setIdDestinoPrevistoInterno(destino);
 
     return remito;
+  }
+
+  @AfterEach
+  void tearDown() throws Exception {
+    mocks.close();
   }
 }

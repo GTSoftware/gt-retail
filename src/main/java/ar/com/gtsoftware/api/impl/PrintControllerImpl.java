@@ -28,8 +28,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jasperreports.engine.JRException;
@@ -69,7 +69,7 @@ public class PrintControllerImpl implements PrintController {
     Map<String, Object> parameters = loadCompanyParameters();
     parameters.put(PRESUPUESTO_MOSTRAR_DETALLE_PRECIOS.getNombreParametro(), mostrarDetallePrecios);
     parameters.put("subreport", compiledReports.get(getReportName("vistaVentas_lineas", format)));
-    String fileName = String.format("venta-%d", saleId);
+    String fileName = "venta-%d".formatted(saleId);
 
     handlePDFExport(
         fileName, beanCollectionDataSource, getReportName("presupuesto", format), parameters);
@@ -105,7 +105,7 @@ public class PrintControllerImpl implements PrintController {
     parameters.put("subDataSource", beanCollectionDataSource1);
     parameters.put("subDataSource2", beanCollectionDataSource2);
 
-    String fileName = String.format("factura-%d", saleId);
+    String fileName = "factura-%d".formatted(saleId);
 
     handlePDFExport(
         fileName, beanCollectionDataSource, getReportName("factura", format), parameters);
@@ -137,7 +137,7 @@ public class PrintControllerImpl implements PrintController {
     Map<String, Object> parameters = loadCompanyParameters();
     parameters.put("subreportParameter", compiledReports.get("remito_lineas"));
 
-    String fileName = String.format("remito-%d", deliveryNoteId);
+    String fileName = "remito-%d".formatted(deliveryNoteId);
 
     handlePDFExport(fileName, beanCollectionDataSource, "remito", parameters);
   }
@@ -155,7 +155,7 @@ public class PrintControllerImpl implements PrintController {
               compiledReports.get(reportName), parameters, beanCollectionDataSource);
 
       response.addHeader(
-          HttpHeaders.CONTENT_DISPOSITION, String.format("attachment; filename=%s.pdf", fileName));
+          HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=%s.pdf".formatted(fileName));
       response.setContentType(MediaType.APPLICATION_PDF_VALUE);
 
       ServletOutputStream servletStream = response.getOutputStream();

@@ -17,11 +17,11 @@ package ar.com.gtsoftware.dao;
 
 import ar.com.gtsoftware.entity.*;
 import ar.com.gtsoftware.search.ProductosSearchFilter;
-import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-import javax.persistence.criteria.Subquery;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.Subquery;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 
@@ -73,7 +73,7 @@ public class ProductosFacade extends AbstractFacade<Productos, ProductosSearchFi
 
           for (String s : psf.getTxt().toUpperCase().split(SPACE)) {
             Predicate pTxt = null;
-            String likeS = String.format(LIKE, s);
+            String likeS = LIKE.formatted(s);
 
             Predicate p1 = cb.like(root.get(Productos_.descripcion), likeS);
             Predicate p2 =
@@ -97,7 +97,7 @@ public class ProductosFacade extends AbstractFacade<Productos, ProductosSearchFi
           }
         } else {
           String texto = psf.getTxt().toUpperCase().replaceAll(SPACE, "%");
-          String descLike = String.format("%s%%", texto);
+          String descLike = "%s%%".formatted(texto);
           Predicate p1 = cb.like(root.get(Productos_.descripcion), descLike);
           p = appendAndPredicate(cb, p, p1);
         }

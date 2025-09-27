@@ -12,7 +12,7 @@ import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.Collections;
 import java.util.List;
-import javax.xml.bind.JAXB;
+import jakarta.xml.bind.JAXB;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.codec.binary.Base64;
 import org.bouncycastle.cert.jcajce.JcaCertStore;

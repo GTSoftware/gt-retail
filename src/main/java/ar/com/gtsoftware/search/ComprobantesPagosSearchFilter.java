@@ -15,6 +15,8 @@
  */
 package ar.com.gtsoftware.search;
 
+import java.io.Serial;
+
 /**
  * SearchFilter para Arqueos de caja
  *
@@ -22,6 +24,7 @@ package ar.com.gtsoftware.search;
  */
 public class ComprobantesPagosSearchFilter extends AbstractSearchFilter {
 
+  @Serial
   private static final long serialVersionUID = 1L;
 
   private Long idComprobante;

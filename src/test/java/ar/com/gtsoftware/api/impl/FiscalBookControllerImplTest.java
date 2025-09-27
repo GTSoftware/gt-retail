@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.mockito.MockitoAnnotations.initMocks;
 
 import ar.com.gtsoftware.api.request.DigitalFiscalBookRequest;
 import ar.com.gtsoftware.dto.fiscal.reginfo.RegInfoCvCabecera;
@@ -19,29 +18,36 @@ import ar.com.gtsoftware.service.fiscal.WorkBookFiscalBookService;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collections;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpHeaders;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 class FiscalBookControllerImplTest {
 
+  private AutoCloseable mocks;
+
   private FiscalBookControllerImpl controller;
 
-  @Mock private RegimenInformativoService regimenInformativoServiceMock;
-  @Mock private WorkBookFiscalBookService workBookFiscalBookServiceMock;
+  @Mock
+  private RegimenInformativoService regimenInformativoServiceMock;
+  @Mock
+  private WorkBookFiscalBookService workBookFiscalBookServiceMock;
 
-  @Captor private ArgumentCaptor<LibroIVASearchFilter> filterArgumentCaptor;
+  @Captor
+  private ArgumentCaptor<LibroIVASearchFilter> filterArgumentCaptor;
 
   private HttpServletResponse responseMock;
 
   @BeforeEach
   void setUp() {
-    initMocks(this);
+    mocks = MockitoAnnotations.openMocks(this);
     responseMock = new MockHttpServletResponse();
     controller =
         new FiscalBookControllerImpl(
@@ -140,5 +146,10 @@ class FiscalBookControllerImplTest {
         .otrosTributos(BigDecimal.valueOf(123.45))
         .fechaVencimientoPago(LocalDate.of(2020, 1, 5))
         .build();
+  }
+
+  @AfterEach
+  void tearDown() throws Exception {
+    mocks.close();
   }
 }

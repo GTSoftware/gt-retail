@@ -19,10 +19,10 @@ import ar.com.gtsoftware.entity.ProductosRubros_;
 import ar.com.gtsoftware.entity.ProductosSubRubros;
 import ar.com.gtsoftware.entity.ProductosSubRubros_;
 import ar.com.gtsoftware.search.SubRubroSearchFilter;
-import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -48,7 +48,7 @@ public class ProductosSubRubrosFacade
     Predicate p = null;
     if (psf.getNombreSubRubro() != null) {
       String s = psf.getNombreSubRubro().toUpperCase();
-      p = cb.like(root.get(ProductosSubRubros_.nombreSubRubro), String.format("%%%s%%", s));
+      p = cb.like(root.get(ProductosSubRubros_.nombreSubRubro), "%%%s%%".formatted(s));
     }
     if (psf.getIdProductosRubros() != null) {
       Predicate p1 =

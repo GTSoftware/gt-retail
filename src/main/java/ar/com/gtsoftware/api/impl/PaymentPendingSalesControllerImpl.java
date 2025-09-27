@@ -20,7 +20,7 @@ import ar.com.gtsoftware.service.PaymentsService;
 import ar.com.gtsoftware.utils.SecurityUtils;
 import java.util.*;
 import java.util.stream.Collectors;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.RestController;
@@ -102,7 +102,7 @@ public class PaymentPendingSalesControllerImpl implements PaymentPendingSalesCon
   }
 
   private String transformCustomer(PersonasDto customer) {
-    return String.format(DISPLAY_NAME_FORMAT, customer.getDocumento(), customer.getRazonSocial());
+    return DISPLAY_NAME_FORMAT.formatted(customer.getDocumento(), customer.getRazonSocial());
   }
 
   private List<SaleToPay> transformSalesToPay(List<SaleToPayDto> salesToPayDto) {
@@ -137,8 +137,7 @@ public class PaymentPendingSalesControllerImpl implements PaymentPendingSalesCon
   private String transformPaymentPlan(SaleToPayDto saleToPayDto) {
     final NegocioPlanesPagoDto idPlan = saleToPayDto.getPayment().getIdPlan();
     if (nonNull(idPlan)) {
-      return String.format(
-          "%s en %d pago/s",
+      return "%s en %d pago/s".formatted(
           idPlan.getNombre(), saleToPayDto.getPayment().getIdDetallePlan().getCuotas());
     }
 

@@ -5,7 +5,6 @@ import static org.hamcrest.Matchers.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
 
 import ar.com.gtsoftware.dao.*;
 import ar.com.gtsoftware.dto.PreparedPaymentDto;
@@ -22,32 +21,49 @@ import ar.com.gtsoftware.service.PersonasCuentaCorrienteService;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collections;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 class PaymentsServiceImplTest {
 
+  private AutoCloseable mocks;
+
   private PaymentsServiceImpl paymentsService;
 
-  @Mock private RecibosFacade mockRecibosFacade;
-  @Mock private ComprobantesFacade mockComprobantesFacade;
-  @Mock private CajasMovimientosFacade mockCajasMovimientosFacade;
-  @Mock private CajasFacade mockCajasFacade;
-  @Mock private ComprobantesPagosFacade mockComprobantesPagosFacade;
-  @Mock private PersonasCuentaCorrienteService mockPersonasCuentaCorrienteService;
-  @Mock private UsuariosFacade mockUsuariosFacade;
-  @Mock private ComprobantesPagosMapper mockComprobantesPagosMapper;
-  @Mock private CuponesMapper mockCuponesMapper;
-  @Mock private ChequesTercerosMapper mockChequesTercerosMapper;
-  @Mock private RecibosMapper mockRecibosMapper;
-  @Mock private PersonasMapper mockPersonasMapper;
-  @Mock private ComprobantesMapper mockComprobantesMapper;
+  @Mock
+  private RecibosFacade mockRecibosFacade;
+  @Mock
+  private ComprobantesFacade mockComprobantesFacade;
+  @Mock
+  private CajasMovimientosFacade mockCajasMovimientosFacade;
+  @Mock
+  private CajasFacade mockCajasFacade;
+  @Mock
+  private ComprobantesPagosFacade mockComprobantesPagosFacade;
+  @Mock
+  private PersonasCuentaCorrienteService mockPersonasCuentaCorrienteService;
+  @Mock
+  private UsuariosFacade mockUsuariosFacade;
+  @Mock
+  private ComprobantesPagosMapper mockComprobantesPagosMapper;
+  @Mock
+  private CuponesMapper mockCuponesMapper;
+  @Mock
+  private ChequesTercerosMapper mockChequesTercerosMapper;
+  @Mock
+  private RecibosMapper mockRecibosMapper;
+  @Mock
+  private PersonasMapper mockPersonasMapper;
+  @Mock
+  private ComprobantesMapper mockComprobantesMapper;
 
   @BeforeEach
   void setUp() {
-    initMocks(this);
+    mocks = MockitoAnnotations.openMocks(this);
     paymentsService =
         new PaymentsServiceImpl(
             mockRecibosFacade,
@@ -191,5 +207,10 @@ class PaymentsServiceImplTest {
     comp.setPagosList(Collections.singletonList(pago));
 
     return comp;
+  }
+
+  @AfterEach
+  void tearDown() throws Exception {
+    mocks.close();
   }
 }

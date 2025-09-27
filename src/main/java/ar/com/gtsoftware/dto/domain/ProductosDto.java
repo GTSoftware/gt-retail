@@ -19,7 +19,7 @@ package ar.com.gtsoftware.dto.domain;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-import javax.validation.constraints.Pattern;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
 @Getter

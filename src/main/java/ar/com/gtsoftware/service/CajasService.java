@@ -20,7 +20,7 @@ import ar.com.gtsoftware.dto.domain.UsuariosDto;
 import ar.com.gtsoftware.search.CajasSearchFilter;
 import java.math.BigDecimal;
 import java.util.Date;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 /**
  * Capa de servicio para la gestión de cajas

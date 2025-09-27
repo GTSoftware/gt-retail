@@ -33,6 +33,6 @@ public class ParametrosDto {
 
   @Override
   public String toString() {
-    return String.format("%s=%s", nombreParametro, valorParametro);
+    return "%s=%s".formatted(nombreParametro, valorParametro);
   }
 }

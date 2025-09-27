@@ -6,7 +6,7 @@ import ar.com.gtsoftware.api.request.products.CreateOrUpdateProductRequest;
 import ar.com.gtsoftware.api.response.*;
 import ar.com.gtsoftware.search.ProductosSearchFilter;
 import ar.com.gtsoftware.service.exceptions.ServiceException;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

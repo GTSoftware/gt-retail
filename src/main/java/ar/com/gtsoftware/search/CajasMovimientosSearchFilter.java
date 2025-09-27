@@ -15,6 +15,7 @@
  */
 package ar.com.gtsoftware.search;
 
+import java.io.Serial;
 import java.util.Date;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
@@ -29,6 +30,7 @@ import org.apache.commons.lang3.StringUtils;
 @Builder
 public class CajasMovimientosSearchFilter extends AbstractSearchFilter {
 
+  @Serial
   private static final long serialVersionUID = 1L;
 
   private Date fechaDesde, fechaHasta;

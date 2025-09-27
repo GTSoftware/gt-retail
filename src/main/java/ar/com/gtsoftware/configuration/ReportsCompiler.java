@@ -51,7 +51,7 @@ public class ReportsCompiler {
         JasperReport compiledReport = tryCompileReport(reportResource);
         reportsMap.put(getKeyName(reportResource), compiledReport);
       } catch (IOException | JRException ex) {
-        log.error(String.format("Error compiling report: %s", reportFilePath), ex);
+        log.error("Error compiling report: %s".formatted(reportFilePath), ex);
       }
     }
 

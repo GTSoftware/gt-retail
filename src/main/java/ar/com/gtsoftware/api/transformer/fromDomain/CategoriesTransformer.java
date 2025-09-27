@@ -31,7 +31,7 @@ public class CategoriesTransformer implements Transformer<ProductosRubrosDto, Pr
     return ProductCategory.builder()
         .categoryName(rubroDto.getNombreRubro())
         .categoryId(rubroDto.getId())
-        .displayName(String.format(DISPLAY_NAME_FMT, rubroDto.getId(), rubroDto.getNombreRubro()))
+        .displayName(DISPLAY_NAME_FMT.formatted(rubroDto.getId(), rubroDto.getNombreRubro()))
         .version(rubroDto.getVersion())
         .build();
   }

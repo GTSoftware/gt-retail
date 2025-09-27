@@ -16,6 +16,7 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
+import java.io.Serial;
 import java.io.Serializable;
 import lombok.*;
 
@@ -31,6 +32,7 @@ import lombok.*;
 @Builder
 public class FiscalTiposComprobanteDto implements Serializable {
 
+  @Serial
   private static final long serialVersionUID = 1L;
   @EqualsAndHashCode.Include private String codigoTipoComprobante;
   private String denominacionComprobante;

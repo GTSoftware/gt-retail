@@ -8,7 +8,7 @@ import ar.com.gtsoftware.api.response.PersonSearchResult;
 import ar.com.gtsoftware.api.transformer.fromDomain.PersonSearchResultTransformer;
 import ar.com.gtsoftware.search.PersonasSearchFilter;
 import ar.com.gtsoftware.service.PersonasService;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 

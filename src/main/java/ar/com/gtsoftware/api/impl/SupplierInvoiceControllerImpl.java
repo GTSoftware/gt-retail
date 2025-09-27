@@ -26,7 +26,7 @@ import ar.com.gtsoftware.service.exceptions.ServiceException;
 import ar.com.gtsoftware.utils.SecurityUtils;
 import java.util.ArrayList;
 import java.util.List;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

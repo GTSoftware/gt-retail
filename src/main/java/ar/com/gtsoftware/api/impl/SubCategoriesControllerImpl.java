@@ -12,7 +12,7 @@ import ar.com.gtsoftware.service.ProductosRubrosService;
 import ar.com.gtsoftware.service.ProductosSubRubrosService;
 import ar.com.gtsoftware.utils.TextUtils;
 import java.util.List;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RestController;

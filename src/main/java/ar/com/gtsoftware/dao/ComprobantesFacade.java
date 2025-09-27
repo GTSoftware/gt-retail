@@ -18,9 +18,9 @@ package ar.com.gtsoftware.dao;
 import ar.com.gtsoftware.entity.*;
 import ar.com.gtsoftware.search.ComprobantesSearchFilter;
 import java.math.BigDecimal;
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.*;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 
@@ -117,7 +117,7 @@ public class ComprobantesFacade extends AbstractFacade<Comprobantes, Comprobante
           cb.concat(
               nroFactura,
               root.get(Comprobantes_.idRegistro).get(FiscalLibroIvaVentas_.numeroFactura));
-      p1 = cb.like(nroFactura, String.format("%%%s%%", vsf.getNumeroFactura()));
+      p1 = cb.like(nroFactura, "%%%s%%".formatted(vsf.getNumeroFactura()));
 
       p = appendAndPredicate(cb, p1, p);
     }

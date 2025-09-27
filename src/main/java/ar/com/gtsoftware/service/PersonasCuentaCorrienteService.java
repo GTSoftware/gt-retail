@@ -21,7 +21,7 @@ import ar.com.gtsoftware.dto.domain.PersonasCuentaCorrienteDto;
 import ar.com.gtsoftware.entity.Personas;
 import ar.com.gtsoftware.search.PersonasCuentaCorrienteSearchFilter;
 import java.math.BigDecimal;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 public interface PersonasCuentaCorrienteService
     extends EntityService<PersonasCuentaCorrienteDto, PersonasCuentaCorrienteSearchFilter> {

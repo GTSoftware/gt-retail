@@ -47,8 +47,8 @@ import ar.com.gtsoftware.utils.SecurityUtils;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
-import javax.persistence.EntityManager;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.EntityManager;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
@@ -202,8 +202,7 @@ public class ProductosServiceImpl
     }
     if (Objects.isNull(productId) || !Objects.equals(productId, existingProduct.getId())) {
       final String message =
-          String.format(
-              "El código %s ya existe para el producto: [%d] %s",
+          "El código %s ya existe para el producto: [%d] %s".formatted(
               code, existingProduct.getId(), existingProduct.getDescripcion());
 
       throw new ServiceException(message);

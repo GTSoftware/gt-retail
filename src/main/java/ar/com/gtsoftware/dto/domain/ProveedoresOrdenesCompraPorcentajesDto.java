@@ -16,9 +16,10 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 /**
@@ -34,6 +35,7 @@ import lombok.*;
 @Builder
 public class ProveedoresOrdenesCompraPorcentajesDto implements Serializable {
 
+  @Serial
   private static final long serialVersionUID = 1L;
 
   @EqualsAndHashCode.Include private Long id;

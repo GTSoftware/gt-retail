@@ -15,7 +15,7 @@ import ar.com.gtsoftware.dto.domain.ComprobantesDto;
 import ar.com.gtsoftware.search.ComprobantesSearchFilter;
 import ar.com.gtsoftware.service.ComprobantesService;
 import ar.com.gtsoftware.utils.SecurityUtils;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 

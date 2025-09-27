@@ -4,7 +4,6 @@ import static ar.com.gtsoftware.enums.Parametros.AFIP_DN_PARAM;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
 
 import ar.com.gtsoftware.service.ParametrosService;
 import ar.com.gtsoftware.service.afip.client.login.HeaderType;
@@ -12,19 +11,25 @@ import ar.com.gtsoftware.service.afip.client.login.LoginTicketRequest;
 import ar.com.gtsoftware.utils.BusinessDateUtils;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 class LoginTicketRequestBuilderTest {
 
+  private AutoCloseable mocks;
+
   private LoginTicketRequestBuilder builder;
-  @Mock private BusinessDateUtils dateUtilsMock;
-  @Mock private ParametrosService parametrosServiceMock;
+  @Mock
+  private BusinessDateUtils dateUtilsMock;
+  @Mock
+  private ParametrosService parametrosServiceMock;
 
   @BeforeEach
   void setUp() {
-    initMocks(this);
+    mocks = MockitoAnnotations.openMocks(this);
     when(parametrosServiceMock.getStringParam(AFIP_DN_PARAM)).thenReturn("testDstn");
     when(dateUtilsMock.getCurrentZonedDateTime())
         .thenReturn(ZonedDateTime.of(2020, 1, 1, 0, 0, 0, 0, ZoneId.of("GMT-3")));
@@ -48,5 +53,10 @@ class LoginTicketRequestBuilderTest {
     assertThat(header.getUniqueId(), is(greaterThan(0L)));
     assertThat(header.getExpirationTime().toString(), is("2020-01-02T00:00:00-03:00"));
     assertThat(header.getGenerationTime().toString(), is("2020-01-01T00:00:00-03:00"));
+  }
+
+  @AfterEach
+  void tearDown() throws Exception {
+    mocks.close();
   }
 }

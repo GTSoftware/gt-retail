@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -70,8 +70,7 @@ public class DeliveryNotesControllerImpl implements DeliveryNotesController {
               .warehouseId(deposito.getId())
               .warehouseName(deposito.getNombreDeposito())
               .displayName(
-                  String.format(
-                      "%s - %s (%d)",
+                  "%s - %s (%d)".formatted(
                       deposito.getNombreDeposito(),
                       deposito.getIdSucursal().getNombreSucursal(),
                       deposito.getIdSucursal().getId()))

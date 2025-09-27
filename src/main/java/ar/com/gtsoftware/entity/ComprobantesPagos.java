@@ -17,8 +17,8 @@ package ar.com.gtsoftware.entity;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -71,11 +71,11 @@ public class ComprobantesPagos extends BaseEntity {
   private BigDecimal montoPagado;
 
   @Column(name = "fecha_pago")
-  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+  @Temporal(jakarta.persistence.TemporalType.TIMESTAMP)
   private Date fechaPago;
 
   @Column(name = "fecha_ultimo_pago")
-  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+  @Temporal(jakarta.persistence.TemporalType.TIMESTAMP)
   private Date fechaUltimoPago;
 
   /**

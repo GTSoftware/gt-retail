@@ -16,9 +16,9 @@
 package ar.com.gtsoftware.entity;
 
 import java.util.Date;
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -94,7 +94,6 @@ public class Depositos extends BaseEntity {
   }
 
   public String getBusinessString() {
-    return String.format(
-        BUSINESS_STRING, this.getId(), nombreDeposito, idSucursal.getBusinessString());
+    return BUSINESS_STRING.formatted(this.getId(), nombreDeposito, idSucursal.getBusinessString());
   }
 }

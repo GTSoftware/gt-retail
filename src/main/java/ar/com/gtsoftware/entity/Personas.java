@@ -17,10 +17,10 @@ package ar.com.gtsoftware.entity;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -179,7 +179,6 @@ public class Personas extends BaseEntity {
   private Sucursales idSucursal;
 
   public String getBusinessString() {
-    return String.format(
-        BUSINESS_STRING, id, razonSocial, idTipoDocumento.getNombreTipoDocumento(), documento);
+    return BUSINESS_STRING.formatted(id, razonSocial, idTipoDocumento.getNombreTipoDocumento(), documento);
   }
 }

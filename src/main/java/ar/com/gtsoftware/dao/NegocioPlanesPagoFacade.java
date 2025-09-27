@@ -19,10 +19,10 @@ import ar.com.gtsoftware.entity.NegocioFormasPago_;
 import ar.com.gtsoftware.entity.NegocioPlanesPago;
 import ar.com.gtsoftware.entity.NegocioPlanesPago_;
 import ar.com.gtsoftware.search.PlanesPagoSearchFilter;
-import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 
@@ -51,7 +51,7 @@ public class NegocioPlanesPagoFacade
       Predicate p1 =
           cb.like(
               cb.upper(root.get(NegocioPlanesPago_.nombre)),
-              String.format("%%%s%%", sf.getNombre().toUpperCase()));
+              "%%%s%%".formatted(sf.getNombre().toUpperCase()));
       p = appendAndPredicate(cb, p, p1);
     }
 

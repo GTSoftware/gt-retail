@@ -16,6 +16,7 @@
  */
 package ar.com.gtsoftware.mappers.helper;
 
+import java.lang.reflect.Method;
 import java.util.IdentityHashMap;
 import java.util.Map;
 import org.mapstruct.BeforeMapping;
@@ -26,18 +27,37 @@ import org.mapstruct.TargetType;
 /**
  * A type to be used as {@link Context} parameter to track cycles in graphs.
  *
- * <p>Depending on the actual use case, the two methods below could also be changed to only accept
- * certain argument types, e.g. base classes of graph nodes, avoiding the need to capture any other
- * objects that wouldn't necessarily result in cycles.
- *
- * @author Andreas Gudian
+ * <p>Note: When MapStruct generates code for Lombok @Builder targets, it may cache the builder
+ * instance in this context to break cycles. That causes a class cast exception when MapStruct later
+ * tries to retrieve the cached value as the DTO class. To handle this, getMappedInstance will
+ * detect builder instances (objects that expose a no-arg build() method) and return the built
+ * object instead, updating the cache.
  */
 public class CycleAvoidingMappingContext {
-  private Map<Object, Object> knownInstances = new IdentityHashMap<>();
+  private final Map<Object, Object> knownInstances = new IdentityHashMap<>();
 
   @BeforeMapping
+  @SuppressWarnings("unchecked")
   public <T> T getMappedInstance(Object source, @TargetType Class<T> targetType) {
-    return (T) knownInstances.get(source);
+    Object cached = knownInstances.get(source);
+    if (cached == null) {
+      return null;
+    }
+    if (targetType.isInstance(cached)) {
+      return (T) cached;
+    }
+    // If the cached value is a builder, try to build the target instance on-the-fly
+    try {
+      Method buildMethod = cached.getClass().getMethod("build");
+      Object built = buildMethod.invoke(cached);
+      if (targetType.isInstance(built)) {
+        knownInstances.put(source, built);
+        return (T) built;
+      }
+    } catch (ReflectiveOperationException ignored) {
+      // Not a builder or build() failed; fall through and return null
+    }
+    return null;
   }
 
   @BeforeMapping

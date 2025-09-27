@@ -129,7 +129,7 @@ public class DashboardControllerImpl implements DashboardController {
     for (VentaMensual vm : ventasMensualesReport.getPageRows()) {
       saleReportList.add(
           SaleReport.builder()
-              .period(String.format("%d-%s", vm.getAnio(), leftPad(vm.getMes().toString(), 2, "0")))
+              .period("%d-%s".formatted(vm.getAnio(), leftPad(vm.getMes().toString(), 2, "0")))
               .amount(vm.getTotal())
               .build());
     }

@@ -10,7 +10,7 @@ import ar.com.gtsoftware.dto.domain.NegocioFormasPagoDto;
 import ar.com.gtsoftware.dto.domain.NegocioPlanesPagoDto;
 import ar.com.gtsoftware.dto.domain.NegocioTiposComprobanteDto;
 import java.util.List;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

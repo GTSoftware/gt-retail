@@ -31,7 +31,7 @@ public class BrandsTransformer implements Transformer<ProductosMarcasDto, Produc
     return ProductBrand.builder()
         .brandId(marcaDto.getId())
         .brandName(marcaDto.getNombreMarca())
-        .displayName(String.format(DISPLAY_NAME_FMT, marcaDto.getId(), marcaDto.getNombreMarca()))
+        .displayName(DISPLAY_NAME_FMT.formatted(marcaDto.getId(), marcaDto.getNombreMarca()))
         .version(marcaDto.getVersion())
         .build();
   }

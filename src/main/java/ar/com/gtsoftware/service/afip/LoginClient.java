@@ -5,7 +5,7 @@ import ar.com.gtsoftware.service.afip.client.LoginRequestSigner;
 import ar.com.gtsoftware.service.afip.client.login.*;
 import java.io.StringReader;
 import java.time.LocalDateTime;
-import javax.xml.bind.JAXB;
+import jakarta.xml.bind.JAXB;
 import javax.xml.datatype.XMLGregorianCalendar;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;

@@ -113,8 +113,7 @@ public class VentasServiceImpl implements VentasService {
     }
     if (!isPresupuesto) {
       String descMovimiento =
-          String.format(
-              "%s Nro: %d",
+          "%s Nro: %d".formatted(
               comprobante.getTipoComprobante().getNombreComprobante(), registro.getIdComprobante());
       cuentaCorrienteBean.registrarMovimientoCuenta(
           comprobante.getIdPersona(), comprobante.getTotalConSigno(), descMovimiento);
@@ -254,7 +253,7 @@ public class VentasServiceImpl implements VentasService {
       recepcion.setIdDeposito(rem.getIdDestinoPrevistoInterno());
     }
     rem.setObservaciones(
-        String.format("Remito generado automáticamente por comprobante nro: %d", venta.getId()));
+        "Remito generado automáticamente por comprobante nro: %d".formatted(venta.getId()));
     // TODO: Seteado en Venta por defecto pero debería ir el que corresponda.
     rem.setRemitoTipoMovimiento(tipoMovimientoFacade.find(ID_TIPO_MOV_VENTA));
     rem.setRemitoRecepcionesList(Collections.singletonList(recepcion));

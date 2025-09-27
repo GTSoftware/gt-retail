@@ -18,7 +18,7 @@ package ar.com.gtsoftware.dto.domain;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Getter

@@ -20,7 +20,7 @@ package ar.com.gtsoftware.service;
 import ar.com.gtsoftware.dto.domain.ParametrosDto;
 import ar.com.gtsoftware.enums.Parametros;
 import java.util.List;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 public interface ParametrosService {
 

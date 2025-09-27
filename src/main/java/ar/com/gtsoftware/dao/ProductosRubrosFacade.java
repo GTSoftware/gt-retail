@@ -18,10 +18,10 @@ package ar.com.gtsoftware.dao;
 import ar.com.gtsoftware.entity.ProductosRubros;
 import ar.com.gtsoftware.entity.ProductosRubros_;
 import ar.com.gtsoftware.search.RubrosSearchFilter;
-import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -46,7 +46,7 @@ public class ProductosRubrosFacade extends AbstractFacade<ProductosRubros, Rubro
     Predicate p = null;
     if (psf.getNombreRubro() != null) {
       String s = psf.getNombreRubro().toUpperCase();
-      p = cb.like(root.get(ProductosRubros_.nombreRubro), String.format("%%%s%%", s));
+      p = cb.like(root.get(ProductosRubros_.nombreRubro), "%%%s%%".formatted(s));
     }
     return p;
   }

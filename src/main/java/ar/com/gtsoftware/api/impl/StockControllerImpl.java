@@ -10,7 +10,7 @@ import ar.com.gtsoftware.service.RemitoService;
 import ar.com.gtsoftware.utils.BusinessDateUtils;
 import java.util.ArrayList;
 import java.util.List;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 

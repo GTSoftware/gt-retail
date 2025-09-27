@@ -15,8 +15,7 @@ public class SaleResponseTransformer {
   public SaleResponse transformSale(ComprobantesDto comprobante) {
     return SaleResponse.builder()
         .customer(
-            String.format(
-                "[%s] %s",
+            "[%s] %s".formatted(
                 comprobante.getIdPersona().getDocumento(),
                 comprobante.getIdPersona().getRazonSocial()))
         .branch(comprobante.getIdSucursal().getNombreSucursal())
@@ -57,8 +56,7 @@ public class SaleResponseTransformer {
       return null;
     }
 
-    return String.format(
-        "%s %s-%s",
+    return "%s %s-%s".formatted(
         idRegistro.getLetraFactura(),
         idRegistro.getPuntoVentaFactura(),
         idRegistro.getNumeroFactura());

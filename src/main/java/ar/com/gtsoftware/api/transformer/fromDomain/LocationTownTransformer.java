@@ -30,7 +30,7 @@ public class LocationTownTransformer implements Transformer<UbicacionLocalidades
 
     return LocationTown.builder()
         .townId(from.getId())
-        .displayName(String.format("%s (%s)", from.getNombreLocalidad(), from.getCodigoPostal()))
+        .displayName("%s (%s)".formatted(from.getNombreLocalidad(), from.getCodigoPostal()))
         .version(from.getVersion())
         .build();
   }

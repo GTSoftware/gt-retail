@@ -10,8 +10,8 @@
 package ar.com.gtsoftware.service.afip.client.login;
 
 import java.math.BigDecimal;
-import javax.annotation.Generated;
-import javax.xml.bind.annotation.*;
+import jakarta.annotation.Generated;
+import jakarta.xml.bind.annotation.*;
 
 /**
  * Clase Java para loginTicketRequest complex type.

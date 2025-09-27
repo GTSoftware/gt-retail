@@ -76,7 +76,7 @@ public class LibroIVAVentasServiceImpl implements LibroIVAService {
       FiscalPeriodosFiscales periodo = periodosFiscalesFacade.find(filter.getIdPeriodo());
       if (Objects.isNull(periodo)) {
         throw new InvalidInputDataException(
-            String.format("El perído fiscal %d no existe", filter.getIdPeriodo()));
+            "El perído fiscal %d no existe".formatted(filter.getIdPeriodo()));
       }
       libro =
           LibroIVADTO.builder()
@@ -194,8 +194,7 @@ public class LibroIVAVentasServiceImpl implements LibroIVAService {
       facDTO.setRazonSocialCliente("NULA");
     }
     facDTO.setNumeroFactura(
-        String.format(
-            NUMERO_FACTURA_FMT,
+        NUMERO_FACTURA_FMT.formatted(
             factura.getLetraFactura(),
             factura.getPuntoVentaFactura(),
             factura.getNumeroFactura()));

@@ -24,7 +24,7 @@ public class DatabaseUserDetailsService implements UserDetailsService {
     UsuariosSearchFilter sf = UsuariosSearchFilter.builder().login(username).build();
     UsuariosDto usuario = usuariosService.findFirstBySearchFilter(sf);
     if (usuario == null) {
-      throw new UsernameNotFoundException(String.format("USER_NOT_FOUND '%s'.", username));
+      throw new UsernameNotFoundException("USER_NOT_FOUND '%s'.".formatted(username));
     }
     List<UsuariosGruposDto> usuariosGrupos = usuariosService.obtenerRolesUsuario(usuario.getId());
     List<String> roles =

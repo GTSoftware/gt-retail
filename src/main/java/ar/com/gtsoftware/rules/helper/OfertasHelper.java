@@ -71,7 +71,7 @@ public class OfertasHelper {
       try {
         rules.add(
             new MVELRule()
-                .name(String.format("%d - %s", ofertaDto.getId(), ofertaDto.getTextoOferta()))
+                .name("%d - %s".formatted(ofertaDto.getId(), ofertaDto.getTextoOferta()))
                 .when(transformConditions(ofertaDto.getCondiciones()))
                 .then(
                     "promotionCartItem.applyDiscount(ar.com.gtsoftware.rules.TipoAccion."

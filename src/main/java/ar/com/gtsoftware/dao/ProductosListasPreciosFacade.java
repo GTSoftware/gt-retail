@@ -18,10 +18,10 @@ package ar.com.gtsoftware.dao;
 import ar.com.gtsoftware.entity.ProductosListasPrecios;
 import ar.com.gtsoftware.entity.ProductosListasPrecios_;
 import ar.com.gtsoftware.search.ProductosListasPreciosSearchFilter;
-import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -51,7 +51,7 @@ public class ProductosListasPreciosFacade
     if (psf.getNombre() != null && !psf.getNombre().isEmpty()) {
       String s = psf.getNombre().toUpperCase();
       Predicate p1 =
-          cb.like(root.get(ProductosListasPrecios_.nombreLista), String.format("%%%s%%", s));
+          cb.like(root.get(ProductosListasPrecios_.nombreLista), "%%%s%%".formatted(s));
 
       p = appendAndPredicate(cb, p, p1);
     }

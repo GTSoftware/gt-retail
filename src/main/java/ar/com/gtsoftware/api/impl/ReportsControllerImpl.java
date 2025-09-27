@@ -8,7 +8,7 @@ import ar.com.gtsoftware.search.reportes.ReporteVentasSearchFilter;
 import ar.com.gtsoftware.service.ReportesVentaService;
 import java.util.ArrayList;
 import java.util.List;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 

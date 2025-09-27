@@ -18,7 +18,7 @@ package ar.com.gtsoftware.dto.domain;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 
@@ -66,9 +66,9 @@ public class RemitoDto {
    */
   public String getNombreOrigen() {
     if (isOrigenInterno) {
-      return String.format("INTERNO: %s", idOrigenInterno.toString());
+      return "INTERNO: %s".formatted(idOrigenInterno.toString());
     }
-    return String.format("EXTERNO: %s", idOrigenExterno.toString());
+    return "EXTERNO: %s".formatted(idOrigenExterno.toString());
   }
 
   /**
@@ -78,10 +78,9 @@ public class RemitoDto {
    */
   public String getNombreDestino() {
     if (isDestinoInterno) {
-      return String.format("INTERNO: %s", idDestinoPrevistoInterno.toString());
+      return "INTERNO: %s".formatted(idDestinoPrevistoInterno.toString());
     }
-    return String.format(
-        "EXTERNO: %s Dirección: %s %s Piso: %s Depto: %s (%s) %s - %s",
+    return "EXTERNO: %s Dirección: %s %s Piso: %s Depto: %s (%s) %s - %s".formatted(
         idDestinoPrevistoExterno.toString(),
         StringUtils.defaultString(idDestinoPrevistoExterno.getCalle()),
         StringUtils.defaultString(idDestinoPrevistoExterno.getAltura()),

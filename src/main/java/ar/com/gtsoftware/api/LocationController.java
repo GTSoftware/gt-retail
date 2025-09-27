@@ -5,7 +5,7 @@ import ar.com.gtsoftware.api.response.location.LocationTown;
 import ar.com.gtsoftware.dto.domain.UbicacionPaisesDto;
 import ar.com.gtsoftware.dto.domain.UbicacionProvinciasDto;
 import java.util.List;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

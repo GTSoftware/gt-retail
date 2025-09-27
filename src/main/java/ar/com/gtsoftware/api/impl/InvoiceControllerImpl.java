@@ -21,7 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -60,8 +60,7 @@ public class InvoiceControllerImpl implements InvoiceController {
         .posType(fiscalPuntosVentaDto.getTipo().name())
         .byDefault(TiposPuntosVenta.ELECTRONICO == fiscalPuntosVentaDto.getTipo())
         .displayName(
-            String.format(
-                "[%s-%s] %s",
+            "[%s-%s] %s".formatted(
                 fiscalPuntosVentaDto.getNroPuntoVenta(),
                 fiscalPuntosVentaDto.getTipo().name(),
                 fiscalPuntosVentaDto.getDescripcion()))
@@ -96,8 +95,7 @@ public class InvoiceControllerImpl implements InvoiceController {
 
     return InvoiceResponse.builder()
         .invoiceNumber(
-            String.format(
-                "%s %s-%s",
+            "%s %s-%s".formatted(
                 idRegistro.getLetraFactura(),
                 idRegistro.getPuntoVentaFactura(),
                 idRegistro.getNumeroFactura()))

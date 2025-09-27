@@ -19,10 +19,10 @@ import ar.com.gtsoftware.entity.UbicacionLocalidades;
 import ar.com.gtsoftware.entity.UbicacionLocalidades_;
 import ar.com.gtsoftware.entity.UbicacionProvincias_;
 import ar.com.gtsoftware.search.LocalidadesSearchFilter;
-import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -52,7 +52,7 @@ public class UbicacionLocalidadesFacade
       Predicate p1 =
           cb.like(
               root.get(UbicacionLocalidades_.nombreLocalidad),
-              String.format("%%%s%%", lsf.getNombreLocalidad().toUpperCase()));
+              "%%%s%%".formatted(lsf.getNombreLocalidad().toUpperCase()));
       p = appendOrPredicate(cb, p, p1);
     }
     if (lsf.getIdProvincia() != null) {

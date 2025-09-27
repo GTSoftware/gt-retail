@@ -5,6 +5,7 @@ import io.jsonwebtoken.Clock;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.impl.DefaultClock;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
@@ -19,6 +20,7 @@ public class JwtTokenUtil implements Serializable {
 
   static final String CLAIM_KEY_USERNAME = "sub";
   static final String CLAIM_KEY_CREATED = "iat";
+  @Serial
   private static final long serialVersionUID = -3301605591108950415L;
   private Clock clock = DefaultClock.INSTANCE;
 

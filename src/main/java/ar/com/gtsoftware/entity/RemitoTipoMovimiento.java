@@ -15,7 +15,7 @@
  */
 package ar.com.gtsoftware.entity;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 

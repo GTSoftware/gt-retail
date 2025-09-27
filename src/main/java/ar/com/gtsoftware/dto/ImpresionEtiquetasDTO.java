@@ -16,6 +16,7 @@
 package ar.com.gtsoftware.dto;
 
 import ar.com.gtsoftware.dto.domain.ProductosDto;
+import java.io.Serial;
 import java.io.Serializable;
 import lombok.Builder;
 import lombok.Data;
@@ -31,6 +32,7 @@ import lombok.EqualsAndHashCode;
 @Builder
 public class ImpresionEtiquetasDTO implements Serializable {
 
+  @Serial
   private static final long serialVersionUID = 1L;
   private final int nroItem;
   @EqualsAndHashCode.Include private ProductosDto producto;

@@ -20,12 +20,12 @@ import ar.com.gtsoftware.entity.Parametros_;
 import ar.com.gtsoftware.search.AbstractSearchFilter;
 import java.util.Collections;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -77,9 +77,9 @@ public class ParametrosFacade extends AbstractFacade<Parametros, AbstractSearchF
     Root<Parametros> parametro = cq.from(Parametros.class);
     cq.select(parametro);
     Predicate p1 =
-        cb.like(parametro.get(Parametros_.nombreParametro), String.format("%%%s%%", txt));
+        cb.like(parametro.get(Parametros_.nombreParametro), "%%%s%%".formatted(txt));
     Predicate p2 =
-        cb.like(parametro.get(Parametros_.descripcionParametro), String.format("%%%s%%", txt));
+        cb.like(parametro.get(Parametros_.descripcionParametro), "%%%s%%".formatted(txt));
     cq.where(cb.or(p1, p2));
     TypedQuery<Parametros> q = em.createQuery(cq);
 
