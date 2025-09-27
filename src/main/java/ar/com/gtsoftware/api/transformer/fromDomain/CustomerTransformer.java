@@ -15,6 +15,7 @@ public class CustomerTransformer {
   private static final String ADDRESS_FORMAT = "%s %s Piso: %s Dpto: %s (%s) %s - %s - %s";
   private static final String IDENTIFICATION_FORMAT = "%s %s";
   private final PhoneTransformer phoneTransformer;
+  private final LocationTownTransformer locationTownTransformer;
 
   public List<CustomerResponse> transformCustomers(List<PersonasDto> personasDtoList) {
     List<CustomerResponse> customerResponses = new ArrayList<>(personasDtoList.size());
@@ -54,7 +55,7 @@ public class CustomerTransformer {
         .version(personasDto.getVersion())
         .pais(personasDto.getIdPais())
         .provincia(personasDto.getIdProvincia())
-        .localidad(personasDto.getIdLocalidad())
+        .town(locationTownTransformer.transform(personasDto.getIdLocalidad()))
         .genero(personasDto.getIdGenero())
         .tipoDocumento(
             IdentificationType.builder()

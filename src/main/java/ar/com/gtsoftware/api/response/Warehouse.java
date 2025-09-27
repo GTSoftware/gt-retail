@@ -13,5 +13,10 @@ public class Warehouse {
   private String warehouseName;
   private Long branchId;
   private String branchName;
+  private String address;
+  private Boolean active;
+  private Long countryId;
+  private Long provinceId;
+  private Long localityId;
   private String displayName;
 }

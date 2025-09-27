@@ -198,6 +198,20 @@ const getV2 = async (url) => {
   }
 }
 
+const del = async (url) => {
+  try {
+    const response = await axios.delete(getUrl(url), getRequestHeaders())
+    if (!response) {
+      log.error("No response from server", url)
+      return null
+    } else {
+      return response.data
+    }
+  } catch (error) {
+    throw getErrorData(error)
+  }
+}
+
 const getWithFileDownload = (url, cb, errorCb) => {
   const config = getRequestHeaders()
   config["responseType"] = "blob"
@@ -231,4 +245,5 @@ export {
   patchV2,
   postWithFileDownload,
   getWithFileDownload,
+  del,
 }

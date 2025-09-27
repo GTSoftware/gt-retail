@@ -62,6 +62,7 @@ public class PersonaDtoTransformer {
     customer.setId(existingCustomer.getId());
     customer.setActivo(updateCustomerRequest.isActivo());
     customer.setCliente(existingCustomer.isCliente());
+    customer.setProveedor(existingCustomer.isProveedor());
 
     return customer;
   }

@@ -3,7 +3,7 @@ package ar.com.gtsoftware.api.transformer.fromDomain;
 import ar.com.gtsoftware.api.response.PriceList;
 import ar.com.gtsoftware.api.transformer.Transformer;
 import ar.com.gtsoftware.dto.domain.ProductosListasPreciosDto;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import org.springframework.stereotype.Component;
@@ -26,7 +26,7 @@ public class PriceListTransformer implements Transformer<ProductosListasPreciosD
   public List<PriceList> transform(List<ProductosListasPreciosDto> from) {
     Objects.requireNonNull(from);
 
-    List<PriceList> priceList = new LinkedList<>();
+    List<PriceList> priceList = new ArrayList<>(from.size());
     for (ProductosListasPreciosDto listPrecio : from) {
       priceList.add(transform(listPrecio));
     }

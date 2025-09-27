@@ -38,7 +38,7 @@ public class UbicacionLocalidadesDto {
   @Size(min = 1, max = 20)
   private String codigoPostal;
 
-  private Integer version;
+  private UbicacionProvinciasDto idProvincia;
 
-  private String displayName;
+  private Integer version;
 }

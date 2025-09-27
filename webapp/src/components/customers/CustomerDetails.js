@@ -17,6 +17,7 @@ import { Checkbox } from "primereact/checkbox"
 import { DataTable } from "primereact/datatable"
 import { Column } from "primereact/column"
 import { LocationService } from "../../service/LocationService"
+import AddTownDialog from "./AddTownDialog"
 
 const newCustomerSchema = {
   type: "object",
@@ -98,6 +99,9 @@ export const CustomerDetails = (props) => {
   const [towns, setTowns] = useState([])
   const [identificationTypes, setIdentificationTypes] = useState([])
 
+  // Dialog state for adding new town (localidad)
+  const [showAddTownDialog, setShowAddTownDialog] = useState(false)
+
   const [formData, setFormData] = useState({
     email: "",
     documento: "",
@@ -147,14 +151,11 @@ export const CustomerDetails = (props) => {
       })
       customersService.getIdentificationTypes(tipoPersoneria.id, (data) => {
         setIdentificationTypes(data)
-        //setTipoDocumento(data[0])
       })
     }
   }, [formData?.tipoPersoneria])
   useEffect(() => {
     if (formData.pais) {
-      //setProvincia(null)
-      //setLocalidad(null)
       setProvinces([])
       setTowns([])
       locationService.getProvinces(formData.pais.id, setProvinces)
@@ -162,9 +163,8 @@ export const CustomerDetails = (props) => {
   }, [formData?.pais])
   useEffect(() => {
     if (formData.provincia) {
-      //setLocalidad(null)
       setTowns([])
-      locationService.getTowns(formData.provincia.id, "", setTowns)
+      locationService.getTowns(formData.provincia.id, "").then(setTowns)
     }
   }, [formData?.provincia])
 
@@ -568,18 +568,41 @@ export const CustomerDetails = (props) => {
             </div>
 
             <div className="p-col-4">
-              <label htmlFor="localidad">Localidad:</label>
-
-              <Field
-                component={Dropdown}
-                options={towns}
-                optionLabel="nombreLocalidad"
-                dataKey="id"
-                name="localidad"
-                value={formData.localidad}
-              />
-
-              <FieldError name="localidad" />
+              <div className="p-grid ">
+                <div className="p-col-10">
+                  <label htmlFor="localidad">Localidad:</label>
+                  <Field
+                    component={Dropdown}
+                    options={towns}
+                    optionLabel="displayName"
+                    dataKey="townId"
+                    name="localidad"
+                    value={formData.localidad}
+                  />
+                  <FieldError name="localidad" />
+                </div>
+                <div className="p-col-2 p-d-flex p-flex-column p-jc-end">
+                  <Button
+                    type="button"
+                    icon="fa fa-fw fa-plus"
+                    className="p-button-success"
+                    onClick={() => {
+                      if (!formData.provincia) {
+                        if (toast && toast.current) {
+                          toast.current.show({
+                            severity: "warn",
+                            summary: "Provincia requerida",
+                            detail:
+                              "Seleccione una provincia antes de agregar una localidad",
+                          })
+                        }
+                        return
+                      }
+                      setShowAddTownDialog(true)
+                    }}
+                  />
+                </div>
+              </div>
             </div>
 
             <div className="p-col-3">
@@ -711,6 +734,25 @@ export const CustomerDetails = (props) => {
           }}
         />
       </Form>
+
+      <AddTownDialog
+        visible={showAddTownDialog}
+        onHide={() => setShowAddTownDialog(false)}
+        provinceId={formData?.provincia?.id}
+        notify={(msg) => {
+          if (toast && toast.current && toast.current.show) {
+            toast.current.show(msg)
+          }
+        }}
+        onCreated={(created) => {
+          if (formData?.provincia?.id) {
+            locationService.getTowns(formData.provincia.id, "").then((data) => {
+              setTowns(data)
+              setFormData({ ...formData, localidad: created })
+            })
+          }
+        }}
+      />
     </div>
   )
 }

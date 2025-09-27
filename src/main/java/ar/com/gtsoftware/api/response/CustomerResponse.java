@@ -1,9 +1,9 @@
 package ar.com.gtsoftware.api.response;
 
+import ar.com.gtsoftware.api.response.location.LocationTown;
 import ar.com.gtsoftware.dto.domain.FiscalResponsabilidadesIvaDto;
 import ar.com.gtsoftware.dto.domain.LegalGenerosDto;
 import ar.com.gtsoftware.dto.domain.LegalTiposPersoneriaDto;
-import ar.com.gtsoftware.dto.domain.UbicacionLocalidadesDto;
 import ar.com.gtsoftware.dto.domain.UbicacionPaisesDto;
 import ar.com.gtsoftware.dto.domain.UbicacionProvinciasDto;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -29,7 +29,7 @@ public class CustomerResponse {
   private Integer version;
   private UbicacionPaisesDto pais;
   private UbicacionProvinciasDto provincia;
-  private UbicacionLocalidadesDto localidad;
+  private LocationTown town;
   private LegalGenerosDto genero;
   private LegalTiposPersoneriaDto tipoPersoneria;
   private IdentificationType tipoDocumento;

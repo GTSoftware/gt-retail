@@ -136,7 +136,9 @@ export const SupplierDetails = (props) => {
   }, [])
 
   useEffect(() => {
-    suppliersService.getSupplier(customerId).then(loadSupplier)
+    if (customerId) {
+      suppliersService.getSupplier(customerId).then(loadSupplier)
+    }
   }, [customerId])
 
   useEffect(() => {
@@ -166,7 +168,7 @@ export const SupplierDetails = (props) => {
     if (formData.provincia) {
       //setLocalidad(null)
       setTowns([])
-      locationService.getTowns(formData.provincia.id, "", setTowns)
+      locationService.getTowns(formData.provincia.id, "").then(setTowns)
     }
   }, [formData?.provincia])
 
@@ -187,7 +189,7 @@ export const SupplierDetails = (props) => {
       depto: customer.depto,
       pais: customer.pais,
       provincia: customer.provincia,
-      localidad: customer.localidad,
+      localidad: customer.town,
       genero: customer.genero,
       tipoPersoneria: customer.tipoPersoneria,
       tipoDocumento: customer.tipoDocumento,
@@ -580,8 +582,8 @@ export const SupplierDetails = (props) => {
               <Field
                 component={Dropdown}
                 options={towns}
-                optionLabel="nombreLocalidad"
-                dataKey="id"
+                optionLabel="displayName"
+                dataKey="townId"
                 name="localidad"
                 value={formData.localidad}
               />

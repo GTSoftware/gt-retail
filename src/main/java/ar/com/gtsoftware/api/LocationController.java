@@ -1,11 +1,13 @@
 package ar.com.gtsoftware.api;
 
-import ar.com.gtsoftware.dto.domain.UbicacionLocalidadesDto;
+import ar.com.gtsoftware.api.request.location.CreateOrUpdateTownRequest;
+import ar.com.gtsoftware.api.response.location.LocationTown;
 import ar.com.gtsoftware.dto.domain.UbicacionPaisesDto;
 import ar.com.gtsoftware.dto.domain.UbicacionProvinciasDto;
 import java.util.List;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import javax.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 public interface LocationController {
 
@@ -16,6 +18,13 @@ public interface LocationController {
   List<UbicacionProvinciasDto> getProvinces(@RequestParam Long countryId);
 
   @GetMapping(path = "/locations/towns")
-  List<UbicacionLocalidadesDto> getTowns(
+  List<LocationTown> getTowns(
       @RequestParam Long provinceId, @RequestParam(required = false) String query);
+
+  @PostMapping(path = "/locations/towns")
+  LocationTown createTown(@Valid @RequestBody CreateOrUpdateTownRequest request);
+
+  @PatchMapping(path = "/locations/towns/{townId}")
+  @ResponseStatus(code = HttpStatus.NO_CONTENT)
+  void updateTown(@PathVariable Long townId, @RequestBody CreateOrUpdateTownRequest request);
 }

@@ -16,7 +16,7 @@ import ar.com.gtsoftware.dto.domain.ProductosSubRubrosDto;
 import ar.com.gtsoftware.dto.domain.ProductosTiposPorcentajesDto;
 import ar.com.gtsoftware.dto.domain.ProductosTiposProveeduriaDto;
 import ar.com.gtsoftware.dto.domain.ProductosTiposUnidadesDto;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
@@ -67,7 +67,7 @@ public class ProductoDtoTransformer
   }
 
   private List<ProductosPreciosDto> transformPrecios(List<SalePrice> salePrices) {
-    List<ProductosPreciosDto> preciosDto = new LinkedList<>();
+    List<ProductosPreciosDto> preciosDto = new ArrayList<>();
     for (SalePrice salePrice : salePrices) {
       preciosDto.add(
           ProductosPreciosDto.builder()
@@ -84,7 +84,7 @@ public class ProductoDtoTransformer
   }
 
   private List<ProductosPorcentajesDto> transformPorcentajes(List<PricePercent> percentages) {
-    List<ProductosPorcentajesDto> porcentajesDto = new LinkedList<>();
+    List<ProductosPorcentajesDto> porcentajesDto = new ArrayList<>();
     for (PricePercent percentage : percentages) {
       porcentajesDto.add(
           ProductosPorcentajesDto.builder()
@@ -133,7 +133,7 @@ public class ProductoDtoTransformer
   public List<ProductosDto> transform(List<CreateOrUpdateProductRequest> from) {
     Objects.requireNonNull(from);
 
-    List<ProductosDto> products = new LinkedList<>();
+    List<ProductosDto> products = new ArrayList<>();
     for (CreateOrUpdateProductRequest productosDto : from) {
       products.add(transform(productosDto));
     }

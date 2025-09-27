@@ -40,6 +40,7 @@ import { SubCategoriesInventory } from "./components/products/categories/SubCate
 import { MyAccount } from "./components/account/MyAccount"
 import { SuppliersInventory } from "./components/suppliers/SuppliersInventory"
 import { SupplierDetails } from "./components/suppliers/SupplierDetails"
+import { WarehousesInventory } from "./components/stock/WarehousesInventory"
 
 const ProtectedRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -162,6 +163,13 @@ class App extends Component {
           icon: "fa fa-fw fa-history",
           command: () => {
             window.location = "#/product-history"
+          },
+        },
+        {
+          label: "Depósitos",
+          icon: "fa fa-fw fa-warehouse",
+          command: () => {
+            window.location = "#/warehouses"
           },
         },
       ],
@@ -397,12 +405,15 @@ class App extends Component {
             <ProtectedRoute path="/batch-pricing" component={BatchPricing} />
             <ProtectedRoute path="/product-history" component={ProductHistory} />
             <ProtectedRoute path="/delivery-notes" component={SearchDeliveryNotes} />
+            <ProtectedRoute path="/warehouses" component={WarehousesInventory} />
             <ProtectedRoute path="/sales" component={SearchSales} />
             <ProtectedRoute path="/suppliers" component={SuppliersInventory} />
             <ProtectedRoute
               path="/supplier/:supplierId"
               component={SupplierDetails}
             />
+            <ProtectedRoute path="/supplier/" component={SupplierDetails} />
+
             <ProtectedRoute
               path="/suppliers/invoices"
               component={SearchSupplierInvoices}

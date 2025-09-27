@@ -619,7 +619,7 @@ export class AddNewCustomerDialog extends Component {
     const { provincia } = this.state.formData
 
     if (query && provincia) {
-      this.locationService.getTowns(provincia.id, query, this.handleTowns)
+      this.locationService.getTowns(provincia.id, query).then(this.handleTowns)
     }
   }
 

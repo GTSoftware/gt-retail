@@ -1,6 +1,9 @@
 package ar.com.gtsoftware.api.impl;
 
 import ar.com.gtsoftware.api.LocationController;
+import ar.com.gtsoftware.api.request.location.CreateOrUpdateTownRequest;
+import ar.com.gtsoftware.api.response.location.LocationTown;
+import ar.com.gtsoftware.api.transformer.fromDomain.LocationTownTransformer;
 import ar.com.gtsoftware.dto.domain.UbicacionLocalidadesDto;
 import ar.com.gtsoftware.dto.domain.UbicacionPaisesDto;
 import ar.com.gtsoftware.dto.domain.UbicacionProvinciasDto;
@@ -11,6 +14,7 @@ import ar.com.gtsoftware.service.UbicacionPaisesService;
 import ar.com.gtsoftware.service.UbicacionProvinciasService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -20,6 +24,7 @@ public class LocationControllerImpl implements LocationController {
   private final UbicacionPaisesService paisesService;
   private final UbicacionProvinciasService provinciasService;
   private final UbicacionLocalidadesService localidadesService;
+  private final LocationTownTransformer locationTownTransformer;
 
   @Override
   public List<UbicacionPaisesDto> getCountries() {
@@ -34,17 +39,35 @@ public class LocationControllerImpl implements LocationController {
   }
 
   @Override
-  public List<UbicacionLocalidadesDto> getTowns(Long provinceId, String query) {
+  public List<LocationTown> getTowns(Long provinceId, String query) {
     final LocalidadesSearchFilter sf =
         LocalidadesSearchFilter.builder().idProvincia(provinceId).nombreLocalidad(query).build();
     sf.addSortField("nombreLocalidad", true);
 
     final List<UbicacionLocalidadesDto> localidades = localidadesService.findAllBySearchFilter(sf);
-    for (UbicacionLocalidadesDto localidad : localidades) {
-      localidad.setDisplayName(
-          String.format("(%s) %s", localidad.getCodigoPostal(), localidad.getNombreLocalidad()));
-    }
 
-    return localidades;
+    return locationTownTransformer.transform(localidades);
+  }
+
+  @Override
+  @Transactional
+  public LocationTown createTown(CreateOrUpdateTownRequest request) {
+
+    UbicacionLocalidadesDto dto =
+        UbicacionLocalidadesDto.builder()
+            .nombreLocalidad(request.getName())
+            .codigoPostal(request.getPostalCode())
+            .version(request.getVersion())
+            .idProvincia(provinciasService.find(request.getProvinceId()))
+            .build();
+
+    UbicacionLocalidadesDto created = localidadesService.createOrEdit(dto);
+
+    return locationTownTransformer.transform(created);
+  }
+
+  @Override
+  public void updateTown(Long townId, CreateOrUpdateTownRequest request) {
+    throw new UnsupportedOperationException();
   }
 }

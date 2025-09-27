@@ -1,17 +1,17 @@
-version: "3.8"
 
 services:
+
   backend:
+    platform: linux/amd64
     container_name: gt-retail-backend
     image: backend-app-prod
     environment:
       APP_NAME: gt-retail
       JWT_SIGN_KEY: secret
-      DB_URL: jdbc:postgresql://192.168.2.5:5432/retail_rt
-      #DB_URL: jdbc:postgresql://postgres:5432/retail
+      DB_URL: jdbc:postgresql://postgres:5432/retail
       DB_PASSWRD: postgres
       DB_USER: postgres
-      PROFILE: local
+      PROFILE: prod
     ports:
       - '8090:8090'
     build:
@@ -21,6 +21,7 @@ services:
       - database
 
   frontend:
+    platform: linux/amd64
     container_name: gt-retail-frontend
     image: frontend-app-prod
     ports:
@@ -36,6 +37,7 @@ services:
       - backend
 
   database:
+    platform: linux/amd64
     container_name: postgres
     image: postgres:13-alpine
     ports:

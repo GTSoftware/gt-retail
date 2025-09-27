@@ -1,4 +1,5 @@
-import { get } from "../utils/HTTPService"
+import { get, getV2, postV2 } from "../utils/HTTPService"
+import { toUpperCaseTrim } from "../utils/StringUtils"
 
 export class LocationService {
   getCountries(successCallback) {
@@ -9,7 +10,19 @@ export class LocationService {
     get(`/locations/provinces?countryId=${countryId}`, successCallback)
   }
 
-  getTowns(provinceId, query, successCallback) {
-    get(`/locations/towns?provinceId=${provinceId}&query=${query}`, successCallback)
+  async getTowns(provinceId, query) {
+    return getV2(`/locations/towns?provinceId=${provinceId}&query=${query}`)
+  }
+
+  async addTown(data) {
+    return await postV2(`/locations/towns`, transformTown(data))
+  }
+}
+
+const transformTown = (data) => {
+  return {
+    name: toUpperCaseTrim(data.name),
+    postalCode: toUpperCaseTrim(data.postalCode),
+    provinceId: data.provinceId,
   }
 }
