@@ -46,7 +46,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-cache'
     implementation 'org.springframework.boot:spring-boot-starter-logging'
-    implementation 'org.springframework.boot:spring-boot-starter-activemq'
     implementation 'org.springframework.ws:spring-ws-security'
     implementation 'org.springframework.ws:spring-ws-core'
     testImplementation 'org.springframework.ws:spring-ws-test'
@@ -86,6 +85,12 @@ dependencies {
     implementation 'com.lowagie:itext:2.1.7.js6'
     implementation "jakarta.servlet:jakarta.servlet-api:6.0.0"
     implementation 'com.google.zxing:core:3.5.1'
+
+    //Message queue
+    implementation 'jakarta.jms:jakarta.jms-api:3.1.0'
+    implementation 'org.apache.activemq:activemq-broker:6.1.7'
+    implementation 'org.apache.activemq:activemq-client:6.1.7'
+    implementation 'org.springframework:spring-jms:6.0.21'
 }
 
 test {
