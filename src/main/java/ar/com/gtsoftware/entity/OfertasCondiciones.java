@@ -19,9 +19,9 @@ package ar.com.gtsoftware.entity;
 
 import ar.com.gtsoftware.rules.Campo;
 import ar.com.gtsoftware.rules.Operacion;
-import java.io.Serializable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import java.io.Serializable;
 import lombok.Getter;
 import lombok.Setter;
 

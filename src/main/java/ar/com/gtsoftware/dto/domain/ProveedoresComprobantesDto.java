@@ -16,10 +16,10 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import lombok.*;
 
 /**
@@ -70,12 +70,13 @@ public class ProveedoresComprobantesDto {
   @Override
   public String toString() {
     if (idRegistro != null) {
-      return "[%d] %s %s %s-%s".formatted(
-          getId(),
-          tipoComprobante.getNombreComprobante(),
-          letra,
-          idRegistro.getPuntoVentaFactura(),
-          idRegistro.getNumeroFactura());
+      return "[%d] %s %s %s-%s"
+          .formatted(
+              getId(),
+              tipoComprobante.getNombreComprobante(),
+              letra,
+              idRegistro.getPuntoVentaFactura(),
+              idRegistro.getNumeroFactura());
     }
     return "[%d] %s".formatted(getId(), tipoComprobante.getNombreComprobante());
   }

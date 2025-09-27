@@ -19,12 +19,12 @@ import ar.com.gtsoftware.entity.PersonasCuentaCorriente;
 import ar.com.gtsoftware.entity.PersonasCuentaCorriente_;
 import ar.com.gtsoftware.entity.Personas_;
 import ar.com.gtsoftware.search.PersonasCuentaCorrienteSearchFilter;
-import java.math.BigDecimal;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import java.math.BigDecimal;
 import org.springframework.stereotype.Repository;
 
 @Repository

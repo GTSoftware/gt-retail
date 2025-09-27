@@ -188,9 +188,7 @@ public class LibroIVAComprasServiceImpl implements LibroIVAService {
     }
     facDTO.setNumeroFactura(
         NUMERO_FACTURA_FMT.formatted(
-            factura.getLetraFactura(),
-            factura.getPuntoVentaFactura(),
-            factura.getNumeroFactura()));
+            factura.getLetraFactura(), factura.getPuntoVentaFactura(), factura.getNumeroFactura()));
     facDTO.setNumeroComprobante(factura.getNumeroFactura());
     facDTO.setLetraFactura(factura.getLetraFactura());
     facDTO.setPuntoVenta(factura.getPuntoVentaFactura());

@@ -15,10 +15,10 @@ import ar.com.gtsoftware.dto.fiscal.reginfo.RegimenInformativoVentas;
 import ar.com.gtsoftware.search.LibroIVASearchFilter;
 import ar.com.gtsoftware.service.fiscal.RegimenInformativoService;
 import ar.com.gtsoftware.service.fiscal.WorkBookFiscalBookService;
+import jakarta.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collections;
-import jakarta.servlet.http.HttpServletResponse;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,13 +35,10 @@ class FiscalBookControllerImplTest {
 
   private FiscalBookControllerImpl controller;
 
-  @Mock
-  private RegimenInformativoService regimenInformativoServiceMock;
-  @Mock
-  private WorkBookFiscalBookService workBookFiscalBookServiceMock;
+  @Mock private RegimenInformativoService regimenInformativoServiceMock;
+  @Mock private WorkBookFiscalBookService workBookFiscalBookServiceMock;
 
-  @Captor
-  private ArgumentCaptor<LibroIVASearchFilter> filterArgumentCaptor;
+  @Captor private ArgumentCaptor<LibroIVASearchFilter> filterArgumentCaptor;
 
   private HttpServletResponse responseMock;
 

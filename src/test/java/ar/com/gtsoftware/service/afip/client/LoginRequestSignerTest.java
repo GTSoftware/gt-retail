@@ -22,8 +22,7 @@ class LoginRequestSignerTest {
 
   private LoginRequestSigner signer;
 
-  @Mock
-  private ParametrosService parametrosServiceMock;
+  @Mock private ParametrosService parametrosServiceMock;
 
   @BeforeEach
   void setUp() {

@@ -18,9 +18,9 @@ import ar.com.gtsoftware.service.ComprobantesService;
 import ar.com.gtsoftware.service.NoExtraCostPaymentMethodsService;
 import ar.com.gtsoftware.service.PaymentsService;
 import ar.com.gtsoftware.utils.SecurityUtils;
+import jakarta.validation.Valid;
 import java.util.*;
 import java.util.stream.Collectors;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.RestController;
@@ -137,8 +137,8 @@ public class PaymentPendingSalesControllerImpl implements PaymentPendingSalesCon
   private String transformPaymentPlan(SaleToPayDto saleToPayDto) {
     final NegocioPlanesPagoDto idPlan = saleToPayDto.getPayment().getIdPlan();
     if (nonNull(idPlan)) {
-      return "%s en %d pago/s".formatted(
-          idPlan.getNombre(), saleToPayDto.getPayment().getIdDetallePlan().getCuotas());
+      return "%s en %d pago/s"
+          .formatted(idPlan.getNombre(), saleToPayDto.getPayment().getIdDetallePlan().getCuotas());
     }
 
     return StringUtils.EMPTY;

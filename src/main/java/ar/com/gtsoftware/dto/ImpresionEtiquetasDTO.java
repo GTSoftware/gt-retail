@@ -32,8 +32,7 @@ import lombok.EqualsAndHashCode;
 @Builder
 public class ImpresionEtiquetasDTO implements Serializable {
 
-  @Serial
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
   private final int nroItem;
   @EqualsAndHashCode.Include private ProductosDto producto;
   @Builder.Default private int cantidad = 1;

@@ -4,10 +4,9 @@ import ar.com.gtsoftware.dto.reportes.VentaMensual;
 import ar.com.gtsoftware.dto.reportes.VentasMensualesReport;
 import ar.com.gtsoftware.search.reportes.ReporteVentasMensualesSearchFilter;
 import ar.com.gtsoftware.service.ReportesVentasMensualesService;
-import java.math.BigInteger;
-import java.util.List;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

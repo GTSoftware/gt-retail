@@ -39,6 +39,7 @@ public class AuthTicket implements Serializable {
 
   @Override
   public String toString() {
-    return "AuthTicket{token=%s, sign=%s, expirationDate=%s}".formatted(token, sign, expirationDate);
+    return "AuthTicket{token=%s, sign=%s, expirationDate=%s}"
+        .formatted(token, sign, expirationDate);
   }
 }

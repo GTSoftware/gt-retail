@@ -15,10 +15,10 @@
  */
 package ar.com.gtsoftware.entity;
 
-import java.util.Date;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import java.util.Date;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -64,6 +64,7 @@ public class Depositos extends BaseEntity {
   @NotNull
   @Column(name = "activo")
   private boolean activo;
+
   //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDepositoMovimiento")
   //    private List<StockMovimientos> stockMovimientosList;
   @JoinColumn(

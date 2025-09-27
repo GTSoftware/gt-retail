@@ -14,33 +14,34 @@ import org.springframework.jms.support.converter.MessageType;
 @Configuration
 public class JmsConfiguration {
 
-    @Bean
-    public ConnectionFactory connectionFactory() {
-        return new ActiveMQConnectionFactory("vm://localhost?broker.persistent=false");
-    }
+  @Bean
+  public ConnectionFactory connectionFactory() {
+    return new ActiveMQConnectionFactory("vm://localhost?broker.persistent=false");
+  }
 
-    @Bean
-    public MessageConverter jacksonJmsMessageConverter() {
-        MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
-        converter.setTargetType(MessageType.TEXT);
-        converter.setTypeIdPropertyName("_type");
-        return converter;
-    }
+  @Bean
+  public MessageConverter jacksonJmsMessageConverter() {
+    MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
+    converter.setTargetType(MessageType.TEXT);
+    converter.setTypeIdPropertyName("_type");
+    return converter;
+  }
 
-    @Bean
-    public JmsListenerContainerFactory<?> jmsListenerContainerFactory(ConnectionFactory connectionFactory) {
-        DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
-        factory.setConnectionFactory(connectionFactory);
-        factory.setPubSubDomain(false); // using queues
-        factory.setMessageConverter(jacksonJmsMessageConverter());
-        //factory.setSessionTransacted(true); // enable if you want local JMS transactions
-        return factory;
-    }
+  @Bean
+  public JmsListenerContainerFactory<?> jmsListenerContainerFactory(
+      ConnectionFactory connectionFactory) {
+    DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
+    factory.setConnectionFactory(connectionFactory);
+    factory.setPubSubDomain(false); // using queues
+    factory.setMessageConverter(jacksonJmsMessageConverter());
+    // factory.setSessionTransacted(true); // enable if you want local JMS transactions
+    return factory;
+  }
 
-    @Bean
-    public JmsTemplate jmsTemplate(ConnectionFactory connectionFactory) {
-        JmsTemplate template = new JmsTemplate(connectionFactory);
-        template.setMessageConverter(jacksonJmsMessageConverter());
-        return template;
-    }
+  @Bean
+  public JmsTemplate jmsTemplate(ConnectionFactory connectionFactory) {
+    JmsTemplate template = new JmsTemplate(connectionFactory);
+    template.setMessageConverter(jacksonJmsMessageConverter());
+    return template;
+  }
 }

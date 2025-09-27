@@ -36,14 +36,10 @@ class NoExtraCostPaymentMethodsServiceImplTest {
   private AutoCloseable mocks;
 
   private NoExtraCostPaymentMethodsServiceImpl service;
-  @Mock
-  private NegocioFormasPagoService mockFormasPagoService;
-  @Mock
-  private NegocioPlanesPagoService mockPlanesPagoService;
-  @Captor
-  private ArgumentCaptor<FormasPagoSearchFilter> formasPagoSearchFilterArgumentCaptor;
-  @Captor
-  private ArgumentCaptor<PlanesPagoSearchFilter> planesPagoSearchFilterArgumentCaptor;
+  @Mock private NegocioFormasPagoService mockFormasPagoService;
+  @Mock private NegocioPlanesPagoService mockPlanesPagoService;
+  @Captor private ArgumentCaptor<FormasPagoSearchFilter> formasPagoSearchFilterArgumentCaptor;
+  @Captor private ArgumentCaptor<PlanesPagoSearchFilter> planesPagoSearchFilterArgumentCaptor;
 
   @BeforeEach
   void setUp() {

@@ -17,12 +17,12 @@ package ar.com.gtsoftware.dao;
 
 import ar.com.gtsoftware.entity.*;
 import ar.com.gtsoftware.search.ProductoXDepositoSearchFilter;
-import java.math.BigDecimal;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import java.math.BigDecimal;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -84,11 +84,9 @@ public class ProductoXDepositoFacade
     CriteriaQuery<BigDecimal> cq = cb.createQuery(BigDecimal.class);
     Root<ProductoXDeposito> root = cq.from(ProductoXDeposito.class);
 
-
     cq.select(cb.sum(root.get(ProductoXDeposito_.stock).as(BigDecimal.class)));
 
-
-      if (sf.hasFilter()) {
+    if (sf.hasFilter()) {
       cq.where(createWhereFromSearchFilter(sf, cb, root));
     }
     BigDecimal result = em.createQuery(cq).getSingleResult();

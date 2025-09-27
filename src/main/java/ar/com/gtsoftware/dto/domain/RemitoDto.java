@@ -16,9 +16,9 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
+import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 
@@ -80,14 +80,15 @@ public class RemitoDto {
     if (isDestinoInterno) {
       return "INTERNO: %s".formatted(idDestinoPrevistoInterno.toString());
     }
-    return "EXTERNO: %s Dirección: %s %s Piso: %s Depto: %s (%s) %s - %s".formatted(
-        idDestinoPrevistoExterno.toString(),
-        StringUtils.defaultString(idDestinoPrevistoExterno.getCalle()),
-        StringUtils.defaultString(idDestinoPrevistoExterno.getAltura()),
-        StringUtils.defaultString(idDestinoPrevistoExterno.getPiso(), "-"),
-        StringUtils.defaultString(idDestinoPrevistoExterno.getDepto(), "-"),
-        idDestinoPrevistoExterno.getIdLocalidad().getCodigoPostal(),
-        idDestinoPrevistoExterno.getIdLocalidad().getNombreLocalidad(),
-        idDestinoPrevistoExterno.getIdProvincia().getNombreProvincia());
+    return "EXTERNO: %s Dirección: %s %s Piso: %s Depto: %s (%s) %s - %s"
+        .formatted(
+            idDestinoPrevistoExterno.toString(),
+            StringUtils.defaultString(idDestinoPrevistoExterno.getCalle()),
+            StringUtils.defaultString(idDestinoPrevistoExterno.getAltura()),
+            StringUtils.defaultString(idDestinoPrevistoExterno.getPiso(), "-"),
+            StringUtils.defaultString(idDestinoPrevistoExterno.getDepto(), "-"),
+            idDestinoPrevistoExterno.getIdLocalidad().getCodigoPostal(),
+            idDestinoPrevistoExterno.getIdLocalidad().getNombreLocalidad(),
+            idDestinoPrevistoExterno.getIdProvincia().getNombreProvincia());
   }
 }

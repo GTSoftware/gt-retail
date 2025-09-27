@@ -15,12 +15,12 @@
  */
 package ar.com.gtsoftware.entity;
 
-import java.io.Serial;
-import java.io.Serializable;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotNull;
+import java.io.Serial;
+import java.io.Serializable;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -32,8 +32,7 @@ import lombok.Setter;
 @Setter
 public class FiscalLetrasComprobantesPK implements Serializable {
 
-  @Serial
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   @Basic(optional = false)
   @NotNull

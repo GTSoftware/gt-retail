@@ -16,12 +16,12 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.*;
 
 /**
@@ -34,8 +34,7 @@ import lombok.*;
 @Builder
 public class StockMovimientosDto implements Serializable {
 
-  @Serial
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   @EqualsAndHashCode.Include private Long id;
   @NotNull private Date fechaMovimiento;

@@ -6,9 +6,9 @@ import ar.com.gtsoftware.dto.reportes.VentaPorProducto;
 import ar.com.gtsoftware.dto.reportes.VentaPorProductoReport;
 import ar.com.gtsoftware.search.reportes.ReporteVentasSearchFilter;
 import ar.com.gtsoftware.service.ReportesVentaService;
+import jakarta.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 

@@ -33,8 +33,7 @@ import lombok.EqualsAndHashCode;
 @Builder
 public class ImportesResponsabilidad implements Serializable {
 
-  @Serial
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   @EqualsAndHashCode.Include private FiscalResponsabilidadesIvaDto responsabilidadIva;
   private BigDecimal importeTotal;

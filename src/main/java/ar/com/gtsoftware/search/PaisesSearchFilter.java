@@ -24,8 +24,7 @@ import org.apache.commons.lang3.StringUtils;
 public class PaisesSearchFilter extends AbstractSearchFilter {
 
   /** */
-  @Serial
-  private static final long serialVersionUID = 2L;
+  @Serial private static final long serialVersionUID = 2L;
 
   private Integer idPais;
   private String nombrePais;

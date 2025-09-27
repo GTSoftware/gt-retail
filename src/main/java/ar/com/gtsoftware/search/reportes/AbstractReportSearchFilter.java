@@ -23,8 +23,7 @@ import java.io.Serializable;
 /** Search filter del que deben heredar los search filter para reportes */
 public class AbstractReportSearchFilter implements Serializable {
 
-  @Serial
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   private int pageSize = 30;
   private int firstRow = 0;

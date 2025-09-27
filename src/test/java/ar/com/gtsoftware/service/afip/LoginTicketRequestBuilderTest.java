@@ -22,10 +22,8 @@ class LoginTicketRequestBuilderTest {
   private AutoCloseable mocks;
 
   private LoginTicketRequestBuilder builder;
-  @Mock
-  private BusinessDateUtils dateUtilsMock;
-  @Mock
-  private ParametrosService parametrosServiceMock;
+  @Mock private BusinessDateUtils dateUtilsMock;
+  @Mock private ParametrosService parametrosServiceMock;
 
   @BeforeEach
   void setUp() {

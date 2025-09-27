@@ -113,8 +113,10 @@ public class VentasServiceImpl implements VentasService {
     }
     if (!isPresupuesto) {
       String descMovimiento =
-          "%s Nro: %d".formatted(
-              comprobante.getTipoComprobante().getNombreComprobante(), registro.getIdComprobante());
+          "%s Nro: %d"
+              .formatted(
+                  comprobante.getTipoComprobante().getNombreComprobante(),
+                  registro.getIdComprobante());
       cuentaCorrienteBean.registrarMovimientoCuenta(
           comprobante.getIdPersona(), comprobante.getTotalConSigno(), descMovimiento);
     }

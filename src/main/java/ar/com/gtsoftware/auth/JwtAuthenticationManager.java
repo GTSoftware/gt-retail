@@ -7,12 +7,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class JwtAuthenticationManager implements AuthenticationManager {
-    @Override
-    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        // The JWT filter (JwtTokenAuthorizationOncePerRequestFilter) performs the actual
-        // authentication and sets the SecurityContext accordingly. This manager acts as a
-        // pass-through to satisfy the AuthenticationManager requirement without altering
-        // the Authentication built by the filter.
-        return authentication;
-    }
+  @Override
+  public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+    // The JWT filter (JwtTokenAuthorizationOncePerRequestFilter) performs the actual
+    // authentication and sets the SecurityContext accordingly. This manager acts as a
+    // pass-through to satisfy the AuthenticationManager requirement without altering
+    // the Authentication built by the filter.
+    return authentication;
+  }
 }

@@ -26,10 +26,11 @@ public class SupplierInvoiceSearchResultTransformer
   private String getInvoiceNumber(ProveedoresComprobantesDto from) {
     final FiscalLibroIvaComprasDto idRegistro = from.getIdRegistro();
     if (Objects.nonNull(idRegistro)) {
-      return "%s %s-%s".formatted(
-          idRegistro.getLetraFactura(),
-          idRegistro.getPuntoVentaFactura(),
-          idRegistro.getNumeroFactura());
+      return "%s %s-%s"
+          .formatted(
+              idRegistro.getLetraFactura(),
+              idRegistro.getPuntoVentaFactura(),
+              idRegistro.getNumeroFactura());
     }
     return null;
   }

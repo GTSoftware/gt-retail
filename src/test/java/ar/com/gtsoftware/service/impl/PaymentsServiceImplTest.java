@@ -34,32 +34,19 @@ class PaymentsServiceImplTest {
 
   private PaymentsServiceImpl paymentsService;
 
-  @Mock
-  private RecibosFacade mockRecibosFacade;
-  @Mock
-  private ComprobantesFacade mockComprobantesFacade;
-  @Mock
-  private CajasMovimientosFacade mockCajasMovimientosFacade;
-  @Mock
-  private CajasFacade mockCajasFacade;
-  @Mock
-  private ComprobantesPagosFacade mockComprobantesPagosFacade;
-  @Mock
-  private PersonasCuentaCorrienteService mockPersonasCuentaCorrienteService;
-  @Mock
-  private UsuariosFacade mockUsuariosFacade;
-  @Mock
-  private ComprobantesPagosMapper mockComprobantesPagosMapper;
-  @Mock
-  private CuponesMapper mockCuponesMapper;
-  @Mock
-  private ChequesTercerosMapper mockChequesTercerosMapper;
-  @Mock
-  private RecibosMapper mockRecibosMapper;
-  @Mock
-  private PersonasMapper mockPersonasMapper;
-  @Mock
-  private ComprobantesMapper mockComprobantesMapper;
+  @Mock private RecibosFacade mockRecibosFacade;
+  @Mock private ComprobantesFacade mockComprobantesFacade;
+  @Mock private CajasMovimientosFacade mockCajasMovimientosFacade;
+  @Mock private CajasFacade mockCajasFacade;
+  @Mock private ComprobantesPagosFacade mockComprobantesPagosFacade;
+  @Mock private PersonasCuentaCorrienteService mockPersonasCuentaCorrienteService;
+  @Mock private UsuariosFacade mockUsuariosFacade;
+  @Mock private ComprobantesPagosMapper mockComprobantesPagosMapper;
+  @Mock private CuponesMapper mockCuponesMapper;
+  @Mock private ChequesTercerosMapper mockChequesTercerosMapper;
+  @Mock private RecibosMapper mockRecibosMapper;
+  @Mock private PersonasMapper mockPersonasMapper;
+  @Mock private ComprobantesMapper mockComprobantesMapper;
 
   @BeforeEach
   void setUp() {

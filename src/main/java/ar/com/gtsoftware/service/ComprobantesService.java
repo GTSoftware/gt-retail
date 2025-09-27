@@ -20,8 +20,8 @@ package ar.com.gtsoftware.service;
 import ar.com.gtsoftware.dto.domain.ComprobantesDto;
 import ar.com.gtsoftware.search.ComprobantesSearchFilter;
 import ar.com.gtsoftware.service.exceptions.ServiceException;
-import java.math.BigDecimal;
 import jakarta.validation.constraints.NotNull;
+import java.math.BigDecimal;
 
 public interface ComprobantesService
     extends EntityService<ComprobantesDto, ComprobantesSearchFilter> {

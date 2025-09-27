@@ -9,9 +9,9 @@
 
 package ar.com.gtsoftware.service.afip.client.login;
 
-import java.math.BigDecimal;
 import jakarta.annotation.Generated;
 import jakarta.xml.bind.annotation.*;
+import java.math.BigDecimal;
 
 /**
  * Clase Java para loginTicketResponse complex type.

@@ -17,9 +17,9 @@
 package ar.com.gtsoftware.dto.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.Date;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import java.util.Date;
 import lombok.*;
 
 /**

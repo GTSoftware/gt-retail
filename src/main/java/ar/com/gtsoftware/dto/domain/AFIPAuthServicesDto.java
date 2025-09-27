@@ -31,8 +31,7 @@ import lombok.*;
 @Builder
 public class AFIPAuthServicesDto implements Serializable {
 
-  @Serial
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   @EqualsAndHashCode.Include private String nombreServicio;
   private String token;

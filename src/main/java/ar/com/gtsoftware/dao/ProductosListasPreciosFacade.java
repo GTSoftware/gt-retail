@@ -50,8 +50,7 @@ public class ProductosListasPreciosFacade
 
     if (psf.getNombre() != null && !psf.getNombre().isEmpty()) {
       String s = psf.getNombre().toUpperCase();
-      Predicate p1 =
-          cb.like(root.get(ProductosListasPrecios_.nombreLista), "%%%s%%".formatted(s));
+      Predicate p1 = cb.like(root.get(ProductosListasPrecios_.nombreLista), "%%%s%%".formatted(s));
 
       p = appendAndPredicate(cb, p, p1);
     }

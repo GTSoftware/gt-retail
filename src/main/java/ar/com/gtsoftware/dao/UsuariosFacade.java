@@ -68,8 +68,7 @@ public class UsuariosFacade extends AbstractFacade<Usuarios, UsuariosSearchFilte
       for (String s : usf.getText().toUpperCase().split(" ")) {
 
         Predicate p1 = cb.like(cb.upper(root.get(Usuarios_.login)), "%%%s%%".formatted(s));
-        Predicate p2 =
-            cb.like(cb.upper(root.get(Usuarios_.nombreUsuario)), "%%%s%%".formatted(s));
+        Predicate p2 = cb.like(cb.upper(root.get(Usuarios_.nombreUsuario)), "%%%s%%".formatted(s));
 
         p = appendOrPredicate(cb, p, p1);
         p = appendOrPredicate(cb, p, p2);

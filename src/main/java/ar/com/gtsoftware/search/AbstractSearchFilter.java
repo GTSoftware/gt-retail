@@ -32,8 +32,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 public abstract class AbstractSearchFilter implements Serializable {
 
-  @Serial
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   private List<SortField> sortFields;
 

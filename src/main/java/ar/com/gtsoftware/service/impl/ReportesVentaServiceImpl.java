@@ -22,10 +22,9 @@ import ar.com.gtsoftware.dto.reportes.VentaPorProductoReport;
 import ar.com.gtsoftware.search.reportes.ReporteVentasSearchFilter;
 import ar.com.gtsoftware.service.ReportesVentaService;
 import ar.com.gtsoftware.utils.BusinessDateUtils;
-import java.math.BigInteger;
-import java.util.List;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

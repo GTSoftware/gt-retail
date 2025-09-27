@@ -15,10 +15,10 @@
  */
 package ar.com.gtsoftware.entity;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
 

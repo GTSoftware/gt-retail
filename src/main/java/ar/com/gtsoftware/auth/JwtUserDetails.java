@@ -19,8 +19,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Getter
 public class JwtUserDetails implements UserDetails {
 
-  @Serial
-  private static final long serialVersionUID = 5116803780192438148L;
+  @Serial private static final long serialVersionUID = 5116803780192438148L;
 
   private Long id;
   private String loginName;

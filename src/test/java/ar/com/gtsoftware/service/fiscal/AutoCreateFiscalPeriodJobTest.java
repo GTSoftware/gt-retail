@@ -30,14 +30,10 @@ class AutoCreateFiscalPeriodJobTest {
 
   private AutoCreateFiscalPeriodJob autoCreateFiscalPeriodJob;
 
-  @Mock
-  private BusinessDateUtils dateUtilsMock;
-  @Mock
-  private FiscalPeriodosFiscalesService periodosFiscalesServiceMock;
-  @Captor
-  private ArgumentCaptor<FiscalPeriodosFiscalesDto> dtoArgumentCaptor;
-  @Captor
-  private ArgumentCaptor<FiscalPeriodosFiscalesSearchFilter> filterArgumentCaptor;
+  @Mock private BusinessDateUtils dateUtilsMock;
+  @Mock private FiscalPeriodosFiscalesService periodosFiscalesServiceMock;
+  @Captor private ArgumentCaptor<FiscalPeriodosFiscalesDto> dtoArgumentCaptor;
+  @Captor private ArgumentCaptor<FiscalPeriodosFiscalesSearchFilter> filterArgumentCaptor;
 
   @BeforeEach
   void setUp() {
@@ -54,7 +50,7 @@ class AutoCreateFiscalPeriodJobTest {
   @Test
   void shouldCreateFiscalPeriodForActualMonthWhenNotAlreadyExists() {
     when(periodosFiscalesServiceMock.findFirstBySearchFilter(
-        any(FiscalPeriodosFiscalesSearchFilter.class)))
+            any(FiscalPeriodosFiscalesSearchFilter.class)))
         .thenReturn(null);
     when(periodosFiscalesServiceMock.createOrEdit(any(FiscalPeriodosFiscalesDto.class)))
         .thenReturn(FiscalPeriodosFiscalesDto.builder().id(1L).build());
@@ -77,7 +73,7 @@ class AutoCreateFiscalPeriodJobTest {
   @Test
   void shouldNotCreateFiscalPeriodForActualMonthWhenAlreadyExists() {
     when(periodosFiscalesServiceMock.findFirstBySearchFilter(
-        any(FiscalPeriodosFiscalesSearchFilter.class)))
+            any(FiscalPeriodosFiscalesSearchFilter.class)))
         .thenReturn(FiscalPeriodosFiscalesDto.builder().id(1L).nombrePeriodo("TEST").build());
 
     autoCreateFiscalPeriodJob.createFiscalPeriodForActualMonth();

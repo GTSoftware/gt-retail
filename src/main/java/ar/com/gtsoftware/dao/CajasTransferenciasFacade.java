@@ -22,7 +22,6 @@ import ar.com.gtsoftware.entity.Cajas_;
 import ar.com.gtsoftware.entity.NegocioFormasPago_;
 import ar.com.gtsoftware.search.CajasSearchFilter;
 import ar.com.gtsoftware.search.CajasTransferenciasSearchFilter;
-import java.math.BigDecimal;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -30,6 +29,7 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import jakarta.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import org.springframework.stereotype.Repository;
 
 @Repository

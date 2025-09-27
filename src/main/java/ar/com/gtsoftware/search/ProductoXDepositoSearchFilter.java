@@ -28,8 +28,7 @@ import lombok.*;
 @Builder
 public class ProductoXDepositoSearchFilter extends AbstractSearchFilter {
 
-  @Serial
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   private Long idDeposito;
   private Long idProducto;

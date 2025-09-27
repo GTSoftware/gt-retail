@@ -37,8 +37,7 @@ import lombok.*;
 @Builder
 public class RegistroIVADTO implements Serializable {
 
-  @Serial
-  private static final long serialVersionUID = 3L;
+  @Serial private static final long serialVersionUID = 3L;
 
   private Long idFactura;
   private LocalDateTime fechaFactura;

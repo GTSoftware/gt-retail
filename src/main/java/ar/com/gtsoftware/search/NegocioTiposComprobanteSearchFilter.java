@@ -31,8 +31,7 @@ import org.apache.commons.lang3.StringUtils;
 @AllArgsConstructor
 public class NegocioTiposComprobanteSearchFilter extends AbstractSearchFilter {
 
-  @Serial
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   private Boolean activo;
   private String nombre;

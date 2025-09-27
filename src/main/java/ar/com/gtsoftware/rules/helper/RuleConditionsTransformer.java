@@ -8,8 +8,8 @@ import static org.apache.commons.lang3.StringUtils.isEmpty;
 import ar.com.gtsoftware.rules.Condicion;
 import ar.com.gtsoftware.rules.CondicionIlegalException;
 import ar.com.gtsoftware.rules.Operacion;
-import java.util.List;
 import jakarta.validation.constraints.NotNull;
+import java.util.List;
 import org.apache.commons.collections4.CollectionUtils;
 
 public class RuleConditionsTransformer {

@@ -15,10 +15,10 @@
  */
 package ar.com.gtsoftware.entity;
 
-import java.util.Objects;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import java.util.Objects;
 import lombok.Getter;
 import lombok.Setter;
 

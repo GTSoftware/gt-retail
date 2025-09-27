@@ -8,13 +8,13 @@
 
 package ar.com.gtsoftware.service.afip.client.fe;
 
-import java.util.ArrayList;
-import java.util.List;
 import jakarta.annotation.Generated;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlType;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Clase Java para ArrayOfFECAEDetRequest complex type.

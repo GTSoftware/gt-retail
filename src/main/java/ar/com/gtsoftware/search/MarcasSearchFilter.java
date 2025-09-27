@@ -29,8 +29,7 @@ import org.apache.commons.lang3.StringUtils;
 @Builder
 public class MarcasSearchFilter extends AbstractSearchFilter {
 
-  @Serial
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   private String nombreMarca;
 

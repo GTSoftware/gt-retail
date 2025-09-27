@@ -28,28 +28,17 @@ class RemitoServiceImplTest {
 
   private AutoCloseable mocks;
 
-  @Mock
-  private RemitoFacade remitoFacadeMock;
-  @Mock
-  private RemitoDetalleFacade remitoDetalleFacadeMock;
-  @Mock
-  private RemitoMapper remitoMapperMock;
-  @Mock
-  private UsuariosFacade usuariosFacadeMock;
-  @Mock
-  private RemitoTipoMovimientoFacade tipoMovimientoFacadeMock;
-  @Mock
-  private DepositosFacade depositosFacadeMock;
-  @Mock
-  private BusinessDateUtils dateUtilsMock;
-  @Mock
-  private ProductosFacade productosFacadeMock;
-  @Mock
-  private PersonasFacade personasFacadeMock;
-  @Mock
-  private ProductosMapper productosMapperMock;
-  @Mock
-  private ProductoXDepositoFacade stockFacadeMock;
+  @Mock private RemitoFacade remitoFacadeMock;
+  @Mock private RemitoDetalleFacade remitoDetalleFacadeMock;
+  @Mock private RemitoMapper remitoMapperMock;
+  @Mock private UsuariosFacade usuariosFacadeMock;
+  @Mock private RemitoTipoMovimientoFacade tipoMovimientoFacadeMock;
+  @Mock private DepositosFacade depositosFacadeMock;
+  @Mock private BusinessDateUtils dateUtilsMock;
+  @Mock private ProductosFacade productosFacadeMock;
+  @Mock private PersonasFacade personasFacadeMock;
+  @Mock private ProductosMapper productosMapperMock;
+  @Mock private ProductoXDepositoFacade stockFacadeMock;
   private RemitoServiceImpl service;
 
   @BeforeEach

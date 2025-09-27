@@ -30,8 +30,7 @@ import lombok.*;
 @Builder
 public class ComprobantesEstadosDto implements Serializable {
 
-  @Serial
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   @EqualsAndHashCode.Include private Long id;
   private String nombreEstado;

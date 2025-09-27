@@ -18,14 +18,14 @@ package ar.com.gtsoftware.dao;
 import ar.com.gtsoftware.entity.Parametros;
 import ar.com.gtsoftware.entity.Parametros_;
 import ar.com.gtsoftware.search.AbstractSearchFilter;
-import java.util.Collections;
-import java.util.List;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import java.util.Collections;
+import java.util.List;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -76,8 +76,7 @@ public class ParametrosFacade extends AbstractFacade<Parametros, AbstractSearchF
     CriteriaQuery<Parametros> cq = cb.createQuery(Parametros.class);
     Root<Parametros> parametro = cq.from(Parametros.class);
     cq.select(parametro);
-    Predicate p1 =
-        cb.like(parametro.get(Parametros_.nombreParametro), "%%%s%%".formatted(txt));
+    Predicate p1 = cb.like(parametro.get(Parametros_.nombreParametro), "%%%s%%".formatted(txt));
     Predicate p2 =
         cb.like(parametro.get(Parametros_.descripcionParametro), "%%%s%%".formatted(txt));
     cq.where(cb.or(p1, p2));

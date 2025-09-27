@@ -30,8 +30,7 @@ import lombok.*;
 @Builder
 public class PlanesPagoDetalleSearchFilter extends AbstractSearchFilter {
 
-  @Serial
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   private Long idPlan;
   private Boolean activo;

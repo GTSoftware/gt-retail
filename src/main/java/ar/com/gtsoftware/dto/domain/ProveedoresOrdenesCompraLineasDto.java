@@ -16,8 +16,8 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
-import java.math.BigDecimal;
 import jakarta.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import lombok.*;
 
 /**

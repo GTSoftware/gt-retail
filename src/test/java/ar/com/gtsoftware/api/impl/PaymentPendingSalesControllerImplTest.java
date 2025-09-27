@@ -108,6 +108,7 @@ class PaymentPendingSalesControllerImplTest {
     assertThat(paginatedResponse.totalResults()).isEqualTo(0);
     assertThat(paginatedResponse.data()).isNull();
   }
+
   //
   //  @Test
   //  void shouldPrepareToPayInCash() {

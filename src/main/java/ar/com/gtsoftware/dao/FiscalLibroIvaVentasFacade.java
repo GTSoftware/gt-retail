@@ -19,13 +19,13 @@ import ar.com.gtsoftware.entity.FiscalLibroIvaVentas;
 import ar.com.gtsoftware.entity.FiscalLibroIvaVentas_;
 import ar.com.gtsoftware.entity.FiscalPeriodosFiscales_;
 import ar.com.gtsoftware.search.LibroIVASearchFilter;
-import java.util.List;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import java.util.List;
 import org.springframework.stereotype.Repository;
 
 @Repository

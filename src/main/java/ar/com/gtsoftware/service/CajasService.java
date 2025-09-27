@@ -18,9 +18,9 @@ package ar.com.gtsoftware.service;
 import ar.com.gtsoftware.dto.domain.CajasDto;
 import ar.com.gtsoftware.dto.domain.UsuariosDto;
 import ar.com.gtsoftware.search.CajasSearchFilter;
+import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
-import jakarta.validation.constraints.NotNull;
 
 /**
  * Capa de servicio para la gestión de cajas

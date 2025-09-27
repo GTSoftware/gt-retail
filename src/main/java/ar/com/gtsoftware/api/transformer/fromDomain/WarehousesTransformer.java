@@ -23,10 +23,11 @@ public class WarehousesTransformer {
         .localityId(deposito.getIdLocalidad() != null ? deposito.getIdLocalidad().getId() : null)
         .displayName(
             deposito.getIdSucursal() != null
-                ? "%s - %s (%d)".formatted(
-                deposito.getNombreDeposito(),
-                deposito.getIdSucursal().getNombreSucursal(),
-                deposito.getIdSucursal().getId())
+                ? "%s - %s (%d)"
+                    .formatted(
+                        deposito.getNombreDeposito(),
+                        deposito.getIdSucursal().getNombreSucursal(),
+                        deposito.getIdSucursal().getId())
                 : deposito.getNombreDeposito())
         .build();
   }

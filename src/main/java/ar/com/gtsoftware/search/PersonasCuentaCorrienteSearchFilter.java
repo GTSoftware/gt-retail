@@ -28,8 +28,7 @@ import lombok.*;
 @Builder
 public class PersonasCuentaCorrienteSearchFilter extends AbstractSearchFilter {
 
-  @Serial
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   private Long idPersona;
 

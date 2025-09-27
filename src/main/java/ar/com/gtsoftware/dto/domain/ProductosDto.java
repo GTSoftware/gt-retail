@@ -16,10 +16,10 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
+import jakarta.validation.constraints.Pattern;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
 @Getter

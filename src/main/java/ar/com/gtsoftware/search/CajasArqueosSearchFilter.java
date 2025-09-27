@@ -31,8 +31,7 @@ import lombok.*;
 @Builder
 public class CajasArqueosSearchFilter extends AbstractSearchFilter {
 
-  @Serial
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   private Long idUsuario;
   private Long idSucursal;

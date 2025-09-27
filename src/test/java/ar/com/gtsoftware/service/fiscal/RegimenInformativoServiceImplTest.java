@@ -33,12 +33,9 @@ class RegimenInformativoServiceImplTest {
 
   private RegimenInformativoService service;
 
-  @Mock
-  private LibroIVAVentasServiceImpl libroIVAVentasServiceMock;
-  @Mock
-  private LibroIVAComprasServiceImpl libroIVAComprasServiceMock;
-  @Mock
-  private ParametrosService parametrosServiceMock;
+  @Mock private LibroIVAVentasServiceImpl libroIVAVentasServiceMock;
+  @Mock private LibroIVAComprasServiceImpl libroIVAComprasServiceMock;
+  @Mock private ParametrosService parametrosServiceMock;
 
   @BeforeEach
   void setUp() {

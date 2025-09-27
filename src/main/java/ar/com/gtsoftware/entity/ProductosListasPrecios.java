@@ -15,9 +15,9 @@
  */
 package ar.com.gtsoftware.entity;
 
-import java.util.List;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
+import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 

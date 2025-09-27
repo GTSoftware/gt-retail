@@ -32,8 +32,7 @@ import lombok.*;
 @Builder
 public class FiscalTiposComprobanteDto implements Serializable {
 
-  @Serial
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
   @EqualsAndHashCode.Include private String codigoTipoComprobante;
   private String denominacionComprobante;
 

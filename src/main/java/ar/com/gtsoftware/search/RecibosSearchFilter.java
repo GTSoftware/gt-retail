@@ -29,8 +29,7 @@ import lombok.*;
 @Builder
 public class RecibosSearchFilter extends AbstractSearchFilter {
 
-  @Serial
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   private Date fechaDesde;
   private Date fechaHasta;

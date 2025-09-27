@@ -30,8 +30,7 @@ import lombok.Setter;
 @Builder
 public class TotalesAlicuotas implements Serializable {
 
-  @Serial
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   @EqualsAndHashCode.Include private FiscalAlicuotasIvaDto alicuota;
   @Builder.Default private BigDecimal importeIva = BigDecimal.ZERO;

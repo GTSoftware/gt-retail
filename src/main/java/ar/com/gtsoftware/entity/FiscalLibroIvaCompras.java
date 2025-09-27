@@ -15,13 +15,13 @@
  */
 package ar.com.gtsoftware.entity;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -81,6 +81,7 @@ public class FiscalLibroIvaCompras extends BaseEntity {
   @Basic(optional = false)
   @Column(name = "anulada")
   private boolean anulada;
+
   // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these
   // annotations to enforce field validation
   @NotNull

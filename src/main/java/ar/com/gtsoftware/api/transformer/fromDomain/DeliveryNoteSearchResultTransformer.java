@@ -80,8 +80,7 @@ public class DeliveryNoteSearchResultTransformer {
               .productId(producto.getId())
               .quantity(remitoDetalleDto.getCantidad())
               .saleUnit(producto.getIdTipoUnidadVenta().getNombreUnidad())
-              .product(
-                  "[%s] %s".formatted(producto.getCodigoPropio(), producto.getDescripcion()))
+              .product("[%s] %s".formatted(producto.getCodigoPropio(), producto.getDescripcion()))
               .build());
     }
 

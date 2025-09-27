@@ -59,10 +59,11 @@ public class CajasTransferenciasServiceImpl
     facade.create(entity);
 
     String descMovimiento =
-        "Transferencia Nro: %d desde caja: %s hacia caja: %s".formatted(
-            entity.getId(),
-            transfencia.getIdCajaOrigen().toString(),
-            transfencia.getIdCajaDestino().toString());
+        "Transferencia Nro: %d desde caja: %s hacia caja: %s"
+            .formatted(
+                entity.getId(),
+                transfencia.getIdCajaOrigen().toString(),
+                transfencia.getIdCajaDestino().toString());
 
     CajasMovimientos movOrigen = new CajasMovimientos();
     movOrigen.setFechaMovimiento(transfencia.getFechaTransferencia());
