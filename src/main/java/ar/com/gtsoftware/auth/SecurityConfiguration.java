@@ -102,7 +102,7 @@ public class SecurityConfiguration {
                 authz
                     .requestMatchers(HttpMethod.POST, authenticationPath)
                     .permitAll()
-                    .requestMatchers(HttpMethod.GET,"/actuator/**")
+                    .requestMatchers(HttpMethod.GET, "/actuator/**")
                     .permitAll()
                     .anyRequest()
                     .authenticated())

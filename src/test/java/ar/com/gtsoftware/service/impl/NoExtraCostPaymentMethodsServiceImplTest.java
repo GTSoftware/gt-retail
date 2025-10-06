@@ -23,17 +23,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+@ExtendWith(MockitoExtension.class)
 class NoExtraCostPaymentMethodsServiceImplTest {
-
-  private AutoCloseable mocks;
 
   private NoExtraCostPaymentMethodsServiceImpl service;
   @Mock private NegocioFormasPagoService mockFormasPagoService;
@@ -43,7 +42,6 @@ class NoExtraCostPaymentMethodsServiceImplTest {
 
   @BeforeEach
   void setUp() {
-    mocks = MockitoAnnotations.openMocks(this);
     service =
         new NoExtraCostPaymentMethodsServiceImpl(mockFormasPagoService, mockPlanesPagoService);
 
@@ -154,10 +152,5 @@ class NoExtraCostPaymentMethodsServiceImplTest {
     }
 
     return formasPagoDtos;
-  }
-
-  @AfterEach
-  void tearDown() throws Exception {
-    mocks.close();
   }
 }
