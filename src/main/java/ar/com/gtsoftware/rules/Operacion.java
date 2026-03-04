@@ -20,28 +20,27 @@ package ar.com.gtsoftware.rules;
 import static java.util.Arrays.asList;
 
 import java.math.BigDecimal;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import lombok.Getter;
 
 @Getter
 public enum Operacion {
-  IGUAL("Igual a", "==", asList(BigDecimal.class, Long.class, Date.class)),
+  IGUAL("Igual a", "==", List.of(BigDecimal.class, Long.class, Date.class)),
 
-  DISTINTO("Distinto a", "!=", asList(BigDecimal.class, Long.class, Date.class)),
+  DISTINTO("Distinto a", "!=", List.of(BigDecimal.class, Long.class, Date.class)),
 
-  MAYOR("Mayor a", ">", asList(BigDecimal.class, Long.class, Date.class)),
+  MAYOR("Mayor a", ">", List.of(BigDecimal.class, Long.class, Date.class)),
 
   MAYOR_IGUAL("Mayor o igual a", ">=", asList(BigDecimal.class, Long.class, Date.class)),
 
-  MENOR("Menor a", "<", asList(BigDecimal.class, Long.class, Date.class)),
+  MENOR("Menor a", "<", List.of(BigDecimal.class, Long.class, Date.class)),
 
   MENOR_IGUAL("Menor o igual a", "<=", asList(BigDecimal.class, Long.class, Date.class)),
 
-  MULTIPLO("Multiplo", "%", asList(BigDecimal.class, Long.class)),
+  MULTIPLO("Multiplo", "%", List.of(BigDecimal.class, Long.class)),
 
-  CONTIENE("Contiene a", "?", Collections.singletonList(String.class));
+  CONTIENE("Contiene a", "?", List.of(String.class));
   private final String nombre, operador;
   private final List<Class> tiposSoportados;
 

@@ -20,6 +20,7 @@ package ar.com.gtsoftware.rules.helper;
 import ar.com.gtsoftware.api.PromotionCartItem;
 import ar.com.gtsoftware.dto.domain.ComprobantesLineasDto;
 import ar.com.gtsoftware.dto.domain.ProductosDto;
+import ar.com.gtsoftware.enums.Caches;
 import ar.com.gtsoftware.rules.Campo;
 import ar.com.gtsoftware.rules.Condicion;
 import ar.com.gtsoftware.rules.OfertaDto;
@@ -55,7 +56,7 @@ public class OfertasHelper {
       return;
     }
 
-    // Apply first matching offer (skip on first applied rule behavior)
+    // Apply the first matching offer (skip on first applied rule behavior)
     for (OfertaDto oferta : ofertas) {
       if (matches(oferta, promotionCartItem)) {
         promotionCartItem.applyDiscount(
@@ -116,7 +117,7 @@ public class OfertasHelper {
           return false;
       }
     } catch (RuntimeException ex) {
-      log.debug("Error evaluating condition {} on {}: {}", condicion, linea, ex.getMessage());
+      log.info("Error evaluating condition {} on {}: {}", condicion, linea, ex.getMessage());
       return false;
     }
   }
@@ -190,7 +191,7 @@ public class OfertasHelper {
   @Scheduled(fixedDelay = 30, timeUnit = TimeUnit.MINUTES)
   public void invalidateCache() {
     log.debug("Evicting offers cache...");
-    cacheManager.getCache("offers").invalidate();
+    cacheManager.getCache(Caches.OFFERS.getCacheName()).invalidate();
   }
 
   @Scheduled(fixedDelay = 5, timeUnit = TimeUnit.MINUTES)
@@ -200,7 +201,7 @@ public class OfertasHelper {
       return null;
     }
 
-    final Cache offersCache = cacheManager.getCache("offers");
+    final Cache offersCache = cacheManager.getCache(Caches.OFFERS.getCacheName());
     List<OfertaDto> cached = offersCache.get(OFFERS_CACHE_KEY, List.class);
     if (cached != null) {
       return cached;
