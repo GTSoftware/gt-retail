@@ -76,7 +76,7 @@ function transformFormData(formData) {
     documento: formData.documento,
     provinciaId: formData.provincia.id,
     paisId: formData.pais.id,
-    localidadId: formData.localidad.townId,
+    localidadId: formData.town.townId,
     tipoPersoneriaId: formData.tipoPersoneria.id,
     tipoDocumentoId: formData.tipoDocumento.id,
     generoId: formData.genero.id,
