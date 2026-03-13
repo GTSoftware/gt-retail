@@ -18,6 +18,7 @@ package ar.com.gtsoftware.dto;
 import ar.com.gtsoftware.dto.domain.ChequesTercerosDto;
 import ar.com.gtsoftware.dto.domain.ComprobantesPagosDto;
 import ar.com.gtsoftware.dto.domain.CuponesDto;
+import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import lombok.*;
@@ -35,7 +36,7 @@ import lombok.*;
 @AllArgsConstructor
 public class PagoValorDTO implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   @EqualsAndHashCode.Include private final int item;
   private ComprobantesPagosDto pago;

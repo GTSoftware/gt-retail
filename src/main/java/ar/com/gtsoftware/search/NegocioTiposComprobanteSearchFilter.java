@@ -15,6 +15,7 @@
  */
 package ar.com.gtsoftware.search;
 
+import java.io.Serial;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 
@@ -30,7 +31,7 @@ import org.apache.commons.lang3.StringUtils;
 @AllArgsConstructor
 public class NegocioTiposComprobanteSearchFilter extends AbstractSearchFilter {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   private Boolean activo;
   private String nombre;

@@ -76,10 +76,10 @@ public class WorkBookFiscalBookService {
     cell.setCellValue("Periodo:");
     cell = row.createCell(6);
     cell.setCellValue(
-        String.format(
-            "%s al %s",
-            DATE_TIME_FORMATTER.format(libro.getFechaDesde()),
-            DATE_TIME_FORMATTER.format(libro.getFechaHasta())));
+        "%s al %s"
+            .formatted(
+                DATE_TIME_FORMATTER.format(libro.getFechaDesde()),
+                DATE_TIME_FORMATTER.format(libro.getFechaHasta())));
 
     row = sheet.createRow(nroFila++);
     List<String> columnHeaderNames = buildBaseColumnHeaderNames();

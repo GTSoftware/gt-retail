@@ -15,12 +15,12 @@
  */
 package ar.com.gtsoftware.entity;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -65,6 +65,7 @@ public class Comprobantes extends BaseEntity {
   @Column(name = "fecha_comprobante")
   // @Temporal(TemporalType.TIMESTAMP)
   private LocalDateTime fechaComprobante;
+
   // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these
   // annotations to enforce field validation
   @Basic(optional = false)

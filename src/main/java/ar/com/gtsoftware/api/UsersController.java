@@ -1,8 +1,8 @@
 package ar.com.gtsoftware.api;
 
 import ar.com.gtsoftware.dto.domain.UsuariosDto;
+import jakarta.validation.Valid;
 import java.util.List;
-import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

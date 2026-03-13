@@ -16,7 +16,7 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 /**

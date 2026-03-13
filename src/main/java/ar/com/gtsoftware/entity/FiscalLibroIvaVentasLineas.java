@@ -15,8 +15,8 @@
  */
 package ar.com.gtsoftware.entity;
 
+import jakarta.persistence.*;
 import java.math.BigDecimal;
-import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 

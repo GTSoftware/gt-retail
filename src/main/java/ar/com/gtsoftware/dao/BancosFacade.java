@@ -18,10 +18,10 @@ package ar.com.gtsoftware.dao;
 import ar.com.gtsoftware.entity.Bancos;
 import ar.com.gtsoftware.entity.Bancos_;
 import ar.com.gtsoftware.search.BancosSearchFilter;
-import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 
@@ -49,7 +49,7 @@ public class BancosFacade extends AbstractFacade<Bancos, BancosSearchFilter> {
     Predicate p = null;
     if (StringUtils.isNotEmpty(sf.getNombreBanco())) {
       String s = sf.getNombreBanco().toUpperCase();
-      p = cb.like(root.get(Bancos_.razonSocial), String.format("%%%s%%", s));
+      p = cb.like(root.get(Bancos_.razonSocial), "%%%s%%".formatted(s));
     }
 
     return p;

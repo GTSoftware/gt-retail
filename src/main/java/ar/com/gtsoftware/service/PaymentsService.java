@@ -19,8 +19,8 @@ import ar.com.gtsoftware.dto.PagoValorDTO;
 import ar.com.gtsoftware.dto.PreparedPaymentDto;
 import ar.com.gtsoftware.dto.domain.CajasDto;
 import ar.com.gtsoftware.dto.domain.RecibosDto;
+import jakarta.validation.constraints.NotNull;
 import java.util.List;
-import javax.validation.constraints.NotNull;
 
 /**
  * Capa de servicio para cobros de comprobantes

@@ -16,6 +16,7 @@
 package ar.com.gtsoftware.dto;
 
 import ar.com.gtsoftware.dto.domain.FiscalAlicuotasIvaDto;
+import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import lombok.*;
@@ -32,7 +33,7 @@ import lombok.*;
 @Builder
 public class ImportesAlicuotasIVA implements Serializable {
 
-  private static final long serialVersionUID = 2L;
+  @Serial private static final long serialVersionUID = 2L;
 
   @EqualsAndHashCode.Include private FiscalAlicuotasIvaDto alicuota;
   private BigDecimal importeIva;

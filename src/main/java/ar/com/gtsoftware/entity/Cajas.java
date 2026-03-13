@@ -15,11 +15,11 @@
  */
 package ar.com.gtsoftware.entity;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -55,11 +55,11 @@ public class Cajas extends BaseEntity {
 
   @NotNull
   @Column(name = "fecha_apertura")
-  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+  @Temporal(jakarta.persistence.TemporalType.TIMESTAMP)
   private Date fechaApertura;
 
   @Column(name = "fecha_cierre")
-  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+  @Temporal(jakarta.persistence.TemporalType.TIMESTAMP)
   private Date fechaCierre;
 
   @NotNull

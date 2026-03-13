@@ -15,11 +15,12 @@
  */
 package ar.com.gtsoftware.entity;
 
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Version;
+import jakarta.xml.bind.annotation.XmlTransient;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Version;
-import javax.xml.bind.annotation.XmlTransient;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -34,7 +35,7 @@ import lombok.Setter;
 @Setter
 public abstract class GTEntity<T extends Serializable> implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   @Version @XmlTransient private Integer version;
 
@@ -88,6 +89,6 @@ public abstract class GTEntity<T extends Serializable> implements Serializable {
 
   @Override
   public String toString() {
-    return String.format("%s [id=%s]", this.getClass().getName(), getId());
+    return "%s [id=%s]".formatted(this.getClass().getName(), getId());
   }
 }

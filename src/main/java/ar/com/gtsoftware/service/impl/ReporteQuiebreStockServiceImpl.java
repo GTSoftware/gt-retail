@@ -4,9 +4,9 @@ import ar.com.gtsoftware.dto.reportes.ProductoConQuiebreStock;
 import ar.com.gtsoftware.dto.reportes.QuiebreStockReport;
 import ar.com.gtsoftware.search.reportes.ReporteQuiebreStockSearchFilter;
 import ar.com.gtsoftware.service.ReporteQuiebreStockService;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

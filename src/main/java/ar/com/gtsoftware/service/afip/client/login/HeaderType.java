@@ -9,8 +9,8 @@
 
 package ar.com.gtsoftware.service.afip.client.login;
 
-import javax.annotation.Generated;
-import javax.xml.bind.annotation.*;
+import jakarta.annotation.Generated;
+import jakarta.xml.bind.annotation.*;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 /**

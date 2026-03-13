@@ -17,6 +17,7 @@ package ar.com.gtsoftware.search;
 
 import static java.util.Objects.nonNull;
 
+import java.io.Serial;
 import java.time.LocalDateTime;
 import lombok.*;
 
@@ -30,7 +31,7 @@ import lombok.*;
 @Builder
 public class FiscalPeriodosFiscalesSearchFilter extends AbstractSearchFilter {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   private Boolean vigente;
   private Boolean cerrado;

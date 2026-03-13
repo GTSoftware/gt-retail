@@ -16,6 +16,7 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import lombok.*;
@@ -32,7 +33,7 @@ import lombok.*;
 @Builder
 public class FiscalLibroIvaComprasLineasDto implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   @EqualsAndHashCode.Include private Long id;
   private BigDecimal netoGravado;

@@ -18,12 +18,12 @@ package ar.com.gtsoftware.dao;
 import ar.com.gtsoftware.entity.AFIPAuthServices;
 import ar.com.gtsoftware.entity.AFIPAuthServices_;
 import ar.com.gtsoftware.search.AFIPAuthServicesSearchFilter;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
+import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 

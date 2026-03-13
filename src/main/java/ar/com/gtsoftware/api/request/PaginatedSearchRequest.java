@@ -1,9 +1,9 @@
 package ar.com.gtsoftware.api.request;
 
 import ar.com.gtsoftware.search.AbstractSearchFilter;
-import javax.validation.Valid;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 

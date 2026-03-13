@@ -21,13 +21,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.ws.test.client.MockWebServiceServer;
 import org.springframework.xml.transform.StringSource;
 
-@ExtendWith({SpringExtension.class, MockitoExtension.class})
-@ContextConfiguration(classes = AfipClientTestConfiguration.class)
+@ExtendWith({MockitoExtension.class})
+@SpringJUnitConfig(classes = AfipClientTestConfiguration.class)
 class ElectronicInvoiceClientTest {
 
   @Autowired private ElectronicInvoiceClient client;
@@ -69,23 +68,24 @@ class ElectronicInvoiceClientTest {
 
     Source responsePayload =
         new StringSource(
-            "<FECompUltimoAutorizadoResponse xmlns=\"http://ar.gov.afip.dif.FEV1/\">\n"
-                + "    <FECompUltimoAutorizadoResult>\n"
-                + "        <PtoVta>1</PtoVta>\n"
-                + "        <CbteTipo>1</CbteTipo>\n"
-                + "        <CbteNro>14</CbteNro>\n"
-                + "        <Events>\n"
-                + "            <Evt>\n"
-                + "                <Code>int</Code>\n"
-                + "                <Msg>string</Msg>\n"
-                + "            </Evt>\n"
-                + "            <Evt>\n"
-                + "                <Code>int</Code>\n"
-                + "                <Msg>string</Msg>\n"
-                + "            </Evt>\n"
-                + "        </Events>\n"
-                + "    </FECompUltimoAutorizadoResult>\n"
-                + "</FECompUltimoAutorizadoResponse>");
+            """
+            <FECompUltimoAutorizadoResponse xmlns="http://ar.gov.afip.dif.FEV1/">
+                <FECompUltimoAutorizadoResult>
+                    <PtoVta>1</PtoVta>
+                    <CbteTipo>1</CbteTipo>
+                    <CbteNro>14</CbteNro>
+                    <Events>
+                        <Evt>
+                            <Code>int</Code>
+                            <Msg>string</Msg>
+                        </Evt>
+                        <Evt>
+                            <Code>int</Code>
+                            <Msg>string</Msg>
+                        </Evt>
+                    </Events>
+                </FECompUltimoAutorizadoResult>
+            </FECompUltimoAutorizadoResponse>""");
 
     mockServer.expect(payload(requestPayload)).andRespond(withPayload(responsePayload));
 
@@ -115,33 +115,34 @@ class ElectronicInvoiceClientTest {
 
     Source responsePayload =
         new StringSource(
-            "<FECompUltimoAutorizadoResponse xmlns=\"http://ar.gov.afip.dif.FEV1/\">\n"
-                + "    <FECompUltimoAutorizadoResult>\n"
-                + "        <PtoVta>1</PtoVta>\n"
-                + "        <CbteTipo>1</CbteTipo>\n"
-                + "        <CbteNro>14</CbteNro>\n"
-                + "        <Errors>\n"
-                + "            <Err>\n"
-                + "                <Code>005</Code>\n"
-                + "                <Msg>Some error</Msg>\n"
-                + "            </Err>\n"
-                + "            <Err>\n"
-                + "                <Code>006</Code>\n"
-                + "                <Msg>Other error</Msg>\n"
-                + "            </Err>\n"
-                + "        </Errors>\n"
-                + "        <Events>\n"
-                + "            <Evt>\n"
-                + "                <Code>int</Code>\n"
-                + "                <Msg>string</Msg>\n"
-                + "            </Evt>\n"
-                + "            <Evt>\n"
-                + "                <Code>int</Code>\n"
-                + "                <Msg>string</Msg>\n"
-                + "            </Evt>\n"
-                + "        </Events>\n"
-                + "    </FECompUltimoAutorizadoResult>\n"
-                + "</FECompUltimoAutorizadoResponse>");
+            """
+            <FECompUltimoAutorizadoResponse xmlns="http://ar.gov.afip.dif.FEV1/">
+                <FECompUltimoAutorizadoResult>
+                    <PtoVta>1</PtoVta>
+                    <CbteTipo>1</CbteTipo>
+                    <CbteNro>14</CbteNro>
+                    <Errors>
+                        <Err>
+                            <Code>005</Code>
+                            <Msg>Some error</Msg>
+                        </Err>
+                        <Err>
+                            <Code>006</Code>
+                            <Msg>Other error</Msg>
+                        </Err>
+                    </Errors>
+                    <Events>
+                        <Evt>
+                            <Code>int</Code>
+                            <Msg>string</Msg>
+                        </Evt>
+                        <Evt>
+                            <Code>int</Code>
+                            <Msg>string</Msg>
+                        </Evt>
+                    </Events>
+                </FECompUltimoAutorizadoResult>
+            </FECompUltimoAutorizadoResponse>""");
 
     mockServer.expect(payload(requestPayload)).andRespond(withPayload(responsePayload));
 
@@ -203,37 +204,38 @@ class ElectronicInvoiceClientTest {
 
     Source responsePayload =
         new StringSource(
-            "<FECAESolicitarResponse xmlns=\"http://ar.gov.afip.dif.FEV1/\">\n"
-                + "      <FECAESolicitarResult>\n"
-                + "        <FeCabResp><Resultado>A</Resultado></FeCabResp>\n"
-                + "        <FeDetResp>\n"
-                + "          <FECAEDetResponse>\n"
-                + "            <CAE>1234</CAE>\n"
-                + "            <CAEFchVto>20200106</CAEFchVto>\n"
-                + "          </FECAEDetResponse>\n"
-                + "        </FeDetResp>\n"
-                + "        <Events>\n"
-                + "          <Evt>\n"
-                + "            <Code>int</Code>\n"
-                + "            <Msg>string</Msg>\n"
-                + "          </Evt>\n"
-                + "          <Evt>\n"
-                + "            <Code>int</Code>\n"
-                + "            <Msg>string</Msg>\n"
-                + "          </Evt>\n"
-                + "        </Events>\n"
-                + "        <Errors>\n"
-                + "          <Err>\n"
-                + "            <Code>int</Code>\n"
-                + "            <Msg>string</Msg>\n"
-                + "          </Err>\n"
-                + "          <Err>\n"
-                + "            <Code>int</Code>\n"
-                + "            <Msg>string</Msg>\n"
-                + "          </Err>\n"
-                + "        </Errors>\n"
-                + "      </FECAESolicitarResult>\n"
-                + "    </FECAESolicitarResponse>");
+            """
+            <FECAESolicitarResponse xmlns="http://ar.gov.afip.dif.FEV1/">
+                  <FECAESolicitarResult>
+                    <FeCabResp><Resultado>A</Resultado></FeCabResp>
+                    <FeDetResp>
+                      <FECAEDetResponse>
+                        <CAE>1234</CAE>
+                        <CAEFchVto>20200106</CAEFchVto>
+                      </FECAEDetResponse>
+                    </FeDetResp>
+                    <Events>
+                      <Evt>
+                        <Code>int</Code>
+                        <Msg>string</Msg>
+                      </Evt>
+                      <Evt>
+                        <Code>int</Code>
+                        <Msg>string</Msg>
+                      </Evt>
+                    </Events>
+                    <Errors>
+                      <Err>
+                        <Code>int</Code>
+                        <Msg>string</Msg>
+                      </Err>
+                      <Err>
+                        <Code>int</Code>
+                        <Msg>string</Msg>
+                      </Err>
+                    </Errors>
+                  </FECAESolicitarResult>
+                </FECAESolicitarResponse>""");
 
     mockServer.expect(payload(requestPayload)).andRespond(withPayload(responsePayload));
 

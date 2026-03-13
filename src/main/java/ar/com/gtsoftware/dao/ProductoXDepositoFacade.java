@@ -17,12 +17,12 @@ package ar.com.gtsoftware.dao;
 
 import ar.com.gtsoftware.entity.*;
 import ar.com.gtsoftware.search.ProductoXDepositoSearchFilter;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import java.math.BigDecimal;
-import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -83,10 +83,9 @@ public class ProductoXDepositoFacade
     CriteriaBuilder cb = em.getCriteriaBuilder();
     CriteriaQuery<BigDecimal> cq = cb.createQuery(BigDecimal.class);
     Root<ProductoXDeposito> root = cq.from(ProductoXDeposito.class);
-    CriteriaBuilder.Coalesce<BigDecimal> coalesce = cb.coalesce();
-    coalesce.value(cb.sum(root.get(ProductoXDeposito_.stock)));
-    coalesce.value(BigDecimal.ZERO);
-    cq.select(coalesce.alias("CANT_STOCK"));
+
+    cq.select(cb.sum(root.get(ProductoXDeposito_.stock).as(BigDecimal.class)));
+
     if (sf.hasFilter()) {
       cq.where(createWhereFromSearchFilter(sf, cb, root));
     }

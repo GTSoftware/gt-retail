@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.mockito.MockitoAnnotations.initMocks;
 
 import ar.com.gtsoftware.api.request.DigitalFiscalBookRequest;
 import ar.com.gtsoftware.dto.fiscal.reginfo.RegInfoCvCabecera;
@@ -16,19 +15,23 @@ import ar.com.gtsoftware.dto.fiscal.reginfo.RegimenInformativoVentas;
 import ar.com.gtsoftware.search.LibroIVASearchFilter;
 import ar.com.gtsoftware.service.fiscal.RegimenInformativoService;
 import ar.com.gtsoftware.service.fiscal.WorkBookFiscalBookService;
+import jakarta.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collections;
-import javax.servlet.http.HttpServletResponse;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpHeaders;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 class FiscalBookControllerImplTest {
+
+  private AutoCloseable mocks;
 
   private FiscalBookControllerImpl controller;
 
@@ -41,7 +44,7 @@ class FiscalBookControllerImplTest {
 
   @BeforeEach
   void setUp() {
-    initMocks(this);
+    mocks = MockitoAnnotations.openMocks(this);
     responseMock = new MockHttpServletResponse();
     controller =
         new FiscalBookControllerImpl(
@@ -140,5 +143,10 @@ class FiscalBookControllerImplTest {
         .otrosTributos(BigDecimal.valueOf(123.45))
         .fechaVencimientoPago(LocalDate.of(2020, 1, 5))
         .build();
+  }
+
+  @AfterEach
+  void tearDown() throws Exception {
+    mocks.close();
   }
 }

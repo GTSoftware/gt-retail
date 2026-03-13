@@ -18,10 +18,10 @@ package ar.com.gtsoftware.dao;
 import ar.com.gtsoftware.entity.ProductosMarcas;
 import ar.com.gtsoftware.entity.ProductosMarcas_;
 import ar.com.gtsoftware.search.MarcasSearchFilter;
-import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -46,7 +46,7 @@ public class ProductosMarcasFacade extends AbstractFacade<ProductosMarcas, Marca
     Predicate p = null;
     if (msf.getNombreMarca() != null) {
       String s = msf.getNombreMarca().toUpperCase();
-      p = cb.like(root.get(ProductosMarcas_.nombreMarca), String.format("%%%s%%", s));
+      p = cb.like(root.get(ProductosMarcas_.nombreMarca), "%%%s%%".formatted(s));
     }
 
     return p;

@@ -48,8 +48,7 @@ public class DeliveryNoteSearchResultTransformer {
   }
 
   private String transformDeposito(DepositosDto deposito) {
-    return String.format(
-        INTERNAL_FORMAT,
+    return INTERNAL_FORMAT.formatted(
         deposito.getId(),
         deposito.getNombreDeposito(),
         deposito.getIdSucursal().getNombreSucursal());
@@ -68,7 +67,7 @@ public class DeliveryNoteSearchResultTransformer {
   }
 
   private String transformPersona(PersonasDto external) {
-    return String.format(EXTERNAL_FORMAT, external.getId(), external.getRazonSocial());
+    return EXTERNAL_FORMAT.formatted(external.getId(), external.getRazonSocial());
   }
 
   public List<DeliveryNoteDetail> transformDeliveryNoteDetails(List<RemitoDetalleDto> detalleList) {
@@ -81,8 +80,7 @@ public class DeliveryNoteSearchResultTransformer {
               .productId(producto.getId())
               .quantity(remitoDetalleDto.getCantidad())
               .saleUnit(producto.getIdTipoUnidadVenta().getNombreUnidad())
-              .product(
-                  String.format("[%s] %s", producto.getCodigoPropio(), producto.getDescripcion()))
+              .product("[%s] %s".formatted(producto.getCodigoPropio(), producto.getDescripcion()))
               .build());
     }
 

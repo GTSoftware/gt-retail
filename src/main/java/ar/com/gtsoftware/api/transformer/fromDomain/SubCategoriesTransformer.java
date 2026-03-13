@@ -34,7 +34,7 @@ public class SubCategoriesTransformer
         .subCategoryName(subRubroDto.getNombreSubRubro())
         .subCategoryId(subRubroDto.getId())
         .displayName(
-            String.format(DISPLAY_NAME_FMT, subRubroDto.getId(), subRubroDto.getNombreSubRubro()))
+            DISPLAY_NAME_FMT.formatted(subRubroDto.getId(), subRubroDto.getNombreSubRubro()))
         .version(subRubroDto.getVersion())
         .build();
   }

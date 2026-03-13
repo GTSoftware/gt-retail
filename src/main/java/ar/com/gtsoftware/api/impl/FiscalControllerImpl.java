@@ -13,8 +13,8 @@ import ar.com.gtsoftware.search.FiscalPeriodosFiscalesSearchFilter;
 import ar.com.gtsoftware.service.FiscalAlicuotasIvaService;
 import ar.com.gtsoftware.service.FiscalPeriodosFiscalesService;
 import ar.com.gtsoftware.service.FiscalResponsabilidadesIvaService;
+import jakarta.validation.Valid;
 import java.util.List;
-import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 

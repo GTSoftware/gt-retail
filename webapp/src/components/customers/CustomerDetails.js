@@ -53,7 +53,7 @@ const newCustomerSchema = {
     responsabilidadIva: { type: "object" },
     pais: { type: "object" },
     provincia: { type: "object" },
-    localidad: { type: "object" },
+    town: { type: "object" },
     activo: { type: "boolean" },
     telefonos: {
       type: "array",
@@ -80,7 +80,7 @@ const newCustomerSchema = {
     "responsabilidadIva",
     "pais",
     "provincia",
-    "localidad",
+    "town",
   ],
 }
 
@@ -119,7 +119,7 @@ export const CustomerDetails = (props) => {
     responsabilidadIva: null,
     pais: null,
     provincia: null,
-    localidad: null,
+    town: null,
     activo: true,
     telefonos: [],
   })
@@ -166,7 +166,7 @@ export const CustomerDetails = (props) => {
       setTowns([])
       locationService.getTowns(formData.provincia.id, "").then(setTowns)
     }
-  }, [formData?.provincia])
+  }, [formData?.provincia, customerId])
 
   const loadCustomer = (customer) => {
     setEditingCustomer(customer)
@@ -185,7 +185,7 @@ export const CustomerDetails = (props) => {
       depto: customer.depto,
       pais: customer.pais,
       provincia: customer.provincia,
-      localidad: customer.localidad,
+      town: customer.town,
       genero: customer.genero,
       tipoPersoneria: customer.tipoPersoneria,
       tipoDocumento: customer.tipoDocumento,
@@ -576,8 +576,8 @@ export const CustomerDetails = (props) => {
                     options={towns}
                     optionLabel="displayName"
                     dataKey="townId"
-                    name="localidad"
-                    value={formData.localidad}
+                    name="town"
+                    value={formData.town}
                   />
                   <FieldError name="localidad" />
                 </div>
@@ -748,7 +748,7 @@ export const CustomerDetails = (props) => {
           if (formData?.provincia?.id) {
             locationService.getTowns(formData.provincia.id, "").then((data) => {
               setTowns(data)
-              setFormData({ ...formData, localidad: created })
+              setFormData({ ...formData, town: created })
             })
           }
         }}

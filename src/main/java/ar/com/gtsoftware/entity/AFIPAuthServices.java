@@ -15,12 +15,13 @@
  */
 package ar.com.gtsoftware.entity;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import java.io.Serial;
 import java.time.LocalDateTime;
 import java.util.Objects;
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * @author Rodrigo M. Tato Rothamel mailto:rotatomel@gmail.com
@@ -30,7 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class AFIPAuthServices extends GTEntity<String> {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   @Id
   @Basic(optional = false)

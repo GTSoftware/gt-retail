@@ -18,10 +18,10 @@ package ar.com.gtsoftware.dao;
 import ar.com.gtsoftware.entity.NegocioFormasPago;
 import ar.com.gtsoftware.entity.NegocioFormasPago_;
 import ar.com.gtsoftware.search.FormasPagoSearchFilter;
-import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 
@@ -64,7 +64,7 @@ public class NegocioFormasPagoFacade
       Predicate p1 =
           cb.like(
               cb.upper(root.get(NegocioFormasPago_.nombreFormaPago)),
-              String.format("%%%s%%", sf.getNombre().toUpperCase()));
+              "%%%s%%".formatted(sf.getNombre().toUpperCase()));
       p = appendAndPredicate(cb, p, p1);
     }
 

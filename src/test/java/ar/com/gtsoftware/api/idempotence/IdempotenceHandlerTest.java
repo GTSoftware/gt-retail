@@ -32,7 +32,7 @@ class IdempotenceHandlerTest {
   }
 
   @Test
-  void shouldThrowForNotExistingNonce() {
+  void shouldThrowWhenNonceIsAlreadyUsed() {
     handler.setNonce("test-nonce", "test");
     assertThrows(IdempotenceException.class, () -> handler.verifyIdempotence("test-nonce"));
   }

@@ -16,10 +16,10 @@
 package ar.com.gtsoftware.entity;
 
 import ar.com.gtsoftware.enums.TiposPuntosVenta;
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlTransient;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import jakarta.xml.bind.annotation.XmlTransient;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
@@ -85,6 +85,6 @@ public class FiscalPuntosVenta extends GTEntity<Integer> {
 
   @XmlTransient
   public String getBusinessString() {
-    return String.format("%s - %s", StringUtils.leftPad(getStringId(), 4, '0'), tipo);
+    return "%s - %s".formatted(StringUtils.leftPad(getStringId(), 4, '0'), tipo);
   }
 }

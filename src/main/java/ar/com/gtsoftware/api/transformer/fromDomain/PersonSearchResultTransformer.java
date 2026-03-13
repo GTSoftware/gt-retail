@@ -35,13 +35,11 @@ public class PersonSearchResultTransformer implements Transformer<PersonasDto, P
         .email(personaDto.getEmail())
         .fantasyName(personaDto.getNombreFantasia())
         .identification(
-            String.format(
-                IDENTIFICATION_FORMAT,
+            IDENTIFICATION_FORMAT.formatted(
                 personaDto.getIdTipoDocumento().getNombreTipoDocumento(),
                 personaDto.getDocumento()))
         .address(
-            String.format(
-                ADDRESS_FORMAT,
+            ADDRESS_FORMAT.formatted(
                 personaDto.getCalle(),
                 personaDto.getAltura(),
                 personaDto.getPiso(),
@@ -54,8 +52,7 @@ public class PersonSearchResultTransformer implements Transformer<PersonasDto, P
         .supplier(personaDto.isProveedor())
         .gender(personaDto.getIdGenero().getNombreGenero())
         .displayName(
-            String.format(
-                DISPLAY_NAME_FORMAT, personaDto.getDocumento(), personaDto.getRazonSocial()))
+            DISPLAY_NAME_FORMAT.formatted(personaDto.getDocumento(), personaDto.getRazonSocial()))
         .build();
   }
 }

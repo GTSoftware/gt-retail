@@ -19,10 +19,10 @@ import ar.com.gtsoftware.entity.LegalGeneros;
 import ar.com.gtsoftware.entity.LegalGeneros_;
 import ar.com.gtsoftware.entity.LegalTiposPersoneria_;
 import ar.com.gtsoftware.search.GenerosSearchFilter;
-import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.springframework.stereotype.Repository;
 
 @Repository

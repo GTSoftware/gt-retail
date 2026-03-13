@@ -16,6 +16,7 @@
 package ar.com.gtsoftware.dto;
 
 import ar.com.gtsoftware.dto.domain.FiscalResponsabilidadesIvaDto;
+import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import lombok.Builder;
@@ -32,7 +33,7 @@ import lombok.EqualsAndHashCode;
 @Builder
 public class ImportesResponsabilidad implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   @EqualsAndHashCode.Include private FiscalResponsabilidadesIvaDto responsabilidadIva;
   private BigDecimal importeTotal;

@@ -18,7 +18,7 @@ public class PriceListTransformer implements Transformer<ProductosListasPreciosD
     return PriceList.builder()
         .priceListId(from.getId())
         .priceListName(from.getNombreLista())
-        .displayName(String.format(DISPLAY_NAME_FMT, from.getId(), from.getNombreLista()))
+        .displayName(DISPLAY_NAME_FMT.formatted(from.getId(), from.getNombreLista()))
         .build();
   }
 

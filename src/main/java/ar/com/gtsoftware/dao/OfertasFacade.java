@@ -20,10 +20,10 @@ import ar.com.gtsoftware.entity.Ofertas;
 import ar.com.gtsoftware.entity.Ofertas_;
 import ar.com.gtsoftware.entity.Sucursales_;
 import ar.com.gtsoftware.search.OfertasSearchFilter;
-import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
@@ -74,7 +74,7 @@ public class OfertasFacade extends AbstractFacade<Ofertas, OfertasSearchFilter> 
       Predicate p1 =
           cb.like(
               root.get(Ofertas_.textoOferta),
-              String.format(LIKE_FORMAT, sf.getTextoOferta().toUpperCase()));
+              LIKE_FORMAT.formatted(sf.getTextoOferta().toUpperCase()));
       p = appendAndPredicate(cb, p1, p);
     }
 

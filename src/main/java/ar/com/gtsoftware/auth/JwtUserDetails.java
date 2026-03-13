@@ -1,6 +1,7 @@
 package ar.com.gtsoftware.auth;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.io.Serial;
 import java.util.Collection;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -18,7 +19,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Getter
 public class JwtUserDetails implements UserDetails {
 
-  private static final long serialVersionUID = 5116803780192438148L;
+  @Serial private static final long serialVersionUID = 5116803780192438148L;
 
   private Long id;
   private String loginName;

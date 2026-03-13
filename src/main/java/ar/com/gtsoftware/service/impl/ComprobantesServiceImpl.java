@@ -78,7 +78,7 @@ public class ComprobantesServiceImpl
     cuentaCorrienteBean.registrarMovimientoCuenta(
         venta.getIdPersona(),
         venta.getTotalConSigno(),
-        String.format("Anulación comprobante Nro: %d", venta.getId()));
+        "Anulación comprobante Nro: %d".formatted(venta.getId()));
     facade.edit(venta);
   }
 }

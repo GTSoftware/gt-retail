@@ -334,11 +334,12 @@ class ShopCartControllerImpl implements ShopCartController {
     BigDecimal discountAmount =
         switch (promotionCartItem.getTipoAccion()) {
           case DESCUENTO_MONTO_FIJO -> promotionCartItem.getDescuento();
-          case DESCUENTO_PORCENTAJE -> promotionCartItem
-              .getLinea()
-              .getSubTotal()
-              .multiply(promotionCartItem.getDescuento().divide(CIEN))
-              .setScale(2, RoundingMode.HALF_UP);
+          case DESCUENTO_PORCENTAJE ->
+              promotionCartItem
+                  .getLinea()
+                  .getSubTotal()
+                  .multiply(promotionCartItem.getDescuento().divide(CIEN))
+                  .setScale(2, RoundingMode.HALF_UP);
         };
 
     return discountAmount.negate();

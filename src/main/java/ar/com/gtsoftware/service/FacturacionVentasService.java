@@ -19,8 +19,8 @@ package ar.com.gtsoftware.service;
 
 import ar.com.gtsoftware.dto.domain.FiscalPuntosVentaDto;
 import ar.com.gtsoftware.service.exceptions.ServiceException;
+import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import javax.validation.constraints.NotNull;
 
 public interface FacturacionVentasService {
   /**

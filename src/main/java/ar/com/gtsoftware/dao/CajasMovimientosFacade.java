@@ -19,10 +19,10 @@ import ar.com.gtsoftware.entity.CajasMovimientos;
 import ar.com.gtsoftware.entity.CajasMovimientos_;
 import ar.com.gtsoftware.entity.Cajas_;
 import ar.com.gtsoftware.search.CajasMovimientosSearchFilter;
-import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 
@@ -68,7 +68,7 @@ public class CajasMovimientosFacade
       Predicate p1 =
           cb.like(
               root.get(CajasMovimientos_.descripcion),
-              String.format("%%%s%%", psf.getTxt().toUpperCase()));
+              "%%%s%%".formatted(psf.getTxt().toUpperCase()));
       p = appendAndPredicate(cb, p1, p);
     }
 

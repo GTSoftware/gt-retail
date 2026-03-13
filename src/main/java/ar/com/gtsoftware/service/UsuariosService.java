@@ -20,8 +20,8 @@ package ar.com.gtsoftware.service;
 import ar.com.gtsoftware.dto.domain.UsuariosDto;
 import ar.com.gtsoftware.dto.domain.UsuariosGruposDto;
 import ar.com.gtsoftware.search.UsuariosSearchFilter;
+import jakarta.validation.constraints.NotNull;
 import java.util.List;
-import javax.validation.constraints.NotNull;
 
 public interface UsuariosService extends EntityService<UsuariosDto, UsuariosSearchFilter> {
 

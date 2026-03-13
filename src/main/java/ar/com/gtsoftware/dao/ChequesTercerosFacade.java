@@ -18,10 +18,10 @@ package ar.com.gtsoftware.dao;
 import ar.com.gtsoftware.entity.ChequesTerceros;
 import ar.com.gtsoftware.entity.ChequesTerceros_;
 import ar.com.gtsoftware.search.ChequesTercerosSearchFilter;
-import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -82,7 +82,7 @@ public class ChequesTercerosFacade
     if (sf.hasFilterNombreOriginante()) {
       String s = sf.getNombreOriginante().toUpperCase();
       Predicate p1 =
-          cb.like(root.get(ChequesTerceros_.razonSocialOriginante), String.format("%%%s%%", s));
+          cb.like(root.get(ChequesTerceros_.razonSocialOriginante), "%%%s%%".formatted(s));
       p = appendAndPredicate(cb, p1, p);
     }
     return p;

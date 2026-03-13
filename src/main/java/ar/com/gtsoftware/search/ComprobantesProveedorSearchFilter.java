@@ -15,6 +15,7 @@
  */
 package ar.com.gtsoftware.search;
 
+import java.io.Serial;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.*;
@@ -31,7 +32,7 @@ import org.apache.commons.lang3.StringUtils;
 @Builder
 public class ComprobantesProveedorSearchFilter extends AbstractSearchFilter {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   private Long idComprobante;
   private LocalDateTime fechaComprobanteDesde;

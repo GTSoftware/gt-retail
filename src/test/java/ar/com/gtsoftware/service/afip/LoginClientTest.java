@@ -13,15 +13,12 @@ import java.time.LocalDateTime;
 import javax.xml.transform.Source;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.ws.test.client.MockWebServiceServer;
 import org.springframework.xml.transform.StringSource;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = AfipClientTestConfiguration.class)
+@SpringJUnitConfig(classes = AfipClientTestConfiguration.class)
 class LoginClientTest {
 
   private static final LocalDateTime EXPIRATION_DATE = LocalDateTime.of(2019, 9, 27, 1, 56, 14);
@@ -55,23 +52,24 @@ class LoginClientTest {
 
     Source responsePayload =
         new StringSource(
-            "<loginCmsResponse xmlns=\"http://wsaa.view.sua.dvadac.desein.afip.gov\">\n"
-                + "    <loginCmsReturn><![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n"
-                + "<loginTicketResponse version=\"1.0\">\n"
-                + "    <header>\n"
-                + "        <source>CN=wsaahomo, O=AFIP, C=AR,SERIALNUMBER=CUIT 33693450239</source>\n"
-                + "        <destination>SERIALNUMBER=CUIT 20190178154,CN=glarriera20190903</destination>\n"
-                + "        <uniqueId>3866895167</uniqueId>\n"
-                + "        <generationTime>2019-09-26T13:56:14.467-03:00</generationTime>\n"
-                + "        <expirationTime>2019-09-27T01:56:14.467-03:00</expirationTime>\n"
-                + "    </header>\n"
-                + "    <credentials>\n"
-                + "        <token>PD94bWwgdmVyc2lvgo8L3Nzbz4K</token>\n"
-                + "        <sign>Urp5dbarIb8m5ySEzSeon1W7ys=</sign>\n"
-                + "    </credentials>\n"
-                + "</loginTicketResponse>]]>\n"
-                + "    </loginCmsReturn>\n"
-                + "</loginCmsResponse>");
+            """
+            <loginCmsResponse xmlns="http://wsaa.view.sua.dvadac.desein.afip.gov">
+                <loginCmsReturn><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+            <loginTicketResponse version="1.0">
+                <header>
+                    <source>CN=wsaahomo, O=AFIP, C=AR,SERIALNUMBER=CUIT 33693450239</source>
+                    <destination>SERIALNUMBER=CUIT 20190178154,CN=glarriera20190903</destination>
+                    <uniqueId>3866895167</uniqueId>
+                    <generationTime>2019-09-26T13:56:14.467-03:00</generationTime>
+                    <expirationTime>2019-09-27T01:56:14.467-03:00</expirationTime>
+                </header>
+                <credentials>
+                    <token>PD94bWwgdmVyc2lvgo8L3Nzbz4K</token>
+                    <sign>Urp5dbarIb8m5ySEzSeon1W7ys=</sign>
+                </credentials>
+            </loginTicketResponse>]]>
+                </loginCmsReturn>
+            </loginCmsResponse>""");
 
     mockServer.expect(payload(requestPayload)).andRespond(withPayload(responsePayload));
 

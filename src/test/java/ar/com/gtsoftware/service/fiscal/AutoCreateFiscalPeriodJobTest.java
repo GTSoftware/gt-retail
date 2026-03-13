@@ -3,7 +3,6 @@ package ar.com.gtsoftware.service.fiscal;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.mockito.MockitoAnnotations.initMocks;
 
 import ar.com.gtsoftware.dto.domain.FiscalPeriodosFiscalesDto;
 import ar.com.gtsoftware.search.FiscalPeriodosFiscalesSearchFilter;
@@ -12,13 +11,17 @@ import ar.com.gtsoftware.utils.BusinessDateUtils;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 class AutoCreateFiscalPeriodJobTest {
+
+  private AutoCloseable mocks;
 
   private static final LocalDateTime START_DATE = LocalDateTime.of(2020, 1, 1, 0, 0);
   private static final LocalDateTime END_DATE = LocalDateTime.of(2020, 1, 31, 23, 59);
@@ -34,7 +37,7 @@ class AutoCreateFiscalPeriodJobTest {
 
   @BeforeEach
   void setUp() {
-    initMocks(this);
+    mocks = MockitoAnnotations.openMocks(this);
     when(dateUtilsMock.getStartDateTimeOfCurrentMonth()).thenReturn(START_DATE);
     when(dateUtilsMock.getEndDateTimeOfCurrentMonth()).thenReturn(END_DATE);
     when(dateUtilsMock.getCurrentDate()).thenReturn(ACTUAL_DATE);
@@ -80,5 +83,10 @@ class AutoCreateFiscalPeriodJobTest {
 
     final FiscalPeriodosFiscalesSearchFilter sf = filterArgumentCaptor.getValue();
     assertEquals(ACTUAL_DATETIME, sf.getFechaActual());
+  }
+
+  @AfterEach
+  void tearDown() throws Exception {
+    mocks.close();
   }
 }

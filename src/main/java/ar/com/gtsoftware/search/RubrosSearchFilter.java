@@ -17,6 +17,7 @@ package ar.com.gtsoftware.search;
 
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
+import java.io.Serial;
 import lombok.*;
 
 /**
@@ -29,7 +30,7 @@ import lombok.*;
 @Builder
 public class RubrosSearchFilter extends AbstractSearchFilter {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   private String nombreRubro;
 

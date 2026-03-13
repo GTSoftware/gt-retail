@@ -23,7 +23,7 @@ import ar.com.gtsoftware.dao.FiscalLetrasComprobantesFacade;
 import ar.com.gtsoftware.entity.FiscalLetrasComprobantes;
 import ar.com.gtsoftware.search.FiscalLetrasComprobantesSearchFilter;
 import ar.com.gtsoftware.service.FiscalLetrasComprobantesService;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

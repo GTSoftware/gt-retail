@@ -1,9 +1,9 @@
 package ar.com.gtsoftware.auth.resource;
 
 import ar.com.gtsoftware.auth.JwtTokenUtil;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import java.util.Objects;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,7 +16,10 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -33,7 +36,7 @@ public class JwtAuthenticationRestController {
 
   private final CacheManager cacheManager;
 
-  @RequestMapping(value = "${jwt.get.token.uri}", method = RequestMethod.POST)
+  @PostMapping("${jwt.get.token.uri}")
   public ResponseEntity<JwtTokenResponse> createAuthenticationToken(
       @RequestBody @Valid JwtTokenRequest authenticationRequest) {
 
@@ -53,7 +56,7 @@ public class JwtAuthenticationRestController {
     return ResponseEntity.ok(new JwtTokenResponse(token));
   }
 
-  @RequestMapping(value = "/logoff", method = RequestMethod.POST)
+  @PostMapping("/logoff")
   public void logoff(HttpServletRequest request) {
     String authToken = request.getHeader(tokenHeader);
     final String token = authToken.substring(7);

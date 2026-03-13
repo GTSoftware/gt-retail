@@ -100,14 +100,14 @@ public class ComprobantesDto {
   @Override
   public String toString() {
     if (idRegistro != null) {
-      return String.format(
-          "[%d] %s %s %s-%s",
-          getId(),
-          tipoComprobante.getNombreComprobante(),
-          letra,
-          idRegistro.getPuntoVentaFactura(),
-          idRegistro.getNumeroFactura());
+      return "[%d] %s %s %s-%s"
+          .formatted(
+              getId(),
+              tipoComprobante.getNombreComprobante(),
+              letra,
+              idRegistro.getPuntoVentaFactura(),
+              idRegistro.getNumeroFactura());
     }
-    return String.format("[%d] %s", getId(), tipoComprobante.getNombreComprobante());
+    return "[%d] %s".formatted(getId(), tipoComprobante.getNombreComprobante());
   }
 }

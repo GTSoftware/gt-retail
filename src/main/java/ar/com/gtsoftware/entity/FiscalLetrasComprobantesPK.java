@@ -15,11 +15,12 @@
  */
 package ar.com.gtsoftware.entity;
 
+import jakarta.persistence.Basic;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+import jakarta.validation.constraints.NotNull;
+import java.io.Serial;
 import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,7 +32,7 @@ import lombok.Setter;
 @Setter
 public class FiscalLetrasComprobantesPK implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   @Basic(optional = false)
   @NotNull
@@ -74,6 +75,6 @@ public class FiscalLetrasComprobantesPK implements Serializable {
 
   @Override
   public String toString() {
-    return String.format("%s-%s", idResoponsabildiadIvaEmisor, idResoponsabildiadIvaReceptor);
+    return "%s-%s".formatted(idResoponsabildiadIvaEmisor, idResoponsabildiadIvaReceptor);
   }
 }

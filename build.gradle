@@ -1,9 +1,9 @@
 plugins {
-    id 'org.springframework.boot' version '2.7.10'
-    id 'io.spring.dependency-management' version '1.1.0'
+    id 'org.springframework.boot' version '3.1.12'
+    id 'io.spring.dependency-management' version '1.1.7'
     id 'java'
     id 'war'
-    id 'com.diffplug.spotless' version '6.11.0'
+    id 'com.diffplug.spotless' version '8.0.0'
 }
 
 war {
@@ -12,7 +12,13 @@ war {
 
 group = 'ar.com.gtsoftware'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = "17"
+sourceCompatibility = "21"
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
 
 configurations {
     developmentOnly
@@ -40,7 +46,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-cache'
     implementation 'org.springframework.boot:spring-boot-starter-logging'
-    implementation 'org.springframework.boot:spring-boot-starter-activemq'
     implementation 'org.springframework.ws:spring-ws-security'
     implementation 'org.springframework.ws:spring-ws-core'
     testImplementation 'org.springframework.ws:spring-ws-test'
@@ -50,33 +55,40 @@ dependencies {
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
-    compileOnly 'org.projectlombok:lombok:1.18.26'
-    annotationProcessor 'org.projectlombok:lombok:1.18.22'
-    testCompileOnly 'org.projectlombok:lombok:1.18.22'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.26'
+    compileOnly 'org.projectlombok:lombok:1.18.42'
+    annotationProcessor 'org.projectlombok:lombok:1.18.42'
+    annotationProcessor "org.projectlombok:lombok-mapstruct-binding:0.2.0"
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.42'
+
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.42'
 
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
     implementation 'org.apache.commons:commons-lang3:3.12.0'
     implementation 'org.apache.commons:commons-collections4:4.4'
-    compileOnly 'org.hibernate:hibernate-jpamodelgen:6.1.7.Final'
-    annotationProcessor 'org.hibernate:hibernate-jpamodelgen'
+    compileOnly 'org.hibernate.orm:hibernate-jpamodelgen:6.2.45.Final'
+    annotationProcessor 'org.hibernate.orm:hibernate-jpamodelgen'
     implementation 'org.liquibase:liquibase-core'
-    compileOnly 'org.mapstruct:mapstruct:1.5.3.Final'
-    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
-    testAnnotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
-    implementation 'org.bouncycastle:bcprov-jdk15to18:1.72'
-    implementation 'org.bouncycastle:bcpkix-jdk15to18:1.72'
+    compileOnly 'org.mapstruct:mapstruct:1.6.3'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
+    testAnnotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
+    implementation 'org.bouncycastle:bcprov-jdk18on:1.82'
+    implementation 'org.bouncycastle:bcpkix-jdk18on:1.82'
     implementation 'net.sf.jasperreports:jasperreports:6.20.0'
     implementation 'net.sf.jasperreports:jasperreports-fonts:6.20.0'
     implementation 'com.lowagie:itext:2.1.7'
     implementation 'net.sf.barcode4j:barcode4j:2.1'
     implementation 'org.apache.xmlgraphics:batik-bridge:1.13'
-    implementation 'org.jeasy:easy-rules-core:4.1.0'
-    implementation 'org.jeasy:easy-rules-mvel:4.1.0'
     implementation 'org.apache.poi:poi-ooxml:5.0.0'
     implementation 'com.lowagie:itext:2.1.7.js6'
-    implementation 'javax.annotation:javax.annotation-api:1.3.2'
+    implementation "jakarta.servlet:jakarta.servlet-api:6.0.0"
     implementation 'com.google.zxing:core:3.5.1'
+
+    //Message queue
+    implementation 'jakarta.jms:jakarta.jms-api:3.1.0'
+    implementation 'org.apache.activemq:activemq-broker:6.1.7'
+    implementation 'org.apache.activemq:activemq-client:6.1.7'
+    implementation 'org.springframework:spring-jms:6.0.21'
 }
 
 test {
@@ -89,4 +101,4 @@ spotless {
         googleJavaFormat()
     }
 }
-targetCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_21

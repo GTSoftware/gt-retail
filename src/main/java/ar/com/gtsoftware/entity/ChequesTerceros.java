@@ -15,10 +15,10 @@
  */
 package ar.com.gtsoftware.entity;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.util.Date;
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -50,15 +50,15 @@ public class ChequesTerceros extends Valores {
 
   @NotNull
   @Column(name = "fecha_origen")
-  @Temporal(javax.persistence.TemporalType.DATE)
+  @Temporal(jakarta.persistence.TemporalType.DATE)
   private Date fechaOrigen;
 
   @Column(name = "fecha_vencimiento")
-  @Temporal(javax.persistence.TemporalType.DATE)
+  @Temporal(jakarta.persistence.TemporalType.DATE)
   private Date fechaVencimiento;
 
   @Column(name = "fecha_cobro")
-  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+  @Temporal(jakarta.persistence.TemporalType.TIMESTAMP)
   private Date fechaCobro;
 
   @NotNull

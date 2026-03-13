@@ -18,9 +18,9 @@
 package ar.com.gtsoftware.service;
 
 import ar.com.gtsoftware.search.AbstractSearchFilter;
+import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
-import javax.validation.constraints.NotNull;
 
 /**
  * Interfaz que provee las funcionalidades básicas para persistir, filtrar y eliminar objetos de

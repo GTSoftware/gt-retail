@@ -16,9 +16,10 @@
  */
 package ar.com.gtsoftware.dto.domain;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import java.io.Serial;
 import java.io.Serializable;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import lombok.*;
 
 /**
@@ -31,7 +32,7 @@ import lombok.*;
 @Builder
 public class StockMovimientosTiposDto implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
   @EqualsAndHashCode.Include private Long id;
 
   @NotNull

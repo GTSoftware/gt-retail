@@ -8,9 +8,9 @@ import ar.com.gtsoftware.dto.domain.RemitoDto;
 import ar.com.gtsoftware.search.RemitoDetalleSearchFilter;
 import ar.com.gtsoftware.service.RemitoService;
 import ar.com.gtsoftware.utils.BusinessDateUtils;
+import jakarta.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 

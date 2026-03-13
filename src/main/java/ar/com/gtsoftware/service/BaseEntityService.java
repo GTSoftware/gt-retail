@@ -22,9 +22,9 @@ import ar.com.gtsoftware.entity.GTEntity;
 import ar.com.gtsoftware.mappers.GenericMapper;
 import ar.com.gtsoftware.mappers.helper.CycleAvoidingMappingContext;
 import ar.com.gtsoftware.search.AbstractSearchFilter;
+import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
-import javax.validation.constraints.NotNull;
 
 public abstract class BaseEntityService<D, S extends AbstractSearchFilter, E extends GTEntity<?>>
     implements EntityService<D, S> {

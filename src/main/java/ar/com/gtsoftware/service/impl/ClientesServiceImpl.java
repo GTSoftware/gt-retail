@@ -97,7 +97,7 @@ public class ClientesServiceImpl implements ClientesService, ProveedoresService 
       String razonSocialCliente, String apellidos, String nombres, long tipoPersoneria) {
     String razonSocial = razonSocialCliente;
     if (tipoPersoneria == 1) { // Persona física
-      razonSocial = String.format("%s, %s", apellidos, nombres);
+      razonSocial = "%s, %s".formatted(apellidos, nombres);
     }
     return razonSocial;
   }

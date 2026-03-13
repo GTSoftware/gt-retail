@@ -43,6 +43,6 @@ public class DepositosDto {
 
   @Override
   public String toString() {
-    return String.format(BUSINESS_STRING, id, nombreDeposito, idSucursal.toString());
+    return BUSINESS_STRING.formatted(id, nombreDeposito, idSucursal.toString());
   }
 }

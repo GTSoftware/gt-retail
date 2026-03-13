@@ -2,8 +2,8 @@ package ar.com.gtsoftware.api;
 
 import ar.com.gtsoftware.api.response.SoldProduct;
 import ar.com.gtsoftware.search.reportes.ReporteVentasSearchFilter;
+import jakarta.validation.Valid;
 import java.util.List;
-import javax.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 

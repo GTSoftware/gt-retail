@@ -15,10 +15,10 @@ public class SaleResponseTransformer {
   public SaleResponse transformSale(ComprobantesDto comprobante) {
     return SaleResponse.builder()
         .customer(
-            String.format(
-                "[%s] %s",
-                comprobante.getIdPersona().getDocumento(),
-                comprobante.getIdPersona().getRazonSocial()))
+            "[%s] %s"
+                .formatted(
+                    comprobante.getIdPersona().getDocumento(),
+                    comprobante.getIdPersona().getRazonSocial()))
         .branch(comprobante.getIdSucursal().getNombreSucursal())
         .remainingAmount(comprobante.getSaldo())
         .total(comprobante.getTotal())
@@ -57,10 +57,10 @@ public class SaleResponseTransformer {
       return null;
     }
 
-    return String.format(
-        "%s %s-%s",
-        idRegistro.getLetraFactura(),
-        idRegistro.getPuntoVentaFactura(),
-        idRegistro.getNumeroFactura());
+    return "%s %s-%s"
+        .formatted(
+            idRegistro.getLetraFactura(),
+            idRegistro.getPuntoVentaFactura(),
+            idRegistro.getNumeroFactura());
   }
 }

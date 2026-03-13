@@ -4,10 +4,9 @@ import ar.com.gtsoftware.dto.reportes.VentaMensual;
 import ar.com.gtsoftware.dto.reportes.VentasMensualesReport;
 import ar.com.gtsoftware.search.reportes.ReporteVentasMensualesSearchFilter;
 import ar.com.gtsoftware.service.ReportesVentasMensualesService;
-import java.math.BigInteger;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -19,8 +18,7 @@ public class ReportesVentasMensualesServiceImpl implements ReportesVentasMensual
 
   @Override
   public VentasMensualesReport obtenerReporte(ReporteVentasMensualesSearchFilter filter) {
-    TypedQuery<BigInteger> qCount =
-        (TypedQuery<BigInteger>) em.createNamedQuery("VentasMensualesQueryCount");
+    TypedQuery<Long> qCount = em.createNamedQuery("VentasMensualesQueryCount", Long.class);
 
     qCount.setParameter("fechaDesde", filter.getFechaDesde());
     qCount.setParameter("fechaHasta", filter.getFechaHasta());

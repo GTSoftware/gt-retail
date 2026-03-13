@@ -15,11 +15,11 @@
  */
 package ar.com.gtsoftware.entity;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.Date;
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -48,6 +48,7 @@ public class ContabilidadRegistroContableLineas extends BaseEntity {
   @Size(max = 1024)
   @Column(name = "descripcion_linea")
   private String descripcionLinea;
+
   // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these
   // annotations to enforce field validation
   @Basic(optional = false)

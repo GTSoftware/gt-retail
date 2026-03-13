@@ -15,11 +15,11 @@
  */
 package ar.com.gtsoftware.entity;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -91,6 +91,6 @@ public class Sucursales extends BaseEntity {
   private List<Depositos> depositosList;
 
   public String getBusinessString() {
-    return String.format("[%d] %s", getId(), nombreSucursal);
+    return "[%d] %s".formatted(getId(), nombreSucursal);
   }
 }

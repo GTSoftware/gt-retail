@@ -1,8 +1,8 @@
 package ar.com.gtsoftware.api.request;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
 import java.time.LocalDateTime;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

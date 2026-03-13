@@ -18,18 +18,18 @@ package ar.com.gtsoftware.dao;
 import ar.com.gtsoftware.entity.GTEntity;
 import ar.com.gtsoftware.search.AbstractSearchFilter;
 import ar.com.gtsoftware.search.SortField;
+import jakarta.persistence.EntityGraph;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.*;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
+import jakarta.validation.constraints.NotNull;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.persistence.EntityGraph;
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.*;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
-import javax.validation.constraints.NotNull;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -74,28 +74,28 @@ public abstract class AbstractFacade<T extends GTEntity<?>, S extends AbstractSe
   }
 
   public List<T> findAll() {
-    javax.persistence.criteria.CriteriaQuery cq =
+    jakarta.persistence.criteria.CriteriaQuery cq =
         getEntityManager().getCriteriaBuilder().createQuery();
     cq.select(cq.from(entityClass));
     return getEntityManager().createQuery(cq).getResultList();
   }
 
   public List<T> findRange(int[] range) {
-    javax.persistence.criteria.CriteriaQuery cq =
+    jakarta.persistence.criteria.CriteriaQuery cq =
         getEntityManager().getCriteriaBuilder().createQuery();
     cq.select(cq.from(entityClass));
-    javax.persistence.Query q = getEntityManager().createQuery(cq);
+    jakarta.persistence.Query q = getEntityManager().createQuery(cq);
     q.setMaxResults(range[1] - range[0] + 1);
     q.setFirstResult(range[0]);
     return q.getResultList();
   }
 
   public int count() {
-    javax.persistence.criteria.CriteriaQuery cq =
+    jakarta.persistence.criteria.CriteriaQuery cq =
         getEntityManager().getCriteriaBuilder().createQuery();
-    javax.persistence.criteria.Root<T> rt = cq.from(entityClass);
+    jakarta.persistence.criteria.Root<T> rt = cq.from(entityClass);
     cq.select(getEntityManager().getCriteriaBuilder().count(rt));
-    javax.persistence.Query q = getEntityManager().createQuery(cq);
+    jakarta.persistence.Query q = getEntityManager().createQuery(cq);
     return ((Long) q.getSingleResult()).intValue();
   }
 
@@ -186,15 +186,15 @@ public abstract class AbstractFacade<T extends GTEntity<?>, S extends AbstractSe
    * @return la cantidad de elementos encontrados
    */
   public int countBySearchFilter(S sf) {
-    javax.persistence.criteria.CriteriaQuery cq =
+    jakarta.persistence.criteria.CriteriaQuery cq =
         getEntityManager().getCriteriaBuilder().createQuery();
-    javax.persistence.criteria.Root<T> rt = cq.from(entityClass);
+    jakarta.persistence.criteria.Root<T> rt = cq.from(entityClass);
     cq.select(getEntityManager().getCriteriaBuilder().count(rt));
     if (sf.hasFilter()) {
       Predicate p = createWhereFromSearchFilter(sf, getEntityManager().getCriteriaBuilder(), rt);
       cq.where(p);
     }
-    javax.persistence.Query q = getEntityManager().createQuery(cq);
+    jakarta.persistence.Query q = getEntityManager().createQuery(cq);
     return ((Long) q.getSingleResult()).intValue();
   }
 

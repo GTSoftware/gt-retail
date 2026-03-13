@@ -17,11 +17,11 @@ package ar.com.gtsoftware.dao;
 
 import ar.com.gtsoftware.entity.*;
 import ar.com.gtsoftware.search.CajasSearchFilter;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.*;
+import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.*;
-import javax.validation.constraints.NotNull;
 import org.springframework.stereotype.Repository;
 
 /**

@@ -15,6 +15,7 @@
  */
 package ar.com.gtsoftware.dto.fiscal;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 import lombok.AllArgsConstructor;
@@ -33,7 +34,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class CAEResponse implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   private long cae;
   private LocalDate fechaVencimientoCae;

@@ -77,7 +77,7 @@ public class ElectronicInvoiceClient extends WebServiceGatewaySupport {
     if (Objects.nonNull(ultimoAutorizadoResult.getErrors())) {
       StringBuilder sb = new StringBuilder("Errores solicitando último autorizado");
       for (Err err : ultimoAutorizadoResult.getErrors().getErr()) {
-        sb.append(String.format("\nCode: %s Msg: %s", err.getCode(), err.getMsg()));
+        sb.append("\nCode: %s Msg: %s".formatted(err.getCode(), err.getMsg()));
       }
       final String errorMsg = sb.toString();
       logger.error(errorMsg);
