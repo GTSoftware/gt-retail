@@ -19,7 +19,7 @@ import ar.com.gtsoftware.entity.*;
 import ar.com.gtsoftware.search.CuponesSearchFilter;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -43,9 +43,17 @@ public class CuponesFacade extends AbstractFacade<Cupones, CuponesSearchFilter> 
 
     Predicate p = null;
     if (sf.getIdCaja() != null) {
-      Join<Cupones, RecibosDetalle> joinCup = root.join(Cupones_.reciboDetalle);
+      Subquery<Long> subquery = cb.createQuery().subquery(Long.class);
+      Root<Cupones> subRoot = subquery.from(Cupones.class);
+      subquery.select(subRoot.get(Cupones_.id));
+
+      Join<Cupones, RecibosDetalle> joinCup = subRoot.join(Cupones_.reciboDetalle);
       Join<RecibosDetalle, Recibos> joinRec = joinCup.join(RecibosDetalle_.idRecibo);
-      Predicate p1 = cb.equal(joinRec.get(Recibos_.idCaja).get(Cajas_.id), sf.getIdCaja());
+
+      subquery.where(cb.equal(joinRec.get(Recibos_.idCaja).get(Cajas_.id), sf.getIdCaja()));
+
+      Predicate p1 = cb.in(root.get(Cupones_.id)).value(subquery);
+
       p = appendAndPredicate(cb, p, p1);
     }
     if (sf.hasValidFechasOrigen()) {
@@ -57,16 +65,33 @@ public class CuponesFacade extends AbstractFacade<Cupones, CuponesSearchFilter> 
     return p;
   }
 
-  public void establecerFechaPresentacion(Cajas idCaja, Date fechaPresentacion) {
-    CriteriaBuilder cb = this.em.getCriteriaBuilder();
+  /**
+   * Establece la fecha de presentación de los cupones que pertenecen a la caja pasada como
+   * parámetro y que aún no tienen fecha de presentación.
+   *
+   * @param idCaja la caja a la que pertenecen los cupones
+   * @param fechaPresentacion la fecha de presentación a establecer
+   */
+  public void establecerFechaPresentacion(Cajas idCaja, LocalDateTime fechaPresentacion) {
+    CriteriaBuilder cb = em.getCriteriaBuilder();
     CriteriaUpdate<Cupones> update = cb.createCriteriaUpdate(Cupones.class);
-    Root root = update.from(Cupones.class);
+    Root<Cupones> root = update.from(Cupones.class);
     update.set(Cupones_.fechaPresentacion, fechaPresentacion);
-    CuponesSearchFilter sf = CuponesSearchFilter.builder().idCaja(idCaja.getId()).build();
-    Predicate p = createWhereFromSearchFilter(sf, cb, root);
+
+    Subquery<Long> subquery = update.subquery(Long.class);
+    Root<Cupones> subRoot = subquery.from(Cupones.class);
+    subquery.select(subRoot.get(Cupones_.id));
+
+    Join<Cupones, RecibosDetalle> joinCup = subRoot.join(Cupones_.reciboDetalle);
+    Join<RecibosDetalle, Recibos> joinRec = joinCup.join(RecibosDetalle_.idRecibo);
+
+    subquery.where(cb.equal(joinRec.get(Recibos_.idCaja).get(Cajas_.id), idCaja.getId()));
+
+    Predicate p = cb.in(root.get(Cupones_.id)).value(subquery);
+
     Predicate pNoPres = cb.isNull(root.get(Cupones_.fechaPresentacion));
     p = appendAndPredicate(cb, p, pNoPres);
     update.where(p);
-    this.em.createQuery(update).executeUpdate();
+    em.createQuery(update).executeUpdate();
   }
 }

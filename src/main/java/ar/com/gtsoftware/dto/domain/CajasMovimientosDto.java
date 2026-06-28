@@ -17,7 +17,7 @@
 package ar.com.gtsoftware.dto.domain;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 import lombok.*;
 
 /**
@@ -36,7 +36,7 @@ public class CajasMovimientosDto {
 
   @EqualsAndHashCode.Include private Long id;
   private CajasDto idCaja;
-  private Date fechaMovimiento;
+  private LocalDateTime fechaMovimiento;
   private BigDecimal montoMovimiento;
   private String descripcion;
   private Integer version;

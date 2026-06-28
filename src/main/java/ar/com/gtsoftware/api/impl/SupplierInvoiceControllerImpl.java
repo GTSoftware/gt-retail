@@ -40,7 +40,6 @@ public class SupplierInvoiceControllerImpl implements SupplierInvoiceController 
   private final ComprobantesProveedorService proveedorService;
   private final PersonasService personasService;
   private final SecurityUtils securityUtils;
-  private final PaginatedResponseBuilder responseBuilder;
   private final SupplierInvoiceSearchResultTransformer saleSearchResultTransformer;
 
   @Override
@@ -51,7 +50,8 @@ public class SupplierInvoiceControllerImpl implements SupplierInvoiceController 
     final ComprobantesProveedorSearchFilter searchFilter = searchRequest.getSearchFilter();
     searchFilter.addSortField("fechaComprobante", false);
 
-    return responseBuilder.build(proveedorService, searchRequest, saleSearchResultTransformer);
+    return PaginatedResponseBuilder.build(
+        proveedorService, searchRequest, saleSearchResultTransformer);
   }
 
   @Override

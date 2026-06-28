@@ -18,12 +18,11 @@ public class PersonsControllerImpl implements PersonsController {
 
   private final PersonasService personasService;
   private final PersonSearchResultTransformer searchResultTransformer;
-  private final PaginatedResponseBuilder responseBuilder;
 
   @Override
   public PaginatedResponse<PersonSearchResult> findBySearchFilter(
       @Valid PaginatedSearchRequest<PersonasSearchFilter> searchRequest) {
 
-    return responseBuilder.build(personasService, searchRequest, searchResultTransformer);
+    return PaginatedResponseBuilder.build(personasService, searchRequest, searchResultTransformer);
   }
 }

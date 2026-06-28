@@ -8,5 +8,7 @@ public interface Transformer<T, R> {
 
   R transform(T from);
 
-  List<R> transform(List<T> from);
+  default List<R> transform(List<T> from) {
+    return from.stream().map(this::transform).toList();
+  }
 }

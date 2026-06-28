@@ -19,7 +19,7 @@ package ar.com.gtsoftware.dto.domain;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 import lombok.*;
 
 /**
@@ -39,7 +39,7 @@ public class CajasTransferenciasDto {
   @EqualsAndHashCode.Include private Long id;
   @NotNull private CajasDto idCajaOrigen;
   @NotNull private CajasDto idCajaDestino;
-  @NotNull private Date fechaTransferencia;
+  @NotNull private LocalDateTime fechaTransferencia;
   @NotNull private BigDecimal monto;
 
   @Size(max = 90)

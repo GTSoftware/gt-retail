@@ -18,7 +18,7 @@ package ar.com.gtsoftware.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -72,11 +72,11 @@ public class ComprobantesPagos extends BaseEntity {
 
   @Column(name = "fecha_pago")
   @Temporal(jakarta.persistence.TemporalType.TIMESTAMP)
-  private Date fechaPago;
+  private LocalDateTime fechaPago;
 
   @Column(name = "fecha_ultimo_pago")
   @Temporal(jakarta.persistence.TemporalType.TIMESTAMP)
-  private Date fechaUltimoPago;
+  private LocalDateTime fechaUltimoPago;
 
   /**
    * Retorna el total con signo del pago

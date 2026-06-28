@@ -6,7 +6,6 @@ import static org.mockito.Mockito.when;
 
 import ar.com.gtsoftware.api.request.PaginatedSearchRequest;
 import ar.com.gtsoftware.api.response.PaginatedResponse;
-import ar.com.gtsoftware.api.response.PaginatedResponseBuilder;
 import ar.com.gtsoftware.api.response.PaymentPendingSale;
 import ar.com.gtsoftware.api.transformer.fromDomain.PaymentPendingSaleTransformer;
 import ar.com.gtsoftware.auth.JwtUserDetails;
@@ -48,7 +47,6 @@ class PaymentPendingSalesControllerImplTest {
 
   @Spy private ComprobantesDto comprobantesDto;
   @Spy private PaymentPendingSale paymentPendingSale;
-  @Spy private PaginatedResponseBuilder paginatedResponseBuilder;
 
   @BeforeEach
   void setUp() {
@@ -59,8 +57,7 @@ class PaymentPendingSalesControllerImplTest {
             mockPaymentsService,
             paymentPendingSaleTransformer,
             mockBancosService,
-            mockNoExtraCostPaymentMethodsService,
-            paginatedResponseBuilder);
+            mockNoExtraCostPaymentMethodsService);
   }
 
   @Test

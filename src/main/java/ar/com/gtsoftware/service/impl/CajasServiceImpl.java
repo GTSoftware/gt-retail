@@ -15,6 +15,7 @@
  */
 package ar.com.gtsoftware.service.impl;
 
+import ar.com.gtsoftware.api.exception.CashBoxAlreadyClosedException;
 import ar.com.gtsoftware.dao.*;
 import ar.com.gtsoftware.dto.domain.CajasDto;
 import ar.com.gtsoftware.dto.domain.UsuariosDto;
@@ -28,9 +29,9 @@ import ar.com.gtsoftware.search.CajasSearchFilter;
 import ar.com.gtsoftware.search.SortField;
 import ar.com.gtsoftware.service.BaseEntityService;
 import ar.com.gtsoftware.service.CajasService;
+import ar.com.gtsoftware.utils.BusinessDateUtils;
 import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.util.Date;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -44,6 +45,7 @@ public class CajasServiceImpl extends BaseEntityService<CajasDto, CajasSearchFil
   private final CuponesFacade cuponesFacade;
   private final UsuariosFacade usuariosFacade;
   private final CajasTransferenciasFacade transferenciasFacade;
+  private final BusinessDateUtils dateUtils;
 
   private final CajasMapper cajasMapper;
 
@@ -75,12 +77,13 @@ public class CajasServiceImpl extends BaseEntityService<CajasDto, CajasSearchFil
     if (obtenerCajaActual(usuarioDto) == null) {
 
       Cajas caja = new Cajas();
-      caja.setFechaApertura(new Date());
+      caja.setFechaApertura(dateUtils.getCurrentDateTime());
       Usuarios usuario = usuariosFacade.find(usuarioDto.getId());
       caja.setIdUsuario(usuario);
       caja.setIdSucursal(usuario.getIdSucursal());
       // Obtener el último arqueo y sacar el saldo final de allí.
       caja.setSaldoInicial(obtenerSaldoUltimoArqueo(usuario));
+
       facade.create(caja);
     }
 
@@ -109,20 +112,22 @@ public class CajasServiceImpl extends BaseEntityService<CajasDto, CajasSearchFil
   }
 
   @Override
-  public boolean cerrarCaja(CajasDto cajaDto, Date fechaCierre) {
-    Cajas caja = facade.find(cajaDto.getId());
+  public void cerrarCaja(Long idCaja) {
+    Cajas caja = facade.find(idCaja);
     if (caja.getFechaCierre() != null) {
-      return false;
+      throw new CashBoxAlreadyClosedException();
     }
+
+    var fechaCierre = dateUtils.getCurrentDateTime();
     caja.setFechaCierre(fechaCierre);
     facade.edit(caja);
-    // Seteo la fecha de presentacion en los cupones
+
     cuponesFacade.establecerFechaPresentacion(caja, fechaCierre);
-    return true;
   }
 
   @Override
   public BigDecimal obtenerTotalEnCaja(@NotNull CajasSearchFilter csf) {
+    // Why not just sum the movements? Maybe because of the forms of payment
 
     BigDecimal totalCobranzas = facade.obtenerTotalDeCaja(csf);
     BigDecimal erogacionTransf = transferenciasFacade.obtenerTotalTransferenciasEmitidas(csf);

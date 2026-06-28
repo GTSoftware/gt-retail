@@ -28,6 +28,7 @@ import ar.com.gtsoftware.service.PaymentsService;
 import ar.com.gtsoftware.service.PersonasCuentaCorrienteService;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDateTime;
 import java.util.*;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
@@ -57,7 +58,7 @@ public class PaymentsServiceImpl implements PaymentsService {
     if (CollectionUtils.isEmpty(pagos)) {
       throw new IllegalArgumentException("La lista de pagos no puede estar vacía!");
     }
-    Date fecha = new Date();
+    LocalDateTime fecha = LocalDateTime.now();
     Recibos recibo = new Recibos();
     recibo.setFechaRecibo(fecha);
     Cajas caja = cajasFacade.find(cajasDto.getId());
@@ -258,7 +259,7 @@ public class PaymentsServiceImpl implements PaymentsService {
   }
 
   private String generarMovimientoCaja(
-      Date fecha,
+      LocalDateTime fecha,
       Long idRecibo,
       Cajas caja,
       Comprobantes comprobante,

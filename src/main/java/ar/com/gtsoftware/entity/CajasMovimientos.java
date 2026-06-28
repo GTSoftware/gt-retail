@@ -19,7 +19,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -55,7 +55,7 @@ public class CajasMovimientos extends BaseEntity {
   @NotNull
   @Column(name = "fecha_movimiento")
   @Temporal(jakarta.persistence.TemporalType.TIMESTAMP)
-  private Date fechaMovimiento;
+  private LocalDateTime fechaMovimiento;
 
   @NotNull
   @Column(name = "monto_movimiento")

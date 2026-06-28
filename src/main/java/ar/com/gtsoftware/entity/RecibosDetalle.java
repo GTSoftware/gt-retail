@@ -69,7 +69,6 @@ public class RecibosDetalle extends BaseEntity {
   @JoinColumn(name = "id_forma_pago", referencedColumnName = "id_forma_pago")
   private NegocioFormasPago idFormaPago;
 
-  @ManyToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "id_valor", referencedColumnName = "id_valor")
   @OneToOne
   private Valores idValor;

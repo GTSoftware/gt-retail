@@ -27,7 +27,6 @@ public class SalesControllerImpl implements SalesController {
   private final SaleSearchResultTransformer saleSearchResultTransformer;
   private final SecurityUtils securityUtils;
   private final SaleResponseTransformer saleResponseTransformer;
-  private final PaginatedResponseBuilder responseBuilder;
 
   @Override
   public PaginatedResponse<SaleSearchResult> findBySearchFilter(
@@ -39,7 +38,8 @@ public class SalesControllerImpl implements SalesController {
       searchFilter.setIdUsuario(securityUtils.getUserDetails().getId());
     }
 
-    return responseBuilder.build(comprobantesService, searchRequest, saleSearchResultTransformer);
+    return PaginatedResponseBuilder.build(
+        comprobantesService, searchRequest, saleSearchResultTransformer);
   }
 
   @Override

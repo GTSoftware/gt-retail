@@ -40,7 +40,6 @@ public class ProductsControllerImpl implements ProductsController {
   private final ProductoDtoTransformer productoDtoTransformer;
   private final SecurityUtils securityUtils;
   private final IdempotenceHandler idempotenceHandler;
-  private final PaginatedResponseBuilder responseBuilder;
 
   @Override
   public PaginatedResponse<ProductSearchResult> findBySearchFilter(
@@ -50,7 +49,8 @@ public class ProductsControllerImpl implements ProductsController {
       searchFilter.setIdListaPrecio(parametrosService.getLongParam(Parametros.ID_LISTA_VENTA));
     }
 
-    return responseBuilder.build(productosService, searchRequest, productSearchResultTransformer);
+    return PaginatedResponseBuilder.build(
+        productosService, searchRequest, productSearchResultTransformer);
   }
 
   @Override

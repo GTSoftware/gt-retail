@@ -20,7 +20,6 @@ import ar.com.gtsoftware.dto.domain.UsuariosDto;
 import ar.com.gtsoftware.search.CajasSearchFilter;
 import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.util.Date;
 
 /**
  * Capa de servicio para la gestión de cajas
@@ -51,11 +50,10 @@ public interface CajasService extends EntityService<CajasDto, CajasSearchFilter>
    * Marca la caja pasada como parámetro como cerrada y devuelve true si se pudo realizar el
    * guardado en la base de datos.
    *
-   * @param caja
-   * @param fechaCierre
+   * @param idCaja
    * @return
    */
-  boolean cerrarCaja(@NotNull CajasDto caja, @NotNull Date fechaCierre);
+  void cerrarCaja(@NotNull Long idCaja);
 
   /**
    * Retorna el total que hay en la caja segùn el filtro. El paràmetro de idCaja en el filtro es

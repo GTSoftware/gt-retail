@@ -19,7 +19,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
@@ -47,7 +47,7 @@ public class Recibos extends BaseEntity {
   @NotNull
   @Column(name = "fecha_recibo")
   @Temporal(jakarta.persistence.TemporalType.TIMESTAMP)
-  private Date fechaRecibo;
+  private LocalDateTime fechaRecibo;
 
   @NotNull
   @ManyToOne

@@ -17,7 +17,7 @@
 package ar.com.gtsoftware.dto.domain;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 import lombok.*;
 
 /**
@@ -30,13 +30,13 @@ import lombok.*;
 @Builder
 public class CajasDto {
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 2L;
 
   @EqualsAndHashCode.Include private Long id;
   private UsuariosDto idUsuario;
   private SucursalesDto idSucursal;
-  private Date fechaApertura;
-  private Date fechaCierre;
+  private LocalDateTime fechaApertura;
+  private LocalDateTime fechaCierre;
   private BigDecimal saldoInicial;
   private Integer version;
 

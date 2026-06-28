@@ -15,7 +15,7 @@
  */
 package ar.com.gtsoftware.search;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import lombok.*;
 
 /**
@@ -31,7 +31,7 @@ import lombok.*;
 public class CuponesSearchFilter extends AbstractSearchFilter {
 
   private Long idCaja;
-  private Date fechaOrigenDesde, fechaOrigenHasta;
+  private LocalDateTime fechaOrigenDesde, fechaOrigenHasta;
 
   @Override
   public boolean hasFilter() {
@@ -41,6 +41,6 @@ public class CuponesSearchFilter extends AbstractSearchFilter {
   public boolean hasValidFechasOrigen() {
     return fechaOrigenDesde != null
         && fechaOrigenHasta != null
-        && (fechaOrigenHasta.compareTo(fechaOrigenDesde) >= 0);
+        && (!fechaOrigenHasta.isBefore(fechaOrigenDesde));
   }
 }

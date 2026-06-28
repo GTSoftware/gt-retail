@@ -27,8 +27,6 @@ public class FiscalControllerImpl implements FiscalController {
   private final FiscalAlicuotasIvaService alicuotasIvaService;
   private final FiscalTaxRateTransformer taxRateTransformer;
 
-  private final PaginatedResponseBuilder responseBuilder;
-
   @Override
   public List<FiscalResponsabilidadesIvaDto> getResponsabilidadesIva() {
     return responsabilidadesIvaService.findAll();
@@ -42,7 +40,7 @@ public class FiscalControllerImpl implements FiscalController {
       searchFilter.addSortField("id", false);
     }
 
-    return responseBuilder.build(periodosFiscalesService, searchRequest);
+    return PaginatedResponseBuilder.build(periodosFiscalesService, searchRequest);
   }
 
   @Override

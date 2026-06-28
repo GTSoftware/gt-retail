@@ -16,18 +16,12 @@
  */
 package ar.com.gtsoftware.dao;
 
-import ar.com.gtsoftware.entity.CajasTransferencias;
-import ar.com.gtsoftware.entity.CajasTransferencias_;
-import ar.com.gtsoftware.entity.Cajas_;
-import ar.com.gtsoftware.entity.NegocioFormasPago_;
+import ar.com.gtsoftware.entity.*;
 import ar.com.gtsoftware.search.CajasSearchFilter;
 import ar.com.gtsoftware.search.CajasTransferenciasSearchFilter;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.*;
 import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import org.springframework.stereotype.Repository;
@@ -99,10 +93,11 @@ public class CajasTransferenciasFacade
     CriteriaQuery<BigDecimal> cq = cb.createQuery(BigDecimal.class);
     Root<CajasTransferencias> root = cq.from(CajasTransferencias.class);
 
-    CriteriaBuilder.Coalesce<BigDecimal> coalesce = cb.coalesce();
-    coalesce.value(cb.neg(cb.sum(root.get(CajasTransferencias_.monto))));
-    coalesce.value(BigDecimal.ZERO);
-    cq.select(coalesce);
+    Expression<BigDecimal> monto =
+        cb.coalesce(root.get(CajasTransferencias_.monto), BigDecimal.ZERO);
+    Expression<BigDecimal> total = cb.coalesce(cb.sum(monto), BigDecimal.ZERO);
+    cq.select(total);
+
     Predicate p =
         cb.equal(root.get(CajasTransferencias_.idCajaOrigen).get(Cajas_.id), csf.getIdCaja());
     Predicate p1 = null;
@@ -117,6 +112,7 @@ public class CajasTransferenciasFacade
 
     cq.where(p);
     TypedQuery<BigDecimal> q = getEntityManager().createQuery(cq);
+
     return q.getSingleResult();
   }
 
@@ -129,10 +125,11 @@ public class CajasTransferenciasFacade
     CriteriaQuery<BigDecimal> cq = cb.createQuery(BigDecimal.class);
     Root<CajasTransferencias> root = cq.from(CajasTransferencias.class);
 
-    CriteriaBuilder.Coalesce<BigDecimal> coalesce = cb.coalesce();
-    coalesce.value(cb.sum(root.get(CajasTransferencias_.monto)));
-    coalesce.value(BigDecimal.ZERO);
-    cq.select(coalesce);
+    Expression<BigDecimal> monto =
+        cb.coalesce(root.get(CajasTransferencias_.monto), BigDecimal.ZERO);
+    Expression<BigDecimal> total = cb.coalesce(cb.sum(monto), BigDecimal.ZERO);
+    cq.select(total);
+
     Predicate p =
         cb.equal(root.get(CajasTransferencias_.idCajaDestino).get(Cajas_.id), csf.getIdCaja());
     Predicate p1 = null;
@@ -147,6 +144,7 @@ public class CajasTransferenciasFacade
 
     cq.where(p);
     TypedQuery<BigDecimal> q = getEntityManager().createQuery(cq);
+
     return q.getSingleResult();
   }
 }

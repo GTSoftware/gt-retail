@@ -22,7 +22,7 @@ import jakarta.persistence.Temporal;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -50,15 +50,15 @@ public class Cupones extends Valores {
   @NotNull
   @Column(name = "fecha_origen")
   @Temporal(jakarta.persistence.TemporalType.TIMESTAMP)
-  private Date fechaOrigen;
+  private LocalDateTime fechaOrigen;
 
   @Column(name = "fecha_presentacion")
   @Temporal(jakarta.persistence.TemporalType.TIMESTAMP)
-  private Date fechaPresentacion;
+  private LocalDateTime fechaPresentacion;
 
   @Column(name = "fecha_acreditacion")
   @Temporal(jakarta.persistence.TemporalType.TIMESTAMP)
-  private Date fechaAcreditacion;
+  private LocalDateTime fechaAcreditacion;
 
   @NotNull
   @Column(name = "cant_cuotas")
