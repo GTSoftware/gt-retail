@@ -6,7 +6,12 @@ export class CashBoxesService {
   }
 
   searchMovements(searchOptions, successCallback, errorCallback) {
-    post(`/cashboxes/movements/search`, searchOptions, successCallback, errorCallback)
+    post(
+      `/cashboxes/movements/search`,
+      searchOptions,
+      successCallback,
+      errorCallback
+    )
   }
 
   openBox(successCallback, errorCallback) {

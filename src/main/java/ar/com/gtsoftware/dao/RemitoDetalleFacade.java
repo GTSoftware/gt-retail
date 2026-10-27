@@ -15,6 +15,8 @@
  */
 package ar.com.gtsoftware.dao;
 
+import ar.com.gtsoftware.entity.Depositos_;
+import ar.com.gtsoftware.entity.Productos_;
 import ar.com.gtsoftware.entity.RemitoDetalle;
 import ar.com.gtsoftware.entity.RemitoDetalle_;
 import ar.com.gtsoftware.entity.Remito_;
@@ -57,11 +59,15 @@ public class RemitoDetalleFacade extends AbstractFacade<RemitoDetalle, RemitoDet
     if (sf.getIdDepositoMovimiento() != null) {
       Predicate p1 =
           cb.equal(
-              root.get(RemitoDetalle_.remitoCabecera).get(Remito_.idOrigenInterno),
+              root.get(RemitoDetalle_.remitoCabecera)
+                  .get(Remito_.idOrigenInterno)
+                  .get(Depositos_.id),
               sf.getIdDepositoMovimiento());
       Predicate p2 =
           cb.equal(
-              root.get(RemitoDetalle_.remitoCabecera).get(Remito_.idDestinoPrevistoInterno),
+              root.get(RemitoDetalle_.remitoCabecera)
+                  .get(Remito_.idDestinoPrevistoInterno)
+                  .get(Depositos_.id),
               sf.getIdDepositoMovimiento());
       Predicate p3 = cb.or(p1, p2);
 
@@ -69,7 +75,8 @@ public class RemitoDetalleFacade extends AbstractFacade<RemitoDetalle, RemitoDet
     }
 
     if (sf.getIdProducto() != null) {
-      Predicate p1 = cb.equal(root.get(RemitoDetalle_.idProducto), sf.getIdProducto());
+      Predicate p1 =
+          cb.equal(root.get(RemitoDetalle_.idProducto).get(Productos_.id), sf.getIdProducto());
 
       p = appendAndPredicate(cb, p1, p);
     }

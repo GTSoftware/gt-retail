@@ -436,10 +436,7 @@ class App extends Component {
               path="/payment-pending-sales"
               component={SearchPendingSales}
             />
-            <ProtectedRoute
-              path="/payment-my-cashbox"
-              component={MyCashBox}
-            />
+            <ProtectedRoute path="/payment-my-cashbox" component={MyCashBox} />
             <ProtectedRoute path="/fiscal-books" component={FiscalBooks} />
             <ProtectedRoute path="/products" component={ProductsInventory} />
             <ProtectedRoute path="/categories" component={CategoriesInventory} />

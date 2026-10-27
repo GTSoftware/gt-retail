@@ -12,7 +12,7 @@ export const MyCashBox = () => {
   const [movements, setMovements] = useState([])
   const [loading, setLoading] = useState(false)
   const [totalRecords, setTotalRecords] = useState(0)
-  const rows= 100
+  const rows = 100
   const [first, setFirst] = useState(0)
 
   const toast = useRef(null)
@@ -147,9 +147,7 @@ export const MyCashBox = () => {
           <div className="p-col-12 p-md-4">
             <div className="card summary">
               <span className="title">Fecha apertura: </span>
-              <span className="initials">
-                {formatDate(cashBox.openDate)}
-              </span>
+              <span className="initials">{formatDate(cashBox.openDate)}</span>
             </div>
           </div>
 

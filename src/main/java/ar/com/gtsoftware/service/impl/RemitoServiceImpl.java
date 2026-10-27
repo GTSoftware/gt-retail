@@ -36,7 +36,6 @@ import ar.com.gtsoftware.utils.BusinessDateUtils;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -99,7 +98,7 @@ public class RemitoServiceImpl extends BaseEntityService<RemitoDto, RemitoSearch
       recepcion.setIdPersona(remito.getIdDestinoPrevistoExterno());
     }
 
-    remito.setRemitoRecepcionesList(Collections.singletonList(recepcion));
+    remito.setRemitoRecepcionesList(List.of(recepcion));
   }
 
   private void completeInformation(Remito remito) {
@@ -134,7 +133,7 @@ public class RemitoServiceImpl extends BaseEntityService<RemitoDto, RemitoSearch
   @Override
   public List<ProductoMovimiento> getMovimientosProducto(RemitoDetalleSearchFilter sf) {
     final BigDecimal stockActual = getStockActual(sf.getIdProducto(), sf.getIdDepositoMovimiento());
-    sf.setSortFields(Collections.singletonList(new SortField("remitoCabecera.fechaAlta", false)));
+    sf.setSortFields(List.of(new SortField("remitoCabecera.fechaAlta", false)));
     final List<RemitoDetalle> remitoDetalles = remitoDetalleFacade.findAllBySearchFilter(sf);
 
     BigDecimal stockMovimiento = stockActual;
