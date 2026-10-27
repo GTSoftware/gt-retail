@@ -15,6 +15,7 @@
  */
 package ar.com.gtsoftware.service;
 
+import ar.com.gtsoftware.dto.domain.CajasArqueosDto;
 import ar.com.gtsoftware.dto.domain.CajasDto;
 import ar.com.gtsoftware.dto.domain.UsuariosDto;
 import ar.com.gtsoftware.search.CajasSearchFilter;
@@ -54,6 +55,13 @@ public interface CajasService extends EntityService<CajasDto, CajasSearchFilter>
    * @return
    */
   void cerrarCaja(@NotNull Long idCaja);
+
+  /**
+   * Cierra la caja realizando un arqueo.
+   *
+   * @param arqueoDto
+   */
+  void cerrarCaja(CajasArqueosDto arqueoDto);
 
   /**
    * Retorna el total que hay en la caja segùn el filtro. El paràmetro de idCaja en el filtro es

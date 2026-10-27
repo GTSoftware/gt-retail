@@ -18,7 +18,21 @@
 package ar.com.gtsoftware.service;
 
 import ar.com.gtsoftware.dto.domain.CajasArqueosDto;
+import ar.com.gtsoftware.dto.domain.UsuariosDto;
 import ar.com.gtsoftware.search.CajasArqueosSearchFilter;
+import java.time.LocalDateTime;
 
 public interface CajasArqueosService
-    extends EntityService<CajasArqueosDto, CajasArqueosSearchFilter> {}
+    extends EntityService<CajasArqueosDto, CajasArqueosSearchFilter> {
+
+  /**
+   * Realiza el control del arqueo.
+   *
+   * @param idArqueo
+   * @param usuarioControl
+   * @param fechaControl
+   * @param observaciones
+   */
+  void controlar(
+      Long idArqueo, UsuariosDto usuarioControl, LocalDateTime fechaControl, String observaciones);
+}

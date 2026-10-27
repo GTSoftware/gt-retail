@@ -27,6 +27,7 @@ import { SearchSales } from "./components/sale/SearchSales"
 import { ViewSale } from "./components/sale/ViewSale"
 import { SalesByProductReport } from "./components/report/SalesByProductReport"
 import { SearchPendingSales } from "./components/payment/SearchPendingSales"
+import { MyCashBox } from "./components/payment/MyCashBox"
 import Helmet from "react-helmet"
 import { FiscalBooks } from "./components/fiscal/FiscalBooks"
 import { ProductsInventory } from "./components/products/ProductsInventory"
@@ -310,6 +311,13 @@ class App extends Component {
             window.location = "#/payment-pending-sales"
           },
         },
+        {
+          label: "Mi caja",
+          icon: "fa fa-fw fa-list",
+          command: () => {
+            window.location = "#/payment-my-cashbox"
+          },
+        },
       ],
     }
   }
@@ -427,6 +435,10 @@ class App extends Component {
             <ProtectedRoute
               path="/payment-pending-sales"
               component={SearchPendingSales}
+            />
+            <ProtectedRoute
+              path="/payment-my-cashbox"
+              component={MyCashBox}
             />
             <ProtectedRoute path="/fiscal-books" component={FiscalBooks} />
             <ProtectedRoute path="/products" component={ProductsInventory} />

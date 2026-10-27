@@ -17,17 +17,18 @@ package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.api.exception.CashBoxAlreadyClosedException;
 import ar.com.gtsoftware.dao.*;
+import ar.com.gtsoftware.dto.domain.CajasArqueosDetalleDto;
+import ar.com.gtsoftware.dto.domain.CajasArqueosDto;
 import ar.com.gtsoftware.dto.domain.CajasDto;
 import ar.com.gtsoftware.dto.domain.UsuariosDto;
-import ar.com.gtsoftware.entity.Cajas;
-import ar.com.gtsoftware.entity.CajasArqueos;
-import ar.com.gtsoftware.entity.Usuarios;
+import ar.com.gtsoftware.entity.*;
 import ar.com.gtsoftware.mappers.CajasMapper;
 import ar.com.gtsoftware.mappers.helper.CycleAvoidingMappingContext;
 import ar.com.gtsoftware.search.CajasArqueosSearchFilter;
 import ar.com.gtsoftware.search.CajasSearchFilter;
 import ar.com.gtsoftware.search.SortField;
 import ar.com.gtsoftware.service.BaseEntityService;
+import ar.com.gtsoftware.service.CajasArqueosService;
 import ar.com.gtsoftware.service.CajasService;
 import ar.com.gtsoftware.utils.BusinessDateUtils;
 import jakarta.validation.constraints.NotNull;
@@ -48,6 +49,8 @@ public class CajasServiceImpl extends BaseEntityService<CajasDto, CajasSearchFil
   private final BusinessDateUtils dateUtils;
 
   private final CajasMapper cajasMapper;
+  private final CajasArqueosService arqueosService;
+  private final NegocioFormasPagoFacade formasPagoFacade;
 
   @Override
   public CajasDto obtenerCajaActual(UsuariosDto usuario) {
@@ -114,6 +117,10 @@ public class CajasServiceImpl extends BaseEntityService<CajasDto, CajasSearchFil
   @Override
   public void cerrarCaja(Long idCaja) {
     Cajas caja = facade.find(idCaja);
+    cerrarCaja(caja);
+  }
+
+  private void cerrarCaja(Cajas caja) {
     if (caja.getFechaCierre() != null) {
       throw new CashBoxAlreadyClosedException();
     }
@@ -123,6 +130,24 @@ public class CajasServiceImpl extends BaseEntityService<CajasDto, CajasSearchFil
     facade.edit(caja);
 
     cuponesFacade.establecerFechaPresentacion(caja, fechaCierre);
+  }
+
+  @Override
+  public void cerrarCaja(CajasArqueosDto arqueoDto) {
+    Cajas caja = facade.find(arqueoDto.getIdCaja().getId());
+    cerrarCaja(caja);
+
+    arqueoDto.setFechaArqueo(caja.getFechaCierre());
+    arqueoDto.setSaldoInicial(caja.getSaldoInicial());
+
+    BigDecimal saldoFinal = BigDecimal.ZERO;
+    for (CajasArqueosDetalleDto det : arqueoDto.getDetalleArqueo()) {
+      det.setDiferencia(det.getMontoDeclarado().subtract(det.getMontoSistema()));
+      saldoFinal = saldoFinal.add(det.getMontoDeclarado());
+    }
+    arqueoDto.setSaldoFinal(saldoFinal);
+
+    arqueosService.createOrEdit(arqueoDto);
   }
 
   @Override

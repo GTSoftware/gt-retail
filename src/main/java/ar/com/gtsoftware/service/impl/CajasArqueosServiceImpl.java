@@ -18,12 +18,15 @@
 package ar.com.gtsoftware.service.impl;
 
 import ar.com.gtsoftware.dao.CajasArqueosFacade;
+import ar.com.gtsoftware.dao.UsuariosFacade;
 import ar.com.gtsoftware.dto.domain.CajasArqueosDto;
+import ar.com.gtsoftware.dto.domain.UsuariosDto;
 import ar.com.gtsoftware.entity.CajasArqueos;
 import ar.com.gtsoftware.mappers.CajasArqueosMapper;
 import ar.com.gtsoftware.search.CajasArqueosSearchFilter;
 import ar.com.gtsoftware.service.BaseEntityService;
 import ar.com.gtsoftware.service.CajasArqueosService;
+import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +38,20 @@ public class CajasArqueosServiceImpl
 
   private final CajasArqueosFacade facade;
   private final CajasArqueosMapper mapper;
+  private final UsuariosFacade usuariosFacade;
+
+  @Override
+  public void controlar(
+      Long idArqueo, UsuariosDto usuarioControl, LocalDateTime fechaControl, String observaciones) {
+    CajasArqueos arqueo = facade.find(idArqueo);
+    if (arqueo == null) {
+      throw new RuntimeException("Arqueo no encontrado");
+    }
+    arqueo.setIdUsuarioControl(usuariosFacade.find(usuarioControl.getId()));
+    arqueo.setFechaControl(fechaControl);
+    arqueo.setObvervacionesControl(observaciones);
+    facade.edit(arqueo);
+  }
 
   @Override
   protected CajasArqueosFacade getFacade() {

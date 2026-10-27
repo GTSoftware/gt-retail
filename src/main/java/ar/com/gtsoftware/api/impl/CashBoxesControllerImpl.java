@@ -9,8 +9,11 @@ import ar.com.gtsoftware.api.response.PaginatedResponseBuilder;
 import ar.com.gtsoftware.api.response.cashbox.CashBox;
 import ar.com.gtsoftware.api.response.cashbox.CashMovementSearchResult;
 import ar.com.gtsoftware.api.transformer.Transformer;
+import ar.com.gtsoftware.dto.domain.CajasArqueosDetalleDto;
+import ar.com.gtsoftware.dto.domain.CajasArqueosDto;
 import ar.com.gtsoftware.dto.domain.CajasDto;
 import ar.com.gtsoftware.dto.domain.CajasMovimientosDto;
+import ar.com.gtsoftware.dto.domain.NegocioFormasPagoDto;
 import ar.com.gtsoftware.search.CajasMovimientosSearchFilter;
 import ar.com.gtsoftware.search.CajasSearchFilter;
 import ar.com.gtsoftware.service.CajasMovimientosService;
@@ -59,7 +62,7 @@ public class CashBoxesControllerImpl implements CashBoxesController {
   @Override
   public PaginatedResponse<CashMovementSearchResult> searchMovements(
       PaginatedSearchRequest<CajasMovimientosSearchFilter> searchRequest) {
-    // TODO check permissions etc.
+    // TODO check permissions
     return PaginatedResponseBuilder.build(
         cajasMovimientosService, searchRequest, movementTransformer);
   }
@@ -78,14 +81,33 @@ public class CashBoxesControllerImpl implements CashBoxesController {
 
   @Override
   public void closeBox(CloseBoxRequest closeBoxRequest) {
-    //TODO isn't this the arqueo?
     var user = securityUtils.getCurrentUser();
 
     var currentBox = cajasService.obtenerCajaActual(user);
     if (currentBox == null) {
       throw new CashBoxNotFoundException("El usuario no posee una caja abierta");
     }
-    cajasService.cerrarCaja(currentBox.getId());
+
+    var arqueoDto =
+        CajasArqueosDto.builder()
+            .idUsuario(user)
+            .idSucursal(currentBox.getIdSucursal())
+            .idCaja(currentBox)
+            .detalleArqueo(
+                closeBoxRequest.closeBoxDetails().stream()
+                    .map(
+                        d ->
+                            CajasArqueosDetalleDto.builder()
+                                .idFormaPago(
+                                    NegocioFormasPagoDto.builder().id(d.paymentFormId()).build())
+                                .montoSistema(d.currentAmount())
+                                .montoDeclarado(d.declaredAmount())
+                                .descargo(d.notes())
+                                .build())
+                    .toList())
+            .build();
+
+    cajasService.cerrarCaja(arqueoDto);
   }
 }
 

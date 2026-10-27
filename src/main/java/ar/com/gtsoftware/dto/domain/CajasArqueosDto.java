@@ -17,7 +17,7 @@
 package ar.com.gtsoftware.dto.domain;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.*;
 
@@ -40,8 +40,8 @@ public class CajasArqueosDto {
   private UsuariosDto idUsuarioControl;
   private SucursalesDto idSucursal;
   private CajasDto idCaja;
-  private Date fechaArqueo;
-  private Date fechaControl;
+  private LocalDateTime fechaArqueo;
+  private LocalDateTime fechaControl;
   private BigDecimal saldoInicial;
   private BigDecimal saldoFinal;
   private String obvervacionesControl;

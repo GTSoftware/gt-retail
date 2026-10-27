@@ -16,7 +16,7 @@
 package ar.com.gtsoftware.search;
 
 import java.io.Serial;
-import java.util.Date;
+import java.time.LocalDateTime;
 import lombok.*;
 
 /**
@@ -36,7 +36,7 @@ public class CajasArqueosSearchFilter extends AbstractSearchFilter {
   private Long idUsuario;
   private Long idSucursal;
   private Boolean controlado;
-  private Date fechaArqueoDesde, fechaArqueoHasta;
+  private LocalDateTime fechaArqueoDesde, fechaArqueoHasta;
 
   @Override
   public boolean hasFilter() {

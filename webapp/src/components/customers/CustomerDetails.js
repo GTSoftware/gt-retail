@@ -288,7 +288,7 @@ export const CustomerDetails = (props) => {
   }
 
   const handleExistingCustomer = (customer) => {
-    if (customer.customerId != customerId) {
+    if (customer.customerId !== customerId) {
       toast.current.show({
         severity: "error",
         summary: "Ya existe un cliente con estos datos",

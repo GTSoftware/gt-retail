@@ -19,7 +19,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
@@ -68,11 +68,11 @@ public class CajasArqueos extends BaseEntity {
   @NotNull
   @Column(name = "fecha_arqueo")
   @Temporal(jakarta.persistence.TemporalType.TIMESTAMP)
-  private Date fechaArqueo;
+  private LocalDateTime fechaArqueo;
 
   @Column(name = "fecha_control")
   @Temporal(jakarta.persistence.TemporalType.TIMESTAMP)
-  private Date fechaControl;
+  private LocalDateTime fechaControl;
 
   @NotNull
   @Column(name = "saldo_inicial")
